@@ -1,64 +1,48 @@
-# StorageFy 🚀
+# 🏢 StorageFy.co - Landing Page
 
-El software más avanzado de gestión de trasteros. Controla tus espacios con precisión, elegancia y control total.
+Landing page oficial de StorageFy, el software más avanzado de gestión de trasteros.
 
-## Stack Tecnológico
+## 🚀 Tech Stack
 
 - **Framework**: Next.js 14 (App Router)
-- **Lenguaje**: TypeScript
-- **Estilos**: Tailwind CSS (modo JIT)
-- **Animaciones**: Framer Motion
-- **Iconos**: Lucide React
-- **Optimización**: next/image
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Animations**: Framer Motion
+- **Icons**: Lucide React
+- **Deployment**: Vercel
 
-## Estructura del Proyecto
+## ✨ Features
 
-```
-storagefy.co/
-├── app/                    # App Router de Next.js
-│   ├── layout.tsx         # Layout raíz
-│   ├── page.tsx           # Página principal
-│   └── globals.css        # Estilos globales
-├── components/
-│   ├── layout/            # Componentes de layout
-│   ├── sections/          # Secciones de página
-│   ├── ui/                # Componentes UI reutilizables
-│   └── animations/        # Wrappers de animación
-├── lib/
-│   └── utils.ts           # Utilidades
-├── public/
-│   └── images/            # Imágenes y assets
-└── tailwind.config.ts     # Configuración de Tailwind
-```
+- 🌍 Multi-language support (ES/EN)
+- 📱 Fully responsive design
+- 🎨 Premium animations and transitions
+- ⚡ Optimized performance
+- 🎯 SEO ready
 
-## Comenzar
-
-Primero, instala las dependencias:
+## 📦 Installation
 
 ```bash
 npm install
 ```
 
-Luego, ejecuta el servidor de desarrollo:
+## 🔧 Development
 
 ```bash
 npm run dev
 ```
 
-Abre [http://localhost:3000](http://localhost:3000) en tu navegador para ver el resultado.
+Open [http://localhost:3000](http://localhost:3000) with your browser.
 
-## Scripts Disponibles
+## 🏗️ Build
 
-- `npm run dev` - Inicia el servidor de desarrollo
-- `npm run build` - Compila la aplicación para producción
-- `npm start` - Inicia el servidor de producción
-- `npm run lint` - Ejecuta el linter
+```bash
+npm run build
+```
 
-## Deployment
+## 📝 License
 
-La aplicación está optimizada para desplegarse en [Vercel](https://vercel.com).
+© 2025 StorageFy. All rights reserved.
 
 ---
 
-Hecho en España 🇪🇸 · © 2025 StorageFy.co
-
+Made with ❤️ in Spain 🇪🇸
