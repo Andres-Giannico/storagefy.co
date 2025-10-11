@@ -24,7 +24,7 @@ const Navbar = ({ className }: NavbarProps) => {
     { href: '/contact', key: 'nav.contact' },
   ]
 
-  const languages = [
+  const languages: Array<{ code: 'es' | 'en'; name: string; flag: string }> = [
     { code: 'es', name: 'Español', flag: '🇪🇸' },
     { code: 'en', name: 'English', flag: '🇺🇸' },
   ]
