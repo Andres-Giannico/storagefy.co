@@ -1,7 +1,7 @@
 import { Resend } from 'resend'
 import { NextRequest, NextResponse } from 'next/server'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+const resend = new Resend(process.env.RESEND_API_KEY || 'dummy-key')
 
 export async function POST(request: NextRequest) {
   try {
@@ -13,6 +13,21 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         { error: 'Name and email are required' },
         { status: 400 }
+      )
+    }
+
+    // Validar API key
+    if (!process.env.RESEND_API_KEY || process.env.RESEND_API_KEY === 'dummy-key') {
+      console.log('Resend API key not configured, skipping email send')
+      return NextResponse.json(
+        { 
+          success: true, 
+          message: language === 'es' 
+            ? 'Demo solicitado exitosamente (modo desarrollo)' 
+            : 'Demo requested successfully (development mode)',
+          emailId: 'dev-mode'
+        },
+        { status: 200 }
       )
     }
 
