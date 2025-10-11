@@ -20,6 +20,18 @@ export const metadata: Metadata = {
   creator: 'StorageFy',
   publisher: 'StorageFy',
   metadataBase: new URL('https://storagefy.co'),
+  icons: {
+    icon: [
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon.ico', sizes: 'any' },
+    ],
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
+  },
+  manifest: '/site.webmanifest',
+  themeColor: '#7CB342',
   openGraph: {
     type: 'website',
     locale: 'es_ES',
