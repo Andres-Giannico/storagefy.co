@@ -258,30 +258,26 @@ export default function DemoPage() {
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <motion.button
-                    whileHover={{ scale: 1.05, boxShadow: '0 10px 25px rgba(124, 179, 66, 0.3)' }}
-                    whileTap={{ scale: 0.95 }}
+                  <button
                     onClick={() => setIsPlaying(!isPlaying)}
-                    className="px-8 py-3 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-semibold rounded-full shadow-lg hover:from-accent-600 hover:to-accent-700 transition-all duration-300 flex items-center justify-center gap-2"
+                    className="px-8 py-3 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-semibold rounded-full shadow-lg hover:from-accent-600 hover:to-accent-700 transition-all duration-200 flex items-center justify-center gap-2 hover:scale-105 active:scale-95"
                   >
                     {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
                     {isPlaying 
                       ? (language === 'es' ? 'Pausar Demo' : 'Pause Demo')
                       : (language === 'es' ? 'Iniciar Demo' : 'Start Demo')
                     }
-                  </motion.button>
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
+                  </button>
+                  <button
                     onClick={() => setIsMuted(!isMuted)}
-                    className="px-8 py-3 bg-white/10 border-2 border-white/30 text-white font-semibold rounded-full shadow-lg hover:border-white/50 hover:bg-white/20 transition-all duration-300 backdrop-blur-sm flex items-center justify-center gap-2"
+                    className="px-8 py-3 bg-white/10 border-2 border-white/30 text-white font-semibold rounded-full shadow-lg hover:border-white/50 hover:bg-white/20 transition-all duration-200 backdrop-blur-sm flex items-center justify-center gap-2 hover:scale-105 active:scale-95"
                   >
                     {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
                     {isMuted 
                       ? (language === 'es' ? 'Activar Audio' : 'Enable Audio')
                       : (language === 'es' ? 'Silenciar' : 'Mute')
                     }
-                  </motion.button>
+                  </button>
                 </div>
               </motion.div>
             </FadeInUp>
@@ -307,12 +303,9 @@ export default function DemoPage() {
                 {/* Play overlay */}
                 {!isPlaying && (
                   <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-                    <motion.div
-                      whileHover={{ scale: 1.1 }}
-                      className="w-20 h-20 bg-white/90 rounded-full flex items-center justify-center cursor-pointer"
-                    >
+                    <div className="w-20 h-20 bg-white/90 rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-transform duration-200">
                       <Play className="w-8 h-8 text-primary-800 ml-1" />
-                    </motion.div>
+                    </div>
                   </div>
                 )}
                 {/* Glow effect */}
@@ -344,19 +337,17 @@ export default function DemoPage() {
           {/* Tour Navigation */}
           <div className="flex flex-wrap justify-center gap-4 mb-12">
             {tourSteps.map((step, index) => (
-              <motion.button
+              <button
                 key={step.id}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
                 onClick={() => setCurrentStep(index)}
-                className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${
+                className={`px-6 py-3 rounded-full font-semibold transition-all duration-200 hover:scale-105 active:scale-95 ${
                   currentStep === index
                     ? 'bg-gradient-to-r from-accent-500 to-accent-600 text-white shadow-lg'
                     : 'bg-gray-100 text-primary-700 hover:bg-gray-200'
                 }`}
               >
                 {step.title}
-              </motion.button>
+              </button>
             ))}
           </div>
 
@@ -378,28 +369,20 @@ export default function DemoPage() {
               </p>
               
               <div className="grid sm:grid-cols-2 gap-4">
-                {tourSteps[currentStep].features.map((feature, index) => (
-                  <motion.div
+                {tourSteps[currentStep].features.map((feature) => (
+                  <div
                     key={feature}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1 }}
                     className="flex items-center gap-3"
                   >
                     <CheckCircle className="w-5 h-5 text-accent-500 flex-shrink-0" />
                     <span className="text-primary-700 font-medium">{feature}</span>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
             </div>
 
             {/* Screenshot */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="relative"
-            >
+            <div className="relative">
               <div className="relative rounded-2xl shadow-2xl border border-gray-200 overflow-hidden bg-white">
                 <Image
                   src={tourSteps[currentStep].image}
@@ -407,11 +390,11 @@ export default function DemoPage() {
                   width={800}
                   height={600}
                   className="w-full h-auto"
+                  loading="lazy"
+                  quality={75}
                 />
-                <div className="absolute inset-0 rounded-2xl shadow-2xl opacity-20 pointer-events-none" 
-                     style={{ boxShadow: '0 0 60px rgba(124, 179, 66, 0.3)' }} />
               </div>
-            </motion.div>
+            </div>
           </motion.div>
         </div>
       </section>
@@ -433,23 +416,12 @@ export default function DemoPage() {
           </FadeInUp>
 
           <div className="grid md:grid-cols-3 gap-8">
-            {useCases.map((useCase, index) => {
+            {useCases.map((useCase) => {
               const Icon = useCase.icon
               return (
-                <motion.div
+                <div
                   key={useCase.title}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ 
-                    opacity: 1, 
-                    y: 0,
-                    transition: {
-                      delay: index * 0.2,
-                      duration: 0.6
-                    }
-                  }}
-                  viewport={{ once: true, margin: '-100px' }}
-                  whileHover={{ scale: 1.03, y: -5 }}
-                  className="bg-white rounded-2xl p-8 shadow-xl border border-white/20 hover:shadow-2xl transition-all duration-300"
+                  className="bg-white rounded-2xl p-8 shadow-xl border border-white/20 hover:shadow-2xl transition-all duration-200 hover:scale-[1.02] hover:-translate-y-1"
                 >
                   <div className="w-12 h-12 bg-gradient-to-r from-accent-500 to-accent-600 rounded-xl flex items-center justify-center mb-6">
                     <Icon className="w-6 h-6 text-white" />
@@ -474,7 +446,7 @@ export default function DemoPage() {
                     </div>
                     <TrendingUp className="w-8 h-8 text-accent-500" />
                   </div>
-                </motion.div>
+                </div>
               )
             })}
           </div>
@@ -661,15 +633,13 @@ export default function DemoPage() {
                 />
               </div>
 
-              <motion.button
+              <button
                 type="submit"
-                whileHover={{ scale: 1.05, boxShadow: '0 10px 25px rgba(124, 179, 66, 0.3)' }}
-                whileTap={{ scale: 0.95 }}
-                className="w-full px-8 py-4 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-semibold rounded-xl hover:from-accent-600 hover:to-accent-700 transition-all duration-300 flex items-center justify-center gap-2"
+                className="w-full px-8 py-4 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-semibold rounded-xl hover:from-accent-600 hover:to-accent-700 transition-all duration-200 flex items-center justify-center gap-2 hover:scale-105 active:scale-95"
               >
                 <Calendar className="w-5 h-5" />
                 {language === 'es' ? 'Solicitar Demo Personalizado' : 'Request Personalized Demo'}
-              </motion.button>
+              </button>
             </form>
 
             {/* Contact Info */}
