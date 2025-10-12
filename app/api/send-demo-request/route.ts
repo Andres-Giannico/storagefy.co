@@ -105,9 +105,9 @@ export async function POST(request: NextRequest) {
       `
 
     // Enviar email a StorageFy
-    const { data, error } = await resend.emails.send({
+    const { data, error } =     await resend.emails.send({
       from: 'StorageFy Demo <demo@storagefy.app>',
-      to: ['admin@storagefy.app'],
+      to: ['hello@storagefy.co'],
       subject: subject,
       html: htmlContent,
       replyTo: email,

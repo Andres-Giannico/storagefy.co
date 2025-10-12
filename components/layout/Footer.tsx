@@ -13,7 +13,8 @@ const Footer = () => {
     { label: language === 'es' ? 'Características' : 'Features', href: '/features' },
     { label: language === 'es' ? 'Precios' : 'Pricing', href: '/pricing' },
     { label: language === 'es' ? 'Nosotros' : 'About', href: '/about' },
-    { label: language === 'es' ? 'Blog' : 'Blog', href: '/blog' },
+    { label: language === 'es' ? 'Preguntas Frecuentes' : 'FAQs', href: '/faq' },
+    { label: language === 'es' ? 'Contacto' : 'Contact', href: '/contact' },
   ]
 
   const legalLinks = [

@@ -203,6 +203,66 @@ export default function ContactPage() {
         </div>
       </section>
 
+      {/* AI Chatbot CTA */}
+      <section className="py-16 px-4">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-accent-500 to-accent-600 p-8 md:p-12"
+          >
+            <div className="absolute inset-0">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+              <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+            </div>
+
+            <div className="relative z-10 text-center">
+              <motion.div
+                animate={{ 
+                  rotate: [0, 10, -10, 0],
+                  scale: [1, 1.05, 1]
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: 'easeInOut'
+                }}
+                className="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mx-auto mb-6"
+              >
+                <MessageSquare className="w-10 h-10 text-white" />
+              </motion.div>
+
+              <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                {language === 'es' 
+                  ? '¿Prefieres respuestas instantáneas?' 
+                  : 'Prefer instant answers?'
+                }
+              </h3>
+              <p className="text-white/90 text-lg mb-8 max-w-2xl mx-auto">
+                {language === 'es'
+                  ? 'Nuestro asistente IA puede responder tus preguntas al instante, 24/7. Haz clic en el botón verde flotante o aquí abajo.'
+                  : 'Our AI assistant can answer your questions instantly, 24/7. Click the floating green button or here below.'
+                }
+              </p>
+
+              <motion.button
+                onClick={() => {
+                  const chatbotButton = document.querySelector('button[class*="fixed bottom-6 right-6"]') as HTMLButtonElement
+                  if (chatbotButton) chatbotButton.click()
+                }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-8 py-4 bg-white text-accent-600 font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 inline-flex items-center gap-2"
+              >
+                <MessageSquare className="w-5 h-5" />
+                {language === 'es' ? 'Abrir Chat IA' : 'Open AI Chat'}
+              </motion.button>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Contact Form & FAQs */}
       <section className="py-24 px-4">
         <div className="max-w-7xl mx-auto">
