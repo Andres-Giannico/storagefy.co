@@ -199,20 +199,12 @@ export default function FeaturesPage() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <motion.button
-                whileHover={{ scale: 1.05, boxShadow: '0 10px 25px rgba(124, 179, 66, 0.3)' }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-3 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-semibold rounded-full shadow-lg hover:from-accent-600 hover:to-accent-700 transition-all duration-300"
-              >
+              <button className="px-8 py-3 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-semibold rounded-full shadow-lg hover:from-accent-600 hover:to-accent-700 transition-all duration-200 hover:scale-105 active:scale-95">
                 {language === 'es' ? 'Probar Gratis 14 Días' : 'Try Free 14 Days'}
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.05, backgroundColor: 'rgba(255, 255, 255, 0.15)' }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-3 bg-white/10 border-2 border-white/30 text-white font-semibold rounded-full shadow-lg hover:border-white/50 hover:bg-white/20 transition-all duration-300 backdrop-blur-sm"
-              >
+              </button>
+              <button className="px-8 py-3 bg-white/10 border-2 border-white/30 text-white font-semibold rounded-full shadow-lg hover:border-white/50 hover:bg-white/20 transition-all duration-200 backdrop-blur-sm hover:scale-105 active:scale-95">
                 {language === 'es' ? 'Ver Demo' : 'View Demo'}
-              </motion.button>
+              </button>
             </div>
           </FadeInUp>
         </div>
@@ -222,45 +214,20 @@ export default function FeaturesPage() {
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-            {stats.map((stat, index) => {
+            {stats.map((stat) => {
               const Icon = stat.icon
               return (
-                <motion.div
+                <div
                   key={stat.label}
-                  initial={{ opacity: 0, y: 30, scale: 0.9 }}
-                  whileInView={{ 
-                    opacity: 1, 
-                    y: 0, 
-                    scale: 1,
-                    transition: {
-                      type: 'spring',
-                      stiffness: 100,
-                      damping: 15,
-                      delay: index * 0.1
-                    }
-                  }}
-                  viewport={{ once: true, margin: '-100px' }}
-                  whileHover={{ 
-                    scale: 1.05, 
-                    y: -5,
-                    transition: { duration: 0.3 }
-                  }}
-                  className="text-center p-6 glass rounded-2xl border border-white/20 hover:border-accent-200 transition-all duration-300 group"
+                  className="text-center p-6 glass rounded-2xl border border-white/20 hover:border-accent-200 transition-all duration-200 group hover:scale-105 hover:-translate-y-1"
                 >
-                  <motion.div 
-                    className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-r from-accent-500 to-accent-600 rounded-xl mb-4 group-hover:scale-110 transition-transform duration-300"
-                    whileHover={{ 
-                      rotate: 10,
-                      scale: 1.1,
-                      transition: { duration: 0.2 }
-                    }}
-                  >
+                  <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-r from-accent-500 to-accent-600 rounded-xl mb-4 group-hover:scale-110 transition-transform duration-200">
                     <Icon className="w-6 h-6 text-white" />
-                  </motion.div>
+                  </div>
                   <div className="text-3xl font-bold text-primary-800 mb-2">{stat.value}</div>
                   <div className="text-sm font-semibold text-primary-700 mb-1">{stat.label}</div>
                   <div className="text-xs text-primary-500">{stat.description}</div>
-                </motion.div>
+                </div>
               )
             })}
           </div>
@@ -278,13 +245,7 @@ export default function FeaturesPage() {
               <div className={`grid lg:grid-cols-2 gap-12 items-center ${!isEven ? 'lg:grid-flow-col-dense' : ''}`}>
                 
                 {/* Content */}
-                <motion.div
-                  initial={{ opacity: 0, x: isEven ? -50 : 50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: '-100px' }}
-                  transition={{ duration: 0.8, ease: 'easeOut' }}
-                  className={!isEven ? 'lg:col-start-2' : ''}
-                >
+                <div className={!isEven ? 'lg:col-start-2' : ''}>
                   <div className="flex items-center gap-3 mb-6">
                     <div className="w-12 h-12 bg-gradient-to-r from-accent-500 to-accent-600 rounded-xl flex items-center justify-center">
                       <Icon className="w-6 h-6 text-white" />
@@ -304,51 +265,27 @@ export default function FeaturesPage() {
                   </p>
 
                   <div className="grid sm:grid-cols-2 gap-4 mb-8">
-                    {feature.benefits.map((benefit, benefitIndex) => (
-                      <motion.div
+                    {feature.benefits.map((benefit) => (
+                      <div
                         key={benefit}
-                        initial={{ opacity: 0, x: -10 }}
-                        whileInView={{ 
-                          opacity: 1, 
-                          x: 0,
-                          transition: {
-                            delay: benefitIndex * 0.1,
-                            duration: 0.4
-                          }
-                        }}
-                        viewport={{ once: true }}
                         className="flex items-center gap-3"
                       >
                         <CheckCircle className="w-5 h-5 text-accent-500 flex-shrink-0" />
                         <span className="text-primary-700 font-medium">{benefit}</span>
-                      </motion.div>
+                      </div>
                     ))}
                   </div>
 
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-semibold rounded-full hover:from-accent-600 hover:to-accent-700 transition-all duration-300"
-                  >
+                  <button className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-semibold rounded-full hover:from-accent-600 hover:to-accent-700 transition-all duration-200 hover:scale-105 active:scale-95">
                     {language === 'es' ? 'Ver en Acción' : 'See in Action'}
                     <ArrowRight className="w-4 h-4" />
-                  </motion.button>
-                </motion.div>
+                  </button>
+                </div>
 
                 {/* Screenshot or Animation */}
-                <motion.div
-                  initial={{ opacity: 0, x: isEven ? 50 : -50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: '-100px' }}
-                  transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
-                  className={!isEven ? 'lg:col-start-1' : ''}
-                >
+                <div className={!isEven ? 'lg:col-start-1' : ''}>
                   {feature.screenshot ? (
-                    <motion.div
-                      whileHover={{ scale: 1.02, y: -10 }}
-                      transition={{ duration: 0.3 }}
-                      className="relative"
-                    >
+                    <div className="relative hover:scale-[1.02] hover:-translate-y-2 transition-all duration-200">
                       <div className="relative rounded-2xl shadow-2xl border border-gray-200 overflow-hidden bg-white">
                         <Image
                           src={feature.screenshot}
@@ -356,13 +293,14 @@ export default function FeaturesPage() {
                           width={800}
                           height={600}
                           className="w-full h-auto"
-                          priority={index < 2}
+                          loading={index < 2 ? "eager" : "lazy"}
+                          quality={75}
                         />
                         {/* Glow effect */}
                         <div className="absolute inset-0 rounded-2xl shadow-2xl opacity-20 pointer-events-none" 
                              style={{ boxShadow: '0 0 60px rgba(124, 179, 66, 0.3)' }} />
                       </div>
-                    </motion.div>
+                    </div>
                   ) : (
                     // Analytics Animation Placeholder
                     <div className="relative h-96 bg-gradient-to-br from-primary-800 to-primary-900 rounded-2xl shadow-2xl overflow-hidden">
@@ -387,7 +325,7 @@ export default function FeaturesPage() {
                       />
                     </div>
                   )}
-                </motion.div>
+                </div>
               </div>
             </div>
           </section>
@@ -423,22 +361,18 @@ export default function FeaturesPage() {
               }
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <motion.a
+              <a
                 href="/demo"
-                whileHover={{ scale: 1.05, boxShadow: '0 10px 25px rgba(124, 179, 66, 0.3)' }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-3 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-semibold rounded-full shadow-lg hover:from-accent-600 hover:to-accent-700 transition-all duration-300"
+                className="px-8 py-3 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-semibold rounded-full shadow-lg hover:from-accent-600 hover:to-accent-700 transition-all duration-200 hover:scale-105 active:scale-95"
               >
                 {language === 'es' ? 'Probar Gratis 14 Días' : 'Try Free 14 Days'}
-              </motion.a>
-              <motion.a
+              </a>
+              <a
                 href="/contact"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-3 glass border border-white/20 text-white font-semibold rounded-full shadow-md hover:bg-white/10 transition-all duration-300"
+                className="px-8 py-3 glass border border-white/20 text-white font-semibold rounded-full shadow-md hover:bg-white/10 transition-all duration-200 hover:scale-105 active:scale-95"
               >
                 {language === 'es' ? 'Hablar con Experto' : 'Talk to Expert'}
-              </motion.a>
+              </a>
             </div>
           </FadeInUp>
         </div>
