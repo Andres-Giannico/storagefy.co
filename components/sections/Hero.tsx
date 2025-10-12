@@ -144,16 +144,16 @@ const Hero = () => {
             className="flex items-center gap-8 pt-8"
           >
             <div className="text-center">
-              <div className="text-2xl font-bold text-primary-800">500+</div>
-              <div className="text-sm text-primary-600">{language === 'es' ? 'Empresas' : 'Companies'}</div>
+              <div className="text-2xl font-bold text-primary-800">2024</div>
+              <div className="text-sm text-primary-600">{language === 'es' ? 'Año de Fundación' : 'Founded'}</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-primary-800">10k+</div>
-              <div className="text-sm text-primary-600">{language === 'es' ? 'Unidades' : 'Units'}</div>
+              <div className="text-2xl font-bold text-primary-800">24/7</div>
+              <div className="text-sm text-primary-600">{language === 'es' ? 'Soporte' : 'Support'}</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-primary-800">99.9%</div>
-              <div className="text-sm text-primary-600">{language === 'es' ? 'Uptime' : 'Uptime'}</div>
+              <div className="text-2xl font-bold text-primary-800">100%</div>
+              <div className="text-sm text-primary-600">{language === 'es' ? 'Español' : 'Spanish'}</div>
             </div>
           </motion.div>
         </motion.div>
@@ -308,7 +308,7 @@ const Hero = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5, duration: 1 }}
-        className="absolute bottom-12 left-1/2 transform -translate-x-1/2"
+        className="absolute bottom-8 left-8 flex items-center gap-3"
       >
         <motion.div
           animate={{ y: [0, 8, 0] }}
@@ -325,7 +325,7 @@ const Hero = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 2, duration: 1 }}
-          className="text-sm text-primary-600 mt-2 text-center"
+          className="text-sm text-primary-600 font-medium"
         >
           {language === 'es' ? 'Desplázate' : 'Scroll'}
         </motion.p>
