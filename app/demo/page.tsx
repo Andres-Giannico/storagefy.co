@@ -1,6 +1,6 @@
 'use client'
 
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { useRef, useState } from 'react'
 import Image from 'next/image'
 import { 
@@ -40,12 +40,6 @@ export default function DemoPage() {
   })
 
   const containerRef = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start end', 'end start']
-  })
-
-  const y = useTransform(scrollYProgress, [0, 1], ['0%', '-10%'])
 
   const tourSteps = [
     {
@@ -236,10 +230,10 @@ export default function DemoPage() {
             {/* Content */}
             <FadeInUp>
               <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.8 }}
+                transition={{ duration: 0.5 }}
               >
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -294,10 +288,10 @@ export default function DemoPage() {
 
             {/* Video/Mockup Area */}
             <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              transition={{ duration: 0.5 }}
               className="relative"
             >
               <div className="relative rounded-2xl shadow-2xl border border-gray-200 overflow-hidden bg-white">
@@ -307,7 +301,8 @@ export default function DemoPage() {
                   width={800}
                   height={600}
                   className="w-full h-auto"
-                  priority
+                  loading="lazy"
+                  quality={75}
                 />
                 {/* Play overlay */}
                 {!isPlaying && (
