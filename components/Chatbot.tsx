@@ -65,69 +65,35 @@ export default function Chatbot() {
     }])
   }
 
-  const getAnswer = (question: string): string => {
-    const q = question.toLowerCase()
+  const getAIAnswer = async (question: string): Promise<string> => {
+    try {
+      const response = await fetch('/api/chatbot', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message: question,
+          conversationHistory: messages.map(m => ({
+            type: m.type,
+            content: m.content
+          })),
+          language,
+          userName: userName || undefined
+        }),
+      })
 
-    // Pricing questions
-    if (q.includes('precio') || q.includes('cost') || q.includes('cuanto') || q.includes('how much')) {
+      const data = await response.json()
+      return data.response || (language === 'es' 
+        ? 'Disculpa, no pude procesar tu mensaje. ¿Podrías reformularlo?'
+        : 'Sorry, I couldn\'t process your message. Could you rephrase it?'
+      )
+    } catch (error) {
+      console.error('Error getting AI response:', error)
       return language === 'es'
-        ? 'Tenemos 3 planes: Starter (€49/mes), Professional (€99/mes) y Enterprise (personalizado). Todos incluyen 14 días gratis sin tarjeta. ¿Te gustaría más detalles sobre algún plan específico?'
-        : 'We have 3 plans: Starter (€49/month), Professional (€99/month) and Enterprise (custom). All include 14 days free without card. Would you like more details about a specific plan?'
+        ? 'Lo siento, estoy teniendo problemas técnicos. Por favor contacta con nuestro equipo: WhatsApp +34 654 082 728 o hello@storagefy.co'
+        : 'Sorry, I\'m having technical issues. Please contact our team: WhatsApp +34 654 082 728 or hello@storagefy.co'
     }
-
-    // Features questions
-    if (q.includes('funcionalidad') || q.includes('feature') || q.includes('características') || q.includes('hace')) {
-      return language === 'es'
-        ? 'StorageFy incluye: gestión de unidades, contratos digitales, cobros automáticos, reportes en tiempo real, widget de reservas, fotos DNI seguras, recordatorios automáticos y mucho más. ¿Hay alguna funcionalidad específica que te interese?'
-        : 'StorageFy includes: unit management, digital contracts, automatic payments, real-time reports, booking widget, secure ID photos, automatic reminders and much more. Is there a specific feature you\'re interested in?'
-    }
-
-    // Demo questions
-    if (q.includes('demo') || q.includes('prueba') || q.includes('try') || q.includes('test')) {
-      return language === 'es'
-        ? '¡Por supuesto! Puedes solicitar una demo gratis de 14 días sin necesidad de tarjeta. Visita nuestra página de Demo o te puedo conectar con el equipo ahora mismo. ¿Qué prefieres?'
-        : 'Of course! You can request a 14-day free demo without a credit card. Visit our Demo page or I can connect you with the team right now. Which do you prefer?'
-    }
-
-    // Support questions
-    if (q.includes('soporte') || q.includes('support') || q.includes('ayuda') || q.includes('help')) {
-      return language === 'es'
-        ? 'Ofrecemos soporte en todos los planes: Email (24h) en Starter, Prioritario (4h) en Professional, y 24/7 con account manager en Enterprise. También puedes contactarnos por WhatsApp: +34 654 082 728'
-        : 'We offer support in all plans: Email (24h) on Starter, Priority (4h) on Professional, and 24/7 with account manager on Enterprise. You can also contact us via WhatsApp: +34 654 082 728'
-    }
-
-    // Integration questions
-    if (q.includes('integra') || q.includes('stripe') || q.includes('pago')) {
-      return language === 'es'
-        ? 'Nos integramos con Stripe para pagos online, sistemas de cerraduras inteligentes, cámaras de seguridad, y más. El plan Enterprise incluye integraciones personalizadas con tus sistemas actuales.'
-        : 'We integrate with Stripe for online payments, smart lock systems, security cameras, and more. The Enterprise plan includes custom integrations with your current systems.'
-    }
-
-    // Migration questions
-    if (q.includes('migra') || q.includes('datos') || q.includes('excel') || q.includes('data')) {
-      return language === 'es'
-        ? '¡Sí! La migración de datos está incluida en todos los planes. Nuestro equipo te ayuda a migrar desde Excel, otros sistemas, o cualquier formato que uses actualmente. Es completamente gratis.'
-        : 'Yes! Data migration is included in all plans. Our team helps you migrate from Excel, other systems, or any format you currently use. It\'s completely free.'
-    }
-
-    // Location/multi-location questions
-    if (q.includes('locacion') || q.includes('location') || q.includes('sedes') || q.includes('múltiples')) {
-      return language === 'es'
-        ? 'Starter incluye 1 locación, Professional hasta 3, y Enterprise locaciones ilimitadas. Puedes gestionar todas tus sedes desde un único panel de control centralizado.'
-        : 'Starter includes 1 location, Professional up to 3, and Enterprise unlimited locations. You can manage all your locations from a single centralized control panel.'
-    }
-
-    // Contact questions
-    if (q.includes('contacto') || q.includes('contact') || q.includes('hablar') || q.includes('talk')) {
-      return language === 'es'
-        ? 'Puedes contactarnos por Email: hello@storagefy.co (respuesta <24h) o WhatsApp: +34 654 082 728 (respuesta inmediata). ¿Prefieres que el equipo te contacte directamente?'
-        : 'You can contact us by Email: hello@storagefy.co (response <24h) or WhatsApp: +34 654 082 728 (immediate response). Would you prefer the team to contact you directly?'
-    }
-
-    // Default response
-    return language === 'es'
-      ? 'Interesante pregunta. Para darte la mejor respuesta, te recomiendo contactar con nuestro equipo directamente: WhatsApp +34 654 082 728 o hello@storagefy.co. También puedes solicitar una demo gratis para ver todo en acción. ¿Te ayudo con algo más?'
-      : 'Interesting question. To give you the best answer, I recommend contacting our team directly: WhatsApp +34 654 082 728 or hello@storagefy.co. You can also request a free demo to see everything in action. Can I help you with anything else?'
   }
 
   const handleSend = async () => {
@@ -168,10 +134,11 @@ export default function Chatbot() {
         )
       }, 1000)
     } else if (chatStep === 'chat') {
-      const answer = getAnswer(userInput)
-      setTimeout(() => {
-        addBotMessage(answer, 800)
-      }, 500)
+      // Get AI response
+      setIsTyping(true)
+      const answer = await getAIAnswer(userInput)
+      setIsTyping(false)
+      addBotMessage(answer, 100)
     }
   }
 
