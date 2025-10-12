@@ -206,7 +206,8 @@ ${userName ? `- The user's name is ${userName}, use it naturally in conversation
     console.error('Error calling OpenAI:', error)
     
     // Fallback response on error
-    const fallbackResponse = body?.language === 'es'
+    const { language: errorLanguage } = await request.json().catch(() => ({ language: 'es' }))
+    const fallbackResponse = errorLanguage === 'es'
       ? 'Disculpa, estoy teniendo problemas técnicos. Por favor, contacta con nuestro equipo en WhatsApp: +34 654 082 728 o hello@storagefy.co'
       : 'Sorry, I\'m having technical issues. Please contact our team on WhatsApp: +34 654 082 728 or hello@storagefy.co'
     
