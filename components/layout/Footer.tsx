@@ -34,6 +34,71 @@ const Footer = () => {
     <footer className="bg-gradient-to-br from-slate-50 via-gray-50 to-slate-100 border-t border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
+        {/* Trust Badges */}
+        <div className="py-8 border-b border-gray-200">
+          <div className="flex flex-wrap items-center justify-center gap-6 md:gap-12">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/50 border border-gray-200"
+            >
+              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+              <span className="text-sm font-medium text-gray-700">
+                {language === 'es' ? '🟢 Sistema Operativo' : '🟢 System Online'}
+              </span>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/50 border border-gray-200"
+            >
+              <span className="text-sm font-medium text-gray-700">
+                {language === 'es' ? '🔒 SSL Seguro' : '🔒 SSL Secure'}
+              </span>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/50 border border-gray-200"
+            >
+              <span className="text-sm font-medium text-gray-700">
+                {language === 'es' ? '✓ RGPD Compliant' : '✓ GDPR Compliant'}
+              </span>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/50 border border-gray-200"
+            >
+              <span className="text-sm font-medium text-gray-700">
+                {language === 'es' ? '🇪🇸 Datos en España' : '🇪🇸 Data in Spain'}
+              </span>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 }}
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/50 border border-gray-200"
+            >
+              <span className="text-sm font-medium text-gray-700">
+                {language === 'es' ? '⚡ Más de 50 negocios' : '⚡ 50+ businesses'}
+              </span>
+            </motion.div>
+          </div>
+        </div>
+
         {/* Main Footer Content */}
         <div className="py-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           

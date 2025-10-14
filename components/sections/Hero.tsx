@@ -114,26 +114,31 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.6 }}
-            className="flex flex-col sm:flex-row gap-4"
+            className="space-y-4"
           >
-            <motion.a
-              href="/demo"
-              whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(124, 179, 66, 0.3)' }}
-              whileTap={{ scale: 0.95 }}
-              className="group px-8 py-4 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-semibold rounded-full hover:from-accent-600 hover:to-accent-700 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
-            >
-              {language === 'es' ? 'Probar Gratis' : 'Try Free'}
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
-            </motion.a>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <motion.a
+                href="/demo"
+                whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(124, 179, 66, 0.3)' }}
+                whileTap={{ scale: 0.95 }}
+                className="group px-8 py-4 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-semibold rounded-full hover:from-accent-600 hover:to-accent-700 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+              >
+                {language === 'es' ? 'Comenzar prueba gratuita de 14 días' : 'Start 14-day free trial'}
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+              </motion.a>
 
-            <motion.a
-              href="/demo"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-8 py-4 glass border border-primary-200 text-primary-700 font-semibold rounded-full hover:bg-white/50 transition-all duration-300 flex items-center justify-center gap-2"
-            >
-              {language === 'es' ? 'Ver Demo' : 'View Demo'}
-            </motion.a>
+              <motion.a
+                href="/demo"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-8 py-4 glass border border-primary-200 text-primary-700 font-semibold rounded-full hover:bg-white/50 transition-all duration-300 flex items-center justify-center gap-2"
+              >
+                {language === 'es' ? 'Ver demo en 2 minutos' : 'View 2-minute demo'}
+              </motion.a>
+            </div>
+            <p className="text-sm text-primary-600 text-center sm:text-left">
+              {language === 'es' ? '✓ Sin tarjeta • Cancela cuando quieras • Soporte en español' : '✓ No card required • Cancel anytime • Spanish support'}
+            </p>
           </motion.div>
 
           {/* Trust Indicators */}

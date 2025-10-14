@@ -230,15 +230,131 @@ const Pricing = () => {
                     }`}
                   >
                     {plan.name === 'Enterprise' 
-                      ? (language === 'es' ? 'Contactar' : 'Contact')
-                      : (language === 'es' ? 'Probar Gratis' : 'Try Free')
+                      ? (language === 'es' ? 'Hablar con especialista' : 'Talk to specialist')
+                      : (language === 'es' ? 'Comenzar prueba gratis' : 'Start free trial')
                     }
                   </motion.a>
+
+                  {/* Trust Badge */}
+                  {plan.name !== 'Enterprise' && (
+                    <p className="text-xs text-gray-500 text-center mt-3">
+                      {language === 'es' ? '✓ 14 días gratis • Sin tarjeta' : '✓ 14 days free • No card'}
+                    </p>
+                  )}
                 </div>
               </motion.div>
             )
           })}
         </div>
+
+        {/* Detailed Comparison Table */}
+        <FadeInUp className="mt-20">
+          <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+            <div className="bg-gradient-to-r from-primary-800 to-primary-700 px-8 py-6">
+              <h3 className="text-2xl font-bold text-white text-center">
+                {language === 'es' ? 'Comparación Detallada de Planes' : 'Detailed Plan Comparison'}
+              </h3>
+            </div>
+            
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-4 text-left text-sm font-semibold text-primary-800">
+                      {language === 'es' ? 'Características' : 'Features'}
+                    </th>
+                    <th className="px-6 py-4 text-center text-sm font-semibold text-primary-800">Starter</th>
+                    <th className="px-6 py-4 text-center text-sm font-semibold text-accent-600 bg-accent-50">Professional</th>
+                    <th className="px-6 py-4 text-center text-sm font-semibold text-primary-800">Enterprise</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100">
+                  {[
+                    { 
+                      category: language === 'es' ? 'Capacidad' : 'Capacity',
+                      features: [
+                        { name: language === 'es' ? 'Locaciones' : 'Locations', starter: '1', pro: '3', enterprise: language === 'es' ? 'Ilimitadas' : 'Unlimited' },
+                        { name: language === 'es' ? 'Unidades' : 'Units', starter: '50', pro: '200', enterprise: language === 'es' ? 'Ilimitadas' : 'Unlimited' },
+                        { name: language === 'es' ? 'Usuarios' : 'Users', starter: '2', pro: '5', enterprise: language === 'es' ? 'Ilimitados' : 'Unlimited' }
+                      ]
+                    },
+                    {
+                      category: language === 'es' ? 'Funcionalidades' : 'Features',
+                      features: [
+                        { name: 'Widget reservas 24/7', starter: true, pro: true, enterprise: true },
+                        { name: language === 'es' ? 'Contratos digitales' : 'Digital contracts', starter: false, pro: true, enterprise: true },
+                        { name: language === 'es' ? 'Fotos DNI seguras' : 'Secure ID photos', starter: false, pro: true, enterprise: true },
+                        { name: 'API personalizada', starter: false, pro: false, enterprise: true },
+                        { name: language === 'es' ? 'Integraciones custom' : 'Custom integrations', starter: false, pro: false, enterprise: true }
+                      ]
+                    },
+                    {
+                      category: language === 'es' ? 'Reportes' : 'Reports',
+                      features: [
+                        { name: language === 'es' ? 'Reportes básicos' : 'Basic reports', starter: true, pro: true, enterprise: true },
+                        { name: language === 'es' ? 'Analytics en tiempo real' : 'Real-time analytics', starter: false, pro: true, enterprise: true },
+                        { name: language === 'es' ? 'Exportación de datos' : 'Data export', starter: false, pro: true, enterprise: true },
+                        { name: language === 'es' ? 'Dashboard personalizado' : 'Custom dashboard', starter: false, pro: false, enterprise: true }
+                      ]
+                    },
+                    {
+                      category: language === 'es' ? 'Soporte' : 'Support',
+                      features: [
+                        { name: 'Email', starter: true, pro: true, enterprise: true },
+                        { name: language === 'es' ? 'Soporte prioritario' : 'Priority support', starter: false, pro: true, enterprise: true },
+                        { name: language === 'es' ? 'Soporte 24/7' : '24/7 support', starter: false, pro: false, enterprise: true },
+                        { name: 'Account manager', starter: false, pro: false, enterprise: true },
+                        { name: 'SLA garantizado', starter: false, pro: false, enterprise: true }
+                      ]
+                    }
+                  ].map((section, sectionIndex) => (
+                    <>
+                      <tr key={`category-${sectionIndex}`} className="bg-gray-50">
+                        <td colSpan={4} className="px-6 py-3 text-sm font-semibold text-primary-800">
+                          {section.category}
+                        </td>
+                      </tr>
+                      {section.features.map((feature, featureIndex) => (
+                        <tr key={`${sectionIndex}-${featureIndex}`} className="hover:bg-gray-50 transition-colors">
+                          <td className="px-6 py-4 text-sm text-gray-700">{feature.name}</td>
+                          <td className="px-6 py-4 text-center">
+                            {typeof feature.starter === 'boolean' ? (
+                              feature.starter ? <Check className="w-5 h-5 text-green-500 mx-auto" /> : <span className="text-gray-300">—</span>
+                            ) : (
+                              <span className="text-sm font-medium text-gray-700">{feature.starter}</span>
+                            )}
+                          </td>
+                          <td className="px-6 py-4 text-center bg-accent-50/30">
+                            {typeof feature.pro === 'boolean' ? (
+                              feature.pro ? <Check className="w-5 h-5 text-green-500 mx-auto" /> : <span className="text-gray-300">—</span>
+                            ) : (
+                              <span className="text-sm font-medium text-gray-700">{feature.pro}</span>
+                            )}
+                          </td>
+                          <td className="px-6 py-4 text-center">
+                            {typeof feature.enterprise === 'boolean' ? (
+                              feature.enterprise ? <Check className="w-5 h-5 text-green-500 mx-auto" /> : <span className="text-gray-300">—</span>
+                            ) : (
+                              <span className="text-sm font-medium text-gray-700">{feature.enterprise}</span>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                    </>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Note about expansion */}
+            <div className="bg-gray-50 px-8 py-4 text-sm text-gray-600 text-center border-t border-gray-100">
+              {language === 'es' 
+                ? '💡 ¿Necesitas más unidades o locaciones? Todos los planes son escalables sin cambiar de precio base.'
+                : '💡 Need more units or locations? All plans are scalable without changing the base price.'
+              }
+            </div>
+          </div>
+        </FadeInUp>
 
         {/* All Plans Include */}
         <FadeInUp className="mt-16">

@@ -82,8 +82,8 @@ const FinalCTA = () => {
 
           <p className="text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed mb-8">
             {language === 'es'
-              ? 'Únete a más de 500 empresas que ya digitalizaron su gestión con StorageFy. Comienza tu transformación digital hoy mismo.'
-              : 'Join over 500 companies that have already digitalized their management with StorageFy. Start your digital transformation today.'
+              ? 'Más de 50 negocios de trasteros ya digitalizaron su gestión con StorageFy. Comienza tu transformación digital hoy mismo.'
+              : 'Over 50 storage businesses have already digitalized their management with StorageFy. Start your digital transformation today.'
             }
           </p>
 
@@ -115,28 +115,31 @@ const FinalCTA = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.6 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center mb-16"
+            className="space-y-4"
           >
-            <motion.a
-              href="/demo"
-              whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(124, 179, 66, 0.4)' }}
-              whileTap={{ scale: 0.95 }}
-              className="group px-8 py-4 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-semibold rounded-full hover:from-accent-600 hover:to-accent-700 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
-            >
-              {language === 'es' ? 'Probar Gratis 14 Días' : 'Try Free 14 Days'}
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
-            </motion.a>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <motion.a
+                href="/demo"
+                whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(124, 179, 66, 0.4)' }}
+                whileTap={{ scale: 0.95 }}
+                className="group px-8 py-4 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-semibold rounded-full hover:from-accent-600 hover:to-accent-700 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+              >
+                {language === 'es' ? 'Comenzar prueba gratuita de 14 días' : 'Start 14-day free trial'}
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+              </motion.a>
 
-            <motion.a
-              href="https://www.storagefy.app/auth/signin"
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ scale: 1.05, backgroundColor: 'rgba(255, 255, 255, 0.15)' }}
-              whileTap={{ scale: 0.95 }}
-              className="px-8 py-4 bg-white/10 border-2 border-white/30 text-white font-semibold rounded-full hover:border-white/50 transition-all duration-300 flex items-center justify-center gap-2 backdrop-blur-sm"
-            >
-              {language === 'es' ? 'Acceder al Dashboard' : 'Access Dashboard'}
-            </motion.a>
+              <motion.a
+                href="/contact"
+                whileHover={{ scale: 1.05, backgroundColor: 'rgba(255, 255, 255, 0.15)' }}
+                whileTap={{ scale: 0.95 }}
+                className="px-8 py-4 bg-white/10 border-2 border-white/30 text-white font-semibold rounded-full hover:border-white/50 transition-all duration-300 flex items-center justify-center gap-2 backdrop-blur-sm"
+              >
+                {language === 'es' ? 'Hablar con un especialista' : 'Talk to a specialist'}
+              </motion.a>
+            </div>
+            <p className="text-sm text-gray-300 text-center">
+              {language === 'es' ? '✓ Sin tarjeta • Sin permanencia • Migración de datos incluida' : '✓ No card • No commitment • Data migration included'}
+            </p>
           </motion.div>
         </FadeInUp>
       </div>
