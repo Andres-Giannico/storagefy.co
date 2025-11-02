@@ -22,31 +22,31 @@ export default function DetailedMetrics() {
   const clientMetrics = [
     {
       icon: Users,
-      value: '500+',
-      label: language === 'es' ? 'Empresas confían en StorageFy' : 'Companies trust StorageFy',
-      description: language === 'es' ? 'Clientes activos' : 'Active clients'
+      value: '50+',
+      label: language === 'es' ? 'Negocios activos' : 'Active businesses',
+      description: language === 'es' ? 'Creciendo cada día' : 'Growing every day'
     },
     {
       icon: Building2,
-      value: '1,500+',
+      value: '100+',
       label: language === 'es' ? 'Locaciones gestionadas' : 'Locations managed',
       description: language === 'es' ? 'En toda España' : 'Throughout Spain'
     },
     {
       icon: FileText,
-      value: '25,000+',
+      value: '1,000+',
       label: language === 'es' ? 'Unidades administradas' : 'Units managed',
       description: language === 'es' ? 'En tiempo real' : 'In real-time'
     },
     {
       icon: FileText,
-      value: '50,000+',
+      value: '2,000+',
       label: language === 'es' ? 'Contratos creados' : 'Contracts created',
-      description: language === 'es' ? 'Total' : 'Total'
+      description: language === 'es' ? 'Y creciendo' : 'And growing'
     },
     {
       icon: CreditCard,
-      value: '200,000+',
+      value: '5,000+',
       label: language === 'es' ? 'Facturas generadas' : 'Invoices generated',
       description: language === 'es' ? 'Automáticamente' : 'Automatically'
     }
@@ -127,21 +127,21 @@ export default function DetailedMetrics() {
     },
     {
       icon: TrendingUp,
-      value: '+500%',
-      label: language === 'es' ? 'Crecimiento año sobre año' : 'Year-over-year growth',
-      description: language === 'es' ? 'Expansión continua' : 'Continuous expansion'
+      value: '24/7',
+      label: language === 'es' ? 'Soporte disponible' : 'Support available',
+      description: language === 'es' ? 'Siempre para ti' : 'Always for you'
     },
     {
       icon: Globe,
-      value: 'ES →',
-      label: language === 'es' ? 'Expansión a Hispanoamérica' : 'Expansion to Latin America',
-      description: language === 'es' ? 'En progreso' : 'In progress'
+      value: '100%',
+      label: language === 'es' ? 'Enfoque en España' : 'Focus on Spain',
+      description: language === 'es' ? 'Especializados' : 'Specialized'
     },
     {
-      icon: Globe,
-      value: 'PT/BR',
-      label: language === 'es' ? 'Portugal y Brasil próximamente' : 'Portugal and Brazil coming soon',
-      description: language === 'es' ? '2025' : '2025'
+      icon: Zap,
+      value: 'Rápido',
+      label: language === 'es' ? 'Onboarding express' : 'Express onboarding',
+      description: language === 'es' ? '24-48 horas' : '24-48 hours'
     }
   ]
 

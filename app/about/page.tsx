@@ -97,8 +97,8 @@ export default function AboutPage() {
       year: language === 'es' ? 'Hoy' : 'Today',
       title: language === 'es' ? 'Simplificando vidas' : 'Simplifying lives',
       description: language === 'es'
-        ? 'Más de 500 negocios confían en StorageFy. Lo que empezó como nuestra solución, ahora transforma industrias enteras.'
-        : 'Over 500 businesses trust StorageFy. What started as our solution now transforms entire industries.',
+        ? 'Somos una startup innovadora que está transformando la gestión de trasteros en España con tecnología moderna y enfoque en el cliente.'
+        : 'We are an innovative startup that is transforming storage management in Spain with modern technology and customer focus.',
       icon: Award,
       color: 'blue'
     }
@@ -136,7 +136,7 @@ export default function AboutPage() {
   ]
 
   const stats = [
-    { value: '500+', label: language === 'es' ? 'Negocios Confían en Nosotros' : 'Businesses Trust Us' },
+    { value: '50+', label: language === 'es' ? 'Negocios Confían en Nosotros' : 'Businesses Trust Us' },
     { value: '5+', label: language === 'es' ? 'Productos Exitosos Creados' : 'Successful Products Created' },
     { value: '99.9%', label: language === 'es' ? 'Uptime Garantizado' : 'Guaranteed Uptime' },
     { value: '24/7', label: language === 'es' ? 'Soporte Dedicado' : 'Dedicated Support' }

@@ -419,8 +419,8 @@ export default function CasosExitoPage() {
 
             <p className="text-xl text-white/80 mb-12 max-w-2xl mx-auto leading-relaxed">
               {language === 'es'
-                ? 'Únete a más de 500 negocios que ya transformaron su gestión con StorageFy.'
-                : 'Join over 500 businesses that have already transformed their management with StorageFy.'}
+                ? 'Únete a los negocios que ya transformaron su gestión con StorageFy.'
+                : 'Join the businesses that have already transformed their management with StorageFy.'}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

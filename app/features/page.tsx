@@ -413,8 +413,8 @@ export default function FeaturesPage() {
             </h2>
             <p className="text-xl text-gray-200 mb-10 max-w-2xl mx-auto">
               {language === 'es'
-                ? 'Únete a más de 500 empresas que ya digitalizaron su gestión con StorageFy. Comienza tu transformación digital hoy mismo.'
-                : 'Join over 500 companies that have already digitalized their management with StorageFy. Start your digital transformation today.'
+                ? 'Únete a las empresas que ya digitalizaron su gestión con StorageFy. Comienza tu transformación digital hoy mismo.'
+                : 'Join the companies that have already digitalized their management with StorageFy. Start your digital transformation today.'
               }
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

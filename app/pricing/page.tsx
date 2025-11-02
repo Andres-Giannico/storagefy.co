@@ -269,7 +269,7 @@ export default function PricingPage() {
             {/* Quick Stats */}
             <div className="grid grid-cols-3 gap-6 max-w-2xl mx-auto mt-12">
               {[
-                { icon: Users, value: '500+', label: language === 'es' ? 'Clientes' : 'Clients' },
+                { icon: Users, value: '50+', label: language === 'es' ? 'Clientes' : 'Clients' },
                 { icon: TrendingUp, value: '30%', label: language === 'es' ? 'Aumento promedio' : 'Average increase' },
                 { icon: Shield, value: '99.9%', label: language === 'es' ? 'Uptime' : 'Uptime' }
               ].map((stat, index) => (
@@ -695,8 +695,8 @@ export default function PricingPage() {
 
             <p className="text-xl text-white/80 mb-12 max-w-2xl mx-auto leading-relaxed">
               {language === 'es'
-                ? 'Únete a más de 500 negocios que ya transformaron su gestión de trasteros con StorageFy.'
-                : 'Join over 500 businesses that have already transformed their storage management with StorageFy.'
+                ? 'Únete a los negocios que ya transformaron su gestión de trasteros con StorageFy.'
+                : 'Join the businesses that have already transformed their storage management with StorageFy.'
               }
             </p>
 

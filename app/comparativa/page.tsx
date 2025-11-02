@@ -484,8 +484,8 @@ export default function ComparativaPage() {
 
             <p className="text-xl text-white/80 mb-12 max-w-2xl mx-auto leading-relaxed">
               {language === 'es'
-                ? 'Únete a más de 500 negocios que ya eligieron StorageFy como su plataforma de gestión.'
-                : 'Join over 500 businesses that have already chosen StorageFy as their management platform.'
+                ? 'Únete a los negocios que ya eligieron StorageFy como su plataforma de gestión.'
+                : 'Join the businesses that have already chosen StorageFy as their management platform.'
               }
             </p>
 
