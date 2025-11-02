@@ -18,7 +18,10 @@ import {
   ArrowRight,
   BarChart3,
   Target,
-  Star
+  Star,
+  MessageSquare,
+  Layers,
+  Map
 } from 'lucide-react'
 import { useLanguage } from '@/lib/context/LanguageContext'
 import FadeInUp from '@/components/animations/FadeInUp'
@@ -110,6 +113,48 @@ export default function FeaturesPage() {
         : ['Real-time metrics', 'Automated reports', 'Custom dashboards', 'Key KPIs'],
       screenshot: '/images/reportes.webp',
       animation: 'analytics'
+    },
+    {
+      id: 'announcement-board',
+      icon: MessageSquare,
+      title: language === 'es' ? 'Tablón de Anuncios Interno' : 'Internal Announcement Board',
+      subtitle: language === 'es' ? 'Comunicación efectiva con tu equipo' : 'Effective team communication',
+      description: language === 'es'
+        ? 'Mantén a tu equipo informado con un sistema de anuncios categorizado que incluye tracking de lecturas y analytics avanzados.'
+        : 'Keep your team informed with a categorized announcement system that includes read tracking and advanced analytics.',
+      benefits: language === 'es'
+        ? ['Categorización avanzada', '80% tasa resolución', 'Analytics de lectura', 'Usuarios más activos']
+        : ['Advanced categorization', '80% resolution rate', 'Read analytics', 'Most active users'],
+      screenshot: '/images/announcement-board.webp',
+      animation: 'announcement'
+    },
+    {
+      id: 'multi-unit-contracts',
+      icon: Layers,
+      title: language === 'es' ? 'Contratos Multi-Unidad' : 'Multi-Unit Contracts',
+      subtitle: language === 'es' ? 'Gestiona múltiples unidades en un contrato' : 'Manage multiple units in one contract',
+      description: language === 'es'
+        ? 'Agrupa varias unidades en un solo contrato con cálculo automático de precios y gestión simplificada para clientes con múltiples espacios.'
+        : 'Group multiple units in a single contract with automatic price calculation and simplified management for clients with multiple spaces.',
+      benefits: language === 'es'
+        ? ['Cálculo automático', 'Misma ubicación', 'Precio ajustable', 'Gestión simplificada']
+        : ['Automatic calculation', 'Same location', 'Adjustable pricing', 'Simplified management'],
+      screenshot: '/images/multi-unit-contracts.webp',
+      animation: 'multi-unit'
+    },
+    {
+      id: 'floor-plans',
+      icon: Map,
+      title: language === 'es' ? 'Planos Interactivos' : 'Interactive Floor Plans',
+      subtitle: language === 'es' ? 'Visualiza tu espacio en tiempo real' : 'Visualize your space in real-time',
+      description: language === 'es'
+        ? 'Crea y gestiona planos visuales de tus instalaciones con estados de ocupación en tiempo real y edición interactiva.'
+        : 'Create and manage visual floor plans of your facilities with real-time occupancy status and interactive editing.',
+      benefits: language === 'es'
+        ? ['140m² visualizados', '47 unidades mapeadas', 'Estados por colores', 'Edición en tiempo real']
+        : ['140m² visualized', '47 units mapped', 'Color-coded status', 'Real-time editing'],
+      screenshot: '/images/floor-plan-ses-paises.webp',
+      animation: 'floor-plans'
     }
   ]
 
@@ -137,6 +182,18 @@ export default function FeaturesPage() {
       value: '500%',
       label: language === 'es' ? 'Más Leads' : 'More Leads',
       description: language === 'es' ? 'Con widget online' : 'With online widget'
+    },
+    {
+      icon: Target,
+      value: '5 min',
+      label: language === 'es' ? 'Setup Guiado' : 'Guided Setup',
+      description: language === 'es' ? 'Configuración completa' : 'Complete configuration'
+    },
+    {
+      icon: Layers,
+      value: '∞',
+      label: language === 'es' ? 'Multi-Unidad' : 'Multi-Unit',
+      description: language === 'es' ? 'Unidades por contrato' : 'Units per contract'
     }
   ]
 
@@ -213,7 +270,7 @@ export default function FeaturesPage() {
       {/* Stats Section */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 lg:grid-cols-6 gap-6">
             {stats.map((stat) => {
               const Icon = stat.icon
               return (

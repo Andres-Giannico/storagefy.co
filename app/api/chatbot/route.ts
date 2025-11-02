@@ -55,6 +55,13 @@ export async function POST(request: NextRequest) {
 - Multi-locación desde un panel
 - App móvil (próximamente)
 
+**Funcionalidades Avanzadas:**
+- Tablón de Anuncios: Sistema de comunicación interna con categorización (Anuncios, Ideas, Problemas, Urgente, etc.), tracking de lecturas, y 80% tasa de resolución
+- Contratos Multi-Unidad: Gestiona múltiples unidades en un solo contrato con cálculo automático de precios y ajuste manual
+- Planos Interactivos: Visualización en tiempo real de tus instalaciones con estados de ocupación por colores, edición de planos incluida
+- Onboarding de 5 Pasos: Setup guiado que te permite configurar todo en 5 minutos (Negocio → Locaciones → Unidades → Clientes → Contratos)
+- Gestión Multi-Usuario: Roles diferenciados (Propietario, Administrador) con permisos granulares y estados en tiempo real
+
 **Soporte:**
 - Starter: Email (respuesta en 24h)
 - Professional: Prioritario (respuesta en 4h)
@@ -119,6 +126,13 @@ ${userName ? `- El usuario se llama ${userName}, úsalo naturalmente en la conve
 - Visual occupancy control
 - Multi-location from one panel
 - Mobile app (coming soon)
+
+**Advanced Features:**
+- Announcement Board: Internal communication system with categorization (Announcements, Ideas, Problems, Urgent, etc.), read tracking, and 80% resolution rate
+- Multi-Unit Contracts: Manage multiple units in a single contract with automatic price calculation and manual adjustment
+- Interactive Floor Plans: Real-time visualization of your facilities with color-coded occupancy status, floor plan editing included
+- 5-Step Onboarding: Guided setup that allows you to configure everything in 5 minutes (Business → Locations → Units → Clients → Contracts)
+- Multi-User Management: Differentiated roles (Owner, Administrator) with granular permissions and real-time status
 
 **Support:**
 - Starter: Email (24h response)

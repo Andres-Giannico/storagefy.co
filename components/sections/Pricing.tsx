@@ -42,7 +42,10 @@ const Pricing = () => {
         language === 'es' ? 'Reportes avanzados' : 'Advanced reports',
         language === 'es' ? 'Soporte prioritario' : 'Priority support',
         language === 'es' ? 'Fotos DNI seguras' : 'Secure ID photos',
-        language === 'es' ? 'Recordatorios automáticos' : 'Automatic reminders'
+        language === 'es' ? 'Recordatorios automáticos' : 'Automatic reminders',
+        language === 'es' ? 'Contratos multi-unidad' : 'Multi-unit contracts',
+        language === 'es' ? 'Planos interactivos' : 'Interactive floor plans',
+        language === 'es' ? 'Tablón de anuncios' : 'Announcement board'
       ]
     },
     {
@@ -61,7 +64,10 @@ const Pricing = () => {
         language === 'es' ? 'Soporte 24/7' : '24/7 support',
         language === 'es' ? 'Onboarding dedicado' : 'Dedicated onboarding',
         language === 'es' ? 'Account manager' : 'Account manager',
-        language === 'es' ? 'SLA garantizado' : 'Guaranteed SLA'
+        language === 'es' ? 'SLA garantizado' : 'Guaranteed SLA',
+        language === 'es' ? 'Planos ilimitados' : 'Unlimited floor plans',
+        language === 'es' ? 'Analytics avanzados' : 'Advanced analytics',
+        language === 'es' ? 'Gestión usuarios ilimitada' : 'Unlimited user management'
       ]
     }
   ]
@@ -284,6 +290,11 @@ const Pricing = () => {
                         { name: 'Widget reservas 24/7', starter: true, pro: true, enterprise: true },
                         { name: language === 'es' ? 'Contratos digitales' : 'Digital contracts', starter: false, pro: true, enterprise: true },
                         { name: language === 'es' ? 'Fotos DNI seguras' : 'Secure ID photos', starter: false, pro: true, enterprise: true },
+                        { name: language === 'es' ? 'Contratos multi-unidad' : 'Multi-unit contracts', starter: false, pro: true, enterprise: true },
+                        { name: language === 'es' ? 'Planos interactivos' : 'Interactive floor plans', starter: false, pro: true, enterprise: true },
+                        { name: language === 'es' ? 'Tablón de anuncios' : 'Announcement board', starter: false, pro: true, enterprise: true },
+                        { name: language === 'es' ? 'Onboarding guiado' : 'Guided onboarding', starter: true, pro: true, enterprise: true },
+                        { name: language === 'es' ? 'Gestión de usuarios' : 'User management', starter: true, pro: true, enterprise: true },
                         { name: 'API personalizada', starter: false, pro: false, enterprise: true },
                         { name: language === 'es' ? 'Integraciones custom' : 'Custom integrations', starter: false, pro: false, enterprise: true }
                       ]
@@ -295,6 +306,14 @@ const Pricing = () => {
                         { name: language === 'es' ? 'Analytics en tiempo real' : 'Real-time analytics', starter: false, pro: true, enterprise: true },
                         { name: language === 'es' ? 'Exportación de datos' : 'Data export', starter: false, pro: true, enterprise: true },
                         { name: language === 'es' ? 'Dashboard personalizado' : 'Custom dashboard', starter: false, pro: false, enterprise: true }
+                      ]
+                    },
+                    {
+                      category: language === 'es' ? 'Funcionalidades Avanzadas' : 'Advanced Features',
+                      features: [
+                        { name: language === 'es' ? 'Planos ilimitados' : 'Unlimited floor plans', starter: false, pro: false, enterprise: true },
+                        { name: language === 'es' ? 'Analytics avanzados' : 'Advanced analytics', starter: false, pro: false, enterprise: true },
+                        { name: language === 'es' ? 'Gestión usuarios ilimitada' : 'Unlimited user management', starter: false, pro: false, enterprise: true }
                       ]
                     },
                     {

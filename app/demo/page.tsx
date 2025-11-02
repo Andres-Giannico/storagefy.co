@@ -54,6 +54,28 @@ export default function DemoPage() {
         : ['Real-time metrics', 'Visual KPIs', 'PDF export', 'Auto-update']
     },
     {
+      id: 'onboarding',
+      title: language === 'es' ? 'Setup Guiado en 5 Pasos' : '5-Step Guided Setup',
+      description: language === 'es'
+        ? 'Configura tu cuenta en 5 minutos con nuestro onboarding interactivo paso a paso.'
+        : 'Set up your account in 5 minutes with our interactive step-by-step onboarding.',
+      image: '/images/onboarding-setup.webp',
+      features: language === 'es'
+        ? ['Setup en 5 minutos', 'Navegación flexible', 'Pasos opcionales', 'Sin conocimientos técnicos']
+        : ['5-minute setup', 'Flexible navigation', 'Optional steps', 'No technical knowledge']
+    },
+    {
+      id: 'user-management',
+      title: language === 'es' ? 'Gestión de Usuarios' : 'User Management',
+      description: language === 'es'
+        ? 'Administra roles y permisos de tu equipo con control granular.'
+        : 'Manage team roles and permissions with granular control.',
+      image: '/images/user-management.webp',
+      features: language === 'es'
+        ? ['Roles diferenciados', 'Estados en tiempo real', 'Multi-usuario', 'Permisos personalizados']
+        : ['Differentiated roles', 'Real-time status', 'Multi-user', 'Custom permissions']
+    },
+    {
       id: 'units',
       title: language === 'es' ? 'Gestión de Unidades' : 'Unit Management',
       description: language === 'es'
@@ -115,6 +137,24 @@ export default function DemoPage() {
         : 'Luxury service with complete automation and 24/7 attention.',
       results: language === 'es' ? '+80% satisfacción' : '+80% satisfaction',
       client: language === 'es' ? 'Premium Storage BCN' : 'Premium Storage BCN'
+    },
+    {
+      icon: Clock,
+      title: language === 'es' ? 'Setup Simplificado' : 'Simplified Setup',
+      description: language === 'es'
+        ? 'Configuración rápida y guiada para nuevos negocios de trasteros.'
+        : 'Quick and guided setup for new storage businesses.',
+      results: language === 'es' ? '5 min vs 2 horas' : '5 min vs 2 hours',
+      client: language === 'es' ? 'Nuevos Emprendedores' : 'New Entrepreneurs'
+    },
+    {
+      icon: Users,
+      title: language === 'es' ? 'Gestión de Equipos' : 'Team Management',
+      description: language === 'es'
+        ? 'Multi-usuario con roles diferenciados para equipos grandes.'
+        : 'Multi-user with differentiated roles for large teams.',
+      results: language === 'es' ? '4 usuarios activos' : '4 active users',
+      client: language === 'es' ? 'Empresas en Crecimiento' : 'Growing Companies'
     }
   ]
 
