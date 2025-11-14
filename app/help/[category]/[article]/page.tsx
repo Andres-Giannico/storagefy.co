@@ -61,6 +61,25 @@ export default function ArticlePage({ params }: ArticlePageProps) {
     let currentParagraph: string[] = []
     let listItems: Array<{ text: string; subItems: string[] }> = []
     let currentSubItems: string[] = []
+    let currentCodeBlock: string[] = []
+    let inCodeBlock = false
+    let codeBlockLanguage = ''
+
+    const flushCodeBlock = () => {
+      if (currentCodeBlock.length > 0) {
+        const code = currentCodeBlock.join('\n')
+        elements.push(
+          <pre key={`code-${elements.length}`} className="mb-6 rounded-lg overflow-hidden border border-gray-200 bg-gray-900">
+            <code className={`block p-4 text-sm text-gray-100 overflow-x-auto ${codeBlockLanguage || 'text'}`}>
+              {code}
+            </code>
+          </pre>
+        )
+        currentCodeBlock = []
+        codeBlockLanguage = ''
+        inCodeBlock = false
+      }
+    }
 
     const flushParagraph = () => {
       if (currentParagraph.length > 0) {
@@ -95,30 +114,10 @@ export default function ArticlePage({ params }: ArticlePageProps) {
         // Detectar palabras clave y destacarlas
         const processedParts = parts.length > 0 ? parts.map((part, partIdx) => {
           if (typeof part === 'string') {
-            // Destacar palabras importantes (en negrita)
-            const boldRegex = /\*\*([^*]+)\*\*/g
-            const boldParts: (string | JSX.Element)[] = []
-            let lastBoldIndex = 0
-            let boldMatch
-            
-            while ((boldMatch = boldRegex.exec(part)) !== null) {
-              if (boldMatch.index > lastBoldIndex) {
-                boldParts.push(part.substring(lastBoldIndex, boldMatch.index))
-              }
-              boldParts.push(
-                <strong key={`bold-${partIdx}-${boldMatch.index}`} className="font-bold text-primary-900">
-                  {boldMatch[1]}
-                </strong>
-              )
-              lastBoldIndex = boldMatch.index + boldMatch[0].length
-            }
-            if (lastBoldIndex < part.length) {
-              boldParts.push(part.substring(lastBoldIndex))
-            }
-            return boldParts.length > 0 ? boldParts : part
+            return processInlineCode(processBold(part, partIdx), partIdx)
           }
           return part
-        }) : text
+        }) : processInlineCode(processBold(text, 0), 0)
 
         elements.push(
           <p key={`p-${elements.length}`} className="mb-5 text-primary-700 leading-relaxed text-base">
@@ -129,27 +128,109 @@ export default function ArticlePage({ params }: ArticlePageProps) {
       }
     }
 
-    const processTextWithBold = (text: string, keyPrefix: string) => {
-      const parts: (string | JSX.Element)[] = []
+    const processBold = (text: string, partIdx: number) => {
       const boldRegex = /\*\*([^*]+)\*\*/g
-      let lastIndex = 0
-      let match
+      const boldParts: (string | JSX.Element)[] = []
+      let lastBoldIndex = 0
+      let boldMatch
       
-      while ((match = boldRegex.exec(text)) !== null) {
-        if (match.index > lastIndex) {
-          parts.push(text.substring(lastIndex, match.index))
+      while ((boldMatch = boldRegex.exec(text)) !== null) {
+        if (boldMatch.index > lastBoldIndex) {
+          boldParts.push(text.substring(lastBoldIndex, boldMatch.index))
         }
-        parts.push(
-          <strong key={`bold-${keyPrefix}-${match.index}`} className="font-bold text-primary-900">
-            {match[1]}
+        boldParts.push(
+          <strong key={`bold-${partIdx}-${boldMatch.index}`} className="font-bold text-primary-900">
+            {boldMatch[1]}
           </strong>
         )
-        lastIndex = match.index + match[0].length
+        lastBoldIndex = boldMatch.index + boldMatch[0].length
       }
-      if (lastIndex < text.length) {
-        parts.push(text.substring(lastIndex))
+      if (lastBoldIndex < text.length) {
+        boldParts.push(text.substring(lastBoldIndex))
       }
-      return parts.length > 0 ? parts : text
+      return boldParts.length > 0 ? boldParts : text
+    }
+
+    const processInlineCode = (text: string | (string | JSX.Element)[], partIdx: number) => {
+      // Procesar código inline (backticks escapados primero, luego normales)
+      const processString = (str: string): (string | JSX.Element)[] => {
+        const codeParts: (string | JSX.Element)[] = []
+        let processedStr = str
+        let matchCount = 0
+        
+        // Primero procesar backticks escapados (\`)
+        const escapedRegex = /\\`([^`]+)\\`/g
+        let escapedMatch
+        let lastIndex = 0
+        const escapedParts: Array<{ index: number; length: number; content: string }> = []
+        
+        while ((escapedMatch = escapedRegex.exec(processedStr)) !== null) {
+          escapedParts.push({
+            index: escapedMatch.index,
+            length: escapedMatch[0].length,
+            content: escapedMatch[1]
+          })
+        }
+        
+        // Luego procesar backticks normales (que no estén escapados)
+        const normalRegex = /(?<!\\)`([^`]+)`/g
+        let normalMatch: RegExpExecArray | null
+        
+        while ((normalMatch = normalRegex.exec(processedStr)) !== null) {
+          // Verificar que no esté dentro de un backtick escapado
+          const isInEscaped = escapedParts.some(ep => 
+            normalMatch!.index >= ep.index && normalMatch!.index < ep.index + ep.length
+          )
+          if (!isInEscaped) {
+            escapedParts.push({
+              index: normalMatch.index,
+              length: normalMatch[0].length,
+              content: normalMatch[1]
+            })
+          }
+        }
+        
+        // Ordenar por índice y procesar
+        escapedParts.sort((a, b) => a.index - b.index)
+        
+        lastIndex = 0
+        escapedParts.forEach((part) => {
+          if (part.index > lastIndex) {
+            codeParts.push(processedStr.substring(lastIndex, part.index))
+          }
+          codeParts.push(
+            <code key={`inline-code-${partIdx}-${matchCount++}`} className="px-2 py-1 bg-gray-100 text-accent-700 rounded text-sm font-mono border border-gray-200">
+              {part.content}
+            </code>
+          )
+          lastIndex = part.index + part.length
+        })
+        
+        if (lastIndex < processedStr.length) {
+          codeParts.push(processedStr.substring(lastIndex))
+        }
+        
+        return codeParts.length > 0 ? codeParts : [str]
+      }
+
+      if (typeof text === 'string') {
+        return processString(text)
+      } else {
+        // Si es un array, procesar cada elemento
+        const result: (string | JSX.Element)[] = []
+        text.forEach((item, idx) => {
+          if (typeof item === 'string') {
+            result.push(...processString(item))
+          } else {
+            result.push(item)
+          }
+        })
+        return result
+      }
+    }
+
+    const processTextWithBold = (text: string, keyPrefix: string) => {
+      return processInlineCode(processBold(text, 0), 0)
     }
 
     const flushList = () => {
@@ -190,9 +271,32 @@ export default function ArticlePage({ params }: ArticlePageProps) {
     }
 
     lines.forEach((line, index) => {
+      // Manejar bloques de código (```)
+      if (line.trim().startsWith('```')) {
+        if (inCodeBlock) {
+          // Cerrar bloque de código
+          flushCodeBlock()
+        } else {
+          // Abrir bloque de código
+          flushList()
+          flushParagraph()
+          const languageMatch = line.trim().match(/^```(\w+)?/)
+          codeBlockLanguage = languageMatch ? languageMatch[1] || '' : ''
+          inCodeBlock = true
+        }
+        return
+      }
+
+      if (inCodeBlock) {
+        // Agregar línea al bloque de código
+        currentCodeBlock.push(line)
+        return
+      }
+
       if (line.startsWith('# ')) {
         flushList()
         flushParagraph()
+        flushCodeBlock()
         const text = line.substring(2)
         elements.push(
           <h1 key={`h1-${index}`} className="text-3xl font-bold bg-gradient-to-r from-primary-800 to-accent-700 bg-clip-text text-transparent mb-6 mt-8 first:mt-0">
@@ -202,6 +306,7 @@ export default function ArticlePage({ params }: ArticlePageProps) {
       } else if (line.startsWith('## ')) {
         flushList()
         flushParagraph()
+        flushCodeBlock()
         const text = line.substring(3)
         const id = generateHeadingId(text, existingIds)
         elements.push(
@@ -216,6 +321,7 @@ export default function ArticlePage({ params }: ArticlePageProps) {
       } else if (line.startsWith('### ')) {
         flushList()
         flushParagraph()
+        flushCodeBlock()
         const text = line.substring(4)
         const id = generateHeadingId(text, existingIds)
         elements.push(
@@ -230,6 +336,7 @@ export default function ArticlePage({ params }: ArticlePageProps) {
       } else if (/^\d+\.\s/.test(line)) {
         // Lista numerada (1., 2., etc.)
         flushParagraph()
+        flushCodeBlock()
         const itemText = line.replace(/^\d+\.\s/, '').trim()
         listItems.push({ text: itemText, subItems: [] })
       } else if ((line.startsWith('   - ') || line.startsWith('   * ') || line.startsWith('  - ') || line.startsWith('  * ')) && listItems.length > 0) {
@@ -241,19 +348,23 @@ export default function ArticlePage({ params }: ArticlePageProps) {
       } else if (line.startsWith('- ') || line.startsWith('* ')) {
         // Lista simple (no numerada)
         flushParagraph()
+        flushCodeBlock()
         const itemText = line.substring(2).trim()
         listItems.push({ text: itemText, subItems: [] })
       } else if (line.trim() === '') {
         flushList()
         flushParagraph()
+        flushCodeBlock()
       } else {
         flushList()
+        flushCodeBlock()
         currentParagraph.push(line.trim())
       }
     })
 
     flushList()
     flushParagraph()
+    flushCodeBlock()
 
     return elements
   }
