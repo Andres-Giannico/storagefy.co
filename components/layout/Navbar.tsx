@@ -20,6 +20,7 @@ const Navbar = ({ className }: NavbarProps) => {
   const navItems = [
     { href: '/features', key: 'nav.features' },
     { href: '/pricing', key: 'nav.pricing' },
+    { href: '/help', key: 'nav.help' },
     { href: '/about', key: 'nav.about' },
     { href: '/contact', key: 'nav.contact' },
   ]

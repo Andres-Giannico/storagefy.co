@@ -14,6 +14,7 @@ export default function ROICalculator() {
   const [delinquencyRate, setDelinquencyRate] = useState(10)
   const [reservationsPerMonth, setReservationsPerMonth] = useState(20)
   const [locations, setLocations] = useState(1)
+  const [units, setUnits] = useState(50)
 
   // Calculations
   const hoursPerMonth = hoursPerWeek * 4
@@ -33,7 +34,16 @@ export default function ROICalculator() {
   const reservationSavings = additionalReservations * reservationValue * 12
 
   const totalSavings = timeSavings + delinquencySavings + reservationSavings
-  const storagefyCost = 99 * 12 // Professional plan annual
+  // Calculate StorageFy cost: 1 EUR per unit per month + VAT (21%)
+  // Annual payment gets 20% discount
+  const pricePerUnit = 1
+  const vatRate = 0.21
+  const annualDiscount = 0.20 // 20% discount for annual payment
+  const monthlyPrice = units * pricePerUnit
+  const monthlyPriceWithVat = monthlyPrice * (1 + vatRate)
+  const annualPrice = monthlyPrice * 12
+  const annualPriceWithDiscount = annualPrice * (1 - annualDiscount)
+  const storagefyCost = annualPriceWithDiscount * (1 + vatRate) // Annual cost with discount and VAT
   const roi = ((totalSavings - storagefyCost) / storagefyCost) * 100
   const roiPercentage = Math.max(0, roi)
 
@@ -180,6 +190,35 @@ export default function ROICalculator() {
                   </span>
                 </div>
               </div>
+
+              {/* Units */}
+              <div>
+                <label className="block text-sm font-semibold text-primary-700 mb-2">
+                  {language === 'es' 
+                    ? `¿Cuántas unidades gestionas?` 
+                    : `How many units do you manage?`}
+                </label>
+                <div className="flex items-center gap-4">
+                  <input
+                    type="range"
+                    min="1"
+                    max="200"
+                    value={units}
+                    onChange={(e) => setUnits(Number(e.target.value))}
+                    className="flex-1"
+                  />
+                  <span className="text-2xl font-bold text-accent-600 w-16 text-right">
+                    {units}
+                  </span>
+                </div>
+                {units > 200 && (
+                  <p className="text-xs text-accent-600 mt-2">
+                    {language === 'es' 
+                      ? '💡 Más de 200 unidades: Contacta para precio Enterprise personalizado'
+                      : '💡 More than 200 units: Contact for custom Enterprise pricing'}
+                  </p>
+                )}
+              </div>
             </div>
           </div>
 
@@ -261,10 +300,20 @@ export default function ROICalculator() {
                 <div className="text-4xl font-bold text-accent-600 mb-4">
                   {roiPercentage.toFixed(0)}%
                 </div>
-                <div className="text-primary-600 mb-6">
+                <div className="text-primary-600 mb-2">
                   {language === 'es' 
-                    ? `Costo StorageFy: €${storagefyCost.toLocaleString('es-ES')}/año` 
-                    : `StorageFy Cost: €${storagefyCost.toLocaleString('es-ES')}/year`}
+                    ? `Costo StorageFy: €${storagefyCost.toLocaleString('es-ES', { maximumFractionDigits: 2 })}/año` 
+                    : `StorageFy Cost: €${storagefyCost.toLocaleString('es-ES', { maximumFractionDigits: 2 })}/year`}
+                </div>
+                <div className="text-sm text-primary-500 mb-2">
+                  {language === 'es' 
+                    ? `(${units} unidades × €${pricePerUnit}/mes, pago anual -20%)` 
+                    : `(${units} units × €${pricePerUnit}/month, annual payment -20%)`}
+                </div>
+                <div className="text-xs text-accent-600 mb-6">
+                  {language === 'es' 
+                    ? `Ahorras €${(annualPrice - annualPriceWithDiscount).toFixed(2)}/año con pago anual` 
+                    : `Save €${(annualPrice - annualPriceWithDiscount).toFixed(2)}/year with annual payment`}
                 </div>
                 <motion.a
                   href="/demo"

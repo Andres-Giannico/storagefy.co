@@ -23,7 +23,7 @@ export default function ComparativaPage() {
   const localComparison = [
     {
       feature: language === 'es' ? 'Precio inicial' : 'Starting price',
-      storagefy: language === 'es' ? '€49/mes' : '€49/month',
+      storagefy: language === 'es' ? '1 EUR/unidad + IVA' : '1 EUR/unit + VAT',
       competitor: language === 'es' ? '€150-300/mes' : '€150-300/month',
       storagefyHas: true,
       competitorHas: true
@@ -145,7 +145,7 @@ export default function ComparativaPage() {
     },
     {
       feature: language === 'es' ? 'Precio' : 'Price',
-      storagefy: language === 'es' ? 'Desde €49/mes' : 'From €49/month',
+      storagefy: language === 'es' ? '1 EUR/unidad + IVA' : '1 EUR/unit + VAT',
       competitor: language === 'es' ? '$99-200/mes' : '$99-200/month',
       storagefyHas: true,
       competitorHas: true
@@ -206,8 +206,8 @@ export default function ComparativaPage() {
       icon: Euro,
       title: language === 'es' ? 'Pricing Disruptivo' : 'Disruptive Pricing',
       description: language === 'es'
-        ? 'Competencia española: €150-300/mes mínimo. StorageFy: Desde €49/mes. Sin costos de setup, sin permanencia, sin sorpresas.'
-        : 'Spanish competition: €150-300/month minimum. StorageFy: From €49/month. No setup costs, no commitment, no surprises.'
+        ? 'Competencia española: €150-300/mes mínimo. StorageFy: 1 EUR/unidad + IVA. Precio simple y transparente. Sin costos de setup, sin permanencia, sin sorpresas.'
+        : 'Spanish competition: €150-300/month minimum. StorageFy: 1 EUR/unit + VAT. Simple and transparent pricing. No setup costs, no commitment, no surprises.'
     },
     {
       icon: TrendingUp,

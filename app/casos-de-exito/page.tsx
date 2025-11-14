@@ -27,7 +27,7 @@ export default function CasosExitoPage() {
       location: 'Madrid',
       locations: 2,
       units: 150,
-      plan: 'Professional',
+      plan: language === 'es' ? 'Estándar' : 'Standard',
       situation: {
         title: language === 'es' ? 'Situación Inicial' : 'Initial Situation',
         items: [
@@ -75,9 +75,9 @@ export default function CasosExitoPage() {
           ? 'Los recordatorios automáticos cambiaron todo. Ahora los clientes pagan sin que tengamos que llamarles. El sistema funciona solo.'
           : 'Automatic reminders changed everything. Now clients pay without us having to call them. The system works on its own.',
         roi: {
-          investment: language === 'es' ? '€99/mes (Professional)' : '€99/month (Professional)',
+          investment: language === 'es' ? '€150/mes + IVA (150 unidades)' : '€150/month + VAT (150 units)',
           savings: language === 'es' ? '€25,000 + tiempo recuperado' : '€25,000 + recovered time',
-          percentage: '2,100%'
+          percentage: '1,388%'
         }
       }
     },
@@ -88,7 +88,7 @@ export default function CasosExitoPage() {
       location: 'Barcelona',
       locations: 1,
       units: 80,
-      plan: 'Professional',
+      plan: language === 'es' ? 'Estándar' : 'Standard',
       situation: {
         title: language === 'es' ? 'Situación Inicial' : 'Initial Situation',
         items: [
@@ -136,9 +136,9 @@ export default function CasosExitoPage() {
           ? 'El widget fue un cambio radical. Ahora recibimos reservas incluso a las 2 de la madrugada. Los clientes pueden ver disponibilidad y reservar sin esperar.'
           : 'The widget was a radical change. Now we receive reservations even at 2 AM. Clients can see availability and book without waiting.',
         roi: {
-          investment: language === 'es' ? '€99/mes (Professional)' : '€99/month (Professional)',
+          investment: language === 'es' ? '€80/mes + IVA (80 unidades)' : '€80/month + VAT (80 units)',
           savings: language === 'es' ? '€18,000/año (por aumento de ocupación)' : '€18,000/year (from occupancy increase)',
-          percentage: '1,515%'
+          percentage: '1,816%'
         }
       }
     },
@@ -199,9 +199,9 @@ export default function CasosExitoPage() {
           ? 'Gestionar 5 locaciones desde un solo panel nos ahorró contratar 2 personas. Los reportes en tiempo real nos permiten tomar decisiones rápidas.'
           : 'Managing 5 locations from a single panel saved us from hiring 2 people. Real-time reports allow us to make quick decisions.',
         roi: {
-          investment: language === 'es' ? '€300/mes (Enterprise)' : '€300/month (Enterprise)',
+          investment: language === 'es' ? 'Precio personalizado (Enterprise)' : 'Custom pricing (Enterprise)',
           savings: language === 'es' ? '€50,000 + tiempo recuperado' : '€50,000 + recovered time',
-          percentage: '1,288%'
+          percentage: language === 'es' ? 'ROI personalizado' : 'Custom ROI'
         }
       }
     }

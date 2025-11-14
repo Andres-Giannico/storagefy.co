@@ -12,6 +12,7 @@ const Footer = () => {
     { label: language === 'es' ? 'Inicio' : 'Home', href: '/' },
     { label: language === 'es' ? 'Características' : 'Features', href: '/features' },
     { label: language === 'es' ? 'Precios' : 'Pricing', href: '/pricing' },
+    { label: language === 'es' ? 'Centro de Ayuda' : 'Help Center', href: '/help' },
     { label: language === 'es' ? 'Comparativa' : 'Comparison', href: '/comparativa' },
     { label: language === 'es' ? 'Onboarding' : 'Onboarding', href: '/onboarding' },
     { label: language === 'es' ? 'Integraciones' : 'Integrations', href: '/integraciones' },
@@ -145,9 +146,16 @@ const Footer = () => {
                   <Mail className="w-4 h-4 text-accent-500 flex-shrink-0" />
                   <a href="mailto:hola@storagefy.co">hola@storagefy.co</a>
                 </div>
-                <div className="flex items-center gap-2 text-gray-600 hover:text-accent-600 transition-colors duration-200">
-                  <Phone className="w-4 h-4 text-accent-500 flex-shrink-0" />
-                  <a href="tel:+34971123456">+34 971 123 456</a>
+                <div className="flex flex-col gap-1 text-sm">
+                  <a href="tel:+34871242618" className="text-gray-600 hover:text-accent-600 transition-colors duration-200">
+                    +34 871 242 618
+                  </a>
+                  <a href="tel:+34871242616" className="text-gray-600 hover:text-accent-600 transition-colors duration-200">
+                    +34 871 242 616
+                  </a>
+                  <a href="tel:+34871242628" className="text-gray-600 hover:text-accent-600 transition-colors duration-200">
+                    +34 871 242 628
+                  </a>
                 </div>
               </div>
             </motion.div>

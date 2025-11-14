@@ -16,6 +16,7 @@ const translations = {
     // Navbar
     'nav.features': 'Características',
     'nav.pricing': 'Precios',
+    'nav.help': 'Ayuda',
     'nav.about': 'Nosotros',
     'nav.contact': 'Contacto',
     'nav.signIn': 'Iniciar Sesión',
@@ -30,6 +31,7 @@ const translations = {
     // Navbar
     'nav.features': 'Features',
     'nav.pricing': 'Pricing',
+    'nav.help': 'Help',
     'nav.about': 'About',
     'nav.contact': 'Contact',
     'nav.signIn': 'Sign In',

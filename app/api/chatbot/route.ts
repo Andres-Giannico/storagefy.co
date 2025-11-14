@@ -69,7 +69,7 @@ export async function POST(request: NextRequest) {
 
 **Contacto:**
 - Email: hello@storagefy.co
-- WhatsApp: +34 654 082 728 (respuesta inmediata)
+- Teléfono Comercial: +34 871 242 618 (Theo Gennove) o +34 871 242 616 (Juan David Wilde)
 - Web: storagefy.co
 
 **Migración de Datos:**
@@ -98,7 +98,7 @@ ${userName ? `- El usuario se llama ${userName}, úsalo naturalmente en la conve
 
 **IMPORTANTE:**
 - Si preguntan por funcionalidades muy específicas o técnicas complejas, recomienda hablar con el equipo
-- Para solicitudes de demo o ventas, sugiere contactar por WhatsApp o email
+- Para solicitudes de demo o ventas, sugiere contactar por teléfono o email
 - Sé breve pero completo en tus respuestas (máximo 3-4 líneas)
 - Si detectas alta intención de compra, sugiere contactar al equipo inmediatamente`
       : `You are StorageFy's virtual assistant, the most advanced storage management software in Spain.
@@ -141,7 +141,7 @@ ${userName ? `- El usuario se llama ${userName}, úsalo naturalmente en la conve
 
 **Contact:**
 - Email: hello@storagefy.co
-- WhatsApp: +34 654 082 728 (immediate response)
+- Sales Phone: +34 871 242 618 (Theo Gennove) or +34 871 242 616 (Juan David Wilde)
 - Web: storagefy.co
 
 **Data Migration:**
@@ -170,7 +170,7 @@ ${userName ? `- The user's name is ${userName}, use it naturally in conversation
 
 **IMPORTANT:**
 - For very specific or complex technical features, recommend talking to the team
-- For demo requests or sales, suggest contacting via WhatsApp or email
+- For demo requests or sales, suggest contacting via phone or email
 - Be brief but complete in your responses (max 3-4 lines)
 - If you detect high purchase intent, suggest contacting the team immediately`
 
@@ -222,8 +222,8 @@ ${userName ? `- The user's name is ${userName}, use it naturally in conversation
     // Fallback response on error
     const { language: errorLanguage } = await request.json().catch(() => ({ language: 'es' }))
     const fallbackResponse = errorLanguage === 'es'
-      ? 'Disculpa, estoy teniendo problemas técnicos. Por favor, contacta con nuestro equipo en WhatsApp: +34 654 082 728 o hello@storagefy.co'
-      : 'Sorry, I\'m having technical issues. Please contact our team on WhatsApp: +34 654 082 728 or hello@storagefy.co'
+      ? 'Disculpa, estoy teniendo problemas técnicos. Por favor, contacta con nuestro equipo: +34 871 242 618 (Comercial) o +34 871 242 628 (Desarrollo) o hello@storagefy.co'
+      : 'Sorry, I\'m having technical issues. Please contact our team: +34 871 242 618 (Sales) or +34 871 242 628 (Development) or hello@storagefy.co'
     
     return NextResponse.json({ response: fallbackResponse })
   }

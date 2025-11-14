@@ -91,8 +91,8 @@ export default function Chatbot() {
     } catch (error) {
       console.error('Error getting AI response:', error)
       return language === 'es'
-        ? 'Lo siento, estoy teniendo problemas técnicos. Por favor contacta con nuestro equipo: WhatsApp +34 654 082 728 o hello@storagefy.co'
-        : 'Sorry, I\'m having technical issues. Please contact our team: WhatsApp +34 654 082 728 or hello@storagefy.co'
+        ? 'Lo siento, estoy teniendo problemas técnicos. Por favor contacta con nuestro equipo: +34 871 242 618 (Comercial) o +34 871 242 628 (Desarrollo) o hello@storagefy.co'
+        : 'Sorry, I\'m having technical issues. Please contact our team: +34 871 242 618 (Sales) or +34 871 242 628 (Development) or hello@storagefy.co'
     }
   }
 

@@ -170,8 +170,8 @@ export async function POST(request: NextRequest) {
               <p><strong>${language === 'es' ? '¿Necesitas más ayuda?' : 'Need more help?'}</strong></p>
               
               <div style="text-align: center;">
-                <a href="https://wa.me/34654082728" class="cta-button">
-                  📱 WhatsApp
+                <a href="tel:+34871242618" class="cta-button">
+                  📱 Teléfono
                 </a>
                 <a href="mailto:hello@storagefy.co" class="cta-button">
                   ✉️ Email

@@ -155,14 +155,15 @@ export async function POST(request: NextRequest) {
               </div>
               
               <p>${language === 'es' 
-                ? '¿Necesitas ayuda inmediata? Contáctanos por WhatsApp:'
-                : 'Need immediate help? Contact us on WhatsApp:'
+                ? '¿Necesitas ayuda inmediata? Contáctanos por teléfono:'
+                : 'Need immediate help? Contact us by phone:'
               }</p>
               
-              <div style="text-align: center;">
-                <a href="https://wa.me/34654082728" class="cta-button">
-                  📱 WhatsApp: +34 654 082 728
-                </a>
+              <div style="text-align: center; margin-top: 15px;">
+                <p style="margin-bottom: 10px; font-weight: 600;">${language === 'es' ? 'Teléfonos de contacto:' : 'Contact phones:'}</p>
+                <p style="margin: 5px 0;"><a href="tel:+34871242618" style="color: #7CB342; text-decoration: none;">+34 871 242 618</a></p>
+                <p style="margin: 5px 0;"><a href="tel:+34871242616" style="color: #7CB342; text-decoration: none;">+34 871 242 616</a></p>
+                <p style="margin: 5px 0;"><a href="tel:+34871242628" style="color: #7CB342; text-decoration: none;">+34 871 242 628</a> ${language === 'es' ? '(Desarrollo)' : '(Development)'}</p>
               </div>
               
               <p style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb;">

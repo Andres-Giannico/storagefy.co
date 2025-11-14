@@ -36,11 +36,25 @@ export default function ContactPage() {
       description: language === 'es' ? 'Respuesta en menos de 24h' : 'Response in less than 24h'
     },
     {
-      icon: MessageSquare,
-      title: 'WhatsApp',
-      value: '+34 654 082 728',
-      link: 'https://wa.me/34654082728',
-      description: language === 'es' ? 'Respuesta inmediata' : 'Immediate response'
+      icon: Phone,
+      title: language === 'es' ? 'Comercial Theo Gennove' : 'Sales Theo Gennove',
+      value: '+34 871 242 618',
+      link: 'tel:+34871242618',
+      description: language === 'es' ? 'Ventas y consultas comerciales' : 'Sales and commercial inquiries'
+    },
+    {
+      icon: Phone,
+      title: language === 'es' ? 'Comercial Juan David Wilde' : 'Sales Juan David Wilde',
+      value: '+34 871 242 616',
+      link: 'tel:+34871242616',
+      description: language === 'es' ? 'Ventas y consultas comerciales' : 'Sales and commercial inquiries'
+    },
+    {
+      icon: Phone,
+      title: language === 'es' ? 'Desarrollo y Software' : 'Development & Software',
+      value: '+34 871 242 628',
+      link: 'tel:+34871242628',
+      description: language === 'es' ? 'Soporte técnico y desarrollo' : 'Technical support and development'
     },
     {
       icon: MapPin,
@@ -174,78 +188,109 @@ export default function ContactPage() {
       {/* Contact Cards */}
       <section className="py-16 px-4">
         <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-3 gap-8 mb-16">
-            {contactInfo.map((info, index) => {
+          {/* Email Card - Featured */}
+          <FadeInUp className="mb-8">
+            <motion.a
+              href="mailto:hello@storagefy.co"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              whileHover={{ y: -5, scale: 1.02 }}
+              className="block bg-gradient-to-br from-accent-500 to-accent-600 rounded-2xl p-8 shadow-xl text-white hover:shadow-2xl transition-all duration-300 max-w-2xl mx-auto"
+            >
+              <div className="flex items-center gap-6">
+                <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center flex-shrink-0">
+                  <Mail className="w-8 h-8 text-white" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-2xl font-bold mb-2">hello@storagefy.co</h3>
+                  <p className="text-white/90">{language === 'es' ? 'Respuesta en menos de 24h' : 'Response in less than 24h'}</p>
+                </div>
+                <div className="text-4xl">→</div>
+              </div>
+            </motion.a>
+          </FadeInUp>
+
+          {/* Phone Cards - Compact Grid */}
+          <div className="grid md:grid-cols-3 gap-6 mb-8">
+            {contactInfo.filter(info => info.icon === Phone).map((info, index) => {
               const Icon = info.icon
               return (
                 <motion.a
                   key={info.title}
                   href={info.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  whileHover={{ y: -5, scale: 1.02 }}
-                  className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 hover:border-accent-200 transition-all duration-300"
+                  whileHover={{ y: -3, scale: 1.02 }}
+                  className="bg-white rounded-xl p-6 shadow-md border border-gray-100 hover:border-accent-300 hover:shadow-lg transition-all duration-300"
                 >
-                  <div className="w-14 h-14 bg-gradient-to-br from-accent-400 to-accent-600 rounded-xl flex items-center justify-center mb-6">
-                    <Icon className="w-7 h-7 text-white" />
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <Icon className="w-6 h-6 text-white" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-sm font-semibold text-primary-600 mb-1">{info.title}</h3>
+                      <p className="text-lg font-bold text-primary-800 mb-1">{info.value}</p>
+                      <p className="text-xs text-primary-500">{info.description}</p>
+                    </div>
                   </div>
-                  <h3 className="text-xl font-bold text-primary-800 mb-2">{info.title}</h3>
-                  <p className="text-lg text-accent-600 font-semibold mb-2">{info.value}</p>
-                  <p className="text-sm text-primary-600">{info.description}</p>
                 </motion.a>
               )
             })}
           </div>
+
+          {/* Location Card */}
+          <FadeInUp>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="bg-white rounded-xl p-6 shadow-md border border-gray-100 max-w-md mx-auto text-center"
+            >
+              <div className="w-12 h-12 bg-gradient-to-br from-accent-400 to-accent-600 rounded-lg flex items-center justify-center mx-auto mb-4">
+                <MapPin className="w-6 h-6 text-white" />
+              </div>
+              <h3 className="text-lg font-bold text-primary-800 mb-1">{contactInfo.find(i => i.icon === MapPin)?.title}</h3>
+              <p className="text-primary-600">{contactInfo.find(i => i.icon === MapPin)?.value}</p>
+            </motion.div>
+          </FadeInUp>
         </div>
       </section>
 
       {/* AI Chatbot CTA */}
-      <section className="py-16 px-4">
-        <div className="max-w-7xl mx-auto">
+      <section className="py-12 px-4">
+        <div className="max-w-4xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-accent-500 to-accent-600 p-8 md:p-12"
+            className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-primary-800 to-primary-900 p-6 md:p-8"
           >
             <div className="absolute inset-0">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
-              <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+              <div className="absolute top-0 right-0 w-48 h-48 bg-accent-500/10 rounded-full blur-3xl"></div>
+              <div className="absolute bottom-0 left-0 w-48 h-48 bg-accent-500/10 rounded-full blur-3xl"></div>
             </div>
 
-            <div className="relative z-10 text-center">
-              <motion.div
-                animate={{ 
-                  rotate: [0, 10, -10, 0],
-                  scale: [1, 1.05, 1]
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: 'easeInOut'
-                }}
-                className="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mx-auto mb-6"
-              >
-                <MessageSquare className="w-10 h-10 text-white" />
-              </motion.div>
-
-              <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                {language === 'es' 
-                  ? '¿Prefieres respuestas instantáneas?' 
-                  : 'Prefer instant answers?'
-                }
-              </h3>
-              <p className="text-white/90 text-lg mb-8 max-w-2xl mx-auto">
-                {language === 'es'
-                  ? 'Nuestro asistente IA puede responder tus preguntas al instante, 24/7. Haz clic en el botón verde flotante o aquí abajo.'
-                  : 'Our AI assistant can answer your questions instantly, 24/7. Click the floating green button or here below.'
-                }
-              </p>
-
+            <div className="relative z-10 flex items-center gap-6 flex-wrap">
+              <div className="w-14 h-14 bg-white/10 backdrop-blur-sm rounded-xl flex items-center justify-center flex-shrink-0">
+                <MessageSquare className="w-7 h-7 text-white" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <h3 className="text-xl font-bold text-white mb-1">
+                  {language === 'es' 
+                    ? '¿Prefieres respuestas instantáneas?' 
+                    : 'Prefer instant answers?'
+                  }
+                </h3>
+                <p className="text-white/80 text-sm">
+                  {language === 'es'
+                    ? 'Nuestro asistente IA responde 24/7. Haz clic en el botón verde flotante.'
+                    : 'Our AI assistant answers 24/7. Click the floating green button.'
+                  }
+                </p>
+              </div>
               <motion.button
                 onClick={() => {
                   const chatbotButton = document.querySelector('button[class*="fixed bottom-6 right-6"]') as HTMLButtonElement
@@ -253,10 +298,10 @@ export default function ContactPage() {
                 }}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-white text-accent-600 font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 inline-flex items-center gap-2"
+                className="px-6 py-3 bg-white text-primary-800 font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 inline-flex items-center gap-2 flex-shrink-0"
               >
-                <MessageSquare className="w-5 h-5" />
-                {language === 'es' ? 'Abrir Chat IA' : 'Open AI Chat'}
+                <MessageSquare className="w-4 h-4" />
+                {language === 'es' ? 'Abrir Chat' : 'Open Chat'}
               </motion.button>
             </div>
           </motion.div>
@@ -274,10 +319,24 @@ export default function ContactPage() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
-                <h2 className="text-3xl font-bold text-primary-800 mb-6">
-                  {language === 'es' ? 'Envíanos un mensaje' : 'Send us a message'}
-                </h2>
+              <div className="bg-white rounded-2xl p-8 md:p-10 shadow-xl border border-gray-100">
+                <div className="mb-8">
+                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-50 border border-accent-200 mb-4">
+                    <Send className="w-4 h-4 text-accent-600" />
+                    <span className="text-sm font-medium text-accent-700">
+                      {language === 'es' ? 'Formulario de contacto' : 'Contact form'}
+                    </span>
+                  </div>
+                  <h2 className="text-3xl font-bold text-primary-800 mb-2">
+                    {language === 'es' ? 'Envíanos un mensaje' : 'Send us a message'}
+                  </h2>
+                  <p className="text-primary-600">
+                    {language === 'es' 
+                      ? 'Completa el formulario y te responderemos lo antes posible.'
+                      : 'Fill out the form and we\'ll get back to you as soon as possible.'
+                    }
+                  </p>
+                </div>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div>
@@ -449,65 +508,87 @@ export default function ContactPage() {
             >
               
               {/* Response Time */}
-              <div className="bg-gradient-to-br from-primary-900 to-primary-800 rounded-2xl p-8 text-white">
-                <Clock className="w-12 h-12 text-accent-400 mb-4" />
-                <h3 className="text-2xl font-bold mb-3">
-                  {language === 'es' ? 'Tiempo de respuesta' : 'Response time'}
-                </h3>
-                <p className="text-white/80 leading-relaxed mb-4">
-                  {language === 'es'
-                    ? 'Respondemos todos los mensajes en menos de 24 horas laborables. Para consultas urgentes, contáctanos por WhatsApp.'
-                    : 'We respond to all messages within 24 business hours. For urgent inquiries, contact us via WhatsApp.'
-                  }
-                </p>
-                <div className="grid grid-cols-2 gap-4 pt-4 border-t border-white/10">
-                  <div>
-                    <div className="text-3xl font-bold text-accent-400">{'<24h'}</div>
-                    <div className="text-sm text-white/60">Email</div>
+              <div className="bg-gradient-to-br from-primary-900 via-primary-800 to-primary-900 rounded-2xl p-6 md:p-8 text-white relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-accent-500/10 rounded-full blur-2xl"></div>
+                <div className="relative z-10">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-12 h-12 bg-accent-500/20 rounded-xl flex items-center justify-center">
+                      <Clock className="w-6 h-6 text-accent-400" />
+                    </div>
+                    <h3 className="text-xl font-bold">
+                      {language === 'es' ? 'Tiempo de respuesta' : 'Response time'}
+                    </h3>
                   </div>
-                  <div>
-                    <div className="text-3xl font-bold text-accent-400">{'<1h'}</div>
-                    <div className="text-sm text-white/60">WhatsApp</div>
+                  <p className="text-white/80 text-sm leading-relaxed mb-6">
+                    {language === 'es'
+                      ? 'Respondemos todos los mensajes en menos de 24 horas laborables.'
+                      : 'We respond to all messages within 24 business hours.'
+                    }
+                  </p>
+                  <div className="grid grid-cols-3 gap-3">
+                    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 text-center">
+                      <div className="text-2xl font-bold text-accent-400 mb-1">{'<24h'}</div>
+                      <div className="text-xs text-white/70">Email</div>
+                    </div>
+                    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 text-center">
+                      <div className="text-2xl font-bold text-accent-400 mb-1">{'<1h'}</div>
+                      <div className="text-xs text-white/70">{language === 'es' ? 'Teléfono' : 'Phone'}</div>
+                    </div>
+                    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 text-center">
+                      <div className="text-2xl font-bold text-accent-400 mb-1">{'<4h'}</div>
+                      <div className="text-xs text-white/70">{language === 'es' ? 'Soporte' : 'Support'}</div>
+                    </div>
                   </div>
                 </div>
               </div>
 
               {/* Quick FAQs */}
-              <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
-                <h3 className="text-2xl font-bold text-primary-800 mb-6">
-                  {language === 'es' ? 'Preguntas frecuentes' : 'Quick questions'}
-                </h3>
-                <div className="space-y-4">
+              <div className="bg-white rounded-2xl p-6 md:p-8 shadow-lg border border-gray-100">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-10 h-10 bg-primary-100 rounded-lg flex items-center justify-center">
+                    <MessageSquare className="w-5 h-5 text-primary-600" />
+                  </div>
+                  <h3 className="text-xl font-bold text-primary-800">
+                    {language === 'es' ? 'Preguntas frecuentes' : 'Quick questions'}
+                  </h3>
+                </div>
+                <div className="space-y-5">
                   {faqs.map((faq, index) => (
-                    <div key={index} className="border-b border-gray-100 last:border-0 pb-4 last:pb-0">
-                      <h4 className="font-semibold text-primary-800 mb-2">{faq.question}</h4>
-                      <p className="text-sm text-primary-600">{faq.answer}</p>
-                    </div>
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.1 }}
+                      className="border-l-4 border-accent-400 pl-4 pb-4 last:pb-0"
+                    >
+                      <h4 className="font-semibold text-primary-800 mb-2 text-sm">{faq.question}</h4>
+                      <p className="text-sm text-primary-600 leading-relaxed">{faq.answer}</p>
+                    </motion.div>
                   ))}
                 </div>
               </div>
 
-              {/* WhatsApp CTA */}
+              {/* Phone CTA */}
               <motion.a
-                href="https://wa.me/34654082728"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.02 }}
+                href="tel:+34871242618"
+                whileHover={{ scale: 1.02, y: -2 }}
                 whileTap={{ scale: 0.98 }}
-                className="block bg-green-500 hover:bg-green-600 rounded-2xl p-6 text-white shadow-lg transition-all duration-300"
+                className="block bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-600 hover:to-accent-700 rounded-xl p-5 text-white shadow-lg hover:shadow-xl transition-all duration-300"
               >
                 <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 bg-white/20 rounded-xl flex items-center justify-center">
-                    <Phone className="w-7 h-7" />
+                  <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-lg flex items-center justify-center flex-shrink-0">
+                    <Phone className="w-6 h-6" />
                   </div>
-                  <div>
-                    <div className="font-bold text-lg mb-1">
+                  <div className="flex-1">
+                    <div className="font-bold text-base mb-1">
                       {language === 'es' ? '¿Necesitas ayuda ahora?' : 'Need help now?'}
                     </div>
-                    <div className="text-white/90 text-sm">
-                      {language === 'es' ? 'Chatea con nosotros en WhatsApp' : 'Chat with us on WhatsApp'}
+                    <div className="text-white/90 text-xs">
+                      {language === 'es' ? 'Llama a nuestro equipo comercial' : 'Call our sales team'}
                     </div>
                   </div>
+                  <div className="text-2xl">→</div>
                 </div>
               </motion.a>
             </motion.div>

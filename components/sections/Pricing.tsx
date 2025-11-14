@@ -10,49 +10,35 @@ const Pricing = () => {
 
   const plans = [
     {
-      name: language === 'es' ? 'Starter' : 'Starter',
-      price: '49',
-      period: language === 'es' ? '/mes' : '/month',
-      description: language === 'es' ? 'Perfecto para emprendedores' : 'Perfect for entrepreneurs',
-      icon: Zap,
-      color: 'blue',
-      popular: false,
-      features: [
-        language === 'es' ? '1 Locación' : '1 Location',
-        language === 'es' ? 'Hasta 50 unidades' : 'Up to 50 units',
-        language === 'es' ? '2 usuarios' : '2 users',
-        language === 'es' ? 'Widget básico' : 'Basic widget',
-        language === 'es' ? 'Soporte por email' : 'Email support',
-        language === 'es' ? 'Gestión básica de pagos' : 'Basic payment management'
-      ]
-    },
-    {
-      name: language === 'es' ? 'Professional' : 'Professional',
-      price: '99',
-      period: language === 'es' ? '/mes' : '/month',
-      description: language === 'es' ? 'Ideal para negocios en crecimiento' : 'Ideal for growing businesses',
+      name: language === 'es' ? 'Estándar' : 'Standard',
+      price: '1',
+      priceUnit: language === 'es' ? 'EUR/unidad' : 'EUR/unit',
+      period: language === 'es' ? '/mes + IVA' : '/month + VAT',
+      description: language === 'es' ? 'Hasta 200 unidades. Precio simple y transparente' : 'Up to 200 units. Simple and transparent pricing',
       icon: Star,
       color: 'green',
       popular: true,
       features: [
-        language === 'es' ? '3 Locaciones' : '3 Locations',
+        language === 'es' ? 'Locaciones ilimitadas' : 'Unlimited locations',
         language === 'es' ? 'Hasta 200 unidades' : 'Up to 200 units',
-        language === 'es' ? '5 usuarios' : '5 users',
-        language === 'es' ? 'Widget + Stripe completo' : 'Widget + Full Stripe',
-        language === 'es' ? 'Reportes avanzados' : 'Advanced reports',
-        language === 'es' ? 'Soporte prioritario' : 'Priority support',
+        language === 'es' ? 'Usuarios ilimitados' : 'Unlimited users',
+        language === 'es' ? 'Widget reservas 24/7' : '24/7 booking widget',
+        language === 'es' ? 'Contratos digitales' : 'Digital contracts',
         language === 'es' ? 'Fotos DNI seguras' : 'Secure ID photos',
-        language === 'es' ? 'Recordatorios automáticos' : 'Automatic reminders',
         language === 'es' ? 'Contratos multi-unidad' : 'Multi-unit contracts',
         language === 'es' ? 'Planos interactivos' : 'Interactive floor plans',
-        language === 'es' ? 'Tablón de anuncios' : 'Announcement board'
+        language === 'es' ? 'Tablón de anuncios' : 'Announcement board',
+        language === 'es' ? 'Reportes avanzados' : 'Advanced reports',
+        language === 'es' ? 'Soporte prioritario' : 'Priority support',
+        language === 'es' ? 'Recordatorios automáticos' : 'Automatic reminders'
       ]
     },
     {
       name: language === 'es' ? 'Enterprise' : 'Enterprise',
       price: language === 'es' ? 'Personalizado' : 'Custom',
+      priceUnit: '',
       period: '',
-      description: language === 'es' ? 'Para grandes operadores' : 'For large operators',
+      description: language === 'es' ? 'Más de 200 unidades. Nos adaptamos a tu negocio con descuentos por volumen' : 'More than 200 units. We adapt to your business with volume discounts',
       icon: Crown,
       color: 'purple',
       popular: false,
@@ -60,6 +46,7 @@ const Pricing = () => {
         language === 'es' ? 'Locaciones ilimitadas' : 'Unlimited locations',
         language === 'es' ? 'Unidades ilimitadas' : 'Unlimited units',
         language === 'es' ? 'Usuarios ilimitados' : 'Unlimited users',
+        language === 'es' ? 'Precio personalizado con descuento por volumen' : 'Custom pricing with volume discounts',
         language === 'es' ? 'API personalizada' : 'Custom API',
         language === 'es' ? 'Soporte 24/7' : '24/7 support',
         language === 'es' ? 'Onboarding dedicado' : 'Dedicated onboarding',
@@ -67,7 +54,7 @@ const Pricing = () => {
         language === 'es' ? 'SLA garantizado' : 'Guaranteed SLA',
         language === 'es' ? 'Planos ilimitados' : 'Unlimited floor plans',
         language === 'es' ? 'Analytics avanzados' : 'Advanced analytics',
-        language === 'es' ? 'Gestión usuarios ilimitada' : 'Unlimited user management'
+        language === 'es' ? 'Integraciones personalizadas' : 'Custom integrations'
       ]
     }
   ]
@@ -117,24 +104,24 @@ const Pricing = () => {
 
           <h2 className="text-4xl lg:text-6xl font-bold mb-6">
             <span className="text-gradient">
-              {language === 'es' ? 'Precios que' : 'Pricing that'}
+              {language === 'es' ? 'Precio simple:' : 'Simple pricing:'}
             </span>
             <br />
             <span className="text-primary-800">
-              {language === 'es' ? 'se adaptan a ti' : 'adapts to you'}
+              {language === 'es' ? '1 EUR por unidad' : '1 EUR per unit'}
             </span>
           </h2>
 
           <p className="text-xl text-primary-600 max-w-3xl mx-auto leading-relaxed">
             {language === 'es'
-              ? 'Desde emprendedores hasta grandes operadores. Elige el plan perfecto para tu negocio y escala sin límites.'
-              : 'From entrepreneurs to large operators. Choose the perfect plan for your business and scale without limits.'
+              ? 'Creamos contigo. Hasta 200 unidades a 1 EUR/unidad + IVA. ¿Más de 200? Hablamos y ajustamos el precio a tu medida con descuentos por volumen.'
+              : 'We grow with you. Up to 200 units at 1 EUR/unit + VAT. More than 200? Let\'s talk and adjust the price to your needs with volume discounts.'
             }
           </p>
         </FadeInUp>
 
         {/* Pricing Cards */}
-        <div className="grid md:grid-cols-3 gap-8 mb-16">
+        <div className="grid md:grid-cols-2 gap-8 mb-16 max-w-5xl mx-auto">
           {plans.map((plan, index) => {
             const Icon = plan.icon
             const colorClasses = {
@@ -189,13 +176,21 @@ const Pricing = () => {
 
                   {/* Price */}
                   <div className="mb-8">
-                    <div className="flex items-baseline justify-center">
+                    <div className="flex flex-col items-center justify-center">
                       {plan.price === 'Personalizado' || plan.price === 'Custom' ? (
-                        <span className="text-3xl lg:text-4xl font-bold text-primary-800">{plan.price}</span>
+                        <>
+                          <span className="text-3xl lg:text-4xl font-bold text-primary-800">{plan.price}</span>
+                          <span className="text-sm text-primary-600 mt-2 text-center">
+                            {language === 'es' ? 'Descuentos por volumen' : 'Volume discounts'}
+                          </span>
+                        </>
                       ) : (
                         <>
-                          <span className="text-5xl font-bold text-primary-800">€{plan.price}</span>
-                          <span className="text-primary-600 ml-2">{plan.period}</span>
+                          <div className="flex items-baseline justify-center">
+                            <span className="text-5xl font-bold text-primary-800">€{plan.price}</span>
+                            <span className="text-lg text-primary-600 ml-2">{plan.priceUnit}</span>
+                          </div>
+                          <span className="text-sm text-primary-600 mt-1">{plan.period}</span>
                         </>
                       )}
                     </div>
@@ -226,7 +221,7 @@ const Pricing = () => {
 
                   {/* CTA Button */}
                   <motion.a
-                    href={plan.name === 'Enterprise' ? '/contact' : '/demo'}
+                    href={plan.name === 'Enterprise' || plan.name === 'Enterprise' ? '/contact' : '/demo'}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     className={`block w-full py-3 px-6 rounded-xl font-semibold text-center transition-all duration-300 ${
@@ -235,14 +230,14 @@ const Pricing = () => {
                         : 'bg-primary-100 text-primary-700 hover:bg-primary-200'
                     }`}
                   >
-                    {plan.name === 'Enterprise' 
+                    {(plan.name === 'Enterprise' || plan.name === 'Enterprise')
                       ? (language === 'es' ? 'Hablar con especialista' : 'Talk to specialist')
                       : (language === 'es' ? 'Comenzar prueba gratis' : 'Start free trial')
                     }
                   </motion.a>
 
                   {/* Trust Badge */}
-                  {plan.name !== 'Enterprise' && (
+                  {plan.name !== 'Enterprise' && plan.name !== 'Enterprise' && (
                     <p className="text-xs text-gray-500 text-center mt-3">
                       {language === 'es' ? '✓ 14 días gratis • Sin tarjeta' : '✓ 14 days free • No card'}
                     </p>
@@ -269,8 +264,7 @@ const Pricing = () => {
                     <th className="px-6 py-4 text-left text-sm font-semibold text-primary-800">
                       {language === 'es' ? 'Características' : 'Features'}
                     </th>
-                    <th className="px-6 py-4 text-center text-sm font-semibold text-primary-800">Starter</th>
-                    <th className="px-6 py-4 text-center text-sm font-semibold text-accent-600 bg-accent-50">Professional</th>
+                    <th className="px-6 py-4 text-center text-sm font-semibold text-accent-600 bg-accent-50">Estándar</th>
                     <th className="px-6 py-4 text-center text-sm font-semibold text-primary-800">Enterprise</th>
                   </tr>
                 </thead>
@@ -279,75 +273,67 @@ const Pricing = () => {
                     { 
                       category: language === 'es' ? 'Capacidad' : 'Capacity',
                       features: [
-                        { name: language === 'es' ? 'Locaciones' : 'Locations', starter: '1', pro: '3', enterprise: language === 'es' ? 'Ilimitadas' : 'Unlimited' },
-                        { name: language === 'es' ? 'Unidades' : 'Units', starter: '50', pro: '200', enterprise: language === 'es' ? 'Ilimitadas' : 'Unlimited' },
-                        { name: language === 'es' ? 'Usuarios' : 'Users', starter: '2', pro: '5', enterprise: language === 'es' ? 'Ilimitados' : 'Unlimited' }
+                        { name: language === 'es' ? 'Locaciones' : 'Locations', standard: language === 'es' ? 'Ilimitadas' : 'Unlimited', enterprise: language === 'es' ? 'Ilimitadas' : 'Unlimited' },
+                        { name: language === 'es' ? 'Unidades' : 'Units', standard: language === 'es' ? 'Hasta 200' : 'Up to 200', enterprise: language === 'es' ? 'Ilimitadas' : 'Unlimited' },
+                        { name: language === 'es' ? 'Usuarios' : 'Users', standard: language === 'es' ? 'Ilimitados' : 'Unlimited', enterprise: language === 'es' ? 'Ilimitados' : 'Unlimited' }
                       ]
                     },
                     {
                       category: language === 'es' ? 'Funcionalidades' : 'Features',
                       features: [
-                        { name: 'Widget reservas 24/7', starter: true, pro: true, enterprise: true },
-                        { name: language === 'es' ? 'Contratos digitales' : 'Digital contracts', starter: false, pro: true, enterprise: true },
-                        { name: language === 'es' ? 'Fotos DNI seguras' : 'Secure ID photos', starter: false, pro: true, enterprise: true },
-                        { name: language === 'es' ? 'Contratos multi-unidad' : 'Multi-unit contracts', starter: false, pro: true, enterprise: true },
-                        { name: language === 'es' ? 'Planos interactivos' : 'Interactive floor plans', starter: false, pro: true, enterprise: true },
-                        { name: language === 'es' ? 'Tablón de anuncios' : 'Announcement board', starter: false, pro: true, enterprise: true },
-                        { name: language === 'es' ? 'Onboarding guiado' : 'Guided onboarding', starter: true, pro: true, enterprise: true },
-                        { name: language === 'es' ? 'Gestión de usuarios' : 'User management', starter: true, pro: true, enterprise: true },
-                        { name: 'API personalizada', starter: false, pro: false, enterprise: true },
-                        { name: language === 'es' ? 'Integraciones custom' : 'Custom integrations', starter: false, pro: false, enterprise: true }
+                        { name: 'Widget reservas 24/7', standard: true, enterprise: true },
+                        { name: language === 'es' ? 'Contratos digitales' : 'Digital contracts', standard: true, enterprise: true },
+                        { name: language === 'es' ? 'Fotos DNI seguras' : 'Secure ID photos', standard: true, enterprise: true },
+                        { name: language === 'es' ? 'Contratos multi-unidad' : 'Multi-unit contracts', standard: true, enterprise: true },
+                        { name: language === 'es' ? 'Planos interactivos' : 'Interactive floor plans', standard: true, enterprise: true },
+                        { name: language === 'es' ? 'Tablón de anuncios' : 'Announcement board', standard: true, enterprise: true },
+                        { name: language === 'es' ? 'Onboarding guiado' : 'Guided onboarding', standard: true, enterprise: true },
+                        { name: language === 'es' ? 'Gestión de usuarios' : 'User management', standard: true, enterprise: true },
+                        { name: 'API personalizada', standard: false, enterprise: true },
+                        { name: language === 'es' ? 'Integraciones custom' : 'Custom integrations', standard: false, enterprise: true }
                       ]
                     },
                     {
                       category: language === 'es' ? 'Reportes' : 'Reports',
                       features: [
-                        { name: language === 'es' ? 'Reportes básicos' : 'Basic reports', starter: true, pro: true, enterprise: true },
-                        { name: language === 'es' ? 'Analytics en tiempo real' : 'Real-time analytics', starter: false, pro: true, enterprise: true },
-                        { name: language === 'es' ? 'Exportación de datos' : 'Data export', starter: false, pro: true, enterprise: true },
-                        { name: language === 'es' ? 'Dashboard personalizado' : 'Custom dashboard', starter: false, pro: false, enterprise: true }
+                        { name: language === 'es' ? 'Reportes básicos' : 'Basic reports', standard: true, enterprise: true },
+                        { name: language === 'es' ? 'Analytics en tiempo real' : 'Real-time analytics', standard: true, enterprise: true },
+                        { name: language === 'es' ? 'Exportación de datos' : 'Data export', standard: true, enterprise: true },
+                        { name: language === 'es' ? 'Dashboard personalizado' : 'Custom dashboard', standard: false, enterprise: true }
                       ]
                     },
                     {
                       category: language === 'es' ? 'Funcionalidades Avanzadas' : 'Advanced Features',
                       features: [
-                        { name: language === 'es' ? 'Planos ilimitados' : 'Unlimited floor plans', starter: false, pro: false, enterprise: true },
-                        { name: language === 'es' ? 'Analytics avanzados' : 'Advanced analytics', starter: false, pro: false, enterprise: true },
-                        { name: language === 'es' ? 'Gestión usuarios ilimitada' : 'Unlimited user management', starter: false, pro: false, enterprise: true }
+                        { name: language === 'es' ? 'Planos ilimitados' : 'Unlimited floor plans', standard: true, enterprise: true },
+                        { name: language === 'es' ? 'Analytics avanzados' : 'Advanced analytics', standard: false, enterprise: true },
+                        { name: language === 'es' ? 'Gestión usuarios ilimitada' : 'Unlimited user management', standard: true, enterprise: true }
                       ]
                     },
                     {
                       category: language === 'es' ? 'Soporte' : 'Support',
                       features: [
-                        { name: 'Email', starter: true, pro: true, enterprise: true },
-                        { name: language === 'es' ? 'Soporte prioritario' : 'Priority support', starter: false, pro: true, enterprise: true },
-                        { name: language === 'es' ? 'Soporte 24/7' : '24/7 support', starter: false, pro: false, enterprise: true },
-                        { name: 'Account manager', starter: false, pro: false, enterprise: true },
-                        { name: 'SLA garantizado', starter: false, pro: false, enterprise: true }
+                        { name: language === 'es' ? 'Soporte prioritario' : 'Priority support', standard: true, enterprise: true },
+                        { name: language === 'es' ? 'Soporte 24/7' : '24/7 support', standard: false, enterprise: true },
+                        { name: 'Account manager', standard: false, enterprise: true },
+                        { name: 'SLA garantizado', standard: false, enterprise: true }
                       ]
                     }
                   ].map((section, sectionIndex) => (
                     <>
                       <tr key={`category-${sectionIndex}`} className="bg-gray-50">
-                        <td colSpan={4} className="px-6 py-3 text-sm font-semibold text-primary-800">
+                        <td colSpan={3} className="px-6 py-3 text-sm font-semibold text-primary-800">
                           {section.category}
                         </td>
                       </tr>
                       {section.features.map((feature, featureIndex) => (
                         <tr key={`${sectionIndex}-${featureIndex}`} className="hover:bg-gray-50 transition-colors">
                           <td className="px-6 py-4 text-sm text-gray-700">{feature.name}</td>
-                          <td className="px-6 py-4 text-center">
-                            {typeof feature.starter === 'boolean' ? (
-                              feature.starter ? <Check className="w-5 h-5 text-green-500 mx-auto" /> : <span className="text-gray-300">—</span>
-                            ) : (
-                              <span className="text-sm font-medium text-gray-700">{feature.starter}</span>
-                            )}
-                          </td>
                           <td className="px-6 py-4 text-center bg-accent-50/30">
-                            {typeof feature.pro === 'boolean' ? (
-                              feature.pro ? <Check className="w-5 h-5 text-green-500 mx-auto" /> : <span className="text-gray-300">—</span>
+                            {typeof feature.standard === 'boolean' ? (
+                              feature.standard ? <Check className="w-5 h-5 text-green-500 mx-auto" /> : <span className="text-gray-300">—</span>
                             ) : (
-                              <span className="text-sm font-medium text-gray-700">{feature.pro}</span>
+                              <span className="text-sm font-medium text-gray-700">{feature.standard}</span>
                             )}
                           </td>
                           <td className="px-6 py-4 text-center">
@@ -368,8 +354,8 @@ const Pricing = () => {
             {/* Note about expansion */}
             <div className="bg-gray-50 px-8 py-4 text-sm text-gray-600 text-center border-t border-gray-100">
               {language === 'es' 
-                ? '💡 ¿Necesitas más unidades o locaciones? Todos los planes son escalables sin cambiar de precio base.'
-                : '💡 Need more units or locations? All plans are scalable without changing the base price.'
+                ? '💡 ¿Más de 200 unidades? Contacta con nosotros para un precio personalizado con descuentos por volumen.'
+                : '💡 More than 200 units? Contact us for custom pricing with volume discounts.'
               }
             </div>
           </div>

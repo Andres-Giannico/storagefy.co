@@ -24,53 +24,39 @@ import { useState } from 'react'
 export default function PricingPage() {
   const { language } = useLanguage()
   const [openFaq, setOpenFaq] = useState<number | null>(0)
+  const [units, setUnits] = useState(50)
 
   const plans = [
     {
-      name: language === 'es' ? 'Starter' : 'Starter',
-      price: '49',
-      period: language === 'es' ? '/mes' : '/month',
-      description: language === 'es' ? 'Perfecto para emprendedores' : 'Perfect for entrepreneurs',
-      icon: Zap,
-      color: 'blue',
-      popular: false,
-      features: [
-        language === 'es' ? '1 Locación' : '1 Location',
-        language === 'es' ? 'Hasta 50 unidades' : 'Up to 50 units',
-        language === 'es' ? '2 usuarios' : '2 users',
-        language === 'es' ? 'Widget básico' : 'Basic widget',
-        language === 'es' ? 'Soporte por email' : 'Email support',
-        language === 'es' ? 'Gestión básica de pagos' : 'Basic payment management',
-        language === 'es' ? 'Reportes mensuales' : 'Monthly reports',
-        language === 'es' ? 'Recordatorios automáticos' : 'Automatic reminders'
-      ]
-    },
-    {
-      name: language === 'es' ? 'Professional' : 'Professional',
-      price: '99',
-      period: language === 'es' ? '/mes' : '/month',
-      description: language === 'es' ? 'Ideal para negocios en crecimiento' : 'Ideal for growing businesses',
+      name: language === 'es' ? 'Estándar' : 'Standard',
+      price: '1',
+      priceUnit: language === 'es' ? 'EUR/unidad' : 'EUR/unit',
+      period: language === 'es' ? '/mes + IVA' : '/month + VAT',
+      description: language === 'es' ? 'Hasta 200 unidades. Precio simple y transparente' : 'Up to 200 units. Simple and transparent pricing',
       icon: Star,
       color: 'green',
       popular: true,
       features: [
-        language === 'es' ? '3 Locaciones' : '3 Locations',
+        language === 'es' ? 'Locaciones ilimitadas' : 'Unlimited locations',
         language === 'es' ? 'Hasta 200 unidades' : 'Up to 200 units',
-        language === 'es' ? '5 usuarios' : '5 users',
-        language === 'es' ? 'Widget + Stripe completo' : 'Widget + Full Stripe',
+        language === 'es' ? 'Usuarios ilimitados' : 'Unlimited users',
+        language === 'es' ? 'Widget reservas 24/7' : '24/7 booking widget',
+        language === 'es' ? 'Contratos digitales' : 'Digital contracts',
+        language === 'es' ? 'Fotos DNI seguras' : 'Secure ID photos',
+        language === 'es' ? 'Contratos multi-unidad' : 'Multi-unit contracts',
+        language === 'es' ? 'Planos interactivos' : 'Interactive floor plans',
+        language === 'es' ? 'Tablón de anuncios' : 'Announcement board',
         language === 'es' ? 'Reportes avanzados' : 'Advanced reports',
         language === 'es' ? 'Soporte prioritario' : 'Priority support',
-        language === 'es' ? 'Fotos DNI seguras' : 'Secure ID photos',
-        language === 'es' ? 'Recordatorios automáticos' : 'Automatic reminders',
-        language === 'es' ? 'Contratos digitales' : 'Digital contracts',
-        language === 'es' ? 'Analytics en tiempo real' : 'Real-time analytics'
+        language === 'es' ? 'Recordatorios automáticos' : 'Automatic reminders'
       ]
     },
     {
       name: language === 'es' ? 'Enterprise' : 'Enterprise',
       price: language === 'es' ? 'Personalizado' : 'Custom',
+      priceUnit: '',
       period: '',
-      description: language === 'es' ? 'Para grandes operadores' : 'For large operators',
+      description: language === 'es' ? 'Más de 200 unidades. Nos adaptamos a tu negocio con descuentos por volumen' : 'More than 200 units. We adapt to your business with volume discounts',
       icon: Crown,
       color: 'purple',
       popular: false,
@@ -78,6 +64,7 @@ export default function PricingPage() {
         language === 'es' ? 'Locaciones ilimitadas' : 'Unlimited locations',
         language === 'es' ? 'Unidades ilimitadas' : 'Unlimited units',
         language === 'es' ? 'Usuarios ilimitados' : 'Unlimited users',
+        language === 'es' ? 'Precio personalizado con descuento por volumen' : 'Custom pricing with volume discounts',
         language === 'es' ? 'API personalizada' : 'Custom API',
         language === 'es' ? 'Soporte 24/7' : '24/7 support',
         language === 'es' ? 'Onboarding dedicado' : 'Dedicated onboarding',
@@ -89,30 +76,40 @@ export default function PricingPage() {
     }
   ]
 
+  // Calculate price
+  const pricePerUnit = 1
+  const vatRate = 0.21
+  const annualDiscount = 0.20 // 20% discount for annual payment
+  const monthlyPrice = units * pricePerUnit
+  const monthlyPriceWithVat = monthlyPrice * (1 + vatRate)
+  const annualPrice = monthlyPrice * 12
+  const annualPriceWithDiscount = annualPrice * (1 - annualDiscount)
+  const annualPriceWithVat = annualPriceWithDiscount * (1 + vatRate)
+
   const useCases = [
     {
       icon: Building2,
-      plan: 'Starter',
+      plan: language === 'es' ? 'Estándar' : 'Standard',
       title: language === 'es' ? 'Emprendedor Individual' : 'Solo Entrepreneur',
       description: language === 'es' 
-        ? 'Juan acaba de abrir su primer negocio de trasteros con 30 unidades. Necesita una solución simple para gestionar contratos y cobros.'
-        : 'Juan just opened his first storage business with 30 units. He needs a simple solution to manage contracts and payments.',
+        ? 'Juan acaba de abrir su primer negocio de trasteros con 30 unidades. Paga solo 30 EUR/mes + IVA. Solución simple y transparente.'
+        : 'Juan just opened his first storage business with 30 units. Pays only 30 EUR/month + VAT. Simple and transparent solution.',
       metrics: [
         { value: '30', label: language === 'es' ? 'unidades' : 'units' },
-        { value: '1', label: language === 'es' ? 'locación' : 'location' },
+        { value: '€30', label: language === 'es' ? '/mes + IVA' : '/month + VAT' },
         { value: '85%', label: language === 'es' ? 'ocupación' : 'occupancy' }
       ]
     },
     {
       icon: Warehouse,
-      plan: 'Professional',
+      plan: language === 'es' ? 'Estándar' : 'Standard',
       title: language === 'es' ? 'Negocio en Crecimiento' : 'Growing Business',
       description: language === 'es'
-        ? 'María gestiona 2 locaciones con 150 unidades. Necesita reportes avanzados y automatización completa para escalar su operación.'
-        : 'María manages 2 locations with 150 units. She needs advanced reports and full automation to scale her operation.',
+        ? 'María gestiona 2 locaciones con 150 unidades. Paga 150 EUR/mes + IVA. Todas las funcionalidades incluidas sin límites.'
+        : 'María manages 2 locations with 150 units. Pays 150 EUR/month + VAT. All features included without limits.',
       metrics: [
         { value: '150', label: language === 'es' ? 'unidades' : 'units' },
-        { value: '2', label: language === 'es' ? 'locaciones' : 'locations' },
+        { value: '€150', label: language === 'es' ? '/mes + IVA' : '/month + VAT' },
         { value: '92%', label: language === 'es' ? 'ocupación' : 'occupancy' }
       ]
     },
@@ -121,11 +118,11 @@ export default function PricingPage() {
       plan: 'Enterprise',
       title: language === 'es' ? 'Gran Operador' : 'Large Operator',
       description: language === 'es'
-        ? 'StorageMax gestiona 10 locaciones con más de 800 unidades. Requiere API personalizada e integraciones con sus sistemas existentes.'
-        : 'StorageMax manages 10 locations with over 800 units. They require custom API and integrations with their existing systems.',
+        ? 'StorageMax gestiona 10 locaciones con más de 800 unidades. Precio personalizado con descuentos por volumen. API personalizada incluida.'
+        : 'StorageMax manages 10 locations with over 800 units. Custom pricing with volume discounts. Custom API included.',
       metrics: [
         { value: '800+', label: language === 'es' ? 'unidades' : 'units' },
-        { value: '10', label: language === 'es' ? 'locaciones' : 'locations' },
+        { value: language === 'es' ? 'Personalizado' : 'Custom', label: language === 'es' ? 'precio' : 'price' },
         { value: '95%', label: language === 'es' ? 'ocupación' : 'occupancy' }
       ]
     }
@@ -133,22 +130,28 @@ export default function PricingPage() {
 
   const faqs = [
     {
-      question: language === 'es' ? '¿Puedo cambiar de plan en cualquier momento?' : 'Can I change plans at any time?',
+      question: language === 'es' ? '¿Cómo funciona el precio por unidad?' : 'How does the per-unit pricing work?',
       answer: language === 'es'
-        ? 'Sí, puedes cambiar de plan en cualquier momento. Si haces upgrade, solo pagas la diferencia prorrateada. Si haces downgrade, el cambio se aplica en tu próximo ciclo de facturación.'
-        : 'Yes, you can change plans at any time. If you upgrade, you only pay the prorated difference. If you downgrade, the change applies on your next billing cycle.'
+        ? 'El precio es simple: 1 EUR por unidad al mes + IVA (21%). Si tienes 50 unidades, pagas 50 EUR/mes + IVA = 60.50 EUR/mes. Si tienes 150 unidades, pagas 150 EUR/mes + IVA = 181.50 EUR/mes. Hasta 200 unidades.'
+        : 'The price is simple: 1 EUR per unit per month + VAT (21%). If you have 50 units, you pay 50 EUR/month + VAT = 60.50 EUR/month. If you have 150 units, you pay 150 EUR/month + VAT = 181.50 EUR/month. Up to 200 units.'
     },
     {
-      question: language === 'es' ? '¿Hay descuentos por pago anual?' : 'Are there discounts for annual payment?',
+      question: language === 'es' ? '¿Qué pasa si tengo más de 200 unidades?' : 'What happens if I have more than 200 units?',
       answer: language === 'es'
-        ? 'Sí, ofrecemos un 20% de descuento en todos los planes si optas por facturación anual. Contacta con nuestro equipo de ventas para más detalles.'
-        : 'Yes, we offer a 20% discount on all plans if you opt for annual billing. Contact our sales team for more details.'
+        ? 'Si tienes más de 200 unidades, contacta con nosotros para un plan Enterprise personalizado. Ofrecemos descuentos por volumen, por lo que el precio por unidad será menor que 1 EUR. Además, incluye funcionalidades adicionales como API personalizada y soporte 24/7.'
+        : 'If you have more than 200 units, contact us for a custom Enterprise plan. We offer volume discounts, so the price per unit will be less than 1 EUR. It also includes additional features like custom API and 24/7 support.'
     },
     {
       question: language === 'es' ? '¿Qué incluye el soporte técnico?' : 'What does technical support include?',
       answer: language === 'es'
-        ? 'El soporte varía según el plan: Starter incluye soporte por email (respuesta en 24h), Professional incluye soporte prioritario (respuesta en 4h), y Enterprise incluye soporte 24/7 con account manager dedicado y SLA garantizado.'
-        : 'Support varies by plan: Starter includes email support (24h response), Professional includes priority support (4h response), and Enterprise includes 24/7 support with dedicated account manager and guaranteed SLA.'
+        ? 'El plan Estándar incluye soporte prioritario (respuesta en 4h). El plan Enterprise incluye soporte 24/7 con account manager dedicado y SLA garantizado.'
+        : 'The Standard plan includes priority support (4h response). The Enterprise plan includes 24/7 support with dedicated account manager and guaranteed SLA.'
+    },
+    {
+      question: language === 'es' ? '¿Hay descuentos por pago anual?' : 'Are there discounts for annual payment?',
+      answer: language === 'es'
+        ? 'Sí, ofrecemos un 20% de descuento si optas por facturación anual. Por ejemplo, si tienes 100 unidades, pagarías 1,200 EUR/año en lugar de 1,452 EUR/año (con IVA). Ahorras 252 EUR al año.'
+        : 'Yes, we offer a 20% discount if you choose annual billing. For example, if you have 100 units, you would pay 1,200 EUR/year instead of 1,452 EUR/year (with VAT). You save 252 EUR per year.'
     },
     {
       question: language === 'es' ? '¿Puedo probar antes de pagar?' : 'Can I try before paying?',
@@ -159,8 +162,8 @@ export default function PricingPage() {
     {
       question: language === 'es' ? '¿Hay costos de configuración?' : 'Are there setup costs?',
       answer: language === 'es'
-        ? 'No hay costos de configuración en los planes Starter y Professional. El plan Enterprise incluye onboarding dedicado y configuración personalizada sin costo adicional.'
-        : 'There are no setup costs for Starter and Professional plans. The Enterprise plan includes dedicated onboarding and custom setup at no additional cost.'
+        ? 'No hay costos de configuración. El plan Estándar incluye onboarding guiado sin costo adicional. El plan Enterprise incluye onboarding dedicado y configuración personalizada.'
+        : 'There are no setup costs. The Standard plan includes guided onboarding at no additional cost. The Enterprise plan includes dedicated onboarding and custom setup.'
     },
     {
       question: language === 'es' ? '¿Qué métodos de pago aceptan?' : 'What payment methods do you accept?',
@@ -175,10 +178,10 @@ export default function PricingPage() {
         : 'Yes, there is no commitment. You can cancel your subscription at any time from your control panel. Your access will continue until the end of the paid period.'
     },
     {
-      question: language === 'es' ? '¿Hay límites de usuarios por plan?' : 'Are there user limits per plan?',
+      question: language === 'es' ? '¿Hay límites de usuarios o locaciones?' : 'Are there limits on users or locations?',
       answer: language === 'es'
-        ? 'Sí, cada plan tiene límites de usuarios: Starter (2 usuarios), Professional (5 usuarios), Enterprise (usuarios ilimitados). Puedes agregar usuarios adicionales por €10/mes en planes Starter y Professional.'
-        : 'Yes, each plan has user limits: Starter (2 users), Professional (5 users), Enterprise (unlimited users). You can add additional users for €10/month on Starter and Professional plans.'
+        ? 'No, en el plan Estándar no hay límites de usuarios ni de locaciones. Solo el límite es de 200 unidades. En Enterprise, todo es ilimitado.'
+        : 'No, in the Standard plan there are no limits on users or locations. The only limit is 200 units. In Enterprise, everything is unlimited.'
     }
   ]
 
@@ -186,20 +189,20 @@ export default function PricingPage() {
     {
       name: 'Carlos Rodríguez',
       role: language === 'es' ? 'CEO, TrasterosMadrid' : 'CEO, TrasterosMadrid',
-      plan: 'Professional',
+      plan: language === 'es' ? 'Estándar' : 'Standard',
       quote: language === 'es'
-        ? 'Desde que implementamos StorageFy Professional, nuestra ocupación aumentó del 75% al 92% en solo 6 meses. La inversión se pagó sola en el primer mes.'
-        : 'Since implementing StorageFy Professional, our occupancy increased from 75% to 92% in just 6 months. The investment paid for itself in the first month.',
+        ? 'Gestionamos 120 unidades. Pagamos 120 EUR/mes + IVA. La ocupación aumentó del 75% al 92% en solo 6 meses. La inversión se pagó sola en el primer mes.'
+        : 'We manage 120 units. We pay 120 EUR/month + VAT. Occupancy increased from 75% to 92% in just 6 months. The investment paid for itself in the first month.',
       avatar: '👨‍💼',
       savings: language === 'es' ? '€2,400/mes ahorrados' : '€2,400/month saved'
     },
     {
       name: 'Ana Martínez',
       role: language === 'es' ? 'Propietaria, BoxStorage' : 'Owner, BoxStorage',
-      plan: 'Starter',
+      plan: language === 'es' ? 'Estándar' : 'Standard',
       quote: language === 'es'
-        ? 'Como emprendedora, necesitaba algo simple pero profesional. Con €49/mes tengo todo lo que necesito para gestionar mis 40 trasteros. Increíble valor.'
-        : 'As an entrepreneur, I needed something simple but professional. For €49/month I have everything I need to manage my 40 storage units. Incredible value.',
+        ? 'Como emprendedora, necesitaba algo simple pero profesional. Con 40 unidades pago solo 40 EUR/mes + IVA. Tengo todo lo que necesito. Increíble valor.'
+        : 'As an entrepreneur, I needed something simple but professional. With 40 units I pay only 40 EUR/month + VAT. I have everything I need. Incredible value.',
       avatar: '👩‍💼',
       savings: language === 'es' ? '15h/semana ahorradas' : '15h/week saved'
     },
@@ -223,7 +226,7 @@ export default function PricingPage() {
         {/* Background Elements */}
         <div className="absolute inset-0">
           <motion.div
-            animate={{
+            animate={{ 
               scale: [1, 1.2, 1],
               opacity: [0.05, 0.1, 0.05],
             }}
@@ -247,22 +250,22 @@ export default function PricingPage() {
               <span className="text-sm font-medium text-accent-700">
                 {language === 'es' ? '14 días gratis · Sin tarjeta · Sin permanencia' : '14 days free · No card · No commitment'}
               </span>
-            </motion.div>
+          </motion.div>
 
             <h1 className="text-5xl lg:text-7xl font-bold mb-6">
               <span className="text-gradient">
-                {language === 'es' ? 'Precios transparentes' : 'Transparent pricing'}
+                {language === 'es' ? 'Precio simple:' : 'Simple pricing:'}
               </span>
               <br />
               <span className="text-primary-800">
-                {language === 'es' ? 'que crecen contigo' : 'that grow with you'}
+                {language === 'es' ? '1 EUR por unidad' : '1 EUR per unit'}
               </span>
             </h1>
 
             <p className="text-xl text-primary-600 max-w-3xl mx-auto leading-relaxed mb-8">
               {language === 'es'
-                ? 'Elige el plan perfecto para tu negocio. Desde emprendedores hasta grandes operadores. Sin sorpresas, sin costos ocultos.'
-                : 'Choose the perfect plan for your business. From entrepreneurs to large operators. No surprises, no hidden costs.'
+                ? 'Creamos contigo. Hasta 200 unidades a 1 EUR/unidad + IVA. ¿Más de 200? Hablamos y ajustamos el precio a tu medida con descuentos por volumen.'
+                : 'We grow with you. Up to 200 units at 1 EUR/unit + VAT. More than 200? Let\'s talk and adjust the price to your needs with volume discounts.'
               }
             </p>
 
@@ -290,10 +293,96 @@ export default function PricingPage() {
         </div>
       </section>
 
+      {/* Price Calculator */}
+      <section className="py-16 px-4 relative z-10">
+        <div className="max-w-4xl mx-auto mb-16">
+          <FadeInUp>
+            <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+              <h3 className="text-2xl font-bold text-primary-800 mb-6 text-center">
+                {language === 'es' ? 'Calcula tu precio mensual' : 'Calculate your monthly price'}
+              </h3>
+              
+              <div className="space-y-6">
+                <div>
+                  <label className="block text-sm font-semibold text-primary-700 mb-3">
+                    {language === 'es' ? `Número de unidades: ${units}` : `Number of units: ${units}`}
+                  </label>
+                  <input
+                    type="range"
+                    min="1"
+                    max="200"
+                    value={units}
+                    onChange={(e) => setUnits(Number(e.target.value))}
+                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-accent-600"
+                  />
+                  <div className="flex justify-between text-xs text-gray-500 mt-1">
+                    <span>1</span>
+                    <span>200</span>
+                  </div>
+                </div>
+
+                {units === 200 && (
+                  <div className="bg-accent-50 border border-accent-200 rounded-xl p-4 text-center mb-4">
+                    <p className="text-sm text-primary-700">
+                      {language === 'es'
+                        ? '💡 ¿Más de 200 unidades? Contacta con nosotros para un precio personalizado con descuentos por volumen.'
+                        : '💡 More than 200 units? Contact us for custom pricing with volume discounts.'}
+                    </p>
+                  </div>
+                )}
+                {units <= 200 && (
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div className="bg-gradient-to-br from-primary-50 to-accent-50 rounded-xl p-6 border border-primary-200">
+                      <div className="text-sm text-primary-600 mb-2">
+                        {language === 'es' ? 'Precio mensual' : 'Monthly price'}
+                      </div>
+                      <div className="text-3xl font-bold text-primary-800 mb-1">
+                        €{monthlyPrice.toFixed(2)}
+                      </div>
+                      <div className="text-lg text-primary-600">
+                        {language === 'es' ? '+ IVA: €' : '+ VAT: €'}
+                        {monthlyPriceWithVat.toFixed(2)}
+                      </div>
+                    </div>
+                    <div className="bg-gradient-to-br from-accent-50 to-primary-50 rounded-xl p-6 border border-accent-200">
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className="text-sm text-primary-600">
+                          {language === 'es' ? 'Precio anual' : 'Annual price'}
+                        </div>
+                        <span className="text-xs bg-accent-100 text-accent-700 px-2 py-1 rounded-full font-semibold">
+                          {language === 'es' ? '-20%' : '-20%'}
+                        </span>
+                      </div>
+                      <div className="flex items-baseline gap-2 mb-1">
+                        <div className="text-2xl text-gray-400 line-through">
+                          €{annualPrice.toFixed(2)}
+                        </div>
+                        <div className="text-3xl font-bold text-primary-800">
+                          €{annualPriceWithDiscount.toFixed(2)}
+                        </div>
+                      </div>
+                      <div className="text-lg text-primary-600">
+                        {language === 'es' ? '+ IVA: €' : '+ VAT: €'}
+                        {annualPriceWithVat.toFixed(2)}
+                      </div>
+                      <div className="text-xs text-accent-600 mt-2 font-semibold">
+                        {language === 'es' ? 'Ahorras €' : 'Save €'}
+                        {(annualPrice - annualPriceWithDiscount).toFixed(2)}
+                        {language === 'es' ? '/año' : '/year'}
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </FadeInUp>
+        </div>
+      </section>
+
       {/* Pricing Cards */}
       <section className="py-16 px-4 relative z-10">
         <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-3 gap-8 mb-16">
+          <div className="grid md:grid-cols-2 gap-8 mb-16 max-w-5xl mx-auto">
             {plans.map((plan, index) => {
               const Icon = plan.icon
               const colorClasses = {
@@ -348,13 +437,21 @@ export default function PricingPage() {
 
                     {/* Price */}
                     <div className="mb-8">
-                      <div className="flex items-baseline justify-center">
+                      <div className="flex flex-col items-center justify-center">
                         {plan.price === 'Personalizado' || plan.price === 'Custom' ? (
-                          <span className="text-3xl lg:text-4xl font-bold text-primary-800">{plan.price}</span>
+                          <>
+                            <span className="text-3xl lg:text-4xl font-bold text-primary-800">{plan.price}</span>
+                            <span className="text-sm text-primary-600 mt-2 text-center">
+                              {language === 'es' ? 'Descuentos por volumen' : 'Volume discounts'}
+                            </span>
+                          </>
                         ) : (
                           <>
-                            <span className="text-5xl font-bold text-primary-800">€{plan.price}</span>
-                            <span className="text-primary-600 ml-2">{plan.period}</span>
+                            <div className="flex items-baseline justify-center">
+                              <span className="text-5xl font-bold text-primary-800">€{plan.price}</span>
+                              <span className="text-lg text-primary-600 ml-2">{plan.priceUnit}</span>
+                            </div>
+                            <span className="text-sm text-primary-600 mt-1">{plan.period}</span>
                           </>
                         )}
                       </div>
@@ -394,7 +491,7 @@ export default function PricingPage() {
                           : 'bg-primary-100 text-primary-700 hover:bg-primary-200'
                       }`}
                     >
-                      {plan.name === 'Enterprise' 
+                      {(plan.name === 'Enterprise' || plan.name === 'Enterprise')
                         ? (language === 'es' ? 'Contactar' : 'Contact')
                         : (language === 'es' ? 'Probar Gratis' : 'Try Free')
                       }
@@ -598,7 +695,7 @@ export default function PricingPage() {
                     💰 {testimonial.savings}
                   </div>
                 </div>
-              </motion.div>
+            </motion.div>
             ))}
           </div>
         </div>
@@ -608,8 +705,8 @@ export default function PricingPage() {
       <section className="py-24 px-4">
         <div className="max-w-4xl mx-auto">
           <FadeInUp className="text-center mb-16">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-accent-200 mb-6"
@@ -674,8 +771,8 @@ export default function PricingPage() {
                   <div className="px-8 pb-6 text-primary-600 leading-relaxed">
                     {faq.answer}
                   </div>
-                </motion.div>
-              </motion.div>
+          </motion.div>
+        </motion.div>
             ))}
           </div>
         </div>
@@ -728,7 +825,7 @@ export default function PricingPage() {
               }
             </p>
           </FadeInUp>
-        </div>
+      </div>
       </section>
     </div>
   )
