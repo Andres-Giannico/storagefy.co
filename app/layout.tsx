@@ -5,6 +5,8 @@ import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 import Chatbot from '@/components/Chatbot'
 import StructuredData from '@/components/seo/StructuredData'
+import CookieBanner from '@/components/privacy/CookieBanner'
+import AnalyticsManager from '@/components/privacy/AnalyticsManager'
 import './globals.css'
 
 const inter = Inter({
@@ -131,6 +133,8 @@ export default function RootLayout({
           </main>
           <Footer />
           <Chatbot />
+          <CookieBanner />
+          <AnalyticsManager />
         </LanguageProvider>
       </body>
     </html>

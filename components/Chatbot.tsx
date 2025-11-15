@@ -41,6 +41,7 @@ export default function Chatbot() {
           : 'Hello! 👋 I\'m StorageFy\'s virtual assistant. I\'m here to help you with any questions about our platform.'
       )
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen])
 
   const addBotMessage = (content: string, delay = 500) => {

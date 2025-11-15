@@ -156,7 +156,7 @@ const Testimonials = () => {
                 {/* Quote */}
                 <Quote className="w-10 h-10 text-accent-500/20 mb-4" />
                 <p className="text-gray-700 text-lg leading-relaxed mb-6 italic">
-                  "{testimonial.quote}"
+                  &ldquo;{testimonial.quote}&rdquo;
                 </p>
 
                 {/* Metrics */}

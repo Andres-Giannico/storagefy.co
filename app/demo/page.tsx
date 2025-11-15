@@ -534,7 +534,7 @@ export default function DemoPage() {
                 
                 {/* Content */}
                 <p className="text-primary-700 mb-6 leading-relaxed italic">
-                  "{testimonial.content}"
+                  &ldquo;{testimonial.content}&rdquo;
                 </p>
                 
                 {/* Author */}

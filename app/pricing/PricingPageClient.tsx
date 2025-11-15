@@ -518,7 +518,7 @@ export default function PricingPageClient() {
                 </div>
                 <h3 className="font-bold text-primary-800 mb-1">{testimonial.name}</h3>
                 <p className="text-sm text-gray-600 mb-4">{testimonial.role}</p>
-                <p className="text-sm text-primary-700 mb-4 italic">"{testimonial.text}"</p>
+                <p className="text-sm text-primary-700 mb-4 italic">&ldquo;{testimonial.text}&rdquo;</p>
                 <div className="text-sm font-semibold text-accent-600">
                   💰 {testimonial.savings}
                 </div>

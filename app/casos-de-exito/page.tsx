@@ -373,7 +373,7 @@ export default function CasosExitoPage() {
                   {/* Testimonial */}
                   <div className="bg-white rounded-xl p-6 border-l-4 border-accent-500 mb-6">
                     <p className="text-primary-700 italic leading-relaxed">
-                      "{caseStudy.results.testimonial}"
+                      &ldquo;{caseStudy.results.testimonial}&rdquo;
                     </p>
                   </div>
 
