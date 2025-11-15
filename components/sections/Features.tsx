@@ -11,14 +11,15 @@ import {
   FileBarChart,
   Globe,
   UserCheck,
-  Settings,
   BarChart3,
   ArrowRight,
   CheckCircle,
   Zap,
   Shield,
   Clock,
-  TrendingUp
+  TrendingUp,
+  Layout,
+  MessageSquare
 } from 'lucide-react'
 import { useLanguage } from '@/lib/context/LanguageContext'
 import FadeInUp from '@/components/animations/FadeInUp'
@@ -92,6 +93,50 @@ const Features = () => {
         ? ['Links de pago 24/7', 'Recordatorios automáticos', 'Integración Stripe', 'Reducción morosidad 80%']
         : ['24/7 payment links', 'Automatic reminders', 'Stripe integration', '80% delinquency reduction'],
       color: 'emerald'
+    },
+    {
+      icon: FileBarChart,
+      title: lang === 'es' ? 'Reportes y Analytics Avanzados' : 'Advanced Reports & Analytics',
+      description: lang === 'es'
+        ? 'Dashboard completo con métricas en tiempo real, KPIs visuales, exportación PDF y análisis predictivo.'
+        : 'Complete dashboard with real-time metrics, visual KPIs, PDF export and predictive analytics.',
+      benefits: lang === 'es'
+        ? ['Métricas en tiempo real', 'KPIs visuales', 'Exportación PDF', 'Análisis predictivo']
+        : ['Real-time metrics', 'Visual KPIs', 'PDF export', 'Predictive analytics'],
+      color: 'indigo'
+    },
+    {
+      icon: Layout,
+      title: lang === 'es' ? 'Planos Interactivos' : 'Interactive Floor Plans',
+      description: lang === 'es'
+        ? 'Visualiza y gestiona tus espacios con planos interactivos en tiempo real, arrastra y suelta unidades fácilmente.'
+        : 'Visualize and manage your spaces with real-time interactive floor plans, drag and drop units easily.',
+      benefits: lang === 'es'
+        ? ['Visualización en tiempo real', 'Arrastra y suelta', 'Vista 2D/3D', 'Actualización automática']
+        : ['Real-time visualization', 'Drag and drop', '2D/3D view', 'Auto-update'],
+      color: 'pink'
+    },
+    {
+      icon: MessageSquare,
+      title: lang === 'es' ? 'Tablón de Anuncios Digital' : 'Digital Announcement Board',
+      description: lang === 'es'
+        ? 'Comunícate con tus clientes mediante anuncios personalizados, notificaciones automáticas y mensajería integrada.'
+        : 'Communicate with your customers through personalized announcements, automatic notifications and integrated messaging.',
+      benefits: lang === 'es'
+        ? ['Anuncios personalizados', 'Notificaciones automáticas', 'Mensajería integrada', 'Historial completo']
+        : ['Personalized announcements', 'Automatic notifications', 'Integrated messaging', 'Full history'],
+      color: 'teal'
+    },
+    {
+      icon: UserCheck,
+      title: lang === 'es' ? 'Gestión de Usuarios y Permisos' : 'User & Permission Management',
+      description: lang === 'es'
+        ? 'Administra roles y permisos de tu equipo con control granular, multi-usuario y estados en tiempo real.'
+        : 'Manage team roles and permissions with granular control, multi-user support and real-time status.',
+      benefits: lang === 'es'
+        ? ['Roles diferenciados', 'Permisos personalizados', 'Multi-usuario', 'Estados en tiempo real']
+        : ['Differentiated roles', 'Custom permissions', 'Multi-user', 'Real-time status'],
+      color: 'rose'
     },
     {
       icon: Globe,
@@ -261,7 +306,7 @@ const Features = () => {
         </StaggerContainer>
 
         {/* Features Grid */}
-        <div className="grid lg:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {features.map((feature, index) => {
             const Icon = feature.icon
             const colorClasses = {
@@ -270,7 +315,11 @@ const Features = () => {
               purple: 'from-purple-500 to-purple-600 bg-purple-100 text-purple-600',
               orange: 'from-orange-500 to-orange-600 bg-orange-100 text-orange-600',
               emerald: 'from-emerald-500 to-emerald-600 bg-emerald-100 text-emerald-600',
-              cyan: 'from-cyan-500 to-cyan-600 bg-cyan-100 text-cyan-600'
+              cyan: 'from-cyan-500 to-cyan-600 bg-cyan-100 text-cyan-600',
+              indigo: 'from-indigo-500 to-indigo-600 bg-indigo-100 text-indigo-600',
+              pink: 'from-pink-500 to-pink-600 bg-pink-100 text-pink-600',
+              teal: 'from-teal-500 to-teal-600 bg-teal-100 text-teal-600',
+              rose: 'from-rose-500 to-rose-600 bg-rose-100 text-rose-600'
             }
 
             return (
@@ -294,11 +343,17 @@ const Features = () => {
                 }}
                 className="group relative"
               >
-                <div className="bg-white rounded-2xl p-8 shadow-lg border border-white/20 hover:shadow-xl transition-all duration-300 h-full">
+                <div className="bg-white rounded-2xl p-6 lg:p-8 shadow-lg border border-white/20 hover:shadow-xl transition-all duration-300 h-full flex flex-col relative overflow-hidden">
+                  
+                  {/* Gradient Background Effect */}
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-accent-50/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                    initial={false}
+                  />
                   
                   {/* Icon */}
                   <motion.div 
-                    className={`inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r ${colorClasses[feature.color as keyof typeof colorClasses]} rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-300`}
+                    className={`relative z-10 inline-flex items-center justify-center w-14 h-14 lg:w-16 lg:h-16 bg-gradient-to-r ${colorClasses[feature.color as keyof typeof colorClasses]} rounded-2xl mb-5 group-hover:scale-110 transition-transform duration-300`}
                     whileHover={{ 
                       rotate: 5,
                       scale: 1.1,
@@ -316,49 +371,52 @@ const Features = () => {
                         delay: index * 0.2
                       }}
                     >
-                      <Icon className="w-8 h-8 text-white" />
+                      <Icon className="w-7 h-7 lg:w-8 lg:h-8 text-white" />
                     </motion.div>
                   </motion.div>
 
                   {/* Content */}
-                  <h3 className="text-2xl font-bold text-primary-800 mb-4 group-hover:text-accent-600 transition-colors duration-300">
-                    {feature.title}
-                  </h3>
-                  
-                  <p className="text-primary-600 mb-6 leading-relaxed">
-                    {feature.description}
-                  </p>
+                  <div className="relative z-10 flex-1 flex flex-col">
+                    <h3 className="text-xl lg:text-2xl font-bold text-primary-800 mb-3 group-hover:text-accent-600 transition-colors duration-300">
+                      {feature.title}
+                    </h3>
+                    
+                    <p className="text-sm lg:text-base text-primary-600 mb-5 leading-relaxed flex-1">
+                      {feature.description}
+                    </p>
 
-                  {/* Benefits */}
-                  <div className="space-y-3">
-                    {feature.benefits.map((benefit, benefitIndex) => (
-                      <motion.div
-                        key={benefit}
-                        initial={{ opacity: 0, x: -10 }}
-                        whileInView={{ 
-                          opacity: 1, 
-                          x: 0,
-                          transition: {
-                            delay: benefitIndex * 0.05,
-                            duration: 0.3
-                          }
-                        }}
-                        viewport={{ once: true }}
-                        whileHover={{ 
-                          x: 5,
-                          transition: { duration: 0.2 }
-                        }}
-                        className="flex items-center gap-3"
-                      >
+                    {/* Benefits */}
+                    <div className="space-y-2.5">
+                      {feature.benefits.map((benefit, benefitIndex) => (
                         <motion.div
-                          whileHover={{ scale: 1.2, rotate: 10 }}
-                          transition={{ duration: 0.2 }}
+                          key={benefit}
+                          initial={{ opacity: 0, x: -10 }}
+                          whileInView={{ 
+                            opacity: 1, 
+                            x: 0,
+                            transition: {
+                              delay: benefitIndex * 0.05,
+                              duration: 0.3
+                            }
+                          }}
+                          viewport={{ once: true }}
+                          whileHover={{ 
+                            x: 5,
+                            transition: { duration: 0.2 }
+                          }}
+                          className="flex items-center gap-2.5"
                         >
-                          <CheckCircle className="w-4 h-4 text-accent-500 flex-shrink-0" />
+                          <motion.div
+                            whileHover={{ scale: 1.2, rotate: 10 }}
+                            transition={{ duration: 0.2 }}
+                            className="flex-shrink-0"
+                          >
+                            <CheckCircle className="w-4 h-4 text-accent-500" />
+                          </motion.div>
+                          <span className="text-xs lg:text-sm text-primary-700">{benefit}</span>
                         </motion.div>
-                        <span className="text-sm text-primary-700">{benefit}</span>
-                      </motion.div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
 
                   {/* Hover Arrow */}
@@ -370,7 +428,7 @@ const Features = () => {
                       x: 0,
                       transition: { duration: 0.3 }
                     }}
-                    className="absolute bottom-6 right-6"
+                    className="absolute bottom-5 right-5 z-10"
                   >
                     <motion.div 
                       className="w-8 h-8 bg-gradient-to-r from-accent-500 to-accent-600 rounded-full flex items-center justify-center shadow-lg"

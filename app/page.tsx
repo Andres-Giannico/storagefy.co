@@ -3,9 +3,7 @@ import Hero from '@/components/sections/Hero'
 import Features from '@/components/sections/Features'
 import UseCases from '@/components/sections/UseCases'
 import ROICalculator from '@/components/ROICalculator'
-import DetailedMetrics from '@/components/sections/DetailedMetrics'
 import Testimonials from '@/components/sections/Testimonials'
-import Pricing from '@/components/sections/Pricing'
 import FinalCTA from '@/components/sections/FinalCTA'
 import StructuredData from '@/components/seo/StructuredData'
 
@@ -82,9 +80,7 @@ export default function Home() {
         <Features />
         <UseCases />
         <ROICalculator />
-        <DetailedMetrics />
         <Testimonials />
-        <Pricing />
         <FinalCTA />
       </div>
     </>

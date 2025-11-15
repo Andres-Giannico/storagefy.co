@@ -1,7 +1,5 @@
 'use client'
 
-import { motion, useScroll, useTransform } from 'framer-motion'
-import { useRef } from 'react'
 import Image from 'next/image'
 import { 
   Building2, 
@@ -202,47 +200,20 @@ export default function FeaturesPageClient() {
       
       {/* Hero Section */}
       <section className="py-24 bg-gradient-to-br from-primary-800 via-primary-700 to-primary-900 text-white relative overflow-hidden">
-        {/* Background Elements */}
+        {/* Background Elements - Optimized with CSS animations */}
         <div className="absolute inset-0">
-          <motion.div
-            animate={{
-              scale: [1, 1.1, 1],
-              opacity: [0.1, 0.2, 0.1],
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: 'easeInOut'
-            }}
-            className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-accent-400/20 to-accent-600/20 rounded-full blur-3xl"
-          />
-          <motion.div
-            animate={{
-              scale: [1.1, 1, 1.1],
-              opacity: [0.1, 0.15, 0.1],
-            }}
-            transition={{
-              duration: 10,
-              repeat: Infinity,
-              ease: 'easeInOut',
-              delay: 2
-            }}
-            className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-accent-500/20 to-accent-700/20 rounded-full blur-3xl"
-          />
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-accent-400/15 to-accent-600/15 rounded-full blur-2xl animate-pulse-slow" />
+          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-accent-500/15 to-accent-700/15 rounded-full blur-2xl animate-pulse-slow-delayed" />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <FadeInUp className="text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/20 backdrop-blur-md border border-white/40 mb-6 shadow-lg"
-            >
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/20 backdrop-blur-md border border-white/40 mb-6 shadow-lg">
               <Star className="w-4 h-4 text-accent-300" />
               <span className="text-sm font-medium text-white">
                 {language === 'es' ? 'Características' : 'Features'}
               </span>
-            </motion.div>
+            </div>
             
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight">
               {language === 'es' ? 'Todas las herramientas que necesitas' : 'All the tools you need'}
@@ -276,9 +247,9 @@ export default function FeaturesPageClient() {
               return (
                 <div
                   key={stat.label}
-                  className="text-center p-6 glass rounded-2xl border border-white/20 hover:border-accent-200 transition-all duration-200 group hover:scale-105 hover:-translate-y-1"
+                  className="text-center p-6 glass rounded-2xl border border-white/20 hover:border-accent-200 transition-all duration-300 group hover:scale-[1.02] hover:-translate-y-1 will-change-transform"
                 >
-                  <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-r from-accent-500 to-accent-600 rounded-xl mb-4 group-hover:scale-110 transition-transform duration-200">
+                  <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-r from-accent-500 to-accent-600 rounded-xl mb-4 group-hover:scale-105 transition-transform duration-300">
                     <Icon className="w-6 h-6 text-white" />
                   </div>
                   <div className="text-3xl font-bold text-primary-800 mb-2">{stat.value}</div>
@@ -342,20 +313,23 @@ export default function FeaturesPageClient() {
                 {/* Screenshot or Animation */}
                 <div className={!isEven ? 'lg:col-start-1' : ''}>
                   {feature.screenshot ? (
-                    <div className="relative hover:scale-[1.02] hover:-translate-y-2 transition-all duration-200">
-                      <div className="relative rounded-2xl shadow-2xl border border-gray-200 overflow-hidden bg-white">
-                        <Image
-                          src={feature.screenshot}
-                          alt={feature.title}
-                          width={800}
-                          height={600}
-                          className="w-full h-auto"
-                          loading={index < 2 ? "eager" : "lazy"}
-                          quality={75}
-                        />
-                        {/* Glow effect */}
-                        <div className="absolute inset-0 rounded-2xl shadow-2xl opacity-20 pointer-events-none" 
-                             style={{ boxShadow: '0 0 60px rgba(124, 179, 66, 0.3)' }} />
+                    <div className="relative group cursor-zoom-in">
+                      <div className="relative rounded-2xl shadow-2xl border-2 border-gray-200 overflow-hidden bg-white transition-all duration-300 group-hover:border-accent-300 group-hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)]">
+                        <div className="relative overflow-hidden">
+                          <Image
+                            src={feature.screenshot}
+                            alt={feature.title}
+                            width={900}
+                            height={675}
+                            className="w-full h-auto transition-transform duration-500 group-hover:scale-110 will-change-transform"
+                            loading={index < 2 ? "eager" : "lazy"}
+                            quality={85}
+                          />
+                        </div>
+                        {/* Zoom indicator */}
+                        <div className="absolute top-4 right-4 bg-accent-500/90 backdrop-blur-sm text-white px-3 py-1.5 rounded-full text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 flex items-center gap-1.5">
+                          🔍 {language === 'es' ? 'Acercar' : 'Zoom'}
+                        </div>
                       </div>
                     </div>
                   ) : (
@@ -368,18 +342,6 @@ export default function FeaturesPageClient() {
                           <p className="text-primary-200">Coming Soon</p>
                         </div>
                       </div>
-                      <motion.div
-                        animate={{
-                          scale: [1, 1.1, 1],
-                          opacity: [0.1, 0.3, 0.1],
-                        }}
-                        transition={{
-                          duration: 4,
-                          repeat: Infinity,
-                          ease: 'easeInOut'
-                        }}
-                        className="absolute top-1/4 right-1/4 w-32 h-32 bg-gradient-to-r from-accent-400/20 to-accent-600/20 rounded-full blur-2xl"
-                      />
                     </div>
                   )}
                 </div>
@@ -392,18 +354,7 @@ export default function FeaturesPageClient() {
       {/* CTA Section */}
       <section className="py-24 bg-gradient-to-br from-primary-800 via-primary-700 to-primary-900 text-white relative overflow-hidden">
         <div className="absolute inset-0">
-          <motion.div
-            animate={{
-              scale: [1, 1.2, 1],
-              opacity: [0.1, 0.2, 0.1],
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: 'easeInOut'
-            }}
-            className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-accent-400/20 to-accent-600/20 rounded-full blur-3xl"
-          />
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-accent-400/15 to-accent-600/15 rounded-full blur-2xl animate-pulse-slow" />
         </div>
 
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">

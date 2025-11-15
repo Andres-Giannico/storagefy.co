@@ -77,6 +77,38 @@
     scrollbar-width: none;
   }
 
+  /* Optimized pulse animations for background elements */
+  @keyframes pulse-slow {
+    0%, 100% {
+      opacity: 0.1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.15;
+      transform: scale(1.05);
+    }
+  }
+
+  @keyframes pulse-slow-delayed {
+    0%, 100% {
+      opacity: 0.1;
+      transform: scale(1.05);
+    }
+    50% {
+      opacity: 0.15;
+      transform: scale(1);
+    }
+  }
+
+  .animate-pulse-slow {
+    animation: pulse-slow 8s ease-in-out infinite;
+  }
+
+  .animate-pulse-slow-delayed {
+    animation: pulse-slow-delayed 10s ease-in-out infinite;
+    animation-delay: 2s;
+  }
+
   /* Reduce motion for accessibility */
   @media (prefers-reduced-motion: reduce) {
     *,

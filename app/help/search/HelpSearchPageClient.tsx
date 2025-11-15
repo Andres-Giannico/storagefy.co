@@ -1,213 +1,172 @@
-import type { Metadata } from 'next'
-import HelpSearchPageClient from './HelpSearchPageClient'
-
-export const metadata: Metadata = {
-  title: 'Búsqueda de Ayuda - StorageFy',
-  description: 'Busca en nuestra base de conocimiento para encontrar respuestas rápidas sobre StorageFy.',
-  alternates: {
-    canonical: 'https://storagefy.co/help/search',
-  },
-  robots: {
-    index: false,
-    follow: false,
-  },
-}
-
-export default function HelpSearchPage() {
-  return <HelpSearchPageClient />
-}
-
-import { useEffect, useState, Suspense } from 'react'
-import { useLanguage } from '@/lib/context/LanguageContext'
-import HelpSearchBar from '@/components/help/HelpSearchBar'
-import HelpArticleCard from '@/components/help/HelpArticleCard'
-import HelpEmptyState from '@/components/help/HelpEmptyState'
-import { useHelpSearch } from '@/hooks/useHelpSearch'
-import { getCategoryById } from '@/lib/help/help-categories'
-import { Search, Filter } from 'lucide-react'
-import FadeInUp from '@/components/animations/FadeInUp'
-
 'use client'
 
-function HelpSearchContent() {
+import { useEffect, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
+import { useLanguage } from '@/lib/context/LanguageContext'
+import { useHelpSearch } from '@/hooks/useHelpSearch'
+import { getCategoryById } from '@/lib/help/help-categories'
+import HelpSearchBar from '@/components/help/HelpSearchBar'
+import HelpBreadcrumbs from '@/components/help/HelpBreadcrumbs'
+import FadeInUp from '@/components/animations/FadeInUp'
+import Link from 'next/link'
+import { ArrowRight, Search, FileText } from 'lucide-react'
+import { motion } from 'framer-motion'
+
+export default function HelpSearchPageClient() {
   const { language } = useLanguage()
   const searchParams = useSearchParams()
   const queryParam = searchParams.get('q') || ''
   const { query, setQuery, results, isSearching } = useHelpSearch()
-  const [selectedCategory, setSelectedCategory] = useState<string>('all')
+  const [hasSearched, setHasSearched] = useState(false)
 
   useEffect(() => {
     if (queryParam) {
       setQuery(queryParam)
+      setHasSearched(true)
     }
   }, [queryParam, setQuery])
 
-  const filteredResults = selectedCategory === 'all'
-    ? results
-    : results.filter(r => r.article.categoryId === selectedCategory)
-
-  const categories = Array.from(
-    new Set(results.map(r => r.article.categoryId))
-  )
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-accent-50/30">
-      <div className="max-w-7xl mx-auto px-4 py-16">
-        {/* Header con búsqueda */}
-        <div className="mb-12">
-          <FadeInUp>
-            <div className="flex items-center gap-3 mb-6">
-              <Search className="w-6 h-6 text-accent-600" />
-              <h1 className="text-4xl font-bold text-primary-800">
-                {language === 'es' ? 'Resultados de Búsqueda' : 'Search Results'}
-              </h1>
-            </div>
-            <div className="max-w-2xl">
-              <HelpSearchBar variant="compact" />
-            </div>
-          </FadeInUp>
-        </div>
+      <div className="max-w-7xl mx-auto px-4 py-12">
+        {/* Breadcrumbs */}
+        <HelpBreadcrumbs />
 
-        {/* Filtros y resultados */}
-        {query.length >= 2 ? (
-          <div className="grid lg:grid-cols-4 gap-8">
-            {/* Sidebar de filtros */}
-            {results.length > 0 && (
-              <aside className="lg:col-span-1">
-                <div className="bg-white rounded-xl border border-gray-200 p-4 shadow-sm sticky top-24">
-                  <div className="flex items-center gap-2 mb-4">
-                    <Filter className="w-4 h-4 text-gray-500" />
-                    <h3 className="text-sm font-semibold text-primary-800">
-                      {language === 'es' ? 'Filtros' : 'Filters'}
-                    </h3>
-                  </div>
-                  <div className="space-y-2">
-                    <button
-                      onClick={() => setSelectedCategory('all')}
-                      className={`
-                        w-full text-left px-3 py-2 rounded-lg text-sm transition-colors
-                        ${selectedCategory === 'all'
-                          ? 'bg-accent-50 text-accent-700 font-medium'
-                          : 'text-gray-600 hover:bg-gray-50'
-                        }
-                      `}
-                    >
-                      {language === 'es' ? 'Todas las categorías' : 'All categories'} ({results.length})
-                    </button>
-                    {categories.map(categoryId => {
-                      const category = getCategoryById(categoryId)
-                      const count = results.filter(r => r.article.categoryId === categoryId).length
-                      return (
-                        <button
-                          key={categoryId}
-                          onClick={() => setSelectedCategory(categoryId)}
-                          className={`
-                            w-full text-left px-3 py-2 rounded-lg text-sm transition-colors
-                            ${selectedCategory === categoryId
-                              ? 'bg-accent-50 text-accent-700 font-medium'
-                              : 'text-gray-600 hover:bg-gray-50'
-                            }
-                          `}
-                        >
-                          {category?.name[language] || categoryId} ({count})
-                        </button>
-                      )
-                    })}
-                  </div>
-                </div>
-              </aside>
-            )}
+        {/* Search Section */}
+        <FadeInUp className="mb-12">
+          <div className="max-w-3xl mx-auto">
+            <h1 className="text-4xl lg:text-5xl font-bold text-primary-800 mb-4 text-center">
+              {language === 'es' ? 'Buscar en la Ayuda' : 'Search Help'}
+            </h1>
+            <p className="text-xl text-primary-600 text-center mb-8">
+              {language === 'es' 
+                ? 'Encuentra respuestas rápidas a tus preguntas'
+                : 'Find quick answers to your questions'}
+            </p>
+            <HelpSearchBar variant="hero" />
+          </div>
+        </FadeInUp>
 
-            {/* Resultados */}
-            <div className={results.length > 0 ? 'lg:col-span-3' : 'lg:col-span-4'}>
-              {isSearching ? (
-                <div className="text-center py-12">
-                  <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-accent-600"></div>
-                  <p className="mt-4 text-gray-500">
+        {/* Results Section */}
+        {(hasSearched || query.length >= 2) && (
+          <div className="max-w-4xl mx-auto">
+            {isSearching ? (
+              <div className="text-center py-12">
+                <div className="inline-flex items-center gap-3 text-primary-600">
+                  <Search className="w-6 h-6 animate-pulse" />
+                  <span>
                     {language === 'es' ? 'Buscando...' : 'Searching...'}
-                  </p>
+                  </span>
                 </div>
-              ) : filteredResults.length > 0 ? (
-                <div className="space-y-4">
-                  <p className="text-sm text-gray-500 mb-4">
+              </div>
+            ) : results.length > 0 ? (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="space-y-4"
+              >
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-2xl font-bold text-primary-800">
                     {language === 'es' 
-                      ? `Se encontraron ${filteredResults.length} resultado${filteredResults.length !== 1 ? 's' : ''} para "${query}"`
-                      : `Found ${filteredResults.length} result${filteredResults.length !== 1 ? 's' : ''} for "${query}"`
+                      ? `Resultados de búsqueda (${results.length})`
+                      : `Search results (${results.length})`
                     }
-                  </p>
-                  {filteredResults.map((result, index) => {
-                    const category = getCategoryById(result.article.categoryId)
-                    return (
-                      <FadeInUp key={result.article.id} delay={index * 0.05}>
-                        <div className="bg-white rounded-xl p-6 shadow-md border border-gray-100 hover:shadow-lg transition-shadow">
-                          <div className="flex items-start gap-4">
-                            <div className="flex-1">
-                              <div className="flex items-center gap-2 mb-2">
-                                {category && (
-                                  <span className="text-xs font-medium text-accent-600 bg-accent-50 px-2 py-1 rounded">
-                                    {category.name[language]}
-                                  </span>
-                                )}
-                                <span className="text-xs text-gray-500">
-                                  Score: {result.score.toFixed(1)}
-                                </span>
-                              </div>
-                              <h3 className="text-xl font-semibold text-primary-800 mb-2">
-                                <a
-                                  href={`/help/${result.article.categoryId}/${result.article.id}`}
-                                  className="hover:text-accent-600 transition-colors"
-                                >
-                                  {result.article.title[language]}
-                                </a>
+                  </h2>
+                </div>
+
+                {results.map((result, index) => {
+                  const category = getCategoryById(result.article.categoryId)
+                  return (
+                    <motion.div
+                      key={result.article.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.05 }}
+                    >
+                      <Link
+                        href={`/help/${result.article.categoryId}/${result.article.id}`}
+                        className="block bg-white rounded-xl p-6 shadow-sm border border-gray-200 hover:border-accent-300 hover:shadow-md transition-all group"
+                      >
+                        <div className="flex items-start gap-4">
+                          <div className="flex-shrink-0 w-10 h-10 bg-accent-100 rounded-lg flex items-center justify-center">
+                            <FileText className="w-5 h-5 text-accent-600" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-start justify-between gap-4 mb-2">
+                              <h3 className="text-lg font-semibold text-primary-800 group-hover:text-accent-600 transition-colors">
+                                {result.article.title[language]}
                               </h3>
-                              <p className="text-primary-600 mb-3">
-                                {result.article.description[language]}
-                              </p>
-                              {result.matches.length > 0 && (
-                                <div className="text-sm text-gray-500 space-y-1">
-                                  {result.matches.slice(0, 2).map((match, idx) => (
-                                    <div key={idx} className="line-clamp-1">
-                                      {match}
-                                    </div>
-                                  ))}
-                                </div>
-                              )}
+                              <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-accent-600 group-hover:translate-x-1 transition-all flex-shrink-0 mt-1" />
                             </div>
+                            {category && (
+                              <span className="inline-block text-xs text-primary-600 bg-primary-50 px-2 py-1 rounded mb-2">
+                                {category.name[language]}
+                              </span>
+                            )}
+                            <p className="text-primary-600 text-sm mb-2 line-clamp-2">
+                              {result.article.description[language]}
+                            </p>
+                            {result.matches && result.matches.length > 0 && (
+                              <div className="mt-2 text-xs text-gray-500">
+                                {result.matches[0]}
+                              </div>
+                            )}
                           </div>
                         </div>
-                      </FadeInUp>
-                    )
-                  })}
+                      </Link>
+                    </motion.div>
+                  )
+                })}
+              </motion.div>
+            ) : query.length >= 2 ? (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-center py-12"
+              >
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-gray-100 rounded-full mb-4">
+                  <Search className="w-8 h-8 text-gray-400" />
                 </div>
-              ) : (
-                <HelpEmptyState
-                  type="search"
-                  query={query}
-                />
-              )}
-            </div>
+                <h3 className="text-xl font-semibold text-primary-800 mb-2">
+                  {language === 'es' ? 'No se encontraron resultados' : 'No results found'}
+                </h3>
+                <p className="text-primary-600 mb-6">
+                  {language === 'es' 
+                    ? `No encontramos resultados para "${query}". Intenta con otros términos de búsqueda.`
+                    : `We couldn't find any results for "${query}". Try different search terms.`
+                  }
+                </p>
+                <Link
+                  href="/help"
+                  className="inline-flex items-center gap-2 text-accent-600 hover:text-accent-700 font-medium"
+                >
+                  {language === 'es' ? 'Ver todas las categorías' : 'View all categories'}
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </motion.div>
+            ) : null}
           </div>
-        ) : (
-          <HelpEmptyState
-            type="no-query"
-          />
+        )}
+
+        {/* Empty State - No search yet */}
+        {!hasSearched && query.length < 2 && (
+          <FadeInUp className="max-w-2xl mx-auto text-center py-12">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-accent-100 rounded-full mb-4">
+              <Search className="w-8 h-8 text-accent-600" />
+            </div>
+            <h3 className="text-xl font-semibold text-primary-800 mb-2">
+              {language === 'es' ? 'Comienza tu búsqueda' : 'Start your search'}
+            </h3>
+            <p className="text-primary-600">
+              {language === 'es' 
+                ? 'Escribe en el campo de búsqueda para encontrar artículos de ayuda'
+                : 'Type in the search field to find help articles'
+              }
+            </p>
+          </FadeInUp>
         )}
       </div>
     </div>
-  )
-}
-
-export default function HelpSearchPage() {
-  return (
-    <Suspense fallback={
-      <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-accent-50/30 flex items-center justify-center">
-        <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-accent-600"></div>
-        </div>
-      </div>
-    }>
-      <HelpSearchContent />
-    </Suspense>
   )
 }
 

@@ -42,15 +42,15 @@ export default function FAQPage() {
         name: '¿Cuáles son los planes y precios de StorageFy?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Tenemos 3 planes: Starter (€49/mes) para 1 locación y hasta 50 unidades, Professional (€99/mes) para 3 locaciones y hasta 200 unidades, y Enterprise (precio personalizado) con locaciones y unidades ilimitadas. Todos los planes incluyen 14 días de prueba gratis sin tarjeta de crédito.',
+          text: 'Tenemos un modelo de precios simple: 1 EUR por unidad al mes + IVA hasta 200 unidades. Para más de 200 unidades ofrecemos precios personalizados con descuentos por volumen. Todos los planes incluyen locaciones ilimitadas, usuarios ilimitados y 14 días de prueba gratis sin tarjeta de crédito.',
         },
       },
       {
         '@type': 'Question',
-        name: '¿Hay descuentos por pago anual?',
+        name: '¿Hay descuentos por volumen?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Sí, ofrecemos un 20% de descuento en todos los planes si optas por facturación anual.',
+          text: 'Sí, para más de 200 unidades ofrecemos precios personalizados con descuentos por volumen. Contacta con nuestro equipo para más información.',
         },
       },
       {
@@ -70,3 +70,4 @@ export default function FAQPage() {
       <FAQPageClient />
     </>
   )
+}

@@ -34,13 +34,12 @@ export async function POST(request: NextRequest) {
 **INFORMACIÓN CLAVE DE STORAGEFY:**
 
 **Planes y Precios:**
-- Starter: €49/mes (1 locación, hasta 50 unidades, 2 usuarios, widget básico, soporte email, gestión básica de pagos)
-- Professional: €99/mes (3 locaciones, hasta 200 unidades, 5 usuarios, widget + Stripe completo, reportes avanzados, soporte prioritario, fotos DNI seguras, recordatorios automáticos, contratos digitales)
-- Enterprise: Personalizado (locaciones ilimitadas, unidades ilimitadas, usuarios ilimitados, API personalizada, soporte 24/7, onboarding dedicado, account manager, SLA garantizado)
+- Estándar: 1 EUR por unidad al mes + IVA (hasta 200 unidades, locaciones ilimitadas, usuarios ilimitados, widget reservas 24/7, contratos digitales, fotos DNI seguras, contratos multi-unidad, planos interactivos, tablón de anuncios, reportes avanzados, soporte prioritario, recordatorios automáticos)
+- Enterprise: Precio personalizado (más de 200 unidades, unidades ilimitadas, locaciones ilimitadas, usuarios ilimitados, precio personalizado con descuento por volumen, API personalizada, soporte 24/7, onboarding dedicado, account manager, SLA garantizado, planos ilimitados, analytics avanzados, integraciones personalizadas)
 - Todos incluyen: 14 días gratis sin tarjeta, sin permanencia, migración de datos incluida, soporte en español, actualizaciones continuas
 
 **Descuentos:**
-- 20% de descuento en facturación anual
+- Descuentos por volumen para más de 200 unidades
 
 **Funcionalidades Principales:**
 - Gestión completa de unidades de trasteros
@@ -63,8 +62,7 @@ export async function POST(request: NextRequest) {
 - Gestión Multi-Usuario: Roles diferenciados (Propietario, Administrador) con permisos granulares y estados en tiempo real
 
 **Soporte:**
-- Starter: Email (respuesta en 24h)
-- Professional: Prioritario (respuesta en 4h)
+- Estándar: Soporte prioritario
 - Enterprise: 24/7 con account manager dedicado
 
 **Contacto:**
@@ -106,13 +104,12 @@ ${userName ? `- El usuario se llama ${userName}, úsalo naturalmente en la conve
 **KEY STORAGEFY INFORMATION:**
 
 **Plans and Pricing:**
-- Starter: €49/month (1 location, up to 50 units, 2 users, basic widget, email support, basic payment management)
-- Professional: €99/month (3 locations, up to 200 units, 5 users, widget + full Stripe, advanced reports, priority support, secure ID photos, automatic reminders, digital contracts)
-- Enterprise: Custom (unlimited locations, unlimited units, unlimited users, custom API, 24/7 support, dedicated onboarding, account manager, guaranteed SLA)
+- Standard: 1 EUR per unit per month + VAT (up to 200 units, unlimited locations, unlimited users, 24/7 booking widget, digital contracts, secure ID photos, multi-unit contracts, interactive floor plans, announcement board, advanced reports, priority support, automatic reminders)
+- Enterprise: Custom pricing (more than 200 units, unlimited units, unlimited locations, unlimited users, custom pricing with volume discounts, custom API, 24/7 support, dedicated onboarding, account manager, guaranteed SLA, unlimited floor plans, advanced analytics, custom integrations)
 - All include: 14 days free without card, no commitment, data migration included, Spanish support, continuous updates
 
 **Discounts:**
-- 20% discount on annual billing
+- Volume discounts for more than 200 units
 
 **Main Features:**
 - Complete storage unit management

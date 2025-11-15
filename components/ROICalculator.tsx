@@ -16,24 +16,42 @@ export default function ROICalculator() {
   const [locations, setLocations] = useState(1)
   const [units, setUnits] = useState(50)
 
-  // Calculations
-  const hoursPerMonth = hoursPerWeek * 4
+  // Calculations - More realistic and conservative estimates
+  
+  // Time savings: Only calculate savings from automation (not all hours worked)
+  // StorageFy typically saves 40-60% of admin time, we'll use 50% as conservative estimate
+  const timeSavingsPercentage = 0.50
+  const hoursSavedPerWeek = hoursPerWeek * timeSavingsPercentage
+  const hoursPerMonth = hoursSavedPerWeek * 4.33
   const hoursPerYear = hoursPerMonth * 12
-  const hourlyRate = 15 // €15/hour average
+  const hourlyRate = 15 // €15/hour average (conservative for admin work)
   const timeSavings = hoursPerYear * hourlyRate
 
-  const currentDelinquency = delinquencyRate / 100
-  const newDelinquency = 0.03 // 3% with StorageFy
-  const averageRevenue = 50000 // Example annual revenue
-  const delinquencySavings = (currentDelinquency - newDelinquency) * averageRevenue
+  // Revenue calculation based on actual units
+  // Average price per unit per month: €80-120, we'll use €90 as conservative average
+  const averageUnitPricePerMonth = 90
+  const monthlyRevenue = units * averageUnitPricePerMonth
+  const annualRevenue = monthlyRevenue * 12
 
-  const baseReservations = reservationsPerMonth
-  const newReservations = baseReservations * 3 // 300% increase with widget
-  const additionalReservations = newReservations - baseReservations
-  const reservationValue = 500 // Average value per reservation per year
-  const reservationSavings = additionalReservations * reservationValue * 12
+  // Delinquency savings: Based on actual revenue
+  // More conservative: reduce delinquency by 50% of current rate (minimum 3%)
+  const currentDelinquency = delinquencyRate / 100
+  const delinquencyReduction = Math.max(0.03, currentDelinquency * 0.5) // At least 50% reduction, minimum 3%
+  const newDelinquency = Math.max(0.03, currentDelinquency - delinquencyReduction)
+  const delinquencySavings = (currentDelinquency - newDelinquency) * annualRevenue
+
+  // Reservation increase: More conservative estimate
+  // Widget typically increases online reservations by 30-50%, we'll use 40% increase
+  const reservationIncreaseRate = 0.40
+  const additionalReservationsPerMonth = reservationsPerMonth * reservationIncreaseRate
+  // Average reservation value: €60-80 per month, we'll use €65
+  // But only count first 6 months of new reservations (realistic retention)
+  const averageReservationValuePerMonth = 65
+  const monthsCounted = 6 // Only count first 6 months (conservative)
+  const reservationSavings = additionalReservationsPerMonth * averageReservationValuePerMonth * monthsCounted
 
   const totalSavings = timeSavings + delinquencySavings + reservationSavings
+  
   // Calculate StorageFy cost: 1 EUR per unit per month + VAT (21%)
   // Annual payment gets 20% discount
   const pricePerUnit = 1
@@ -44,7 +62,10 @@ export default function ROICalculator() {
   const annualPrice = monthlyPrice * 12
   const annualPriceWithDiscount = annualPrice * (1 - annualDiscount)
   const storagefyCost = annualPriceWithDiscount * (1 + vatRate) // Annual cost with discount and VAT
-  const roi = ((totalSavings - storagefyCost) / storagefyCost) * 100
+  
+  // ROI calculation
+  const netSavings = totalSavings - storagefyCost
+  const roi = storagefyCost > 0 ? (netSavings / storagefyCost) * 100 : 0
   const roiPercentage = Math.max(0, roi)
 
   return (
@@ -254,37 +275,58 @@ export default function ROICalculator() {
 
               <div className="space-y-4">
                 <div className="flex items-center justify-between p-4 bg-primary-50 rounded-xl">
-                  <div className="flex items-center gap-3">
-                    <Clock className="w-5 h-5 text-accent-600" />
-                    <span className="text-primary-700">
-                      {language === 'es' ? 'Ahorro en tiempo' : 'Time savings'}
-                    </span>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-1">
+                      <Clock className="w-5 h-5 text-accent-600" />
+                      <span className="text-primary-700 font-semibold">
+                        {language === 'es' ? 'Ahorro en tiempo' : 'Time savings'}
+                      </span>
+                    </div>
+                    <p className="text-xs text-primary-500 ml-8">
+                      {language === 'es' 
+                        ? `${hoursSavedPerWeek.toFixed(1)}h ahorradas/semana (50% de ${hoursPerWeek}h) × €15/hora = €${timeSavings.toLocaleString('es-ES', { maximumFractionDigits: 0 })}/año`
+                        : `${hoursSavedPerWeek.toFixed(1)}h saved/week (50% of ${hoursPerWeek}h) × €15/hour = €${timeSavings.toLocaleString('es-ES', { maximumFractionDigits: 0 })}/year`}
+                    </p>
                   </div>
-                  <span className="text-xl font-bold text-primary-800">
+                  <span className="text-xl font-bold text-primary-800 ml-4">
                     €{timeSavings.toLocaleString('es-ES', { maximumFractionDigits: 0 })}
                   </span>
                 </div>
 
                 <div className="flex items-center justify-between p-4 bg-primary-50 rounded-xl">
-                  <div className="flex items-center gap-3">
-                    <DollarSign className="w-5 h-5 text-accent-600" />
-                    <span className="text-primary-700">
-                      {language === 'es' ? 'Reducción morosidad' : 'Delinquency reduction'}
-                    </span>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-1">
+                      <DollarSign className="w-5 h-5 text-accent-600" />
+                      <span className="text-primary-700 font-semibold">
+                        {language === 'es' ? 'Reducción morosidad' : 'Delinquency reduction'}
+                      </span>
+                    </div>
+                    <p className="text-xs text-primary-500 ml-8">
+                      {language === 'es' 
+                        ? `De ${delinquencyRate}% a ${(newDelinquency * 100).toFixed(1)}% (reducción del ${(delinquencyReduction * 100).toFixed(0)}%) = €${delinquencySavings.toLocaleString('es-ES', { maximumFractionDigits: 0 })}/año`
+                        : `From ${delinquencyRate}% to ${(newDelinquency * 100).toFixed(1)}% (${(delinquencyReduction * 100).toFixed(0)}% reduction) = €${delinquencySavings.toLocaleString('es-ES', { maximumFractionDigits: 0 })}/year`}
+                    </p>
                   </div>
-                  <span className="text-xl font-bold text-primary-800">
+                  <span className="text-xl font-bold text-primary-800 ml-4">
                     €{delinquencySavings.toLocaleString('es-ES', { maximumFractionDigits: 0 })}
                   </span>
                 </div>
 
                 <div className="flex items-center justify-between p-4 bg-primary-50 rounded-xl">
-                  <div className="flex items-center gap-3">
-                    <Users className="w-5 h-5 text-accent-600" />
-                    <span className="text-primary-700">
-                      {language === 'es' ? 'Aumento reservas' : 'Reservation increase'}
-                    </span>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-1">
+                      <Users className="w-5 h-5 text-accent-600" />
+                      <span className="text-primary-700 font-semibold">
+                        {language === 'es' ? 'Aumento reservas' : 'Reservation increase'}
+                      </span>
+                    </div>
+                    <p className="text-xs text-primary-500 ml-8">
+                      {language === 'es' 
+                        ? `+${Math.round(additionalReservationsPerMonth)} reservas/mes (40% aumento) × €65/mes × 6 meses = €${reservationSavings.toLocaleString('es-ES', { maximumFractionDigits: 0 })}/año`
+                        : `+${Math.round(additionalReservationsPerMonth)} reservations/month (40% increase) × €65/month × 6 months = €${reservationSavings.toLocaleString('es-ES', { maximumFractionDigits: 0 })}/year`}
+                    </p>
                   </div>
-                  <span className="text-xl font-bold text-primary-800">
+                  <span className="text-xl font-bold text-primary-800 ml-4">
                     €{reservationSavings.toLocaleString('es-ES', { maximumFractionDigits: 0 })}
                   </span>
                 </div>
@@ -297,24 +339,50 @@ export default function ROICalculator() {
                 <div className="text-sm text-primary-600 mb-2">
                   {language === 'es' ? 'ROI Estimado' : 'Estimated ROI'}
                 </div>
-                <div className="text-4xl font-bold text-accent-600 mb-4">
+                <div className="text-4xl font-bold text-accent-600 mb-2">
                   {roiPercentage.toFixed(0)}%
                 </div>
-                <div className="text-primary-600 mb-2">
+                <div className="text-xs text-primary-500 mb-4">
                   {language === 'es' 
-                    ? `Costo StorageFy: €${storagefyCost.toLocaleString('es-ES', { maximumFractionDigits: 2 })}/año` 
-                    : `StorageFy Cost: €${storagefyCost.toLocaleString('es-ES', { maximumFractionDigits: 2 })}/year`}
+                    ? `Retorno sobre inversión anual` 
+                    : `Annual return on investment`}
                 </div>
-                <div className="text-sm text-primary-500 mb-2">
+                
+                <div className="bg-primary-50 rounded-xl p-4 mb-4 text-left">
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-sm text-primary-700">
+                      {language === 'es' ? 'Ahorro total:' : 'Total savings:'}
+                    </span>
+                    <span className="text-lg font-bold text-primary-800">
+                      €{totalSavings.toLocaleString('es-ES', { maximumFractionDigits: 0 })}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-sm text-primary-700">
+                      {language === 'es' ? 'Costo StorageFy:' : 'StorageFy cost:'}
+                    </span>
+                    <span className="text-lg font-bold text-primary-800">
+                      €{storagefyCost.toLocaleString('es-ES', { maximumFractionDigits: 2 })}
+                    </span>
+                  </div>
+                  <div className="border-t border-primary-200 pt-2 mt-2">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm font-semibold text-accent-700">
+                        {language === 'es' ? 'Ahorro neto:' : 'Net savings:'}
+                      </span>
+                      <span className="text-xl font-bold text-accent-600">
+                        €{netSavings.toLocaleString('es-ES', { maximumFractionDigits: 0 })}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="text-xs text-primary-500 mb-4">
                   {language === 'es' 
-                    ? `(${units} unidades × €${pricePerUnit}/mes, pago anual -20%)` 
-                    : `(${units} units × €${pricePerUnit}/month, annual payment -20%)`}
+                    ? `Cálculo: ${units} unidades × €${pricePerUnit}/mes × 12 meses × 0.80 (descuento anual) × 1.21 (IVA) = €${storagefyCost.toLocaleString('es-ES', { maximumFractionDigits: 2 })}/año` 
+                    : `Calculation: ${units} units × €${pricePerUnit}/month × 12 months × 0.80 (annual discount) × 1.21 (VAT) = €${storagefyCost.toLocaleString('es-ES', { maximumFractionDigits: 2 })}/year`}
                 </div>
-                <div className="text-xs text-accent-600 mb-6">
-                  {language === 'es' 
-                    ? `Ahorras €${(annualPrice - annualPriceWithDiscount).toFixed(2)}/año con pago anual` 
-                    : `Save €${(annualPrice - annualPriceWithDiscount).toFixed(2)}/year with annual payment`}
-                </div>
+                
                 <motion.a
                   href="/demo"
                   whileHover={{ scale: 1.05 }}
