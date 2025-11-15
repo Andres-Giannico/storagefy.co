@@ -1,5 +1,6 @@
 'use client'
 
+import React from 'react'
 import { motion } from 'framer-motion'
 import { Check, CheckCircle, Star, Zap, Crown } from 'lucide-react'
 import { useLanguage } from '@/lib/context/LanguageContext'
@@ -320,8 +321,8 @@ const Pricing = () => {
                       ]
                     }
                   ].map((section, sectionIndex) => (
-                    <>
-                      <tr key={`category-${sectionIndex}`} className="bg-gray-50">
+                    <React.Fragment key={`section-${sectionIndex}`}>
+                      <tr className="bg-gray-50">
                         <td colSpan={3} className="px-6 py-3 text-sm font-semibold text-primary-800">
                           {section.category}
                         </td>
@@ -345,7 +346,7 @@ const Pricing = () => {
                           </td>
                         </tr>
                       ))}
-                    </>
+                    </React.Fragment>
                   ))}
                 </tbody>
               </table>
