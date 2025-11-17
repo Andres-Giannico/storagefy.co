@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react'
 import { consentManager, ConsentPreferences } from '@/lib/privacy/consent-manager'
 
-const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
+const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || 'G-VQLJWEECTY'
 
 declare global {
   interface Window {
