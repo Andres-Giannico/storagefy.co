@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 import { 
   Heart,
   Target,
@@ -253,7 +254,7 @@ export default function AboutPage() {
                   </h3>
                 </div>
 
-                <div className="space-y-4">
+                <div className="space-y-4 mb-6">
                   {[
                     { icon: FileSpreadsheet, text: language === 'es' ? 'Excel interminable' : 'Endless Excel sheets' },
                     { icon: Phone, text: language === 'es' ? 'Llamadas constantes' : 'Constant phone calls' },
@@ -275,6 +276,23 @@ export default function AboutPage() {
                     </motion.div>
                   ))}
                 </div>
+
+                {/* Imagen del Excel caótico */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.5 }}
+                  className="relative rounded-xl overflow-hidden border border-red-200 aspect-[4/3]"
+                >
+                  <Image
+                    src="/images/excel-antes.webp"
+                    alt={language === 'es' ? 'Excel caótico antes de StorageFy' : 'Chaotic Excel before StorageFy'}
+                    fill
+                    className="object-cover"
+                    quality={85}
+                  />
+                </motion.div>
               </div>
             </motion.div>
 
@@ -294,7 +312,7 @@ export default function AboutPage() {
                   </h3>
                 </div>
 
-                <div className="space-y-4">
+                <div className="space-y-4 mb-6">
                   {[
                     { icon: Smartphone, text: language === 'es' ? 'Todo digitalizado' : 'Everything digitized' },
                     { icon: Zap, text: language === 'es' ? 'Automatización total' : 'Total automation' },
@@ -316,6 +334,23 @@ export default function AboutPage() {
                     </motion.div>
                   ))}
                 </div>
+
+                {/* Imagen de persona usando StorageFy */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.5 }}
+                  className="relative rounded-xl overflow-hidden border border-accent-200 aspect-[4/3]"
+                >
+                  <Image
+                    src="/images/persona-gestionando-dashboard.webp"
+                    alt={language === 'es' ? 'Persona gestionando su negocio con StorageFy' : 'Person managing business with StorageFy'}
+                    fill
+                    className="object-cover"
+                    quality={85}
+                  />
+                </motion.div>
               </div>
             </motion.div>
           </div>
@@ -426,6 +461,9 @@ export default function AboutPage() {
           <div className="grid md:grid-cols-2 gap-8">
             {values.map((value, index) => {
               const Icon = value.icon
+              const isTechnicalExcellence = value.title === (language === 'es' ? 'Excelencia Técnica' : 'Technical Excellence')
+              const isRealEmpathy = value.title === (language === 'es' ? 'Empatía Real' : 'Real Empathy')
+              
               return (
                 <motion.div
                   key={value.title}
@@ -434,13 +472,51 @@ export default function AboutPage() {
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
                   whileHover={{ y: -5 }}
-                  className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 hover:border-accent-200 transition-all duration-300"
+                  className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 hover:border-accent-200 transition-all duration-300 overflow-hidden"
                 >
                   <div className="w-14 h-14 bg-gradient-to-br from-accent-400 to-accent-600 rounded-xl flex items-center justify-center mb-6">
                     <Icon className="w-7 h-7 text-white" />
                   </div>
                   <h3 className="text-2xl font-bold text-primary-800 mb-3">{value.title}</h3>
-                  <p className="text-primary-600 leading-relaxed">{value.description}</p>
+                  <p className="text-primary-600 leading-relaxed mb-4">{value.description}</p>
+                  
+                  {/* Imagen para Empatía Real */}
+                  {isRealEmpathy && (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.3 }}
+                      className="relative rounded-lg overflow-hidden border border-accent-100 mt-4 aspect-[4/3]"
+                    >
+                      <Image
+                        src="/images/empatia-real.webp"
+                        alt={language === 'es' ? 'Equipo de StorageFy - Empatía Real' : 'StorageFy Team - Real Empathy'}
+                        fill
+                        className="object-cover"
+                        quality={85}
+                      />
+                    </motion.div>
+                  )}
+                  
+                  {/* Imagen para Excelencia Técnica */}
+                  {isTechnicalExcellence && (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.3 }}
+                      className="relative rounded-lg overflow-hidden border border-accent-100 mt-4 aspect-[4/3]"
+                    >
+                      <Image
+                        src="/images/persona-gestionando-planificacion.webp"
+                        alt={language === 'es' ? 'Equipo trabajando con StorageFy' : 'Team working with StorageFy'}
+                        fill
+                        className="object-cover"
+                        quality={85}
+                      />
+                    </motion.div>
+                  )}
                 </motion.div>
               )
             })}

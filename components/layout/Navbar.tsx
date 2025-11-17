@@ -15,6 +15,7 @@ const Navbar = ({ className }: NavbarProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const [isLanguageOpen, setIsLanguageOpen] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
   const { language, setLanguage, t } = useLanguage()
 
   const navItems = [
@@ -29,6 +30,10 @@ const Navbar = ({ className }: NavbarProps) => {
     { code: 'es', name: 'Español', flag: '🇪🇸' },
     { code: 'en', name: 'English', flag: '🇺🇸' },
   ]
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -107,18 +112,16 @@ const Navbar = ({ className }: NavbarProps) => {
               
               {/* Language Selector */}
               <div className="relative">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                <button
                   onClick={toggleLanguage}
-                  className="flex items-center space-x-2 px-3 py-2 rounded-lg glass hover:bg-white/10 transition-colors duration-200"
+                  className="flex items-center space-x-2 px-3 py-2 rounded-lg glass hover:bg-white/10 transition-colors duration-200 hover:scale-105 active:scale-95"
                 >
                   <Globe className="w-4 h-4 text-primary-600" />
                   <span className="text-sm font-medium text-primary-700">
                     {languages.find(lang => lang.code === language)?.flag}
                   </span>
                   <ChevronDown className="w-3 h-3 text-primary-500" />
-                </motion.button>
+                </button>
 
                 <AnimatePresence>
                   {isLanguageOpen && (
@@ -161,17 +164,20 @@ const Navbar = ({ className }: NavbarProps) => {
             </div>
 
             {/* Mobile Menu Button */}
-            <motion.button
-              whileTap={{ scale: 0.95 }}
+            <button
               onClick={toggleMenu}
               className="lg:hidden p-2 rounded-lg glass hover:bg-white/10 transition-colors duration-200"
+              aria-label={isOpen ? (language === 'es' ? 'Cerrar menú' : 'Close menu') : (language === 'es' ? 'Abrir menú' : 'Open menu')}
+              suppressHydrationWarning
             >
-              {isOpen ? (
+              {!isMounted ? (
+                <Menu className="w-6 h-6 text-primary-700" />
+              ) : isOpen ? (
                 <X className="w-6 h-6 text-primary-700" />
               ) : (
                 <Menu className="w-6 h-6 text-primary-700" />
               )}
-            </motion.button>
+            </button>
           </div>
         </div>
 

@@ -1,5 +1,6 @@
 'use client'
 
+import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { 
   Building2, 
@@ -110,6 +111,7 @@ export default function FeaturesPageClient() {
         ? ['Métricas en tiempo real', 'Reportes automáticos', 'Dashboards personalizados', 'KPIs clave']
         : ['Real-time metrics', 'Automated reports', 'Custom dashboards', 'Key KPIs'],
       screenshot: '/images/reportes.webp',
+      personImage: '/images/persona-gestionando-dashboard.webp',
       animation: 'analytics'
     },
     {
@@ -152,6 +154,7 @@ export default function FeaturesPageClient() {
         ? ['140m² visualizados', '47 unidades mapeadas', 'Estados por colores', 'Edición en tiempo real']
         : ['140m² visualized', '47 units mapped', 'Color-coded status', 'Real-time editing'],
       screenshot: '/images/floor-plan-ses-paises.webp',
+      personImage: '/images/persona-gestionando-planificacion.webp',
       animation: 'floor-plans'
     }
   ]
@@ -313,24 +316,48 @@ export default function FeaturesPageClient() {
                 {/* Screenshot or Animation */}
                 <div className={!isEven ? 'lg:col-start-1' : ''}>
                   {feature.screenshot ? (
-                    <div className="relative group cursor-zoom-in">
-                      <div className="relative rounded-2xl shadow-2xl border-2 border-gray-200 overflow-hidden bg-white transition-all duration-300 group-hover:border-accent-300 group-hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)]">
-                        <div className="relative overflow-hidden">
-                          <Image
-                            src={feature.screenshot}
-                            alt={feature.title}
-                            width={900}
-                            height={675}
-                            className="w-full h-auto transition-transform duration-500 group-hover:scale-110 will-change-transform"
-                            loading={index < 2 ? "eager" : "lazy"}
-                            quality={85}
-                          />
-                        </div>
-                        {/* Zoom indicator */}
-                        <div className="absolute top-4 right-4 bg-accent-500/90 backdrop-blur-sm text-white px-3 py-1.5 rounded-full text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 flex items-center gap-1.5">
-                          🔍 {language === 'es' ? 'Acercar' : 'Zoom'}
+                    <div className="space-y-4">
+                      {/* Screenshot principal */}
+                      <div className="relative group cursor-zoom-in">
+                        <div className="relative rounded-2xl shadow-2xl border-2 border-gray-200 overflow-hidden bg-white transition-all duration-300 group-hover:border-accent-300 group-hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)]">
+                          <div className="relative overflow-hidden">
+                            <Image
+                              src={feature.screenshot}
+                              alt={feature.title}
+                              width={900}
+                              height={675}
+                              className="w-full h-auto transition-transform duration-500 group-hover:scale-110 will-change-transform"
+                              loading={index < 2 ? "eager" : "lazy"}
+                              quality={85}
+                            />
+                          </div>
+                          {/* Zoom indicator */}
+                          <div className="absolute top-4 right-4 bg-accent-500/90 backdrop-blur-sm text-white px-3 py-1.5 rounded-full text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 flex items-center gap-1.5">
+                            🔍 {language === 'es' ? 'Acercar' : 'Zoom'}
+                          </div>
                         </div>
                       </div>
+                      
+                      {/* Imagen de persona usando StorageFy */}
+                      {feature.personImage && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 20 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ delay: 0.3 }}
+                          className="relative rounded-xl overflow-hidden border-2 border-accent-200 shadow-lg"
+                        >
+                          <Image
+                            src={feature.personImage}
+                            alt={language === 'es' ? `Persona usando ${feature.title}` : `Person using ${feature.title}`}
+                            width={600}
+                            height={400}
+                            className="w-full h-auto"
+                            quality={85}
+                            loading={index < 2 ? "eager" : "lazy"}
+                          />
+                        </motion.div>
+                      )}
                     </div>
                   ) : (
                     // Analytics Animation Placeholder

@@ -32,6 +32,11 @@ export default function CookieBanner() {
   const { language } = useLanguage()
   const [consentState, setConsentState] = useState<ConsentState>(() => consentManager.getState())
   const [showModal, setShowModal] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   useEffect(() => {
     const unsubscribe = consentManager.subscribe(setConsentState)
@@ -46,12 +51,13 @@ export default function CookieBanner() {
   return (
     <>
       <AnimatePresence>
-        {shouldDisplayBanner && (
+        {isMounted && shouldDisplayBanner && (
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 40 }}
             className="pointer-events-auto fixed inset-x-0 bottom-0 z-50 flex justify-center px-4 pb-6"
+            suppressHydrationWarning
           >
             <div className="w-full max-w-4xl rounded-3xl bg-white/90 p-6 shadow-2xl backdrop-blur-lg ring-1 ring-primary-100">
               <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
@@ -91,13 +97,14 @@ export default function CookieBanner() {
       </AnimatePresence>
 
       <AnimatePresence>
-        {consentState.decision !== 'unknown' && (
+        {isMounted && consentState.decision !== 'unknown' && (
           <motion.button
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 40 }}
             onClick={() => setShowModal(true)}
             className="fixed bottom-6 right-6 z-40 flex items-center gap-2 rounded-full bg-primary-900 px-4 py-2 text-sm font-semibold text-white shadow-lg hover:bg-primary-800"
+            suppressHydrationWarning
           >
             <Settings2 className="h-4 w-4" />
             {bannerMessage.manageLabel}
