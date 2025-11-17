@@ -104,10 +104,11 @@ export default function CookieBanner() {
             exit={{ opacity: 0, x: 40 }}
             onClick={() => setShowModal(true)}
             className="fixed bottom-6 right-6 z-40 flex items-center gap-2 rounded-full bg-primary-900 px-4 py-2 text-sm font-semibold text-white shadow-lg hover:bg-primary-800"
+            aria-label={bannerMessage.manageLabel}
             suppressHydrationWarning
           >
-            <Settings2 className="h-4 w-4" />
-            {bannerMessage.manageLabel}
+            <Settings2 className="h-4 w-4" aria-hidden="true" />
+            <span>{bannerMessage.manageLabel}</span>
           </motion.button>
         )}
       </AnimatePresence>

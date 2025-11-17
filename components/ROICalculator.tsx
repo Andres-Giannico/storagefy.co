@@ -104,19 +104,21 @@ export default function ROICalculator() {
             <div className="space-y-6">
               {/* Hours per week */}
               <div>
-                <label className="block text-sm font-semibold text-primary-700 mb-2">
+                <label htmlFor="hours-per-week" className="block text-sm font-semibold text-primary-700 mb-2">
                   {language === 'es' 
                     ? `¿Cuántas horas semanales dedicas a tareas administrativas?` 
                     : `How many hours per week do you spend on administrative tasks?`}
                 </label>
                 <div className="flex items-center gap-4">
                   <input
+                    id="hours-per-week"
                     type="range"
                     min="0"
                     max="40"
                     value={hoursPerWeek}
                     onChange={(e) => setHoursPerWeek(Number(e.target.value))}
                     className="flex-1"
+                    aria-label={language === 'es' ? 'Horas semanales' : 'Hours per week'}
                   />
                   <span className="text-2xl font-bold text-accent-600 w-16 text-right">
                     {hoursPerWeek}h
@@ -126,19 +128,21 @@ export default function ROICalculator() {
 
               {/* Employees */}
               <div>
-                <label className="block text-sm font-semibold text-primary-700 mb-2">
+                <label htmlFor="employees" className="block text-sm font-semibold text-primary-700 mb-2">
                   {language === 'es' 
                     ? `¿Cuántos empleados gestionan la administración?` 
                     : `How many employees manage administration?`}
                 </label>
                 <div className="flex items-center gap-4">
                   <input
+                    id="employees"
                     type="range"
                     min="1"
                     max="10"
                     value={employees}
                     onChange={(e) => setEmployees(Number(e.target.value))}
                     className="flex-1"
+                    aria-label={language === 'es' ? 'Número de empleados' : 'Number of employees'}
                   />
                   <span className="text-2xl font-bold text-accent-600 w-16 text-right">
                     {employees}
@@ -148,19 +152,21 @@ export default function ROICalculator() {
 
               {/* Delinquency */}
               <div>
-                <label className="block text-sm font-semibold text-primary-700 mb-2">
+                <label htmlFor="delinquency-rate" className="block text-sm font-semibold text-primary-700 mb-2">
                   {language === 'es' 
                     ? `¿Cuál es tu morosidad actual?` 
                     : `What is your current delinquency rate?`}
                 </label>
                 <div className="flex items-center gap-4">
                   <input
+                    id="delinquency-rate"
                     type="range"
                     min="0"
                     max="30"
                     value={delinquencyRate}
                     onChange={(e) => setDelinquencyRate(Number(e.target.value))}
                     className="flex-1"
+                    aria-label={language === 'es' ? 'Tasa de morosidad' : 'Delinquency rate'}
                   />
                   <span className="text-2xl font-bold text-accent-600 w-16 text-right">
                     {delinquencyRate}%
@@ -170,19 +176,21 @@ export default function ROICalculator() {
 
               {/* Reservations */}
               <div>
-                <label className="block text-sm font-semibold text-primary-700 mb-2">
+                <label htmlFor="reservations-per-month" className="block text-sm font-semibold text-primary-700 mb-2">
                   {language === 'es' 
                     ? `¿Cuántas reservas recibes al mes?` 
                     : `How many reservations do you receive per month?`}
                 </label>
                 <div className="flex items-center gap-4">
                   <input
+                    id="reservations-per-month"
                     type="range"
                     min="0"
                     max="100"
                     value={reservationsPerMonth}
                     onChange={(e) => setReservationsPerMonth(Number(e.target.value))}
                     className="flex-1"
+                    aria-label={language === 'es' ? 'Reservas mensuales' : 'Monthly reservations'}
                   />
                   <span className="text-2xl font-bold text-accent-600 w-16 text-right">
                     {reservationsPerMonth}
@@ -192,19 +200,21 @@ export default function ROICalculator() {
 
               {/* Locations */}
               <div>
-                <label className="block text-sm font-semibold text-primary-700 mb-2">
+                <label htmlFor="locations" className="block text-sm font-semibold text-primary-700 mb-2">
                   {language === 'es' 
                     ? `¿Cuántas locaciones gestionas?` 
                     : `How many locations do you manage?`}
                 </label>
                 <div className="flex items-center gap-4">
                   <input
+                    id="locations"
                     type="range"
                     min="1"
                     max="10"
                     value={locations}
                     onChange={(e) => setLocations(Number(e.target.value))}
                     className="flex-1"
+                    aria-label={language === 'es' ? 'Número de locaciones' : 'Number of locations'}
                   />
                   <span className="text-2xl font-bold text-accent-600 w-16 text-right">
                     {locations}
@@ -214,19 +224,21 @@ export default function ROICalculator() {
 
               {/* Units */}
               <div>
-                <label className="block text-sm font-semibold text-primary-700 mb-2">
+                <label htmlFor="units" className="block text-sm font-semibold text-primary-700 mb-2">
                   {language === 'es' 
                     ? `¿Cuántas unidades gestionas?` 
                     : `How many units do you manage?`}
                 </label>
                 <div className="flex items-center gap-4">
                   <input
+                    id="units"
                     type="range"
                     min="1"
                     max="200"
                     value={units}
                     onChange={(e) => setUnits(Number(e.target.value))}
                     className="flex-1"
+                    aria-label={language === 'es' ? 'Número de unidades' : 'Number of units'}
                   />
                   <span className="text-2xl font-bold text-accent-600 w-16 text-right">
                     {units}

@@ -185,9 +185,9 @@ const Hero = () => {
                     <Building2 className="w-4 h-4 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-white font-semibold">
+                    <div className="text-white font-semibold text-lg">
                       {language === 'es' ? 'Panel de Control' : 'Control Panel'}
-                    </h3>
+                    </div>
                     <p className="text-primary-200 text-sm">
                       {language === 'es' ? 'Dashboard en tiempo real' : 'Real-time dashboard'}
                     </p>
@@ -264,7 +264,7 @@ const Hero = () => {
                         </div>
                       </div>
                       <div className="text-right">
-                        <div className="font-semibold text-green-600">{payment.amount}</div>
+                        <div className="font-semibold text-green-700">{payment.amount}</div>
                         <div className="text-xs text-gray-500">{payment.unit}</div>
                       </div>
                     </motion.div>

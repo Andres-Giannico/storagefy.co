@@ -264,10 +264,11 @@ export default function PricingPageClient() {
               {language === 'es' ? 'Calcula tu precio mensual' : 'Calculate your monthly price'}
             </h2>
             <div className="mb-6">
-              <label className="block text-sm font-semibold text-primary-700 mb-3">
+              <label htmlFor="units-slider" className="block text-sm font-semibold text-primary-700 mb-3">
                 {language === 'es' ? 'Número de unidades:' : 'Number of units:'} {units}
               </label>
               <input
+                id="units-slider"
                 type="range"
                 min="1"
                 max="200"
