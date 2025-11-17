@@ -120,11 +120,39 @@ export default function RootLayout({
     },
   }
 
+  const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || 'G-VQLJWEECTY'
+
   return (
     <html lang="es" className={inter.variable}>
       <head>
         <StructuredData data={organizationSchema} />
         <StructuredData data={websiteSchema} />
+        {/* Google tag (gtag.js) */}
+        {GA_ID && (
+          <>
+            <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} />
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('consent', 'default', {
+                    'ad_storage': 'denied',
+                    'analytics_storage': 'denied',
+                    'functionality_storage': 'denied',
+                    'security_storage': 'granted'
+                  });
+                  gtag('config', '${GA_ID}', {
+                    'anonymize_ip': true,
+                    'allow_google_signals': false,
+                    'allow_ad_personalization_signals': false
+                  });
+                `,
+              }}
+            />
+          </>
+        )}
       </head>
       <body className={inter.className}>
         <LanguageProvider>

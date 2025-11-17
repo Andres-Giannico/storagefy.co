@@ -42,43 +42,34 @@ const updateConsentMode = (prefs: ConsentPreferences) => {
 }
 
 export default function AnalyticsManager() {
-  const initialized = useRef(false)
-
   useEffect(() => {
     if (!GA_ID) return undefined
     
     const unsubscribe = consentManager.subscribe(async state => {
-      if (state.decision === 'unknown') return
-
-      if (!window.dataLayer) {
-        window.dataLayer = []
-      }
-      if (typeof window.gtag !== 'function') {
-        window.gtag = function gtag() {
-          window.dataLayer.push(arguments as unknown as Record<string, unknown>)
+      if (state.decision === 'unknown') {
+        // Mantener consent mode en 'denied' hasta que el usuario decida
+        if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+          window.gtag('consent', 'update', {
+            ad_storage: 'denied',
+            analytics_storage: 'denied',
+            functionality_storage: 'denied',
+            security_storage: 'granted',
+          })
         }
-      }
-
-      updateConsentMode(state.preferences)
-
-      if (!state.preferences.analytics) {
         return
       }
 
-      try {
-        await loadGAScript()
-        if (!initialized.current) {
-          window.gtag('js', new Date())
-          initialized.current = true
-        }
+      // Actualizar consent mode según las preferencias del usuario
+      updateConsentMode(state.preferences)
+
+      // Si el usuario acepta analytics, actualizar la configuración
+      if (state.preferences.analytics && typeof window.gtag === 'function') {
         window.gtag('config', GA_ID, {
           anonymize_ip: true,
           allow_google_signals: false,
           allow_ad_personalization_signals: state.preferences.marketing,
           transport_type: 'beacon',
         })
-      } catch (error) {
-        console.error(error)
       }
     })
 
