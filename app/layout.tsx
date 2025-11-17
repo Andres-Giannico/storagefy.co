@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { Analytics } from '@vercel/analytics/react'
 import { LanguageProvider } from '@/lib/context/LanguageContext'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
@@ -135,6 +136,7 @@ export default function RootLayout({
           <Chatbot />
           <CookieBanner />
           <AnalyticsManager />
+          <Analytics />
         </LanguageProvider>
       </body>
     </html>
