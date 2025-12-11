@@ -82,8 +82,8 @@ const FinalCTA = () => {
 
           <p className="text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed mb-8">
             {language === 'es'
-              ? 'Más de 50 negocios de trasteros ya digitalizaron su gestión con StorageFy. Comienza tu transformación digital hoy mismo.'
-              : 'Over 50 storage businesses have already digitalized their management with StorageFy. Start your digital transformation today.'
+              ? 'Más de 50 negocios de trasteros y parkings ya digitalizaron su gestión con StorageFy. Comienza tu transformación digital hoy mismo.'
+              : 'Over 50 storage and parking businesses have already digitalized their management with StorageFy. Start your digital transformation today.'
             }
           </p>
 

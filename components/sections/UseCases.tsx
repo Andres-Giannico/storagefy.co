@@ -71,7 +71,7 @@ const UseCases = () => {
       ],
       metrics: [
         { value: '-32%', label: language === 'es' ? 'Morosidad' : 'Delinquency' },
-        { value: '€25k', label: language === 'es' ? 'Recuperado/año' : 'Recovered/year' }
+        { value: '€25k', label: language === 'es' ? 'Recuperado/año' : 'Recovered/year', note: language === 'es' ? '(centro de 150 unidades)' : '(150-unit center)' }
       ],
       color: 'purple'
     }
@@ -119,8 +119,8 @@ const UseCases = () => {
 
           <p className="text-xl text-primary-600 max-w-3xl mx-auto">
             {language === 'es' 
-              ? 'Casos reales de transformación digital en negocios de trasteros'
-              : 'Real cases of digital transformation in storage businesses'
+              ? 'Casos reales de transformación digital en negocios de trasteros y parkings'
+              : 'Real cases of digital transformation in storage and parking businesses'
             }
           </p>
         </FadeInUp>
@@ -217,6 +217,11 @@ const UseCases = () => {
                           <div className="text-xs text-gray-600 mt-1">
                             {metric.label}
                           </div>
+                          {metric.note && (
+                            <div className="text-xs text-gray-500 mt-0.5 italic">
+                              {metric.note}
+                            </div>
+                          )}
                         </div>
                       ))}
                     </div>

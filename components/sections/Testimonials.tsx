@@ -110,7 +110,7 @@ const Testimonials = () => {
             </span>
           </div>
 
-          <h2 className="text-4xl lg:text-5xl font-bold mb-6">
+          <h2 className="text-4xl lg:text-5xl font-bold mb-4">
             <span className="text-gradient">
               {language === 'es' ? 'Lo que dicen' : 'What our'}
             </span>
@@ -119,6 +119,13 @@ const Testimonials = () => {
               {language === 'es' ? 'nuestros clientes' : 'clients say'}
             </span>
           </h2>
+
+          <p className="text-lg text-primary-600 max-w-2xl mx-auto mb-2 font-medium">
+            {language === 'es' 
+              ? 'Basado en datos reales de clientes en España'
+              : 'Based on real data from clients in Spain'
+            }
+          </p>
 
           <p className="text-xl text-primary-600 max-w-3xl mx-auto">
             {language === 'es' 

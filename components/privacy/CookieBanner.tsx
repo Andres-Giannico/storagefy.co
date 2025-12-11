@@ -28,30 +28,51 @@ const translations = {
   },
 }
 
+const defaultConsentState: ConsentState = {
+  decision: 'unknown',
+  version: '',
+  updatedAt: null,
+  preferences: {
+    necessary: true,
+    preferences: false,
+    analytics: false,
+    marketing: false,
+  },
+  metadata: null,
+}
+
 export default function CookieBanner() {
   const { language } = useLanguage()
-  const [consentState, setConsentState] = useState<ConsentState>(() => consentManager.getState())
+  const [consentState, setConsentState] = useState<ConsentState>(defaultConsentState)
   const [showModal, setShowModal] = useState(false)
   const [isMounted, setIsMounted] = useState(false)
 
   useEffect(() => {
     setIsMounted(true)
+    // Solo obtener el estado del cliente después del mount
+    setConsentState(consentManager.getState())
   }, [])
 
   useEffect(() => {
+    if (!isMounted) return
     const unsubscribe = consentManager.subscribe(setConsentState)
     return () => {
       unsubscribe()
     }
-  }, [])
+  }, [isMounted])
 
   const shouldDisplayBanner = consentState.decision === 'unknown'
   const bannerMessage = useMemo(() => translations[language], [language])
 
+  // No renderizar nada en el servidor para evitar problemas de hidratación
+  if (!isMounted) {
+    return null
+  }
+
   return (
     <>
       <AnimatePresence>
-        {isMounted && shouldDisplayBanner && (
+        {shouldDisplayBanner && (
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
@@ -97,7 +118,7 @@ export default function CookieBanner() {
       </AnimatePresence>
 
       <AnimatePresence>
-        {isMounted && consentState.decision !== 'unknown' && (
+        {consentState.decision !== 'unknown' && (
           <motion.button
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
@@ -119,7 +140,7 @@ export default function CookieBanner() {
         initialPreferences={consentState.preferences}
       />
 
-      {process.env.NODE_ENV === 'development' && (
+      {process.env.NODE_ENV === 'development' && isMounted && (
         <button
           onClick={() => consentManager.reset()}
           className="fixed bottom-6 left-6 z-40 rounded-full border border-dashed border-gray-300 px-3 py-1 text-xs text-gray-500 hover:bg-gray-100"

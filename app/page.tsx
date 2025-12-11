@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import Hero from '@/components/sections/Hero'
+import Implementation from '@/components/sections/Implementation'
+import ClientProfiles from '@/components/sections/ClientProfiles'
 import Features from '@/components/sections/Features'
 import UseCases from '@/components/sections/UseCases'
 import ROICalculator from '@/components/ROICalculator'
@@ -8,15 +10,15 @@ import FinalCTA from '@/components/sections/FinalCTA'
 import StructuredData from '@/components/seo/StructuredData'
 
 export const metadata: Metadata = {
-  title: 'StorageFy - Gestión Avanzada de Trasteros | Software SaaS',
-  description: 'El software más avanzado de gestión de trasteros. Controla tus espacios con precisión, elegancia y control total. Gestiona unidades, clientes, contratos y pagos en una sola plataforma.',
-  keywords: ['software de trasteros', 'gestión de almacenes', 'SaaS trasteros', 'software gestión almacenamiento', 'sistema de gestión trasteros'],
+  title: 'StorageFy - Gestión de Trasteros y Parkings | Software SaaS',
+  description: 'Software de gestión para trasteros y parkings. Reservas online, cobros automáticos y control total de unidades. Gestiona clientes, contratos y pagos en una sola plataforma.',
+  keywords: ['software de trasteros', 'gestión de parkings', 'software gestión almacenamiento', 'sistema de gestión trasteros', 'alquiler parking largo plazo'],
   alternates: {
     canonical: 'https://storagefy.co',
   },
   openGraph: {
-    title: 'StorageFy - Gestión Avanzada de Trasteros',
-    description: 'El software más avanzado de gestión de trasteros. Controla tus espacios con precisión, elegancia y control total.',
+    title: 'StorageFy - Gestión de Trasteros y Parkings',
+    description: 'Software de gestión para trasteros y parkings. Reservas online, cobros automáticos y control total de unidades.',
     url: 'https://storagefy.co',
     siteName: 'StorageFy',
     images: [
@@ -24,7 +26,7 @@ export const metadata: Metadata = {
         url: '/logo.png',
         width: 1200,
         height: 630,
-        alt: 'StorageFy - Gestión Avanzada de Trasteros',
+        alt: 'StorageFy - Gestión de Trasteros y Parkings',
       },
     ],
     locale: 'es_ES',
@@ -32,8 +34,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'StorageFy - Gestión Avanzada de Trasteros',
-    description: 'El software más avanzado de gestión de trasteros.',
+    title: 'StorageFy - Gestión de Trasteros y Parkings',
+    description: 'Software de gestión para trasteros y parkings. Reservas online y cobros automáticos.',
     images: ['/logo.png'],
   },
 }
@@ -59,7 +61,7 @@ export default function Home() {
       bestRating: '5',
       worstRating: '1',
     },
-    description: 'Software de gestión avanzada para trasteros y almacenes. Controla unidades, clientes, contratos y pagos en una sola plataforma.',
+    description: 'Software de gestión avanzada para trasteros y parkings. Controla unidades, clientes, contratos y pagos en una sola plataforma.',
     url: 'https://storagefy.co',
     screenshot: 'https://storagefy.co/logo.png',
     featureList: [
@@ -77,6 +79,8 @@ export default function Home() {
       <StructuredData data={softwareApplicationSchema} />
       <div className="min-h-screen">
         <Hero />
+        <Implementation />
+        <ClientProfiles />
         <Features />
         <UseCases />
         <ROICalculator />

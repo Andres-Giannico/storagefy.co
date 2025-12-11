@@ -85,7 +85,7 @@ const Features = () => {
     },
     {
       icon: CreditCard,
-      title: lang === 'es' ? 'Sistema de Pagos Revolucionario' : 'Revolutionary Payment System',
+      title: lang === 'es' ? 'Cobros automáticos y menos morosidad' : 'Automatic payments and less delinquency',
       description: lang === 'es'
         ? 'Cobra más rápido con links de pago 24/7, recordatorios automáticos y reducción de morosidad del 80%.'
         : 'Get paid faster with 24/7 payment links, automatic reminders and 80% reduction in delinquency.',
@@ -107,7 +107,7 @@ const Features = () => {
     },
     {
       icon: Layout,
-      title: lang === 'es' ? 'Planos Interactivos' : 'Interactive Floor Plans',
+      title: lang === 'es' ? 'Plano visual de tus espacios en tiempo real' : 'Real-time visual floor plan of your spaces',
       description: lang === 'es'
         ? 'Visualiza y gestiona tus espacios con planos interactivos en tiempo real, arrastra y suelta unidades fácilmente.'
         : 'Visualize and manage your spaces with real-time interactive floor plans, drag and drop units easily.',
@@ -156,25 +156,25 @@ const Features = () => {
       icon: TrendingUp,
       value: '30%',
       label: lang === 'es' ? 'Aumento Ocupación' : 'Occupancy Increase',
-      description: lang === 'es' ? 'Promedio en 6 meses' : 'Average in 6 months'
+      description: lang === 'es' ? '(media de clientes en 6 meses)' : '(average of clients in 6 months)'
     },
     {
       icon: Clock,
       value: '15h',
       label: lang === 'es' ? 'Horas Ahorradas' : 'Hours Saved',
-      description: lang === 'es' ? 'Por semana' : 'Per week'
+      description: lang === 'es' ? '(por semana por centro)' : '(per week per center)'
     },
     {
       icon: Shield,
       value: '80%',
       label: lang === 'es' ? 'Reducción Morosidad' : 'Delinquency Reduction',
-      description: lang === 'es' ? 'Con automatización' : 'With automation'
+      description: lang === 'es' ? '(con cobros automatizados)' : '(with automated payments)'
     },
     {
       icon: Zap,
       value: '500%',
       label: lang === 'es' ? 'Más Leads' : 'More Leads',
-      description: lang === 'es' ? 'Con widget online' : 'With online widget'
+      description: lang === 'es' ? '(con widget de reservas online)' : '(with online booking widget)'
     }
   ]
 
@@ -235,16 +235,74 @@ const Features = () => {
             </span>
             <br />
             <span className="text-primary-800">
-              {language === 'es' ? 'para gestionar trasteros' : 'to manage storage'}
+              {language === 'es' ? 'para gestionar trasteros y parkings' : 'to manage storage and parking'}
             </span>
           </h2>
 
           <p className="text-xl text-primary-600 max-w-3xl mx-auto leading-relaxed">
             {language === 'es'
-              ? 'Una plataforma completa que digitaliza y automatiza cada aspecto de tu negocio de trasteros, desde la captación hasta el cobro.'
-              : 'A complete platform that digitalizes and automates every aspect of your storage business, from lead capture to payment collection.'
+              ? 'Una plataforma completa que digitaliza y automatiza cada aspecto de tu negocio, desde la captación hasta el cobro.'
+              : 'A complete platform that digitalizes and automates every aspect of your business, from lead capture to payment collection.'
             }
           </p>
+        </FadeInUp>
+
+        {/* Bloque "¿Qué hace StorageFy?" - 3 Pilares */}
+        <FadeInUp className="mb-16">
+          <div className="bg-gradient-to-br from-primary-50 via-white to-accent-50/50 rounded-3xl p-8 lg:p-12 border border-primary-100 shadow-lg">
+            <h3 className="text-2xl lg:text-3xl font-bold text-center text-primary-800 mb-8">
+              {language === 'es' ? '¿Qué hace StorageFy?' : 'What does StorageFy do?'}
+            </h3>
+            <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
+              {[
+                {
+                  icon: Layout,
+                  title: language === 'es' 
+                    ? 'Gestión de centros y unidades' 
+                    : 'Center and unit management',
+                  description: language === 'es'
+                    ? 'Planos, ocupación y precios.'
+                    : 'Floor plans, occupancy and pricing.'
+                },
+                {
+                  icon: Users,
+                  title: language === 'es'
+                    ? 'Clientes, contratos y pagos automáticos'
+                    : 'Clients, contracts and automatic payments',
+                  description: language === 'es'
+                    ? 'Todo integrado con Stripe.'
+                    : 'All integrated with Stripe.'
+                },
+                {
+                  icon: Globe,
+                  title: language === 'es'
+                    ? 'Reservas online y widget para tu web'
+                    : 'Online reservations and widget for your website',
+                  description: language === 'es'
+                    ? 'Disponible 24/7 sin intermediarios.'
+                    : 'Available 24/7 without intermediaries.'
+                }
+              ].map((pilar, index) => {
+                const Icon = pilar.icon
+                return (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1, duration: 0.5 }}
+                    className="text-center"
+                  >
+                    <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-accent-500 to-accent-600 rounded-2xl mb-4 shadow-lg">
+                      <Icon className="w-8 h-8 text-white" />
+                    </div>
+                    <h4 className="text-xl font-bold text-primary-800 mb-2">{pilar.title}</h4>
+                    <p className="text-primary-600">{pilar.description}</p>
+                  </motion.div>
+                )
+              })}
+            </div>
+          </div>
         </FadeInUp>
 
         {/* Stats */}

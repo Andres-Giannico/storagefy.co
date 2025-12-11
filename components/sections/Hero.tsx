@@ -2,7 +2,7 @@
 
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
-import { ArrowRight, TrendingUp, Users, DollarSign, Building2, CheckCircle } from 'lucide-react'
+import { ArrowRight, TrendingUp, Users, DollarSign, Building2, CheckCircle, X, CreditCard, Globe } from 'lucide-react'
 import { useLanguage } from '@/lib/context/LanguageContext'
 
 const Hero = () => {
@@ -80,33 +80,45 @@ const Hero = () => {
             transition={{ delay: 0.2, duration: 0.6 }}
             className="space-y-6"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-accent-200">
-              <TrendingUp className="w-4 h-4 text-accent-600" />
-              <span className="text-sm font-medium text-accent-700">
-                {language === 'es' ? 'Software líder en gestión de trasteros' : 'Leading storage management software'}
-              </span>
-            </div>
-
-            <h1 className="text-5xl lg:text-7xl font-bold leading-tight">
-              <span className="text-gradient">
-                {language === 'es' ? 'Gestiona tus' : 'Manage your'}
+            <h1 className="text-3xl lg:text-5xl font-bold leading-tight">
+              <span className="text-primary-800">
+                {language === 'es' 
+                  ? 'Software para negocios de trasteros y parkings:' 
+                  : 'Software for storage and parking businesses:'}
               </span>
               <br />
-              <span className="text-primary-800">
-                {language === 'es' ? 'trasteros con' : 'storage with'}
+              <span className="text-gradient">
+                {language === 'es' 
+                  ? 'reservas online, cobros automáticos' 
+                  : 'online reservations, automatic payments'}
               </span>
               <br />
               <span className="text-gradient-accent">
-                {language === 'es' ? 'precisión total' : 'total precision'}
+                {language === 'es' 
+                  ? 'y control total de unidades' 
+                  : 'and total unit control'}
               </span>
             </h1>
 
-            <p className="text-xl lg:text-2xl text-primary-600 leading-relaxed max-w-2xl">
+            <p className="text-lg lg:text-xl text-primary-600 leading-relaxed max-w-2xl">
               {language === 'es' 
-                ? 'StorageFy convierte la gestión de tu negocio en una experiencia fluida e inteligente. Sin hojas de cálculo, sin estrés.'
-                : 'StorageFy transforms your business management into a smooth and intelligent experience. No spreadsheets, no stress.'
+                ? 'Automatiza reservas, contratos y pagos para reducir morosidad y llenar tus espacios más rápido.'
+                : 'Automate reservations, contracts and payments to reduce delinquency and fill your spaces faster.'
               }
             </p>
+
+            {/* Segmentación */}
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-accent-200 bg-accent-50/50 mt-2">
+              <Building2 className="w-4 h-4 text-accent-600" />
+              <span className="text-sm font-medium text-primary-700">
+                <span className="font-semibold text-accent-700">
+                  {language === 'es' ? 'Para: ' : 'For: '}
+                </span>
+                {language === 'es' 
+                  ? 'empresas de self storage, trasteros urbanos, parkings y mini almacenes'
+                  : 'self storage companies, urban storage, parking lots and mini warehouses'}
+              </span>
+            </div>
           </motion.div>
 
           {/* CTA Buttons */}
@@ -114,31 +126,52 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.6 }}
-            className="space-y-4"
+            className="space-y-5"
           >
             <div className="flex flex-col sm:flex-row gap-4">
+              {/* CTA Principal */}
               <motion.a
                 href="/demo"
                 whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(124, 179, 66, 0.3)' }}
                 whileTap={{ scale: 0.95 }}
-                className="group px-8 py-4 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-semibold rounded-full hover:from-accent-600 hover:to-accent-700 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+                className="group px-8 py-4 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-semibold rounded-full hover:from-accent-600 hover:to-accent-700 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2 text-lg"
               >
-                {language === 'es' ? 'Comenzar prueba gratuita de 14 días' : 'Start 14-day free trial'}
+                {language === 'es' ? 'Probar gratis 14 días' : 'Try free for 14 days'}
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
               </motion.a>
 
+              {/* CTA Secundario */}
               <motion.a
                 href="/demo"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 glass border border-primary-200 text-primary-700 font-semibold rounded-full hover:bg-white/50 transition-all duration-300 flex items-center justify-center gap-2"
+                className="px-8 py-4 glass border-2 border-primary-200 text-primary-700 font-semibold rounded-full hover:bg-white/80 hover:border-accent-300 transition-all duration-300 flex items-center justify-center gap-2"
               >
-                {language === 'es' ? 'Ver demo en 2 minutos' : 'View 2-minute demo'}
+                {language === 'es' ? 'Ver demo en 2 minutos (sin registro)' : 'View 2-minute demo (no signup)'}
               </motion.a>
             </div>
-            <p className="text-sm text-primary-600 text-center sm:text-left">
-              {language === 'es' ? '✓ Sin tarjeta • Cancela cuando quieras • Soporte en español' : '✓ No card required • Cancel anytime • Spanish support'}
-            </p>
+
+            {/* 3 Bullets de Beneficios */}
+            <div className="flex flex-col gap-2 pt-2">
+              <div className="flex items-center gap-3">
+                <X className="w-4 h-4 text-accent-600 flex-shrink-0" />
+                <span className="text-sm lg:text-base font-medium text-primary-700">
+                  {language === 'es' ? 'Adiós a Excel y al papeleo.' : 'Goodbye to Excel and paperwork.'}
+                </span>
+              </div>
+              <div className="flex items-center gap-3">
+                <CreditCard className="w-4 h-4 text-accent-600 flex-shrink-0" />
+                <span className="text-sm lg:text-base font-medium text-primary-700">
+                  {language === 'es' ? 'Cobros automatizados y menos morosidad.' : 'Automated payments and less delinquency.'}
+                </span>
+              </div>
+              <div className="flex items-center gap-3">
+                <Globe className="w-4 h-4 text-accent-600 flex-shrink-0" />
+                <span className="text-sm lg:text-base font-medium text-primary-700">
+                  {language === 'es' ? 'Reservas 24/7 desde tu web.' : '24/7 reservations from your website.'}
+                </span>
+              </div>
+            </div>
           </motion.div>
 
           {/* Trust Indicators */}
