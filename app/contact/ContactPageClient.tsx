@@ -4,7 +4,6 @@ import { motion } from 'framer-motion'
 import { 
   Mail,
   MessageSquare,
-  MapPin,
   Clock,
   Send,
   Phone,
@@ -33,34 +32,42 @@ export default function ContactPageClient() {
       title: language === 'es' ? 'Email' : 'Email',
       value: 'hello@storagefy.co',
       link: 'mailto:hello@storagefy.co',
-      description: language === 'es' ? 'Respuesta en menos de 24h' : 'Response in less than 24h'
+      description: language === 'es' ? 'Respuesta en menos de 24h' : 'Response in less than 24h',
+      whatsapp: null
     },
     {
       icon: Phone,
-      title: language === 'es' ? 'Comercial Theo Gennove' : 'Sales Theo Gennove',
-      value: '+34 871 242 618',
-      link: 'tel:+34871242618',
-      description: language === 'es' ? 'Ventas y consultas comerciales' : 'Sales and commercial inquiries'
+      title: language === 'es' ? 'Especialista Theo Gennove' : 'Specialist Theo Gennove',
+      value: '+34 871 242 642',
+      link: 'tel:+34871242642',
+      whatsapp: language === 'es' 
+        ? 'https://wa.me/34871242642?text=Hola%20Theo%2C%20estoy%20interesado%20en%20StorageFy%20para%20gestionar%20mi%20negocio%20de%20trasteros%2Fparkings.%20Me%20gustar%C3%ADa%20saber%20m%C3%A1s%20informaci%C3%B3n.'
+        : 'https://wa.me/34871242642?text=Hello%20Theo%2C%20I%27m%20interested%20in%20StorageFy%20to%20manage%20my%20storage%2Fparking%20business.%20I%27d%20like%20to%20know%20more%20information.',
+      whatsappName: 'Theo',
+      description: language === 'es' 
+        ? '¿Necesitas información, asesoría personalizada o ayuda para configurar tu cuenta de prueba gratis? Contáctame y te ayudo a empezar.'
+        : 'Need information, personalized advice or help setting up your free trial account? Contact me and I\'ll help you get started.'
     },
     {
       icon: Phone,
-      title: language === 'es' ? 'Comercial Juan David Wilde' : 'Sales Juan David Wilde',
+      title: language === 'es' ? 'Especialista Juan David Wilde' : 'Specialist Juan David Wilde',
       value: '+34 871 242 616',
       link: 'tel:+34871242616',
-      description: language === 'es' ? 'Ventas y consultas comerciales' : 'Sales and commercial inquiries'
+      whatsapp: language === 'es'
+        ? 'https://wa.me/34871242616?text=Hola%20Juan%20David%2C%20estoy%20interesado%20en%20StorageFy%20para%20gestionar%20mi%20negocio%20de%20trasteros%2Fparkings.%20Me%20gustar%C3%ADa%20saber%20m%C3%A1s%20informaci%C3%B3n.'
+        : 'https://wa.me/34871242616?text=Hello%20Juan%20David%2C%20I%27m%20interested%20in%20StorageFy%20to%20manage%20my%20storage%2Fparking%20business.%20I%27d%20like%20to%20know%20more%20information.',
+      whatsappName: 'Juan David',
+      description: language === 'es'
+        ? '¿Necesitas información, asesoría personalizada o ayuda para configurar tu cuenta de prueba? Contacta conmigo.'
+        : 'Need information, personalized advice or help setting up your free trial account? Contact me.'
     },
     {
       icon: Phone,
       title: language === 'es' ? 'Desarrollo y Software' : 'Development & Software',
       value: '+34 871 242 628',
       link: 'tel:+34871242628',
-      description: language === 'es' ? 'Soporte técnico y desarrollo' : 'Technical support and development'
-    },
-    {
-      icon: MapPin,
-      title: language === 'es' ? 'Ubicación' : 'Location',
-      value: language === 'es' ? 'España' : 'Spain',
-      description: language === 'es' ? 'Soporte en español' : 'Spanish support'
+      description: language === 'es' ? 'Soporte técnico y desarrollo' : 'Technical support and development',
+      whatsapp: null
     }
   ]
 
@@ -211,51 +218,88 @@ export default function ContactPageClient() {
             </motion.a>
           </FadeInUp>
 
-          {/* Phone Cards - Compact Grid */}
-          <div className="grid md:grid-cols-3 gap-6 mb-8">
-            {contactInfo.filter(info => info.icon === Phone).map((info, index) => {
+          {/* Phone Cards - Especialistas Destacados */}
+          <div className="grid md:grid-cols-2 gap-6 mb-6">
+            {contactInfo.filter(info => info.icon === Phone && info.whatsapp).map((info, index) => {
               const Icon = info.icon
               return (
-                <motion.a
+                <motion.div
                   key={info.title}
-                  href={info.link}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  whileHover={{ y: -3, scale: 1.02 }}
-                  className="bg-white rounded-xl p-6 shadow-md border border-gray-100 hover:border-accent-300 hover:shadow-lg transition-all duration-300"
+                  className="bg-gradient-to-br from-accent-500 to-accent-600 rounded-2xl p-8 shadow-xl border-2 border-accent-400 hover:shadow-2xl transition-all duration-300"
                 >
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <Icon className="w-6 h-6 text-white" />
+                  <div className="flex items-start gap-5 mb-6">
+                    <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Icon className="w-8 h-8 text-white" />
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <h3 className="text-sm font-semibold text-primary-600 mb-1">{info.title}</h3>
-                      <p className="text-lg font-bold text-primary-800 mb-1">{info.value}</p>
-                      <p className="text-xs text-primary-500">{info.description}</p>
+                    <div className="flex-1">
+                      <h3 className="text-lg font-bold text-white mb-2">{info.title}</h3>
+                      <a href={info.link} className="text-2xl font-bold text-white mb-2 hover:text-accent-100 transition-colors block">
+                        {info.value}
+                      </a>
+                      <p className="text-white/90 text-sm">{info.description}</p>
                     </div>
                   </div>
-                </motion.a>
+                  
+                  {/* WhatsApp Button */}
+                  {info.whatsapp && (
+                    <motion.a
+                      href={info.whatsapp}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      whileHover={{ scale: 1.02, y: -2 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="flex items-center justify-center gap-2 w-full px-5 py-3.5 bg-white text-accent-600 rounded-lg font-bold text-base hover:bg-accent-50 hover:shadow-xl transition-all duration-300 group"
+                    >
+                      <svg 
+                        className="w-5 h-5 group-hover:scale-110 transition-transform" 
+                        fill="currentColor" 
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                      </svg>
+                      <span className="group-hover:translate-x-0.5 transition-transform">
+                        {language === 'es' ? 'Chatear por WhatsApp' : 'Chat on WhatsApp'}
+                      </span>
+                    </motion.a>
+                  )}
+                </motion.div>
               )
             })}
           </div>
 
-          {/* Location Card */}
-          <FadeInUp>
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="bg-white rounded-xl p-6 shadow-md border border-gray-100 max-w-md mx-auto text-center"
-            >
-              <div className="w-12 h-12 bg-gradient-to-br from-accent-400 to-accent-600 rounded-lg flex items-center justify-center mx-auto mb-4">
-                <MapPin className="w-6 h-6 text-white" />
-              </div>
-              <h3 className="text-lg font-bold text-primary-800 mb-1">{contactInfo.find(i => i.icon === MapPin)?.title}</h3>
-              <p className="text-primary-600">{contactInfo.find(i => i.icon === MapPin)?.value}</p>
-            </motion.div>
-          </FadeInUp>
+          {/* Desarrollo y Software - Menos Importante */}
+          {contactInfo.filter(info => info.icon === Phone && !info.whatsapp).map((info) => {
+            const Icon = info.icon
+            return (
+              <motion.div
+                key={info.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 }}
+                className="bg-white rounded-lg p-4 shadow-sm border border-gray-200 hover:border-gray-300 transition-all duration-300"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <Icon className="w-5 h-5 text-gray-600" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-xs font-semibold text-gray-600 mb-0.5">{info.title}</h3>
+                    <a href={info.link} className="text-sm font-medium text-gray-700 hover:text-accent-600 transition-colors">
+                      {info.value}
+                    </a>
+                    <p className="text-xs text-gray-500 mt-0.5">{info.description}</p>
+                  </div>
+                </div>
+              </motion.div>
+            )
+          })}
+
         </div>
       </section>
 
@@ -571,7 +615,7 @@ export default function ContactPageClient() {
 
               {/* Phone CTA */}
               <motion.a
-                href="tel:+34871242618"
+                href="tel:+34871242616"
                 whileHover={{ scale: 1.02, y: -2 }}
                 whileTap={{ scale: 0.98 }}
                 className="block bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-600 hover:to-accent-700 rounded-xl p-5 text-white shadow-lg hover:shadow-xl transition-all duration-300"

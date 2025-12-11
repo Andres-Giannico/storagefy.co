@@ -692,11 +692,11 @@ export default function DemoPage() {
                 <div className="space-y-2">
                   <div className="flex items-center gap-3">
                     <Phone className="w-5 h-5 text-accent-300" />
-                    <span className="text-white">{language === 'es' ? 'Comercial Theo:' : 'Sales Theo:'} +34 871 242 618</span>
+                    <span className="text-white">{language === 'es' ? 'Especialista Theo:' : 'Specialist Theo:'} +34 871 242 642</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <Phone className="w-5 h-5 text-accent-300" />
-                    <span className="text-white">{language === 'es' ? 'Comercial Juan David:' : 'Sales Juan David:'} +34 871 242 616</span>
+                    <span className="text-white">{language === 'es' ? 'Especialista Juan David:' : 'Specialist Juan David:'} +34 871 242 616</span>
                   </div>
                 </div>
               </div>
