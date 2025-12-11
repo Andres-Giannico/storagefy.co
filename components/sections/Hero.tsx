@@ -182,7 +182,7 @@ const Hero = () => {
             className="flex items-center gap-8 pt-8"
           >
             <div className="text-center">
-              <div className="text-2xl font-bold text-primary-800">2024</div>
+              <div className="text-2xl font-bold text-primary-800">2025</div>
               <div className="text-sm text-primary-600">{language === 'es' ? 'Año de Fundación' : 'Founded'}</div>
             </div>
             <div className="text-center">
