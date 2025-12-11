@@ -174,7 +174,7 @@ const ClientProfiles = () => {
                       </span>
                     </div>
                     <p className="text-base font-semibold text-primary-800 italic">
-                      "{profile.result}"
+                      &ldquo;{profile.result}&rdquo;
                     </p>
                   </div>
                 </div>
