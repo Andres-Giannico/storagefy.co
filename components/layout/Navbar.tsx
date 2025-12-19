@@ -150,6 +150,16 @@ const Navbar = ({ className }: NavbarProps) => {
                 </AnimatePresence>
               </div>
 
+              {/* Sign Up Link */}
+              <motion.a
+                href="/signup"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-4 py-2.5 text-primary-700 hover:text-accent-600 font-semibold transition-colors duration-200"
+              >
+                {language === 'es' ? 'Registrarse' : 'Sign Up'}
+              </motion.a>
+
               {/* CTA Button */}
               <motion.a
                 href="https://www.storagefy.app/auth/signin"
@@ -232,6 +242,16 @@ const Navbar = ({ className }: NavbarProps) => {
                       ))}
                     </div>
                   </div>
+
+                  {/* Mobile Sign Up Link */}
+                  <motion.a
+                    href="/signup"
+                    onClick={() => setIsOpen(false)}
+                    whileTap={{ scale: 0.95 }}
+                    className="block w-full px-6 py-3 border-2 border-accent-500 text-accent-600 font-semibold rounded-full text-center hover:bg-accent-50 transition-all duration-300 mb-3"
+                  >
+                    {language === 'es' ? 'Registrarse' : 'Sign Up'}
+                  </motion.a>
 
                   {/* Mobile CTA Button */}
                   <motion.a

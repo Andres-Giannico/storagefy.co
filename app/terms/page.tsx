@@ -19,7 +19,7 @@ export default function TermsPage() {
 
 La titularidad de este sitio web, Storagefy.co, (en adelante, Sitio Web) la ostenta: Storagefy S.L, provista de NIF: B24986580 e inscrita en: Ibiza con los siguientes datos registrales: , cuyo representante es: , y cuyos datos de contacto son:
 
-**Dirección:** 
+**Dirección:** Carrer de polls 10, Sant jordi de ses salines, 07817, San José, Ibiza
 **Teléfono de contacto:** +34 871 242 618
 **Email de contacto:** hello@storagefy.co`,
         },
@@ -108,7 +108,7 @@ La relación entre el Usuario y Storage FY se regirá por la normativa vigente y
 
 The ownership of this website, Storagefy.co, (hereinafter, Website) is held by: Storagefy S.L, provided with NIF: B24986580 and registered in: Ibiza with the following registration data: , whose representative is: , and whose contact details are:
 
-**Address:** 
+**Address:** Carrer de polls 10, Sant jordi de ses salines, 07817, San José, Ibiza
 **Contact phone:** +34 871 242 618
 **Contact email:** hello@storagefy.co`,
         },

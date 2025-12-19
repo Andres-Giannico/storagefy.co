@@ -30,7 +30,7 @@ export default function PrivacyPage() {
           title: 'Identidad del responsable del tratamiento de los datos personales',
           content: `El responsable del tratamiento de los datos personales recogidos en Storagefy es: StorageFY S.L, provista de NIF/CIF: B24986580 e inscrito en: Ibiza con los siguientes datos registrales: , cuyo representante es: (en adelante, Responsable del tratamiento). Sus datos de contacto son los siguientes:
 
-**Dirección:** 
+**Dirección:** Carrer de polls 10, Sant jordi de ses salines, 07817, San José, Ibiza
 **Teléfono de contacto:** +34 871 242 618
 **Email de contacto:** hello@storagefy.co`,
         },
@@ -117,7 +117,7 @@ Así pues, el Usuario podrá ejercitar sus derechos mediante comunicación escri
 - Todo documento que acredite la petición que formula.
 
 Esta solicitud y todo otro documento adjunto podrá enviarse a la siguiente dirección y/o correo electrónico:
-**Dirección postal:** 
+**Dirección postal:** Carrer de polls 10, Sant jordi de ses salines, 07817, San José, Ibiza
 **Correo electrónico:** hello@storagefy.co`,
         },
         thirdParty: {
@@ -159,7 +159,7 @@ Esta Política de Privacidad fue actualizada para adaptarse al Reglamento (UE) 2
           title: 'Identity of the controller of personal data processing',
           content: `The controller of the personal data collected in Storagefy is: StorageFY S.L, provided with NIF/CIF: B24986580 and registered in: Ibiza with the following registration data: , whose representative is: (hereinafter, Controller). Their contact details are as follows:
 
-**Address:** 
+**Address:** Carrer de polls 10, Sant jordi de ses salines, 07817, San José, Ibiza
 **Contact phone:** +34 871 242 618
 **Contact email:** hello@storagefy.co`,
         },
@@ -184,7 +184,7 @@ Thus, the User may exercise their rights by means of written communication addre
 - Any document that accredits the request being made.
 
 This request and any other attached document may be sent to the following address and/or email:
-**Postal address:** 
+**Postal address:** Carrer de polls 10, Sant jordi de ses salines, 07817, San José, Ibiza
 **Email:** hello@storagefy.co`,
         },
         claims: {
