@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { ArrowRight, CheckCircle } from 'lucide-react'
 import { useLanguage } from '@/lib/context/LanguageContext'
 import FadeInUp from '@/components/animations/FadeInUp'
+import LinkWithLang from '@/components/common/LinkWithLang'
 
 const FinalCTA = () => {
   const { language } = useLanguage()
@@ -118,24 +119,26 @@ const FinalCTA = () => {
             className="space-y-4"
           >
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <motion.a
-                href="/demo"
-                whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(124, 179, 66, 0.4)' }}
-                whileTap={{ scale: 0.95 }}
-                className="group px-8 py-4 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-semibold rounded-full hover:from-accent-600 hover:to-accent-700 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
-              >
-                {language === 'es' ? 'Comenzar prueba gratuita de 14 días' : 'Start 14-day free trial'}
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
-              </motion.a>
+              <LinkWithLang href="/demo">
+                <motion.span
+                  whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(124, 179, 66, 0.4)' }}
+                  whileTap={{ scale: 0.95 }}
+                  className="group px-8 py-4 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-semibold rounded-full hover:from-accent-600 hover:to-accent-700 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  {language === 'es' ? 'Comenzar prueba gratuita de 14 días' : 'Start 14-day free trial'}
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+                </motion.span>
+              </LinkWithLang>
 
-              <motion.a
-                href="/contact"
-                whileHover={{ scale: 1.05, backgroundColor: 'rgba(255, 255, 255, 0.15)' }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-white/10 border-2 border-white/30 text-white font-semibold rounded-full hover:border-white/50 transition-all duration-300 flex items-center justify-center gap-2 backdrop-blur-sm"
-              >
-                {language === 'es' ? 'Hablar con un especialista' : 'Talk to a specialist'}
-              </motion.a>
+              <LinkWithLang href="/contact">
+                <motion.span
+                  whileHover={{ scale: 1.05, backgroundColor: 'rgba(255, 255, 255, 0.15)' }}
+                  whileTap={{ scale: 0.95 }}
+                  className="px-8 py-4 bg-white/10 border-2 border-white/30 text-white font-semibold rounded-full hover:border-white/50 transition-all duration-300 flex items-center justify-center gap-2 backdrop-blur-sm cursor-pointer"
+                >
+                  {language === 'es' ? 'Hablar con un especialista' : 'Talk to a specialist'}
+                </motion.span>
+              </LinkWithLang>
             </div>
             <p className="text-sm text-gray-300 text-center">
               {language === 'es' 

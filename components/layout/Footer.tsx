@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { Mail, Phone, MapPin, Twitter, Linkedin, Instagram, Facebook } from 'lucide-react'
 import { useLanguage } from '@/lib/context/LanguageContext'
+import LinkWithLang from '@/components/common/LinkWithLang'
 
 const Footer = () => {
   const { language } = useLanguage()
@@ -174,13 +175,13 @@ const Footer = () => {
             <ul className="space-y-2">
               {quickLinks.map((link) => (
                 <li key={link.label}>
-                  <a
+                  <LinkWithLang
                     href={link.href}
                     className="text-gray-600 hover:text-accent-600 transition-colors duration-200 text-sm inline-flex items-center group"
                   >
                     <span className="w-1 h-1 rounded-full bg-accent-500 mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200"></span>
                     {link.label}
-                  </a>
+                  </LinkWithLang>
                 </li>
               ))}
             </ul>
@@ -199,13 +200,13 @@ const Footer = () => {
             <ul className="space-y-2">
               {legalLinks.map((link) => (
                 <li key={link.label}>
-                  <a
+                  <LinkWithLang
                     href={link.href}
                     className="text-gray-600 hover:text-accent-600 transition-colors duration-200 text-sm inline-flex items-center group"
                   >
                     <span className="w-1 h-1 rounded-full bg-accent-500 mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200"></span>
                     {link.label}
-                  </a>
+                  </LinkWithLang>
                 </li>
               ))}
             </ul>
@@ -276,9 +277,9 @@ const Footer = () => {
               >
                 <p className="text-gray-600">
                   © 2025{' '}
-                  <a href="/" className="text-accent-600 hover:text-accent-700 font-semibold transition-colors duration-200">
+                  <LinkWithLang href="/" className="text-accent-600 hover:text-accent-700 font-semibold transition-colors duration-200">
                     StorageFy
-                  </a>
+                  </LinkWithLang>
                   . {language === 'es' ? 'Todos los derechos reservados' : 'All rights reserved'}
                 </p>
               </motion.div>

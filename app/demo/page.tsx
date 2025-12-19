@@ -25,6 +25,7 @@ import {
 } from 'lucide-react'
 import { useLanguage } from '@/lib/context/LanguageContext'
 import FadeInUp from '@/components/animations/FadeInUp'
+import LinkWithLang from '@/components/common/LinkWithLang'
 
 export default function DemoPage() {
   const { language } = useLanguage()
@@ -287,7 +288,9 @@ export default function DemoPage() {
                 </motion.div>
                 
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight">
-                  {language === 'es' ? 'Ve StorageFy en acción' : 'See StorageFy in Action'}
+                  <span className="bg-gradient-to-r from-white via-accent-300 to-accent-400 bg-clip-text text-transparent drop-shadow-lg">
+                    {language === 'es' ? 'Ve StorageFy en acción' : 'See StorageFy in Action'}
+                  </span>
                 </h1>
                 
                 <p className="text-xl text-gray-200 max-w-2xl mb-8 leading-relaxed">
@@ -309,29 +312,28 @@ export default function DemoPage() {
                   </div>
                 </div>
 
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <a
-                    href="/signup"
-                    className="px-8 py-3 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-semibold rounded-full shadow-lg hover:from-accent-600 hover:to-accent-700 transition-all duration-200 flex items-center justify-center gap-2 hover:scale-105 active:scale-95"
-                  >
-                    {language === 'es' ? 'Crear cuenta gratis' : 'Create free account'}
-                    <ArrowRight className="w-5 h-5" />
-                  </a>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <LinkWithLang href="/signup">
+                    <span className="px-6 py-2.5 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-medium rounded-lg shadow-md hover:from-accent-600 hover:to-accent-700 hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2 text-sm cursor-pointer">
+                      {language === 'es' ? 'Crear cuenta gratis' : 'Create free account'}
+                      <ArrowRight className="w-4 h-4" />
+                    </span>
+                  </LinkWithLang>
                   <button
                     onClick={() => setIsPlaying(!isPlaying)}
-                    className="px-8 py-3 bg-white/10 border-2 border-white/30 text-white font-semibold rounded-full shadow-lg hover:border-white/50 hover:bg-white/20 transition-all duration-200 backdrop-blur-sm flex items-center justify-center gap-2 hover:scale-105 active:scale-95"
+                    className="px-5 py-2.5 bg-white/10 border border-white/20 text-white font-medium rounded-lg shadow-sm hover:bg-white/20 hover:border-white/30 transition-all duration-200 backdrop-blur-sm flex items-center justify-center gap-2 text-sm"
                   >
-                    {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
+                    {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
                     {isPlaying 
-                      ? (language === 'es' ? 'Pausar Demo' : 'Pause Demo')
+                      ? (language === 'es' ? 'Pausar' : 'Pause')
                       : (language === 'es' ? 'Iniciar Demo' : 'Start Demo')
                     }
                   </button>
                   <button
                     onClick={() => setIsMuted(!isMuted)}
-                    className="px-8 py-3 bg-white/10 border-2 border-white/30 text-white font-semibold rounded-full shadow-lg hover:border-white/50 hover:bg-white/20 transition-all duration-200 backdrop-blur-sm flex items-center justify-center gap-2 hover:scale-105 active:scale-95"
+                    className="px-5 py-2.5 bg-white/10 border border-white/20 text-white font-medium rounded-lg shadow-sm hover:bg-white/20 hover:border-white/30 transition-all duration-200 backdrop-blur-sm flex items-center justify-center gap-2 text-sm"
                   >
-                    {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+                    {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
                     {isMuted 
                       ? (language === 'es' ? 'Activar Audio' : 'Enable Audio')
                       : (language === 'es' ? 'Silenciar' : 'Mute')
@@ -597,12 +599,12 @@ export default function DemoPage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <FadeInUp className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-extrabold mb-6 leading-tight">
-              {language === 'es' ? '¿Listo para tu demo personalizado?' : 'Ready for your personalized demo?'}
+              {language === 'es' ? '¿Listo para abrir tu cuenta en 2 minutos?' : 'Ready to open your account in 2 minutes?'}
             </h2>
             <p className="text-xl text-gray-200 max-w-2xl mx-auto">
               {language === 'es'
-                ? 'Agenda una demostración personalizada y descubre cómo StorageFy puede transformar tu negocio específico.'
-                : 'Schedule a personalized demonstration and discover how StorageFy can transform your specific business.'
+                ? 'Crea tu cuenta gratis y comienza a gestionar tu negocio de trasteros de forma profesional desde hoy.'
+                : 'Create your free account and start managing your storage business professionally from today.'
               }
             </p>
           </FadeInUp>
@@ -697,7 +699,7 @@ export default function DemoPage() {
                 className="w-full px-8 py-4 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-semibold rounded-xl hover:from-accent-600 hover:to-accent-700 transition-all duration-200 flex items-center justify-center gap-2 hover:scale-105 active:scale-95"
               >
                 <Calendar className="w-5 h-5" />
-                {language === 'es' ? 'Solicitar Demo Personalizado' : 'Request Personalized Demo'}
+                {language === 'es' ? 'Crear cuenta gratis' : 'Create free account'}
               </button>
             </form>
 

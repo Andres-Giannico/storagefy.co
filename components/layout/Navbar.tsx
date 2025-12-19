@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { Menu, X, ChevronDown, Globe } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useLanguage } from '@/lib/context/LanguageContext'
+import LinkWithLang from '@/components/common/LinkWithLang'
 
 interface NavbarProps {
   className?: string
@@ -76,7 +77,7 @@ const Navbar = ({ className }: NavbarProps) => {
               whileTap={{ scale: 0.95 }}
               className="flex-shrink-0"
             >
-              <a href="/" className="flex items-center space-x-3">
+              <LinkWithLang href="/" className="flex items-center space-x-3">
                 <div className="relative w-10 h-10 lg:w-12 lg:h-12">
                   <Image
                     src="/logo.png"
@@ -89,21 +90,24 @@ const Navbar = ({ className }: NavbarProps) => {
                 <span className="text-xl lg:text-2xl font-bold text-gradient">
                   StorageFy
                 </span>
-              </a>
+              </LinkWithLang>
             </motion.div>
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-8">
               {navItems.map((item) => (
-                <motion.a
+                <motion.div
                   key={item.href}
-                  href={item.href}
                   whileHover={{ y: -2 }}
-                  className="text-primary-700 hover:text-accent-600 font-medium transition-colors duration-200 relative group"
                 >
-                  {t(item.key)}
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent-500 transition-all duration-300 group-hover:w-full"></span>
-                </motion.a>
+                  <LinkWithLang
+                    href={item.href}
+                    className="text-primary-700 hover:text-accent-600 font-medium transition-colors duration-200 relative group block"
+                  >
+                    {t(item.key)}
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent-500 transition-all duration-300 group-hover:w-full"></span>
+                  </LinkWithLang>
+                </motion.div>
               ))}
             </div>
 
@@ -151,14 +155,15 @@ const Navbar = ({ className }: NavbarProps) => {
               </div>
 
               {/* Sign Up Link */}
-              <motion.a
-                href="/signup"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-4 py-2.5 text-primary-700 hover:text-accent-600 font-semibold transition-colors duration-200"
-              >
-                {language === 'es' ? 'Registrarse' : 'Sign Up'}
-              </motion.a>
+              <LinkWithLang href="/signup">
+                <motion.span
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="px-4 py-2.5 text-primary-700 hover:text-accent-600 font-semibold transition-colors duration-200 block"
+                >
+                  {language === 'es' ? 'Registrarse' : 'Sign Up'}
+                </motion.span>
+              </LinkWithLang>
 
               {/* CTA Button */}
               <motion.a
@@ -205,17 +210,20 @@ const Navbar = ({ className }: NavbarProps) => {
                 
                 {/* Mobile Navigation */}
                 {navItems.map((item, index) => (
-                  <motion.a
+                  <LinkWithLang
                     key={item.href}
                     href={item.href}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1 }}
                     onClick={() => setIsOpen(false)}
-                    className="block text-lg font-medium text-primary-700 hover:text-accent-600 transition-colors duration-200"
                   >
-                    {t(item.key)}
-                  </motion.a>
+                    <motion.span
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      className="block text-lg font-medium text-primary-700 hover:text-accent-600 transition-colors duration-200"
+                    >
+                      {t(item.key)}
+                    </motion.span>
+                  </LinkWithLang>
                 ))}
 
                 <div className="border-t border-white/20 pt-4">
@@ -244,14 +252,14 @@ const Navbar = ({ className }: NavbarProps) => {
                   </div>
 
                   {/* Mobile Sign Up Link */}
-                  <motion.a
-                    href="/signup"
-                    onClick={() => setIsOpen(false)}
-                    whileTap={{ scale: 0.95 }}
-                    className="block w-full px-6 py-3 border-2 border-accent-500 text-accent-600 font-semibold rounded-full text-center hover:bg-accent-50 transition-all duration-300 mb-3"
-                  >
-                    {language === 'es' ? 'Registrarse' : 'Sign Up'}
-                  </motion.a>
+                  <LinkWithLang href="/signup" onClick={() => setIsOpen(false)}>
+                    <motion.span
+                      whileTap={{ scale: 0.95 }}
+                      className="block w-full px-6 py-3 border-2 border-accent-500 text-accent-600 font-semibold rounded-full text-center hover:bg-accent-50 transition-all duration-300 mb-3"
+                    >
+                      {language === 'es' ? 'Registrarse' : 'Sign Up'}
+                    </motion.span>
+                  </LinkWithLang>
 
                   {/* Mobile CTA Button */}
                   <motion.a

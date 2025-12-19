@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
 import { ArrowRight, TrendingUp, Users, DollarSign, Building2, CheckCircle, X, CreditCard, Globe, Clock } from 'lucide-react'
 import { useLanguage } from '@/lib/context/LanguageContext'
+import LinkWithLang from '@/components/common/LinkWithLang'
 
 const Hero = () => {
   const { t, language } = useLanguage()
@@ -128,27 +129,29 @@ const Hero = () => {
             transition={{ delay: 0.4, duration: 0.6 }}
             className="space-y-5"
           >
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row gap-3">
               {/* CTA Principal */}
-              <motion.a
-                href="/demo"
-                whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(124, 179, 66, 0.3)' }}
-                whileTap={{ scale: 0.95 }}
-                className="group px-8 py-4 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-semibold rounded-full hover:from-accent-600 hover:to-accent-700 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2 text-lg"
-              >
-                {language === 'es' ? 'Probar gratis 14 días' : 'Try free for 14 days'}
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
-              </motion.a>
+              <LinkWithLang href="/signup">
+                <motion.span
+                  whileHover={{ scale: 1.02, y: -1 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="group px-6 py-2.5 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-medium rounded-lg hover:from-accent-600 hover:to-accent-700 transition-all duration-200 shadow-md hover:shadow-lg flex items-center justify-center gap-2 text-sm cursor-pointer"
+                >
+                  {language === 'es' ? 'Crear cuenta gratis' : 'Create free account'}
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-200" />
+                </motion.span>
+              </LinkWithLang>
 
               {/* CTA Secundario */}
-              <motion.a
-                href="/demo"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 glass border-2 border-primary-200 text-primary-700 font-semibold rounded-full hover:bg-white/80 hover:border-accent-300 transition-all duration-300 flex items-center justify-center gap-2"
-              >
-                {language === 'es' ? 'Ver demo en 2 minutos (sin registro)' : 'View 2-minute demo (no signup)'}
-              </motion.a>
+              <LinkWithLang href="/demo">
+                <motion.span
+                  whileHover={{ scale: 1.02, y: -1 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="px-6 py-2.5 bg-white/80 backdrop-blur-sm border border-primary-200 text-primary-700 font-medium rounded-lg hover:bg-white hover:border-accent-300 hover:text-accent-700 transition-all duration-200 shadow-sm hover:shadow-md flex items-center justify-center gap-2 text-sm cursor-pointer"
+                >
+                  {language === 'es' ? 'Ver demo' : 'View demo'}
+                </motion.span>
+              </LinkWithLang>
             </div>
 
             {/* Mensaje de registro rápido */}
