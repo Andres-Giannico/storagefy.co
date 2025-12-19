@@ -227,7 +227,7 @@ The relationship between the User and Storage FY will be governed by the regulat
                 <h2 className="text-2xl font-semibold text-primary-900 mb-4">
                   {section.title}
                 </h2>
-                {section.subtitle && (
+                {'subtitle' in section && section.subtitle && (
                   <h3 className="text-xl font-medium text-primary-800 mb-3 mt-4">
                     {section.subtitle}
                   </h3>
