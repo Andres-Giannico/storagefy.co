@@ -443,6 +443,11 @@ export default function CasosExitoPage() {
                 {language === 'es' ? 'Hablar con Experto' : 'Talk to Expert'}
               </motion.a>
             </div>
+            <p className="text-center text-sm text-white/80 mt-4">
+              {language === 'es'
+                ? 'Regístrate gratis en 2 minutos • Sin tarjeta de crédito'
+                : 'Sign up free in 2 minutes • No credit card required'}
+            </p>
           </FadeInUp>
         </div>
       </section>

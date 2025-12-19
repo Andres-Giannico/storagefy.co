@@ -2,7 +2,7 @@
 
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
-import { ArrowRight, TrendingUp, Users, DollarSign, Building2, CheckCircle, X, CreditCard, Globe } from 'lucide-react'
+import { ArrowRight, TrendingUp, Users, DollarSign, Building2, CheckCircle, X, CreditCard, Globe, Clock } from 'lucide-react'
 import { useLanguage } from '@/lib/context/LanguageContext'
 
 const Hero = () => {
@@ -149,6 +149,16 @@ const Hero = () => {
               >
                 {language === 'es' ? 'Ver demo en 2 minutos (sin registro)' : 'View 2-minute demo (no signup)'}
               </motion.a>
+            </div>
+
+            {/* Mensaje de registro rápido */}
+            <div className="text-center pt-2">
+              <p className="text-sm text-primary-600 flex items-center justify-center gap-2">
+                <Clock className="w-4 h-4 text-accent-600" />
+                {language === 'es' 
+                  ? '✨ Regístrate gratis en 2 minutos • Sin tarjeta de crédito'
+                  : '✨ Sign up free in 2 minutes • No credit card required'}
+              </p>
             </div>
 
             {/* 3 Bullets de Beneficios */}

@@ -297,10 +297,29 @@ export default function DemoPage() {
                   }
                 </p>
 
+                {/* Banner de registro rápido */}
+                <div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg p-4 mb-6">
+                  <div className="flex items-center gap-3">
+                    <Clock className="w-5 h-5 text-green-600 flex-shrink-0" />
+                    <p className="text-sm font-semibold text-green-700">
+                      {language === 'es'
+                        ? 'Regístrate gratis en 2 minutos y comienza tu prueba de 14 días'
+                        : 'Sign up free in 2 minutes and start your 14-day trial'}
+                    </p>
+                  </div>
+                </div>
+
                 <div className="flex flex-col sm:flex-row gap-4">
+                  <a
+                    href="/signup"
+                    className="px-8 py-3 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-semibold rounded-full shadow-lg hover:from-accent-600 hover:to-accent-700 transition-all duration-200 flex items-center justify-center gap-2 hover:scale-105 active:scale-95"
+                  >
+                    {language === 'es' ? 'Crear cuenta gratis' : 'Create free account'}
+                    <ArrowRight className="w-5 h-5" />
+                  </a>
                   <button
                     onClick={() => setIsPlaying(!isPlaying)}
-                    className="px-8 py-3 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-semibold rounded-full shadow-lg hover:from-accent-600 hover:to-accent-700 transition-all duration-200 flex items-center justify-center gap-2 hover:scale-105 active:scale-95"
+                    className="px-8 py-3 bg-white/10 border-2 border-white/30 text-white font-semibold rounded-full shadow-lg hover:border-white/50 hover:bg-white/20 transition-all duration-200 backdrop-blur-sm flex items-center justify-center gap-2 hover:scale-105 active:scale-95"
                   >
                     {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
                     {isPlaying 

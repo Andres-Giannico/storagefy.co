@@ -409,6 +409,11 @@ export default function FeaturesPageClient() {
                 {language === 'es' ? 'Hablar con Experto' : 'Talk to Expert'}
               </a>
             </div>
+            <p className="text-center text-sm text-gray-300 mt-4">
+              {language === 'es'
+                ? 'Regístrate gratis en 2 minutos • Sin tarjeta de crédito'
+                : 'Sign up free in 2 minutes • No credit card required'}
+            </p>
           </FadeInUp>
         </div>
       </section>

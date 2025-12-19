@@ -138,7 +138,9 @@ const FinalCTA = () => {
               </motion.a>
             </div>
             <p className="text-sm text-gray-300 text-center">
-              {language === 'es' ? '✓ Sin tarjeta • Sin permanencia • Migración de datos incluida' : '✓ No card • No commitment • Data migration included'}
+              {language === 'es' 
+                ? '✓ Sin tarjeta • Sin permanencia • Registro en 2 minutos • Migración incluida'
+                : '✓ No card • No commitment • Sign up in 2 minutes • Migration included'}
             </p>
           </motion.div>
         </FadeInUp>
