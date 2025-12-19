@@ -73,44 +73,47 @@ const Hero = () => {
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
-          className="space-y-8"
+          className="space-y-10"
         >
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
-            className="space-y-6"
+            className="space-y-8"
           >
-            <h1 className="text-3xl lg:text-5xl font-bold leading-tight">
-              <span className="text-primary-800">
-                {language === 'es' 
-                  ? 'Software para negocios de trasteros y parkings:' 
-                  : 'Software for storage and parking businesses:'}
-              </span>
-              <br />
-              <span className="text-gradient">
-                {language === 'es' 
-                  ? 'reservas online, cobros automáticos' 
-                  : 'online reservations, automatic payments'}
-              </span>
-              <br />
-              <span className="text-gradient-accent">
-                {language === 'es' 
-                  ? 'y control total de unidades' 
-                  : 'and total unit control'}
-              </span>
-            </h1>
+            {/* Título Principal */}
+            <div className="space-y-4">
+              <h1 className="text-3xl lg:text-5xl font-bold leading-tight">
+                <span className="text-primary-800">
+                  {language === 'es' 
+                    ? 'Software para negocios de trasteros y parkings:' 
+                    : 'Software for storage and parking businesses:'}
+                </span>
+                <br />
+                <span className="text-gradient">
+                  {language === 'es' 
+                    ? 'reservas online, cobros automáticos' 
+                    : 'online reservations, automatic payments'}
+                </span>
+                <br />
+                <span className="text-gradient-accent">
+                  {language === 'es' 
+                    ? 'y control total de unidades' 
+                    : 'and total unit control'}
+                </span>
+              </h1>
 
-            <p className="text-lg lg:text-xl text-primary-600 leading-relaxed max-w-2xl">
-              {language === 'es' 
-                ? 'Automatiza reservas, contratos y pagos para reducir morosidad y llenar tus espacios más rápido.'
-                : 'Automate reservations, contracts and payments to reduce delinquency and fill your spaces faster.'
-              }
-            </p>
+              <p className="text-lg lg:text-xl text-primary-600 leading-relaxed max-w-2xl">
+                {language === 'es' 
+                  ? 'Automatiza reservas, contratos y pagos para reducir morosidad y llenar tus espacios más rápido.'
+                  : 'Automate reservations, contracts and payments to reduce delinquency and fill your spaces faster.'
+                }
+              </p>
+            </div>
 
-            {/* Segmentación */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-accent-200 bg-accent-50/50 mt-2">
-              <Building2 className="w-4 h-4 text-accent-600" />
+            {/* Segmentación - Separada visualmente */}
+            <div className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg glass border border-accent-200 bg-accent-50/50">
+              <Building2 className="w-4 h-4 text-accent-600 flex-shrink-0" />
               <span className="text-sm font-medium text-primary-700">
                 <span className="font-semibold text-accent-700">
                   {language === 'es' ? 'Para: ' : 'For: '}
@@ -122,12 +125,12 @@ const Hero = () => {
             </div>
           </motion.div>
 
-          {/* CTA Buttons */}
+          {/* CTA Buttons - Sección separada */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.6 }}
-            className="space-y-5"
+            className="space-y-4"
           >
             <div className="flex flex-col sm:flex-row gap-3">
               {/* CTA Principal */}
@@ -154,59 +157,50 @@ const Hero = () => {
               </LinkWithLang>
             </div>
 
-            {/* Mensaje de registro rápido */}
-            <div className="text-center pt-2">
-              <p className="text-sm text-primary-600 flex items-center justify-center gap-2">
-                <Clock className="w-4 h-4 text-accent-600" />
+            {/* Mensaje de registro rápido - Separado */}
+            <div className="bg-green-50 border border-green-200 rounded-lg px-4 py-3">
+              <p className="text-sm text-green-700 font-medium flex items-center justify-center gap-2">
+                <Clock className="w-4 h-4 text-green-600 flex-shrink-0" />
                 {language === 'es' 
-                  ? '✨ Regístrate gratis en 2 minutos • Sin tarjeta de crédito'
-                  : '✨ Sign up free in 2 minutes • No credit card required'}
+                  ? 'Regístrate gratis en 2 minutos • Sin tarjeta de crédito'
+                  : 'Sign up free in 2 minutes • No credit card required'}
               </p>
-            </div>
-
-            {/* 3 Bullets de Beneficios */}
-            <div className="flex flex-col gap-2 pt-2">
-              <div className="flex items-center gap-3">
-                <X className="w-4 h-4 text-accent-600 flex-shrink-0" />
-                <span className="text-sm lg:text-base font-medium text-primary-700">
-                  {language === 'es' ? 'Adiós a Excel y al papeleo.' : 'Goodbye to Excel and paperwork.'}
-                </span>
-              </div>
-              <div className="flex items-center gap-3">
-                <CreditCard className="w-4 h-4 text-accent-600 flex-shrink-0" />
-                <span className="text-sm lg:text-base font-medium text-primary-700">
-                  {language === 'es' ? 'Cobros automatizados y menos morosidad.' : 'Automated payments and less delinquency.'}
-                </span>
-              </div>
-              <div className="flex items-center gap-3">
-                <Globe className="w-4 h-4 text-accent-600 flex-shrink-0" />
-                <span className="text-sm lg:text-base font-medium text-primary-700">
-                  {language === 'es' ? 'Reservas 24/7 desde tu web.' : '24/7 reservations from your website.'}
-                </span>
-              </div>
             </div>
           </motion.div>
 
-          {/* Trust Indicators */}
+          {/* 3 Bullets de Beneficios - Sección separada */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.6 }}
-            className="flex items-center gap-8 pt-8"
+            transition={{ delay: 0.5, duration: 0.6 }}
+            className="space-y-3 pt-4 border-t border-gray-200"
           >
-            <div className="text-center">
-              <div className="text-2xl font-bold text-primary-800">2025</div>
-              <div className="text-sm text-primary-600">{language === 'es' ? 'Año de Fundación' : 'Founded'}</div>
+            <div className="flex items-start gap-3">
+              <div className="mt-0.5 p-1.5 rounded-lg bg-red-50">
+                <X className="w-4 h-4 text-red-600 flex-shrink-0" />
+              </div>
+              <span className="text-sm lg:text-base font-medium text-primary-700 pt-1">
+                {language === 'es' ? 'Adiós a Excel y al papeleo.' : 'Goodbye to Excel and paperwork.'}
+              </span>
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-primary-800">24/7</div>
-              <div className="text-sm text-primary-600">{language === 'es' ? 'Soporte' : 'Support'}</div>
+            <div className="flex items-start gap-3">
+              <div className="mt-0.5 p-1.5 rounded-lg bg-green-50">
+                <CreditCard className="w-4 h-4 text-green-600 flex-shrink-0" />
+              </div>
+              <span className="text-sm lg:text-base font-medium text-primary-700 pt-1">
+                {language === 'es' ? 'Cobros automatizados y menos morosidad.' : 'Automated payments and less delinquency.'}
+              </span>
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-primary-800">100%</div>
-              <div className="text-sm text-primary-600">{language === 'es' ? 'Español' : 'Spanish'}</div>
+            <div className="flex items-start gap-3">
+              <div className="mt-0.5 p-1.5 rounded-lg bg-blue-50">
+                <Globe className="w-4 h-4 text-blue-600 flex-shrink-0" />
+              </div>
+              <span className="text-sm lg:text-base font-medium text-primary-700 pt-1">
+                {language === 'es' ? 'Reservas 24/7 desde tu web.' : '24/7 reservations from your website.'}
+              </span>
             </div>
           </motion.div>
+
         </motion.div>
 
         {/* Dashboard Mockup Right */}
