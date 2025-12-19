@@ -248,39 +248,56 @@ const Footer = () => {
 
         {/* Bottom Footer */}
         <div className="py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm">
-            
-            {/* Copyright */}
+          <div className="flex flex-col gap-4 text-sm">
+            {/* Legal Info */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="text-center md:text-left"
+              className="text-center text-gray-600 space-y-1"
             >
-              <p className="text-gray-600">
-                © 2025{' '}
-                <a href="/" className="text-accent-600 hover:text-accent-700 font-semibold transition-colors duration-200">
-                  StorageFy
-                </a>
-                . {language === 'es' ? 'Todos los derechos reservados' : 'All rights reserved'}
+              <p>
+                <strong>Storagefy S.L.</strong> | NIF: B24986580
+              </p>
+              <p className="text-xs text-gray-500">
+                {language === 'es' ? 'Inscrita en Ibiza, España' : 'Registered in Ibiza, Spain'}
               </p>
             </motion.div>
 
-            {/* Made with love */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-center md:text-right"
-            >
-              <p className="text-gray-500 text-sm flex items-center gap-1">
-                {language === 'es' ? 'Hecho con' : 'Made with'}{' '}
-                <span className="text-red-500 animate-pulse">❤️</span>{' '}
-                {language === 'es' ? 'en España' : 'in Spain'} 🇪🇸
-              </p>
-            </motion.div>
+            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+              {/* Copyright */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+                className="text-center md:text-left"
+              >
+                <p className="text-gray-600">
+                  © 2025{' '}
+                  <a href="/" className="text-accent-600 hover:text-accent-700 font-semibold transition-colors duration-200">
+                    StorageFy
+                  </a>
+                  . {language === 'es' ? 'Todos los derechos reservados' : 'All rights reserved'}
+                </p>
+              </motion.div>
+
+              {/* Made with love */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="text-center md:text-right"
+              >
+                <p className="text-gray-500 text-sm flex items-center gap-1">
+                  {language === 'es' ? 'Hecho con' : 'Made with'}{' '}
+                  <span className="text-red-500 animate-pulse">❤️</span>{' '}
+                  {language === 'es' ? 'en España' : 'in Spain'} 🇪🇸
+                </p>
+              </motion.div>
+            </div>
           </div>
         </div>
       </div>
