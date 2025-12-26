@@ -17,6 +17,9 @@ export const unidadesArticles: HelpArticle[] = [
 
 La pantalla **Unidades** centraliza todo el inventario de espacios disponibles. El formulario está dividido en bloques para que no se escape nada.
 
+![Pantalla de Unidades](/images/help/units.webp)
+*Vista de la lista de unidades con todas las opciones disponibles y filtros*
+
 ## Antes de comenzar
 
 - Asegúrate de tener creada la **locación** donde vivirá la unidad.
@@ -90,6 +93,9 @@ Cuando el estado pasa a **Alquilado**:
       en: `# Create New Units
 
 The **Units** screen centralizes every available space. The form is organized in sections so you never miss a required field.
+
+![Units Screen](/images/help/units.webp)
+*View of the units list with all available options and filters*
 
 ## Before you start
 
@@ -179,6 +185,9 @@ When status is **Rented**:
     content: {
       es: `# Editar Unidades Existentes
 
+![Formulario de Edición de Unidades](/images/help/edit_unit.webp)
+*Modal completo para editar unidades mostrando todas las secciones: información básica, dimensiones, precios y notas*
+
 ## Acceder a la Edición
 
 1. Ve a la sección "Unidades"
@@ -206,6 +215,9 @@ Puedes modificar:
 
 Los cambios se guardan automáticamente. Si modificas el precio, los nuevos contratos usarán el nuevo precio, pero los contratos existentes mantendrán su precio original.`,
       en: `# Edit Existing Units
+
+![Unit Edit Form](/images/help/edit_unit.webp)
+*Complete modal to edit units showing all sections: basic information, dimensions, pricing and notes*
 
 ## Access Editing
 

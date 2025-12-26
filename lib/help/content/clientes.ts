@@ -11,6 +11,9 @@ export const clientesArticles: HelpArticle[] = [
 
 ## 1. Acceder al Formulario de Cliente
 
+![Formulario de Creación de Cliente](/images/help/form_cliente.webp)
+*Formulario completo para crear nuevos clientes con todas las secciones: información personal, dirección y datos adicionales*
+
 1. En el Dashboard, ve a la sección **Clientes**
 2. Haz clic en el botón **Nuevo Cliente** (o "Crear Primer Cliente" si no tienes ninguno)
    Se abrirá un diálogo con el formulario de creación, organizado en tres tarjetas principales
@@ -124,6 +127,9 @@ El formulario cambiará dinámicamente según el tipo seleccionado.
       en: `# Create and Manage Customer Profiles
 
 ## 1. Access the Customer Form
+
+![Customer Creation Form](/images/help/form_cliente.webp)
+*Complete form to create new customers with all sections: personal information, address, and additional data*
 
 1. In the Dashboard, go to the **Customers** section
 2. Click the **New Customer** button (or "Create First Customer" if you don't have any)
@@ -250,6 +256,9 @@ The form will change dynamically based on the selected type.
 
 ## Búsqueda de Clientes
 
+![Lista de Clientes](/images/help/clients.webp)
+*Vista de la lista de clientes con filtros y búsqueda activos, mostrando estadísticas y opciones de filtrado*
+
 La barra de búsqueda te permite encontrar clientes por múltiples criterios:
 
 **Campos de búsqueda:**
@@ -360,6 +369,9 @@ Para expandir/contraer, haz clic en cualquier parte de la fila del cliente.
       en: `# Search and Filter Customers
 
 ## Customer Search
+
+![Customer List](/images/help/clients.webp)
+*View of the customer list with filters and active search, showing statistics and filtering options*
 
 The search bar allows you to find customers by multiple criteria:
 

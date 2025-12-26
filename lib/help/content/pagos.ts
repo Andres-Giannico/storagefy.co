@@ -11,6 +11,9 @@ export const pagosArticles: HelpArticle[] = [
 
 ## 1. Acceder al Formulario de Pago
 
+![Formulario de Pago](/images/help/form_pago.webp)
+*Formulario completo de pago con desglose de conceptos, métodos de pago y opciones de recordatorios automáticos*
+
 1. En el Dashboard, ve a la sección **Pagos**
 2. Haz clic en el botón **Nuevo Pago**
    Se abrirá un formulario completo organizado en tarjetas
@@ -172,6 +175,9 @@ Después de guardar, el pago puede tener estos estados:
       en: `# Create and Manage Payments
 
 ## 1. Access the Payment Form
+
+![Payment Form](/images/help/form_pago.webp)
+*Complete payment form with breakdown of items, payment methods, and automatic reminder options*
 
 1. In the Dashboard, go to the **Payments** section
 2. Click the **New Payment** button
@@ -344,6 +350,9 @@ After saving, payment can have these statuses:
     content: {
       es: `# Configurar Pasarelas de Pago (Stripe y Redsys)
 
+![Configuración de Pasarelas](/images/help/investments.webp)
+*Panel de configuración de Stripe y Redsys con opciones para habilitar y validar credenciales*
+
 ## 1. Acceder a la Configuración
 
 1. Ve a **Configuración** en el menú principal
@@ -489,6 +498,9 @@ Si habilitas ambas pasarelas:
 
 > **Tip**: Empieza con Stripe si necesitas algo rápido y fácil. Considera Redsys si buscas comisiones más bajas y operas principalmente en España.`,
       en: `# Configure Payment Gateways (Stripe and Redsys)
+
+![Payment Gateways Configuration](/images/help/investments.webp)
+*Stripe and Redsys configuration panel with options to enable and validate credentials*
 
 ## 1. Access Settings
 

@@ -15,6 +15,9 @@ export const dashboardArticles: HelpArticle[] = [
     content: {
       es: `# Vista General del Dashboard
 
+![Vista General del Dashboard](/images/help/dashboard.webp)
+*Vista principal del dashboard mostrando todas las métricas clave y KPIs principales*
+
 El dashboard es tu centro de control donde verás toda la información importante de tu negocio.
 
 ## Métricas Principales
@@ -55,6 +58,9 @@ Desde el dashboard puedes:
 - Agregar una unidad
 - Ver reportes`,
       en: `# Dashboard Overview
+
+![Dashboard Overview](/images/help/dashboard.webp)
+*Main dashboard view showing all key metrics and KPIs*
 
 The dashboard is your control center where you'll see all important business information.
 
@@ -114,6 +120,9 @@ From the dashboard you can:
     content: {
       es: `# Métricas y KPIs Principales
 
+![Métricas y KPIs del Dashboard](/images/help/13.26.52.webp)
+*Vista detallada de las métricas principales del dashboard mostrando ocupación, ingresos y clientes activos*
+
 ## Ocupación
 
 ### Tasa de Ocupación
@@ -161,6 +170,9 @@ From the dashboard you can:
 - Porcentaje de contratos que se renuevan
 - Indicador de satisfacción del cliente`,
       en: `# Main Metrics and KPIs
+
+![Dashboard Metrics and KPIs](/images/help/13.26.52.webp)
+*Detailed view of main dashboard metrics showing occupancy, revenue, and active customers*
 
 ## Occupancy
 
@@ -226,6 +238,9 @@ From the dashboard you can:
     content: {
       es: `# Alertas y Notificaciones
 
+![Sistema de Alertas](/images/help/13.26.57.webp)
+*Panel de alertas y notificaciones mostrando alertas urgentes e informativas del sistema*
+
 ## Tipos de Alertas
 
 ### Alertas Urgentes
@@ -261,6 +276,9 @@ Puedes filtrar alertas por:
 - Fecha
 - Estado (leída/no leída)`,
       en: `# Alerts and Notifications
+
+![Alerts System](/images/help/13.26.57.webp)
+*Alerts and notifications panel showing urgent and informative system alerts*
 
 ## Alert Types
 

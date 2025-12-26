@@ -11,6 +11,9 @@ export const contratosArticles: HelpArticle[] = [
 
 ## Asistente de Creación
 
+![Formulario de Contrato](/images/help/form_contrato.webp)
+*Asistente paso a paso para crear contratos digitales con selección de cliente, unidad y configuración de términos*
+
 1. Selecciona el cliente
 2. Elige la unidad (verás dimensiones)
 3. El sistema sugiere precio
@@ -23,6 +26,9 @@ Puedes agregar múltiples unidades al mismo contrato con precio calculado autom�
       en: `# Create Digital Contracts
 
 ## Creation Assistant
+
+![Contract Form](/images/help/form_contrato.webp)
+*Step-by-step assistant to create digital contracts with customer selection, unit selection, and terms configuration*
 
 1. Select the customer
 2. Choose the unit (you'll see dimensions)
