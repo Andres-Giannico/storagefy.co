@@ -153,7 +153,7 @@ export default function FeaturesPageClient() {
       benefits: language === 'es'
         ? ['140m² visualizados', '47 unidades mapeadas', 'Estados por colores', 'Edición en tiempo real']
         : ['140m² visualized', '47 units mapped', 'Color-coded status', 'Real-time editing'],
-      screenshot: '/images/floor-plan-ses-paises.webp',
+      screenshot: '/images/self-storage-map.webp',
       personImage: '/images/persona-gestionando-planificacion.webp',
       animation: 'floor-plans'
     }
