@@ -12,7 +12,10 @@ import {
   Shield,
   Clock,
   Euro,
-  Target
+  Target,
+  CreditCard,
+  Building2,
+  Lock
 } from 'lucide-react'
 import { useLanguage } from '@/lib/context/LanguageContext'
 import FadeInUp from '@/components/animations/FadeInUp'
@@ -111,6 +114,69 @@ export default function ComparativaPage() {
       competitor: language === 'es' ? 'Versionadas' : 'Versioned',
       storagefyHas: true,
       competitorHas: true
+    },
+    {
+      feature: language === 'es' ? 'Pagos recurrentes SEPA' : 'SEPA recurring payments',
+      storagefy: language === 'es' ? 'Automático (Direct Debit + Remesa)' : 'Automatic (Direct Debit + Remittance)',
+      competitor: language === 'es' ? 'No disponible' : 'Not available',
+      storagefyHas: true,
+      competitorHas: false
+    },
+    {
+      feature: language === 'es' ? 'Facturación electrónica Verifacti' : 'Verifacti electronic invoicing',
+      storagefy: language === 'es' ? 'Integración oficial con Hacienda' : 'Official integration with Tax Authority',
+      competitor: language === 'es' ? 'No disponible' : 'Not available',
+      storagefyHas: true,
+      competitorHas: false
+    },
+    {
+      feature: language === 'es' ? 'Soporte Parking/Mixto' : 'Parking/Mixed support',
+      storagefy: language === 'es' ? 'Almacenes + Parking en una plataforma' : 'Storage + Parking in one platform',
+      competitor: language === 'es' ? 'Solo uno u otro' : 'Only one or the other',
+      storagefyHas: true,
+      competitorHas: false
+    },
+    {
+      feature: language === 'es' ? 'Control acceso remoto (Sonoff)' : 'Remote access control (Sonoff)',
+      storagefy: language === 'es' ? 'Integración con dispositivos IoT' : 'Integration with IoT devices',
+      competitor: language === 'es' ? 'No disponible' : 'Not available',
+      storagefyHas: true,
+      competitorHas: false
+    },
+    {
+      feature: language === 'es' ? 'Reconcilicación bancaria' : 'Bank reconciliation',
+      storagefy: language === 'es' ? 'Automática con matching inteligente' : 'Automatic with intelligent matching',
+      competitor: language === 'es' ? 'Manual' : 'Manual',
+      storagefyHas: true,
+      competitorHas: false
+    },
+    {
+      feature: language === 'es' ? 'Pasarelas de pago' : 'Payment gateways',
+      storagefy: language === 'es' ? 'Stripe + Redsys (española)' : 'Stripe + Redsys (Spanish)',
+      competitor: language === 'es' ? 'Una sola opción' : 'Single option',
+      storagefyHas: true,
+      competitorHas: false
+    },
+    {
+      feature: language === 'es' ? 'Reportes por dimensiones' : 'Reports by dimensions',
+      storagefy: language === 'es' ? 'm², m³, análisis avanzado' : 'm², m³, advanced analysis',
+      competitor: language === 'es' ? 'Solo unidades' : 'Units only',
+      storagefyHas: true,
+      competitorHas: false
+    },
+    {
+      feature: language === 'es' ? 'Área de cliente' : 'Client area',
+      storagefy: language === 'es' ? 'Portal completo (en desarrollo)' : 'Complete portal (in development)',
+      competitor: language === 'es' ? 'No disponible' : 'Not available',
+      storagefyHas: true,
+      competitorHas: false
+    },
+    {
+      feature: language === 'es' ? 'Exportación PDF reportes' : 'PDF report export',
+      storagefy: language === 'es' ? 'Completa con gráficos' : 'Complete with charts',
+      competitor: language === 'es' ? 'Limitada' : 'Limited',
+      storagefyHas: true,
+      competitorHas: false
     }
   ]
 
@@ -215,6 +281,34 @@ export default function ComparativaPage() {
       description: language === 'es'
         ? 'Más rápido que la competencia, mobile-first design, UX moderna y actualizada, updates continuos sin downtime y stack tecnológico moderno.'
         : 'Faster than competition, mobile-first design, modern and updated UX, continuous updates without downtime and modern tech stack.'
+    },
+    {
+      icon: CreditCard,
+      title: language === 'es' ? 'Automatización Financiera Avanzada' : 'Advanced Financial Automation',
+      description: language === 'es'
+        ? 'Pagos recurrentes SEPA automáticos, reconciliación bancaria inteligente y facturación electrónica con validación Hacienda. Todo automatizado para ahorrarte tiempo.'
+        : 'Automatic SEPA recurring payments, intelligent bank reconciliation and electronic invoicing with Tax Authority validation. Everything automated to save you time.'
+    },
+    {
+      icon: Lock,
+      title: language === 'es' ? 'Tecnología IoT Integrada' : 'Integrated IoT Technology',
+      description: language === 'es'
+        ? 'Control de acceso remoto con Sonoff. Apertura de puertas desde el área de cliente y registro de accesos automatizado. Tecnología inteligente al alcance de tu mano.'
+        : 'Remote access control with Sonoff. Door opening from client area and automated access logging. Smart technology at your fingertips.'
+    },
+    {
+      icon: Building2,
+      title: language === 'es' ? 'Multi-Industria' : 'Multi-Industry',
+      description: language === 'es'
+        ? 'Una plataforma para almacenes y parking. Terminología adaptada automáticamente y campos específicos por tipo de negocio. Flexibilidad total.'
+        : 'One platform for storage and parking. Automatically adapted terminology and specific fields by business type. Total flexibility.'
+    },
+    {
+      icon: Shield,
+      title: language === 'es' ? 'Cumplimiento Normativo Español' : 'Spanish Regulatory Compliance',
+      description: language === 'es'
+        ? 'Integración Verifacti oficial, facturación electrónica con QR, cumplimiento RGPD estricto e IVA 21% español. Todo adaptado a la normativa española.'
+        : 'Official Verifacti integration, electronic invoicing with QR, strict GDPR compliance and 21% Spanish VAT. Everything adapted to Spanish regulations.'
     }
   ]
 
