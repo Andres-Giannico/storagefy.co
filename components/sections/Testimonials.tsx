@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { Star, TrendingUp, Clock, DollarSign, Quote } from 'lucide-react'
+import Image from 'next/image'
 import { useLanguage } from '@/lib/context/LanguageContext'
 import FadeInUp from '@/components/animations/FadeInUp'
 
@@ -10,22 +11,26 @@ const Testimonials = () => {
 
   const testimonials = [
     {
-      name: language === 'es' ? 'Carlos Martínez' : 'Carlos Martínez',
+      name: language === 'es' ? 'Steffano' : 'Steffano',
       role: language === 'es' ? 'Propietario' : 'Owner',
-      company: language === 'es' ? 'Trasteros Madrid Centro' : 'Madrid Centro Storage',
+      company: language === 'es' ? 'Trasteros Ibiza' : 'Ibiza Storage',
       quote: language === 'es' 
-        ? 'Pasamos de Excel a StorageFy y aumentamos la ocupación del 45% al 78% en solo 6 meses. El widget de reservas 24/7 fue un cambio radical.'
-        : 'We moved from Excel to StorageFy and increased occupancy from 45% to 78% in just 6 months. The 24/7 booking widget was a game changer.',
-      avatar: 'CM',
+        ? 'Pasamos de gestionar todo manualmente a StorageFy y aumentamos la ocupación del 52% al 82% en solo 5 meses. El widget de reservas 24/7 fue un cambio radical para nuestro negocio en Ibiza.'
+        : 'We moved from managing everything manually to StorageFy and increased occupancy from 52% to 82% in just 5 months. The 24/7 booking widget was a game changer for our business in Ibiza.',
+      avatar: '/images/steffnao.png',
+      logo: '/images/logotrasteros.png',
+      logoUrl: 'https://www.trasteros-ibiza.com/',
+      companyUrl: 'https://www.trasteros-ibiza.com/',
+      locations: 2,
       metrics: [
         { 
           icon: TrendingUp, 
-          value: '+33%', 
+          value: '+30%', 
           label: language === 'es' ? 'Ocupación' : 'Occupancy' 
         },
         { 
           icon: Clock, 
-          value: '12h', 
+          value: '15h', 
           label: language === 'es' ? 'Ahorro/semana' : 'Saved/week' 
         }
       ],
@@ -153,6 +158,42 @@ const Testimonials = () => {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8 hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]"
               >
+                {/* Company Logo */}
+                {testimonial.logo && (
+                  <div className="flex justify-center mb-6">
+                    {testimonial.logoUrl ? (
+                      <a 
+                        href={testimonial.logoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:opacity-80 transition-opacity"
+                      >
+                        <div className="relative h-12 w-auto">
+                          <Image
+                            src={testimonial.logo}
+                            alt={testimonial.company}
+                            width={120}
+                            height={48}
+                            className="object-contain"
+                            style={{ height: 'auto', width: 'auto', maxHeight: '48px' }}
+                          />
+                        </div>
+                      </a>
+                    ) : (
+                      <div className="relative h-12 w-auto">
+                        <Image
+                          src={testimonial.logo}
+                          alt={testimonial.company}
+                          width={120}
+                          height={48}
+                          className="object-contain"
+                          style={{ height: 'auto', width: 'auto', maxHeight: '48px' }}
+                        />
+                      </div>
+                    )}
+                  </div>
+                )}
+
                 {/* Star Rating */}
                 <div className="flex items-center gap-1 mb-6">
                   {[...Array(5)].map((_, i) => (
@@ -186,13 +227,50 @@ const Testimonials = () => {
 
                 {/* Author */}
                 <div className="flex items-center gap-4">
-                  <div className={`w-14 h-14 rounded-full bg-gradient-to-r ${colorClasses[testimonial.color as keyof typeof colorClasses]} flex items-center justify-center text-white font-bold text-lg shadow-lg`}>
-                    {testimonial.avatar}
-                  </div>
+                  {testimonial.avatar.startsWith('/') ? (
+                    <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-gray-200 shadow-lg relative">
+                      <Image
+                        src={testimonial.avatar}
+                        alt={testimonial.name}
+                        fill
+                        className="object-cover"
+                        sizes="56px"
+                      />
+                    </div>
+                  ) : (
+                    <div className={`w-14 h-14 rounded-full bg-gradient-to-r ${colorClasses[testimonial.color as keyof typeof colorClasses]} flex items-center justify-center text-white font-bold text-lg shadow-lg`}>
+                      {testimonial.avatar}
+                    </div>
+                  )}
                   <div>
                     <div className="font-semibold text-gray-900">{testimonial.name}</div>
                     <div className="text-sm text-gray-600">{testimonial.role}</div>
-                    <div className="text-sm text-accent-600 font-medium">{testimonial.company}</div>
+                    <div className="text-sm text-accent-600 font-medium">
+                      {testimonial.companyUrl ? (
+                        <a 
+                          href={testimonial.companyUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="hover:underline inline-flex items-center gap-1"
+                        >
+                          {testimonial.company}
+                          {testimonial.locations && (
+                            <span className="text-gray-500 font-normal">
+                              ({testimonial.locations} {language === 'es' ? 'locaciones' : 'locations'})
+                            </span>
+                          )}
+                        </a>
+                      ) : (
+                        <>
+                          {testimonial.company}
+                          {testimonial.locations && (
+                            <span className="text-gray-500 font-normal ml-1">
+                              ({testimonial.locations} {language === 'es' ? 'locaciones' : 'locations'})
+                            </span>
+                          )}
+                        </>
+                      )}
+                    </div>
                   </div>
                 </div>
 

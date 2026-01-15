@@ -33,7 +33,7 @@ const Footer = () => {
     { icon: Twitter, href: 'https://twitter.com/storagefy', label: 'Twitter' },
     { icon: Instagram, href: 'https://instagram.com/storagefy', label: 'Instagram' },
     { icon: Facebook, href: 'https://facebook.com/storagefy', label: 'Facebook' },
-    { icon: Linkedin, href: 'https://linkedin.com/company/storagefy', label: 'LinkedIn' },
+    { icon: Linkedin, href: 'https://www.linkedin.com/company/storagefy/posts/?feedView=all&viewAsMember=true', label: 'LinkedIn' },
   ]
 
   return (

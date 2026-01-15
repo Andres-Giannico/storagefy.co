@@ -4,7 +4,6 @@ import Implementation from '@/components/sections/Implementation'
 import ClientProfiles from '@/components/sections/ClientProfiles'
 import Features from '@/components/sections/Features'
 import UseCases from '@/components/sections/UseCases'
-import ROICalculator from '@/components/ROICalculator'
 import Testimonials from '@/components/sections/Testimonials'
 import FinalCTA from '@/components/sections/FinalCTA'
 import StructuredData from '@/components/seo/StructuredData'
@@ -83,7 +82,6 @@ export default function Home() {
         <ClientProfiles />
         <Features />
         <UseCases />
-        <ROICalculator />
         <Testimonials />
         <FinalCTA />
       </div>
