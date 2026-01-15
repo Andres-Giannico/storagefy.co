@@ -484,4 +484,830 @@ To expand/collapse, click anywhere on the customer row.
     tags: ['clientes', 'búsqueda', 'filtros', 'buscar'],
     order: 2
   },
+  {
+    id: 'ver-historial-cliente',
+    categoryId: 'clientes',
+    title: { es: 'Ver Historial Completo de un Cliente', en: 'View Complete Customer History' },
+    description: {
+      es: 'Consulta toda la información y actividad de un cliente',
+      en: 'View all information and activity for a customer'
+    },
+    content: {
+      es: `# Ver Historial Completo de un Cliente
+
+El historial de un cliente te permite ver toda su actividad y relación con tu negocio en un solo lugar.
+
+## Acceder al historial
+
+1. En la lista de clientes, encuentra el cliente que deseas revisar
+2. Haz clic en la fila del cliente para expandir los detalles
+3. O haz clic en el botón **"Ver Detalles"** o **"Ver Historial"**
+
+## Información disponible
+
+### Datos personales
+
+- **Información completa**: Nombre, apellidos, DNI/NIE, fecha de nacimiento
+- **Contacto**: Email, teléfono, dirección completa
+- **Foto de perfil**: Imagen del cliente (si está disponible)
+- **Documentos**: DNI frente y dorso (si están subidos)
+
+### Contratos
+
+- **Contratos activos**: Todos los contratos actualmente en vigor
+- **Contratos finalizados**: Historial de contratos pasados
+- **Número de contrato**: Identificador único de cada contrato
+- **Unidades asignadas**: Qué unidades tiene o ha tenido
+- **Fechas**: Inicio y fin de cada contrato
+- **Precios**: Coste de cada contrato
+
+### Pagos
+
+- **Historial de pagos**: Todos los pagos realizados
+- **Pagos pendientes**: Pagos que aún no se han realizado
+- **Métodos de pago**: Cómo ha pagado el cliente
+- **Estadísticas**: Total pagado, promedio mensual, etc.
+
+### Facturas
+
+- **Facturas emitidas**: Todas las facturas asociadas
+- **Estado de facturas**: Pagadas, pendientes, vencidas
+- **Descargas**: Acceso a PDFs de facturas
+
+### Notas y recordatorios
+
+- **Notas internas**: Anotaciones sobre el cliente
+- **Recordatorios**: Tareas pendientes relacionadas
+- **Comunicaciones**: Historial de emails o mensajes
+
+## Navegación rápida
+
+Desde el historial puedes acceder rápidamente a:
+
+- **Crear nuevo contrato**: Asignar una nueva unidad
+- **Generar factura**: Crear una factura manual
+- **Registrar pago**: Anotar un pago recibido
+- **Enviar email**: Contactar directamente con el cliente
+- **Editar datos**: Actualizar información del cliente
+
+## Exportar información
+
+Puedes exportar el historial completo:
+
+1. En la vista de historial, busca el botón **"Exportar"**
+2. Selecciona el formato (PDF, Excel, CSV)
+3. El archivo se generará con toda la información del cliente
+4. Descarga el archivo para tus registros
+
+## Filtros en el historial
+
+Puedes filtrar el historial por:
+
+- **Período**: Ver actividad de un rango de fechas específico
+- **Tipo**: Solo contratos, solo pagos, solo facturas
+- **Estado**: Activos, finalizados, pendientes
+
+> **Tip**: El historial completo te ayuda a entender la relación a largo plazo con cada cliente y tomar decisiones informadas.`,
+      en: `# View Complete Customer History
+
+A customer's history allows you to see all their activity and relationship with your business in one place.
+
+## Access history
+
+1. In the customer list, find the customer you want to review
+2. Click on the customer row to expand details
+3. Or click the **"View Details"** or **"View History"** button
+
+## Available information
+
+### Personal data
+
+- **Complete information**: Name, last name, ID/NIE, date of birth
+- **Contact**: Email, phone, complete address
+- **Profile photo**: Customer image (if available)
+- **Documents**: ID front and back (if uploaded)
+
+### Contracts
+
+- **Active contracts**: All contracts currently in force
+- **Completed contracts**: History of past contracts
+- **Contract number**: Unique identifier for each contract
+- **Assigned units**: Which units they have or have had
+- **Dates**: Start and end of each contract
+- **Prices**: Cost of each contract
+
+### Payments
+
+- **Payment history**: All payments made
+- **Pending payments**: Payments not yet made
+- **Payment methods**: How the customer has paid
+- **Statistics**: Total paid, monthly average, etc.
+
+### Invoices
+
+- **Issued invoices**: All associated invoices
+- **Invoice status**: Paid, pending, overdue
+- **Downloads**: Access to invoice PDFs
+
+### Notes and reminders
+
+- **Internal notes**: Notes about the customer
+- **Reminders**: Pending tasks related
+- **Communications**: Email or message history
+
+## Quick navigation
+
+From the history you can quickly access:
+
+- **Create new contract**: Assign a new unit
+- **Generate invoice**: Create a manual invoice
+- **Record payment**: Note a received payment
+- **Send email**: Contact the customer directly
+- **Edit data**: Update customer information
+
+## Export information
+
+You can export the complete history:
+
+1. In the history view, look for the **"Export"** button
+2. Select the format (PDF, Excel, CSV)
+3. The file will be generated with all customer information
+4. Download the file for your records
+
+## History filters
+
+You can filter the history by:
+
+- **Period**: View activity from a specific date range
+- **Type**: Only contracts, only payments, only invoices
+- **Status**: Active, completed, pending
+
+> **Tip**: The complete history helps you understand the long-term relationship with each customer and make informed decisions.`
+    },
+    tags: ['clientes', 'historial', 'detalles', 'información'],
+    order: 3
+  },
+  {
+    id: 'exportar-clientes',
+    categoryId: 'clientes',
+    title: { es: 'Exportar Datos de Clientes', en: 'Export Customer Data' },
+    description: {
+      es: 'Exporta información de clientes en diferentes formatos',
+      en: 'Export customer information in different formats'
+    },
+    content: {
+      es: `# Exportar Datos de Clientes
+
+Puedes exportar la información de tus clientes para usarla en otros sistemas o para hacer respaldos.
+
+## Formatos disponibles
+
+StorageFy permite exportar datos en varios formatos:
+
+- **Excel (.xlsx)**: Para análisis en Excel o Google Sheets
+- **CSV**: Para importar en otros sistemas
+- **PDF**: Para documentación o impresión
+
+## Cómo exportar
+
+### Exportar todos los clientes
+
+1. Ve a la sección **Clientes**
+2. Haz clic en el botón **"Exportar"** o **"Descargar"**
+3. Selecciona el formato deseado
+4. El archivo se generará y descargará automáticamente
+
+### Exportar clientes filtrados
+
+1. Aplica los filtros que desees (estado, búsqueda, etc.)
+2. Haz clic en **"Exportar"**
+3. Solo se exportarán los clientes que coincidan con los filtros
+4. Selecciona el formato
+
+### Exportar un cliente específico
+
+1. Abre el historial del cliente
+2. Busca el botón **"Exportar"** o **"Descargar"**
+3. Selecciona el formato
+4. Se exportará toda la información de ese cliente
+
+## Información incluida en la exportación
+
+### Datos básicos
+
+- Nombre completo
+- Email
+- Teléfono
+- Dirección completa
+- DNI/NIE/CIF
+- Fecha de registro
+- Estado (activo/inactivo)
+
+### Información adicional
+
+- Notas internas
+- Ubicación preferida
+- Número de contratos
+- Fecha del último contrato
+- Total pagado
+- Foto de perfil (si está disponible)
+
+## Usos comunes
+
+### Respaldos
+
+- Exporta regularmente para tener respaldos de tus datos
+- Guarda los archivos en un lugar seguro
+- Cumple con normativas de retención de datos
+
+### Análisis
+
+- Importa en Excel para análisis avanzados
+- Crea reportes personalizados
+- Analiza tendencias de clientes
+
+### Migración
+
+- Exporta antes de migrar a otro sistema
+- Usa CSV para importar en otras plataformas
+- Mantén la compatibilidad de datos
+
+### Reportes
+
+- Genera reportes para la dirección
+- Comparte información con contabilidad
+- Crea documentación para auditorías
+
+## Consideraciones de privacidad
+
+- **RGPD**: Asegúrate de cumplir con normativas de protección de datos
+- **Seguridad**: Guarda los archivos exportados de forma segura
+- **Acceso**: Solo exporta lo necesario para tu propósito
+- **Eliminación**: Elimina los archivos cuando ya no los necesites
+
+## Limitaciones
+
+- **Tamaño**: Exportaciones muy grandes pueden tardar más tiempo
+- **Formato**: Algunos formatos pueden no incluir todas las imágenes
+- **Filtros**: Los filtros aplicados afectan lo que se exporta
+
+> **Tip**: Exporta regularmente tus datos como respaldo. Es una buena práctica para proteger tu información.`,
+      en: `# Export Customer Data
+
+You can export your customer information to use in other systems or for backups.
+
+## Available formats
+
+StorageFy allows exporting data in several formats:
+
+- **Excel (.xlsx)**: For analysis in Excel or Google Sheets
+- **CSV**: To import into other systems
+- **PDF**: For documentation or printing
+
+## How to export
+
+### Export all customers
+
+1. Go to the **Customers** section
+2. Click the **"Export"** or **"Download"** button
+3. Select the desired format
+4. The file will be generated and downloaded automatically
+
+### Export filtered customers
+
+1. Apply the filters you want (status, search, etc.)
+2. Click **"Export"**
+3. Only customers matching the filters will be exported
+4. Select the format
+
+### Export a specific customer
+
+1. Open the customer history
+2. Look for the **"Export"** or **"Download"** button
+3. Select the format
+4. All information for that customer will be exported
+
+## Information included in export
+
+### Basic data
+
+- Full name
+- Email
+- Phone
+- Complete address
+- ID/Tax Number
+- Registration date
+- Status (active/inactive)
+
+### Additional information
+
+- Internal notes
+- Preferred location
+- Number of contracts
+- Date of last contract
+- Total paid
+- Profile photo (if available)
+
+## Common uses
+
+### Backups
+
+- Export regularly to have backups of your data
+- Save files in a secure location
+- Comply with data retention regulations
+
+### Analysis
+
+- Import into Excel for advanced analysis
+- Create custom reports
+- Analyze customer trends
+
+### Migration
+
+- Export before migrating to another system
+- Use CSV to import into other platforms
+- Maintain data compatibility
+
+### Reports
+
+- Generate reports for management
+- Share information with accounting
+- Create documentation for audits
+
+## Privacy considerations
+
+- **GDPR**: Make sure you comply with data protection regulations
+- **Security**: Store exported files securely
+- **Access**: Only export what's necessary for your purpose
+- **Deletion**: Delete files when you no longer need them
+
+## Limitations
+
+- **Size**: Very large exports may take longer
+- **Format**: Some formats may not include all images
+- **Filters**: Applied filters affect what is exported
+
+> **Tip**: Export your data regularly as a backup. It's a good practice to protect your information.`
+    },
+    tags: ['clientes', 'exportar', 'datos', 'excel', 'csv'],
+    order: 4
+  },
+  {
+    id: 'notas-recordatorios',
+    categoryId: 'clientes',
+    title: { es: 'Gestionar Notas y Recordatorios', en: 'Manage Notes and Reminders' },
+    description: {
+      es: 'Añade notas y recordatorios sobre tus clientes',
+      en: 'Add notes and reminders about your customers'
+    },
+    content: {
+      es: `# Gestionar Notas y Recordatorios
+
+Las notas y recordatorios te permiten mantener información importante sobre cada cliente y no olvidar tareas pendientes.
+
+## Agregar notas
+
+### Desde el formulario de cliente
+
+1. Al crear o editar un cliente, busca el campo **"Notas"**
+2. Escribe la información que quieras recordar
+3. Las notas son visibles solo para tu equipo
+4. Guarda los cambios
+
+### Desde el historial del cliente
+
+1. Abre el historial del cliente
+2. Busca la sección **"Notas"**
+3. Haz clic en **"Agregar Nota"**
+4. Escribe tu nota y guarda
+
+## Tipos de información útil
+
+### Preferencias del cliente
+
+- "Prefiere contacto por email"
+- "No llamar después de las 20:00"
+- "Cliente VIP - atención prioritaria"
+- "Prefiere unidades en planta baja"
+
+### Información importante
+
+- "Alergia a productos químicos"
+- "Requiere acceso 24/7"
+- "Pago siempre puntual"
+- "Historial de pagos atrasados"
+
+### Recordatorios de seguimiento
+
+- "Llamar en 3 meses para renovación"
+- "Verificar estado de unidad en enero"
+- "Recordar ofrecer unidad más grande"
+
+## Recordatorios
+
+Los recordatorios son notas con fecha que te alertan cuando es momento de hacer algo.
+
+### Crear un recordatorio
+
+1. En la sección de notas, haz clic en **"Agregar Recordatorio"**
+2. Escribe la tarea o acción a recordar
+3. Selecciona la fecha y hora
+4. Opcionalmente, asigna el recordatorio a un usuario específico
+5. Guarda el recordatorio
+
+### Ver recordatorios
+
+- **Dashboard**: Los recordatorios próximos aparecen en el dashboard
+- **Lista de clientes**: Los clientes con recordatorios pendientes se marcan
+- **Notificaciones**: Recibirás notificaciones cuando llegue el momento
+
+### Completar recordatorios
+
+1. Cuando completes la tarea, marca el recordatorio como completado
+2. Puedes agregar una nota sobre lo que hiciste
+3. El recordatorio se archivará pero seguirá visible en el historial
+
+## Organización de notas
+
+### Etiquetas
+
+Puedes usar etiquetas para organizar notas:
+
+- **VIP**: Para clientes importantes
+- **Urgente**: Para temas que requieren atención inmediata
+- **Seguimiento**: Para recordatorios de seguimiento
+- **Problema**: Para clientes con incidencias
+
+### Búsqueda en notas
+
+- Usa el buscador para encontrar notas específicas
+- Busca por palabras clave o etiquetas
+- Filtra por fecha o autor de la nota
+
+## Mejores prácticas
+
+### Sé específico
+
+- En lugar de "Cliente importante", escribe "Cliente desde 2020, siempre puntual"
+- Incluye fechas y contexto cuando sea relevante
+
+### Actualiza regularmente
+
+- Revisa y actualiza las notas periódicamente
+- Elimina información obsoleta
+- Mantén las notas relevantes y útiles
+
+### Usa recordatorios proactivamente
+
+- Crea recordatorios para seguimientos futuros
+- Programa recordatorios antes de fechas importantes
+- Asigna recordatorios al equipo adecuado
+
+## Privacidad
+
+- **Confidencialidad**: Las notas son visibles solo para tu equipo
+- **RGPD**: Asegúrate de que las notas cumplan con normativas de privacidad
+- **Eliminación**: Puedes eliminar notas cuando ya no sean necesarias
+
+> **Tip**: Las notas bien organizadas te ayudan a ofrecer un mejor servicio y no olvidar detalles importantes sobre cada cliente.`,
+      en: `# Manage Notes and Reminders
+
+Notes and reminders allow you to keep important information about each customer and not forget pending tasks.
+
+## Add notes
+
+### From customer form
+
+1. When creating or editing a customer, look for the **"Notes"** field
+2. Write the information you want to remember
+3. Notes are visible only to your team
+4. Save changes
+
+### From customer history
+
+1. Open the customer history
+2. Look for the **"Notes"** section
+3. Click **"Add Note"**
+4. Write your note and save
+
+## Types of useful information
+
+### Customer preferences
+
+- "Prefers email contact"
+- "Don't call after 8:00 PM"
+- "VIP customer - priority attention"
+- "Prefers ground floor units"
+
+### Important information
+
+- "Allergy to chemicals"
+- "Requires 24/7 access"
+- "Always pays on time"
+- "History of late payments"
+
+### Follow-up reminders
+
+- "Call in 3 months for renewal"
+- "Check unit status in January"
+- "Remember to offer larger unit"
+
+## Reminders
+
+Reminders are notes with dates that alert you when it's time to do something.
+
+### Create a reminder
+
+1. In the notes section, click **"Add Reminder"**
+2. Write the task or action to remember
+3. Select the date and time
+4. Optionally, assign the reminder to a specific user
+5. Save the reminder
+
+### View reminders
+
+- **Dashboard**: Upcoming reminders appear on the dashboard
+- **Customer list**: Customers with pending reminders are marked
+- **Notifications**: You'll receive notifications when the time comes
+
+### Complete reminders
+
+1. When you complete the task, mark the reminder as completed
+2. You can add a note about what you did
+3. The reminder will be archived but remain visible in history
+
+## Note organization
+
+### Tags
+
+You can use tags to organize notes:
+
+- **VIP**: For important customers
+- **Urgent**: For issues requiring immediate attention
+- **Follow-up**: For follow-up reminders
+- **Problem**: For customers with issues
+
+### Search in notes
+
+- Use the search to find specific notes
+- Search by keywords or tags
+- Filter by date or note author
+
+## Best practices
+
+### Be specific
+
+- Instead of "Important customer", write "Customer since 2020, always on time"
+- Include dates and context when relevant
+
+### Update regularly
+
+- Review and update notes periodically
+- Remove obsolete information
+- Keep notes relevant and useful
+
+### Use reminders proactively
+
+- Create reminders for future follow-ups
+- Schedule reminders before important dates
+- Assign reminders to the appropriate team
+
+## Privacy
+
+- **Confidentiality**: Notes are visible only to your team
+- **GDPR**: Make sure notes comply with privacy regulations
+- **Deletion**: You can delete notes when no longer needed
+
+> **Tip**: Well-organized notes help you provide better service and not forget important details about each customer.`
+    },
+    tags: ['clientes', 'notas', 'recordatorios', 'seguimiento'],
+    order: 5
+  },
+  {
+    id: 'estadisticas-clientes',
+    categoryId: 'clientes',
+    title: { es: 'Estadísticas y Métricas de Clientes', en: 'Customer Statistics and Metrics' },
+    description: {
+      es: 'Analiza métricas y estadísticas de tu base de clientes',
+      en: 'Analyze metrics and statistics of your customer base'
+    },
+    content: {
+      es: `# Estadísticas y Métricas de Clientes
+
+Las estadísticas de clientes te dan una visión general del estado de tu base de clientes y te ayudan a tomar decisiones informadas.
+
+## Acceder a las estadísticas
+
+Las estadísticas aparecen en la parte superior de la sección de Clientes:
+
+- **Tarjetas de resumen**: Muestran métricas clave de un vistazo
+- **Gráficos**: Visualizan tendencias y distribuciones
+- **Filtros**: Permiten analizar subconjuntos específicos
+
+## Métricas principales
+
+### Total de Clientes
+
+- **Número total**: Cantidad total de clientes registrados
+- **Incluye**: Activos e inactivos
+- **Útil para**: Conocer el tamaño de tu base de datos
+
+### Clientes Activos
+
+- **Cantidad**: Número de clientes activos
+- **Porcentaje**: Porcentaje del total
+- **Útil para**: Ver cuántos clientes pueden crear contratos
+
+### Clientes con Contratos
+
+- **Cantidad**: Clientes que tienen al menos un contrato activo
+- **Tasa de conversión**: Porcentaje de clientes con contratos
+- **Útil para**: Medir la efectividad de captación
+
+### Clientes Inactivos
+
+- **Cantidad**: Clientes desactivados
+- **Útil para**: Identificar clientes que podrían reactivarse
+
+## Análisis por período
+
+### Nuevos clientes
+
+- **Este mes**: Clientes registrados en el mes actual
+- **Este año**: Clientes registrados en el año actual
+- **Tendencia**: Comparación con períodos anteriores
+
+### Clientes perdidos
+
+- **Este mes**: Clientes que se desactivaron
+- **Tasa de retención**: Porcentaje de clientes que se mantienen activos
+
+## Distribución geográfica
+
+- **Por ciudad**: Ver dónde están ubicados tus clientes
+- **Por ubicación preferida**: Clientes por almacén
+- **Útil para**: Planificar expansiones o marketing local
+
+## Análisis de valor
+
+### Cliente promedio
+
+- **Valor por cliente**: Ingresos promedio por cliente
+- **Duración promedio**: Tiempo promedio de relación
+- **Contratos promedio**: Número promedio de contratos por cliente
+
+### Clientes VIP
+
+- **Identificación**: Clientes de alto valor
+- **Criterios**: Basado en ingresos, duración, o contratos
+- **Útil para**: Ofrecer atención especializada
+
+## Filtros y segmentación
+
+Puedes analizar estadísticas aplicando filtros:
+
+- **Por estado**: Activos, inactivos, todos
+- **Por período**: Rango de fechas específico
+- **Por ubicación**: Clientes de un almacén específico
+- **Por tipo**: Personas físicas vs empresas
+
+## Exportar estadísticas
+
+1. Aplica los filtros que desees
+2. Haz clic en **"Exportar Estadísticas"**
+3. Selecciona el formato (Excel, PDF)
+4. El reporte incluirá gráficos y tablas
+
+## Uso de las estadísticas
+
+### Toma de decisiones
+
+- **Expansión**: Identifica dónde hay más demanda
+- **Marketing**: Enfoca esfuerzos en segmentos específicos
+- **Retención**: Identifica clientes en riesgo
+
+### Reportes
+
+- **Para dirección**: Resúmenes ejecutivos
+- **Para inversores**: Crecimiento y métricas clave
+- **Para planificación**: Tendencias y proyecciones
+
+## Actualización en tiempo real
+
+- Las estadísticas se actualizan automáticamente
+- Reflejan cambios en tiempo real
+- Los filtros afectan las métricas mostradas
+
+> **Tip**: Revisa las estadísticas regularmente para mantenerte al día con el estado de tu base de clientes y identificar oportunidades de crecimiento.`,
+      en: `# Customer Statistics and Metrics
+
+Customer statistics give you an overview of your customer base status and help you make informed decisions.
+
+## Access statistics
+
+Statistics appear at the top of the Customers section:
+
+- **Summary cards**: Show key metrics at a glance
+- **Charts**: Visualize trends and distributions
+- **Filters**: Allow analyzing specific subsets
+
+## Main metrics
+
+### Total Customers
+
+- **Total number**: Total number of registered customers
+- **Includes**: Active and inactive
+- **Useful for**: Knowing the size of your database
+
+### Active Customers
+
+- **Quantity**: Number of active customers
+- **Percentage**: Percentage of total
+- **Useful for**: See how many customers can create contracts
+
+### Customers with Contracts
+
+- **Quantity**: Customers who have at least one active contract
+- **Conversion rate**: Percentage of customers with contracts
+- **Useful for**: Measure acquisition effectiveness
+
+### Inactive Customers
+
+- **Quantity**: Deactivated customers
+- **Useful for**: Identify customers who could be reactivated
+
+## Period analysis
+
+### New customers
+
+- **This month**: Customers registered in the current month
+- **This year**: Customers registered in the current year
+- **Trend**: Comparison with previous periods
+
+### Lost customers
+
+- **This month**: Customers who were deactivated
+- **Retention rate**: Percentage of customers who remain active
+
+## Geographic distribution
+
+- **By city**: See where your customers are located
+- **By preferred location**: Customers by warehouse
+- **Useful for**: Plan expansions or local marketing
+
+## Value analysis
+
+### Average customer
+
+- **Value per customer**: Average revenue per customer
+- **Average duration**: Average relationship time
+- **Average contracts**: Average number of contracts per customer
+
+### VIP customers
+
+- **Identification**: High-value customers
+- **Criteria**: Based on revenue, duration, or contracts
+- **Useful for**: Offer specialized attention
+
+## Filters and segmentation
+
+You can analyze statistics by applying filters:
+
+- **By status**: Active, inactive, all
+- **By period**: Specific date range
+- **By location**: Customers from a specific warehouse
+- **By type**: Individuals vs companies
+
+## Export statistics
+
+1. Apply the filters you want
+2. Click **"Export Statistics"**
+3. Select the format (Excel, PDF)
+4. The report will include charts and tables
+
+## Using statistics
+
+### Decision making
+
+- **Expansion**: Identify where there's more demand
+- **Marketing**: Focus efforts on specific segments
+- **Retention**: Identify at-risk customers
+
+### Reports
+
+- **For management**: Executive summaries
+- **For investors**: Growth and key metrics
+- **For planning**: Trends and projections
+
+## Real-time updates
+
+- Statistics update automatically
+- Reflect changes in real time
+- Filters affect the metrics shown
+
+> **Tip**: Review statistics regularly to stay up to date with your customer base status and identify growth opportunities.`
+    },
+    tags: ['clientes', 'estadísticas', 'métricas', 'análisis'],
+    order: 6
+  },
 ]

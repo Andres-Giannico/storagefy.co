@@ -12,7 +12,8 @@ import {
   TrendingUp, 
   MessageSquare, 
   UserCog, 
-  Settings 
+  Settings,
+  User
 } from 'lucide-react'
 
 export interface HelpCategory {
@@ -132,6 +133,13 @@ export const helpCategories: HelpCategory[] = [
     description: { es: 'Configuración general del sistema', en: 'General system settings' },
     icon: 'Settings',
     order: 14
+  },
+  {
+    id: 'area-cliente',
+    name: { es: 'Área de Cliente', en: 'Client Area' },
+    description: { es: 'Portal para clientes finales', en: 'Portal for end customers' },
+    icon: 'User',
+    order: 15
   }
 ]
 
@@ -150,7 +158,8 @@ export const getCategoryIcon = (iconName: string) => {
     TrendingUp,
     MessageSquare,
     UserCog,
-    Settings
+    Settings,
+    User
   }
   return icons[iconName] || Settings
 }

@@ -116,6 +116,30 @@ function renderMarkdown(content: string): string {
         continue
       }
       
+      // Imágenes markdown: ![alt](src) o ![alt](src) *caption*
+      const imageMatch = trimmed.match(/^!\[([^\]]*)\]\(([^)]+)\)(?:\s*\*\s*(.+?)\s*\*)?$/)
+      if (imageMatch) {
+        if (inList) {
+          processedLines.push(`</${listType}>`)
+          inList = false
+          listType = null
+        }
+        const [, alt, src, caption] = imageMatch
+        let imageHtml = `<div class="my-8">
+          <img 
+            src="${src}" 
+            alt="${alt || ''}" 
+            class="w-full rounded-lg shadow-md border border-gray-200 hover:shadow-xl transition-shadow duration-300"
+            loading="lazy"
+          />`
+        if (caption) {
+          imageHtml += `<p class="text-sm text-gray-600 text-center mt-3 italic">${processInlineMarkdown(caption)}</p>`
+        }
+        imageHtml += `</div>`
+        processedLines.push(imageHtml)
+        continue
+      }
+      
       // Cerrar lista si hay línea vacía
       if (trimmed === '' && inList) {
         processedLines.push(`</${listType}>`)
@@ -220,7 +244,11 @@ export default function ArticlePageClient({ category, article }: ArticlePageClie
             <HelpRelatedArticles article={article} />
 
             {/* Feedback */}
-            <HelpFeedback articleId={article.id} />
+            <HelpFeedback 
+              articleId={article.id} 
+              articleTitle={article.title[language]}
+              articleUrl={typeof window !== 'undefined' ? window.location.href : ''}
+            />
           </article>
 
           {/* Sidebar - Table of Contents */}

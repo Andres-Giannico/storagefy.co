@@ -15,6 +15,7 @@ import { reportesArticles } from './content/reportes'
 import { tablonArticles } from './content/tablon'
 import { usuariosArticles } from './content/usuarios'
 import { configuracionArticles } from './content/configuracion'
+import { areaClienteArticles } from './content/area-cliente'
 
 // Combinar todos los artículos
 export const helpArticles: HelpArticle[] = [
@@ -31,5 +32,6 @@ export const helpArticles: HelpArticle[] = [
   ...reportesArticles,
   ...tablonArticles,
   ...usuariosArticles,
-  ...configuracionArticles
+  ...configuracionArticles,
+  ...areaClienteArticles
 ]
