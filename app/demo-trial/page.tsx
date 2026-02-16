@@ -301,10 +301,15 @@ export default function DemoTrialPage() {
                 : 'Stop wasting time with spreadsheets'}
             </span>
           </h1>
-          <p className="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto leading-relaxed mb-8">
+          <p className="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto leading-relaxed mb-4">
             {language === 'es'
-              ? 'StorageFy es el software que usan los negocios de trasteros para gestionar unidades, clientes, contratos y cobros en una sola plataforma. Pruébalo ahora sin compromiso.'
-              : 'StorageFy is the software storage businesses use to manage units, clients, contracts and payments in one platform. Try it now with no commitment.'}
+              ? 'El software más completo para trasteros. Unidades, clientes, contratos, cobros, facturas, widget web 24/7, roles de usuario, exportaciones, control de puertas desde el móvil… Todo en una sola plataforma. No existe nada igual.'
+              : 'The most complete software for storage. Units, clients, contracts, payments, invoices, 24/7 web widget, user roles, exports, remote door control from your phone… Everything in one platform. Nothing like it exists.'}
+          </p>
+          <p className="text-accent-300/90 text-sm md:text-base font-medium mb-4">
+            {language === 'es'
+              ? 'Más de 15 módulos integrados · Sustituye Excel y muchas herramientas a la vez'
+              : '15+ integrated modules · Replaces spreadsheets and multiple tools'}
           </p>
           <p className="text-accent-300 font-medium mb-8">
             {language === 'es'
@@ -363,12 +368,12 @@ export default function DemoTrialPage() {
               </div>
               <div>
                 <h3 className="font-semibold text-primary-800 mb-1">
-                  {language === 'es' ? 'Todo automatizado' : 'Everything automated'}
+                  {language === 'es' ? 'Adiós a Excel — Todo integrado' : 'Goodbye Excel — Everything integrated'}
                 </h3>
                 <p className="text-sm text-primary-600">
                   {language === 'es'
-                    ? 'Facturas, cobros recurrentes y área de clientes incluida.'
-                    : 'Invoices, recurring charges and client area included.'}
+                    ? 'Widget web 24/7, facturas, cobros, área de clientes, roles, exportaciones, control de puertas desde el móvil…'
+                    : '24/7 web widget, invoices, payments, client area, roles, exports, remote door control from your phone…'}
                 </p>
               </div>
             </div>
@@ -396,17 +401,17 @@ export default function DemoTrialPage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeInUp>
           <h2 className="text-3xl md:text-4xl font-bold text-primary-800 mb-4 text-center">
-            {language === 'es' ? 'Así funciona StorageFy' : 'How StorageFy works'}
+            {language === 'es' ? 'El software más completo del sector' : 'The most complete software in the industry'}
           </h2>
           <p className="text-primary-600 mb-4 text-center max-w-3xl mx-auto text-lg leading-relaxed">
             {language === 'es'
-              ? 'Miles de empresas de trasteros ya gestionan su negocio con StorageFy. El flujo es simple: crea tus ubicaciones, define las unidades, añade clientes y genera contratos. El sistema se encarga de los cobros recurrentes, las facturas y el área de clientes.'
-              : 'Thousands of storage businesses already manage their operations with StorageFy. The flow is simple: create your locations, define units, add clients and generate contracts. The system handles recurring charges, invoices and the client area.'}
+              ? 'No hay otra herramienta que integre unidades, clientes, contratos, cobros, facturación, widget de reservas 24/7, roles de usuario, exportaciones a Excel/PDF, control de puertas desde el móvil, planos interactivos y tablón de anuncios. Miles de negocios ya dejaron Excel atrás.'
+              : 'No other tool integrates units, clients, contracts, payments, invoicing, 24/7 booking widget, user roles, Excel/PDF exports, remote door control from your phone, interactive floor plans and announcement board. Thousands of businesses have left spreadsheets behind.'}
           </p>
           <p className="text-primary-500 mb-12 text-center max-w-2xl mx-auto">
             {language === 'es'
-              ? 'Explora las capturas del sistema y descubre todo lo que puedes hacer.'
-              : 'Explore the system screenshots and discover everything you can do.'}
+              ? 'Explora las capturas y descubre todo lo que el sistema puede hacer por ti.'
+              : 'Explore the screenshots and discover everything the system can do for you.'}
           </p>
 
           <div
@@ -629,8 +634,8 @@ export default function DemoTrialPage() {
           <FadeInUp>
           <p className="text-center text-primary-600 mb-8">
             {language === 'es'
-              ? 'Más de 50 negocios de trasteros ya gestionan su operación con StorageFy.'
-              : 'Over 50 storage businesses already manage their operations with StorageFy.'}
+              ? 'El sistema más completo para trasteros. Más de 50 negocios ya gestionan todo con StorageFy.'
+              : 'The most complete system for storage. Over 50 businesses already manage everything with StorageFy.'}
           </p>
           </FadeInUp>
           {!submitted ? (
@@ -646,8 +651,8 @@ export default function DemoTrialPage() {
               </h2>
               <p className="text-primary-600 mb-6 leading-relaxed">
                 {language === 'es'
-                  ? 'Introduce tu nombre y email y te daremos acceso inmediato. Podrás explorar el sistema completo con datos de ejemplo: unidades, clientes, contratos, cobros y facturas. Sin compromiso.'
-                  : 'Enter your name and email and we\'ll give you immediate access. You can explore the full system with sample data: units, clients, contracts, payments and invoices. No commitment.'}
+                  ? 'Introduce tu nombre y email y accede al software más completo del sector. Explora todo lo que StorageFy hace —desde el widget de reservas hasta el control de puertas desde el móvil— con datos de ejemplo. Sin compromiso.'
+                  : 'Enter your name and email and access the most complete software in the industry. Explore everything StorageFy does —from the booking widget to remote door control from your phone— with sample data. No commitment.'}
               </p>
 
               <form onSubmit={handleSubmit} className="space-y-4">
@@ -734,8 +739,8 @@ export default function DemoTrialPage() {
                   </h2>
                   <p className="text-primary-600">
                     {language === 'es'
-                      ? 'Explora el sistema completo. Estas credenciales te dan acceso a la demo con datos de ejemplo.'
-                      : 'Explore the full system. These credentials give you access to the demo with sample data.'}
+                      ? 'Explora el sistema más completo del sector: widget, roles, exportaciones, control de puertas… Todo integrado.'
+                      : 'Explore the most complete system in the industry: widget, roles, exports, door control… Everything integrated.'}
                   </p>
                 </div>
               </div>

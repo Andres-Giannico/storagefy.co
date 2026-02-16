@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Prueba StorageFy - Demo',
-  description: 'Accede a la demo de StorageFy y explora el sistema de gestión de trasteros.',
+  title: 'Prueba StorageFy - El software más completo para trasteros',
+  description: 'El software más completo para trasteros: unidades, clientes, contratos, widget 24/7, control de puertas, roles, exportaciones. Accede a la demo sin compromiso.',
   robots: {
     index: false,
     follow: false,
