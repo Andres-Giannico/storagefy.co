@@ -2,8 +2,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/react'
 import { LanguageProvider } from '@/lib/context/LanguageContext'
-import Navbar from '@/components/layout/Navbar'
-import Footer from '@/components/layout/Footer'
+import LayoutShell from '@/components/layout/LayoutShell'
 import Chatbot from '@/components/Chatbot'
 import StructuredData from '@/components/seo/StructuredData'
 import CookieBanner from '@/components/privacy/CookieBanner'
@@ -156,11 +155,7 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <LanguageProvider>
-          <Navbar />
-          <main>
-            {children}
-          </main>
-          <Footer />
+          <LayoutShell>{children}</LayoutShell>
           <Chatbot />
           <CookieBanner />
           <AnalyticsManager />
