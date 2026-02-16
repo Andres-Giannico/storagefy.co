@@ -124,6 +124,7 @@ export default function RootLayout({
   return (
     <html lang="es" className={inter.variable}>
       <head>
+        <link rel="preconnect" href="https://www.storagefy.app" />
         <StructuredData data={organizationSchema} />
         <StructuredData data={websiteSchema} />
         {/* Google tag (gtag.js) */}

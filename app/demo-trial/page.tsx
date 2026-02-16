@@ -31,6 +31,8 @@ const LOGIN_URL = 'https://www.storagefy.app/auth/signin'
 
 const CAROUSEL_INTERVAL = 4500
 
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
 const slides = [
   {
     image: '/images/reportes.webp',
@@ -104,8 +106,10 @@ export default function DemoTrialPage() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [carouselPaused, setCarouselPaused] = useState(false)
   const [languageOpen, setLanguageOpen] = useState(false)
-  const [copiedField, setCopiedField] = useState<'email' | 'password' | null>(null)
+  const [copiedField, setCopiedField] = useState<'email' | 'password' | 'all' | null>(null)
+  const [showCopiedTooltip, setShowCopiedTooltip] = useState(false)
   const formRef = useRef<HTMLDivElement>(null)
+  const touchUnpauseRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
     if (carouselPaused) return
@@ -114,6 +118,12 @@ export default function DemoTrialPage() {
     }, CAROUSEL_INTERVAL)
     return () => clearInterval(timer)
   }, [carouselPaused])
+
+  useEffect(() => {
+    return () => {
+      if (touchUnpauseRef.current) clearTimeout(touchUnpauseRef.current)
+    }
+  }, [])
 
   const scrollToForm = () => {
     formRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -130,14 +140,23 @@ export default function DemoTrialPage() {
     return () => document.removeEventListener('click', handleClickOutside)
   }, [languageOpen])
 
-  const copyToClipboard = async (text: string, field: 'email' | 'password') => {
+  const copyToClipboard = async (text: string, field: 'email' | 'password' | 'all') => {
     try {
       await navigator.clipboard.writeText(text)
       setCopiedField(field)
-      setTimeout(() => setCopiedField(null), 2000)
+      setShowCopiedTooltip(true)
+      setTimeout(() => {
+        setCopiedField(null)
+        setShowCopiedTooltip(false)
+      }, 2000)
     } catch {
       // Fallback para navegadores antiguos
     }
+  }
+
+  const copyAllCredentials = () => {
+    const text = `${language === 'es' ? 'Email' : 'Email'}: ${DEMO_EMAIL}\n${language === 'es' ? 'Contraseña' : 'Password'}: ${DEMO_PASSWORD}`
+    copyToClipboard(text, 'all')
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -147,8 +166,18 @@ export default function DemoTrialPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setIsSubmitting(true)
     setError(null)
+
+    if (!EMAIL_REGEX.test(formData.email)) {
+      setError(
+        language === 'es'
+          ? 'Introduce un email válido.'
+          : 'Please enter a valid email address.'
+      )
+      return
+    }
+
+    setIsSubmitting(true)
 
     try {
       const response = await fetch('/api/send-demo-access', {
@@ -165,15 +194,21 @@ export default function DemoTrialPage() {
       if (response.ok) {
         setSubmitted(true)
       } else {
-        setError(result.error || (language === 'es'
-          ? 'Hubo un error. Por favor, inténtalo de nuevo.'
-          : 'An error occurred. Please try again.'))
+        if (response.status === 429) {
+          setError(result.error || (language === 'es'
+            ? 'Demasiados intentos. Espera un momento antes de volver a intentar.'
+            : 'Too many attempts. Please wait before trying again.'))
+        } else {
+          setError(result.error || (language === 'es'
+            ? 'Hubo un error. Por favor, inténtalo de nuevo.'
+            : 'An error occurred. Please try again.'))
+        }
       }
     } catch {
       setError(
         language === 'es'
-          ? 'Hubo un error. Por favor, inténtalo de nuevo.'
-          : 'An error occurred. Please try again.'
+          ? 'Error de conexión. Comprueba tu internet e inténtalo de nuevo.'
+          : 'Connection error. Check your internet and try again.'
       )
     } finally {
       setIsSubmitting(false)
@@ -222,7 +257,7 @@ export default function DemoTrialPage() {
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
-                    className="absolute right-0 mt-2 w-40 bg-white rounded-xl shadow-lg border border-primary-100 overflow-hidden"
+                    className="absolute right-0 bottom-full mb-2 sm:bottom-auto sm:mb-0 sm:mt-2 w-40 bg-white rounded-xl shadow-lg border border-primary-100 overflow-hidden z-50"
                   >
                     {languages.map((lang) => (
                       <button
@@ -249,7 +284,7 @@ export default function DemoTrialPage() {
       </header>
 
       {/* Hero */}
-      <section className="py-16 md:py-20 bg-gradient-to-br from-primary-800 via-primary-700 to-primary-900 text-white relative overflow-hidden">
+      <section className="pt-24 pb-16 md:pt-28 md:pb-20 bg-gradient-to-br from-primary-800 via-primary-700 to-primary-900 text-white relative overflow-hidden">
         <div className="absolute inset-0">
           <motion.div
             animate={{ scale: [1, 1.1, 1], opacity: [0.1, 0.2, 0.1] }}
@@ -378,6 +413,13 @@ export default function DemoTrialPage() {
             className="relative"
             onMouseEnter={() => setCarouselPaused(true)}
             onMouseLeave={() => setCarouselPaused(false)}
+            onTouchStart={() => {
+              if (touchUnpauseRef.current) clearTimeout(touchUnpauseRef.current)
+              setCarouselPaused(true)
+            }}
+            onTouchEnd={() => {
+              touchUnpauseRef.current = setTimeout(() => setCarouselPaused(false), 2500)
+            }}
           >
             <div className="overflow-hidden rounded-2xl shadow-2xl border border-primary-100 bg-white">
               <AnimatePresence mode="wait">
@@ -699,9 +741,24 @@ export default function DemoTrialPage() {
               </div>
 
               <div className="bg-primary-50 rounded-xl p-6 mb-6 border border-primary-100">
-                <p className="text-sm font-medium text-primary-600 mb-3">
-                  {language === 'es' ? 'Credenciales de acceso' : 'Access credentials'}
-                </p>
+                <div className="flex items-center justify-between mb-3">
+                  <p className="text-sm font-medium text-primary-600">
+                    {language === 'es' ? 'Credenciales de acceso' : 'Access credentials'}
+                  </p>
+                  <button
+                    onClick={copyAllCredentials}
+                    className="relative flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white border border-primary-200 hover:bg-primary-50 transition-colors text-sm font-medium text-primary-700"
+                    title={language === 'es' ? 'Copiar todo' : 'Copy all'}
+                  >
+                    <Copy className="w-4 h-4" />
+                    {language === 'es' ? 'Copiar todo' : 'Copy all'}
+                    {(showCopiedTooltip && copiedField === 'all') && (
+                      <span className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 bg-primary-800 text-white text-xs rounded shadow-lg whitespace-nowrap">
+                        {language === 'es' ? '¡Copiado!' : 'Copied!'}
+                      </span>
+                    )}
+                  </button>
+                </div>
                 <div className="space-y-3">
                   <div className="flex items-center justify-between gap-2 bg-white rounded-lg px-4 py-3 border border-primary-100">
                     <div>
@@ -710,17 +767,24 @@ export default function DemoTrialPage() {
                       </span>
                       <span className="font-mono text-primary-800">{DEMO_EMAIL}</span>
                     </div>
-                    <button
-                      onClick={() => copyToClipboard(DEMO_EMAIL, 'email')}
-                      className="p-2 rounded-lg hover:bg-primary-100 transition-colors"
-                      title={language === 'es' ? 'Copiar' : 'Copy'}
-                    >
-                      {copiedField === 'email' ? (
-                        <Check className="w-4 h-4 text-accent-600" />
-                      ) : (
-                        <Copy className="w-4 h-4 text-primary-500" />
+                    <div className="relative">
+                      <button
+                        onClick={() => copyToClipboard(DEMO_EMAIL, 'email')}
+                        className="p-2 rounded-lg hover:bg-primary-100 transition-colors"
+                        title={language === 'es' ? 'Copiar' : 'Copy'}
+                      >
+                        {copiedField === 'email' ? (
+                          <Check className="w-4 h-4 text-accent-600" />
+                        ) : (
+                          <Copy className="w-4 h-4 text-primary-500" />
+                        )}
+                      </button>
+                      {copiedField === 'email' && showCopiedTooltip && (
+                        <span className="absolute -top-8 right-0 px-2 py-1 bg-primary-800 text-white text-xs rounded shadow-lg whitespace-nowrap">
+                          {language === 'es' ? '¡Copiado!' : 'Copied!'}
+                        </span>
                       )}
-                    </button>
+                    </div>
                   </div>
                   <div className="flex items-center justify-between gap-2 bg-white rounded-lg px-4 py-3 border border-primary-100">
                     <div>
@@ -729,17 +793,24 @@ export default function DemoTrialPage() {
                       </span>
                       <span className="font-mono text-primary-800">{DEMO_PASSWORD}</span>
                     </div>
-                    <button
-                      onClick={() => copyToClipboard(DEMO_PASSWORD, 'password')}
-                      className="p-2 rounded-lg hover:bg-primary-100 transition-colors"
-                      title={language === 'es' ? 'Copiar' : 'Copy'}
-                    >
-                      {copiedField === 'password' ? (
-                        <Check className="w-4 h-4 text-accent-600" />
-                      ) : (
-                        <Copy className="w-4 h-4 text-primary-500" />
+                    <div className="relative">
+                      <button
+                        onClick={() => copyToClipboard(DEMO_PASSWORD, 'password')}
+                        className="p-2 rounded-lg hover:bg-primary-100 transition-colors"
+                        title={language === 'es' ? 'Copiar' : 'Copy'}
+                      >
+                        {copiedField === 'password' ? (
+                          <Check className="w-4 h-4 text-accent-600" />
+                        ) : (
+                          <Copy className="w-4 h-4 text-primary-500" />
+                        )}
+                      </button>
+                      {copiedField === 'password' && showCopiedTooltip && (
+                        <span className="absolute -top-8 right-0 px-2 py-1 bg-primary-800 text-white text-xs rounded shadow-lg whitespace-nowrap">
+                          {language === 'es' ? '¡Copiado!' : 'Copied!'}
+                        </span>
                       )}
-                    </button>
+                    </div>
                   </div>
                 </div>
               </div>
