@@ -65,6 +65,7 @@ export async function POST(request: NextRequest) {
       organizationName: body.organizationName,
       organizationEmail: body.organizationEmail || body.userEmail, // Usar userEmail si no se proporciona
       companyId: body.taxId || '', // Validar taxId si se proporciona (pasa como companyId para la función de validación)
+      phone: body.phone,
     })
 
     if (!validation.isValid) {
@@ -122,8 +123,8 @@ export async function POST(request: NextRequest) {
       payload.promoCode = body.promoCode.trim().toUpperCase()
     }
 
-    // Agregar campos opcionales si existen
-    if (body.phone) payload.phone = body.phone.trim()
+    // Agregar campos opcionales si existen (phone es obligatorio, ya validado)
+    payload.phone = body.phone.trim()
     if (body.address) payload.address = body.address.trim()
     if (body.city) payload.city = body.city.trim()
     if (body.postalCode) payload.postalCode = body.postalCode.trim()
@@ -288,6 +289,80 @@ export async function POST(request: NextRequest) {
       } catch (emailError) {
         console.error('Error sending verification email:', emailError)
         // No fallar el signup si falla el email, solo loguear
+      }
+
+      // Email de notificación al equipo con datos del nuevo registro (incluye teléfono)
+      try {
+        const adminSubject = `[StorageFy] Nuevo registro - ${body.organizationName}`
+        const adminHtml = `
+          <!DOCTYPE html>
+          <html>
+            <head>
+              <meta charset="utf-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <style>
+                body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; }
+                .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+                .header { background: linear-gradient(135deg, #7CB342 0%, #8BC34A 100%); color: white; padding: 30px; border-radius: 10px 10px 0 0; text-align: center; }
+                .content { background: #ffffff; padding: 30px; border: 1px solid #e5e7eb; border-top: none; }
+                .info-row { margin: 15px 0; padding: 15px; background: #f8fafc; border-radius: 8px; }
+                .label { font-weight: 600; color: #7CB342; margin-bottom: 5px; }
+                .value { color: #334155; }
+                .footer { text-align: center; padding: 20px; color: #94a3b8; font-size: 14px; }
+              </style>
+            </head>
+            <body>
+              <div class="container">
+                <div class="header">
+                  <h1 style="margin: 0; font-size: 24px;">🆕 Nuevo registro en StorageFy</h1>
+                </div>
+                <div class="content">
+                  <div class="info-row">
+                    <div class="label">👤 Nombre:</div>
+                    <div class="value">${body.userName}</div>
+                  </div>
+                  <div class="info-row">
+                    <div class="label">📧 Email:</div>
+                    <div class="value"><a href="mailto:${body.userEmail}" style="color: #7CB342;">${body.userEmail}</a></div>
+                  </div>
+                  ${body.phone ? `
+                  <div class="info-row">
+                    <div class="label">📱 Teléfono:</div>
+                    <div class="value"><a href="tel:${body.phone}" style="color: #7CB342;">${body.phone}</a></div>
+                  </div>
+                  ` : `
+                  <div class="info-row">
+                    <div class="label">📱 Teléfono:</div>
+                    <div class="value" style="color: #94a3b8;">No proporcionado</div>
+                  </div>
+                  `}
+                  <div class="info-row">
+                    <div class="label">🏢 Empresa:</div>
+                    <div class="value">${body.organizationName}</div>
+                  </div>
+                  ${body.taxId ? `
+                  <div class="info-row">
+                    <div class="label">📄 CIF/NIF:</div>
+                    <div class="value">${body.taxId}</div>
+                  </div>
+                  ` : ''}
+                </div>
+                <div class="footer">
+                  <p>StorageFy © ${new Date().getFullYear()}</p>
+                </div>
+              </div>
+            </body>
+          </html>
+        `
+        await resend.emails.send({
+          from: 'StorageFy Signup <noreply@storagefy.app>',
+          to: ['hello@storagefy.co'],
+          subject: adminSubject,
+          html: adminHtml,
+          replyTo: body.userEmail,
+        })
+      } catch (adminEmailError) {
+        console.error('Error sending signup notification to admin:', adminEmailError)
       }
     } else {
       console.log('Dev mode: Verification code:', verificationCode)

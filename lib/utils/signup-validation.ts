@@ -24,6 +24,14 @@ export function isValidCIF(cif: string): boolean {
 }
 
 /**
+ * Valida formato básico de teléfono (mínimo 9 dígitos, permite +, espacios, guiones)
+ */
+export function isValidPhone(phone: string): boolean {
+  const digits = phone.replace(/\D/g, '')
+  return digits.length >= 9
+}
+
+/**
  * Valida campos obligatorios del formulario
  */
 export function validateRequiredFields(data: {
@@ -33,6 +41,7 @@ export function validateRequiredFields(data: {
   organizationName?: string
   organizationEmail?: string
   companyId?: string
+  phone?: string
 }): { isValid: boolean; errors: string[] } {
   const errors: string[] = []
 
@@ -54,6 +63,12 @@ export function validateRequiredFields(data: {
 
   if (!data.organizationName || data.organizationName.trim().length === 0) {
     errors.push('El nombre de la empresa es requerido')
+  }
+
+  if (!data.phone || data.phone.trim().length === 0) {
+    errors.push('El teléfono es requerido')
+  } else if (!isValidPhone(data.phone)) {
+    errors.push('El teléfono debe tener al menos 9 dígitos')
   }
 
   // organizationEmail ya no es requerido, se usará userEmail si no se proporciona

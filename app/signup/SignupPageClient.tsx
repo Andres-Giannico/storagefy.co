@@ -30,7 +30,7 @@ import {
 } from 'lucide-react'
 import { useLanguage } from '@/lib/context/LanguageContext'
 import type { SignupFormData } from '@/lib/types/signup'
-import { isValidEmail, isValidPassword, isValidCIF } from '@/lib/utils/signup-validation'
+import { isValidEmail, isValidPassword, isValidCIF, isValidPhone } from '@/lib/utils/signup-validation'
 
 export default function SignupPageClient() {
   const { language } = useLanguage()
@@ -112,6 +112,20 @@ export default function SignupPageClient() {
         language === 'es'
           ? 'El nombre de la empresa es requerido'
           : 'Company name is required'
+      )
+      return false
+    }
+    if (!formData.phone.trim()) {
+      setError(
+        language === 'es' ? 'El teléfono es requerido' : 'Phone is required'
+      )
+      return false
+    }
+    if (!isValidPhone(formData.phone)) {
+      setError(
+        language === 'es'
+          ? 'El teléfono debe tener al menos 9 dígitos'
+          : 'Phone must have at least 9 digits'
       )
       return false
     }
@@ -714,7 +728,7 @@ export default function SignupPageClient() {
 
                 <div>
                   <label className="block text-sm font-semibold text-primary-700 mb-2">
-                    {language === 'es' ? 'Teléfono' : 'Phone'} {language === 'es' ? '(opcional)' : '(optional)'}
+                    {language === 'es' ? 'Teléfono' : 'Phone'}
                   </label>
                   <input
                     type="tel"
@@ -724,6 +738,11 @@ export default function SignupPageClient() {
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent-500 focus:border-transparent"
                     placeholder="+34612345678"
                   />
+                  <p className="text-xs text-gray-500 mt-1">
+                    {language === 'es'
+                      ? 'Incluye código de país (ej: +34 para España)'
+                      : 'Include country code (e.g. +34 for Spain)'}
+                  </p>
                 </div>
 
                 <div>
