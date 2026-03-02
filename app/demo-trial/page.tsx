@@ -20,6 +20,8 @@ import {
   Check,
   Lock,
   ShieldCheck,
+  User,
+  Mail,
 } from 'lucide-react'
 import { useLanguage } from '@/lib/context/LanguageContext'
 import FadeInUp from '@/components/animations/FadeInUp'
@@ -27,7 +29,7 @@ import { cn } from '@/lib/utils'
 
 const DEMO_EMAIL = 'demo@storagefy.app'
 const DEMO_PASSWORD = 'demo123'
-const LOGIN_URL = 'https://www.storagefy.app/auth/signin'
+const LOGIN_URL = 'https://www.storagefy.app/auth/signin?email=demo@storagefy.app&password=demo123'
 
 const CAROUSEL_INTERVAL = 4500
 
@@ -108,8 +110,19 @@ export default function DemoTrialPage() {
   const [languageOpen, setLanguageOpen] = useState(false)
   const [copiedField, setCopiedField] = useState<'email' | 'password' | 'all' | null>(null)
   const [showCopiedTooltip, setShowCopiedTooltip] = useState(false)
+  const [showStickyCTA, setShowStickyCTA] = useState(false)
   const formRef = useRef<HTMLDivElement>(null)
   const touchUnpauseRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const formTop = formRef.current?.getBoundingClientRect().top ?? Infinity
+      setShowStickyCTA(window.scrollY > 400 && formTop > 120 && !submitted)
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    handleScroll()
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [submitted])
 
   useEffect(() => {
     if (carouselPaused) return
@@ -193,6 +206,7 @@ export default function DemoTrialPage() {
 
       if (response.ok) {
         setSubmitted(true)
+        setTimeout(() => formRef.current?.scrollIntoView({ behavior: 'smooth' }), 100)
       } else {
         if (response.status === 429) {
           setError(result.error || (language === 'es'
@@ -216,9 +230,34 @@ export default function DemoTrialPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-accent-50/30">
+    <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-accent-50/30 font-demo">
+      {/* Sticky CTA */}
+      <AnimatePresence>
+        {showStickyCTA && (
+          <motion.div
+            initial={{ y: -100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -100, opacity: 0 }}
+            className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-primary-100 shadow-lg"
+          >
+            <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+              <span className="font-semibold text-primary-800 hidden sm:block">
+                {language === 'es' ? 'Prueba StorageFy gratis' : 'Try StorageFy free'}
+              </span>
+              <button
+                onClick={scrollToForm}
+                className="px-6 py-2.5 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-semibold rounded-xl hover:from-accent-600 hover:to-accent-700 transition-all shadow-lg hover:shadow-xl flex items-center gap-2"
+              >
+                {language === 'es' ? 'Obtener acceso' : 'Get access'}
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Header */}
-      <header className="absolute top-0 left-0 right-0 z-20 bg-white border-b border-primary-100 shadow-sm">
+      <header className="absolute top-0 left-0 right-0 z-20 bg-white/80 backdrop-blur-sm border-b border-primary-100 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 lg:h-20">
             <a
@@ -283,53 +322,202 @@ export default function DemoTrialPage() {
         </div>
       </header>
 
-      {/* Hero */}
-      <section className="pt-24 pb-16 md:pt-28 md:pb-20 bg-gradient-to-br from-primary-800 via-primary-700 to-primary-900 text-white relative overflow-hidden">
+      {/* Hero - Split layout con mockup y form */}
+      <section className="pt-24 pb-32 md:pt-28 md:pb-36 lg:pb-40 bg-gradient-to-br from-primary-800 via-primary-700 to-primary-900 text-white relative overflow-hidden">
         <div className="absolute inset-0">
           <motion.div
             animate={{ scale: [1, 1.1, 1], opacity: [0.1, 0.2, 0.1] }}
             transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
             className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-accent-400/20 to-accent-600/20 rounded-full blur-3xl"
           />
+          <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-accent-500/10 rounded-full blur-3xl" />
         </div>
 
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight">
-            <span className="bg-gradient-to-r from-white via-accent-300 to-accent-400 bg-clip-text text-transparent drop-shadow-lg">
-              {language === 'es'
-                ? 'Deja de perder tiempo con Excel'
-                : 'Stop wasting time with spreadsheets'}
-            </span>
-          </h1>
-          <p className="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto leading-relaxed mb-4">
-            {language === 'es'
-              ? 'El software más completo para trasteros. Unidades, clientes, contratos, cobros, facturas, widget web 24/7, roles de usuario, exportaciones, control de puertas desde el móvil… Todo en una sola plataforma. No existe nada igual.'
-              : 'The most complete software for storage. Units, clients, contracts, payments, invoices, 24/7 web widget, user roles, exports, remote door control from your phone… Everything in one platform. Nothing like it exists.'}
-          </p>
-          <p className="text-accent-300/90 text-sm md:text-base font-medium mb-4">
-            {language === 'es'
-              ? 'Más de 15 módulos integrados · Sustituye Excel y muchas herramientas a la vez'
-              : '15+ integrated modules · Replaces spreadsheets and multiple tools'}
-          </p>
-          <p className="text-accent-300 font-medium mb-8">
-            {language === 'es'
-              ? 'Acceso inmediato · Sin tarjeta · Sin permanencia'
-              : 'Instant access · No card · No commitment'}
-          </p>
-          <motion.button
-            onClick={scrollToForm}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-8 py-4 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-semibold rounded-xl shadow-lg hover:from-accent-600 hover:to-accent-700 transition-all flex items-center gap-2 mx-auto"
-          >
-            {language === 'es' ? 'Obtener acceso a la demo' : 'Get demo access'}
-            <ArrowRight className="w-5 h-5" />
-          </motion.button>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            {/* Left: Copy */}
+            <div className="text-center lg:text-left order-2 lg:order-1">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-6">
+                <span className="text-accent-300 font-semibold">50+</span>
+                <span className="text-white/90 text-sm">
+                  {language === 'es' ? 'negocios activos' : 'active businesses'}
+                </span>
+              </div>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 leading-[1.1] tracking-tight">
+                <span className="bg-gradient-to-r from-white via-accent-200 to-accent-400 bg-clip-text text-transparent drop-shadow-lg">
+                  {language === 'es'
+                    ? 'Deja de perder tiempo con Excel'
+                    : 'Stop wasting time with spreadsheets'}
+                </span>
+              </h1>
+              <p className="text-lg md:text-xl text-gray-200 max-w-xl mx-auto lg:mx-0 leading-relaxed mb-6">
+                {language === 'es'
+                  ? 'El software más completo para trasteros. Unidades, clientes, contratos, cobros, facturas, widget 24/7… Todo en una plataforma.'
+                  : 'The most complete software for storage. Units, clients, contracts, payments, invoices, 24/7 widget… Everything in one platform.'}
+              </p>
+              <div className="flex flex-wrap gap-4 justify-center lg:justify-start mb-8">
+                <span className="flex items-center gap-2 text-accent-300 text-sm font-medium">
+                  <CheckCircle className="w-4 h-4" />
+                  {language === 'es' ? 'Acceso inmediato' : 'Instant access'}
+                </span>
+                <span className="flex items-center gap-2 text-accent-300 text-sm font-medium">
+                  <Shield className="w-4 h-4" />
+                  {language === 'es' ? 'Sin tarjeta' : 'No card'}
+                </span>
+                <span className="flex items-center gap-2 text-accent-300 text-sm font-medium">
+                  <Zap className="w-4 h-4" />
+                  {language === 'es' ? '15+ módulos' : '15+ modules'}
+                </span>
+              </div>
+              <motion.button
+                onClick={scrollToForm}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="px-8 py-4 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-semibold rounded-xl shadow-lg hover:from-accent-600 hover:to-accent-700 transition-all flex items-center gap-2 mx-auto lg:mx-0"
+              >
+                {language === 'es' ? 'Obtener acceso a la demo' : 'Get demo access'}
+                <ArrowRight className="w-5 h-5" />
+              </motion.button>
+            </div>
+
+            {/* Right: Mockup + Form card */}
+            <div className="order-1 lg:order-2 relative">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="relative"
+              >
+                <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-white/5 backdrop-blur-sm">
+                  <div className="aspect-video relative">
+                    <Image
+                      src="/images/help/storagefy_hero_mockup.webp"
+                      alt="StorageFy Dashboard"
+                      fill
+                      className="object-cover object-top"
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                      priority
+                    />
+                  </div>
+                </div>
+                {/* Form card - floating */}
+                <div className="absolute -bottom-6 left-4 right-4 md:left-8 md:right-8 lg:left-12 lg:right-12 bg-white rounded-2xl shadow-2xl border border-primary-100 p-6 md:p-8">
+                  {!submitted ? (
+                    <>
+                      <h3 className="text-xl font-bold text-primary-800 mb-2">
+                        {language === 'es' ? 'Accede ahora' : 'Access now'}
+                      </h3>
+                      <p className="text-sm text-primary-600 mb-4">
+                        {language === 'es'
+                          ? 'Nombre y email. Credenciales al instante.'
+                          : 'Name and email. Instant credentials.'}
+                      </p>
+                      <form onSubmit={handleSubmit} className="space-y-3">
+                        <div className="relative">
+                          <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-primary-400" />
+                          <input
+                            type="text"
+                            name="name"
+                            value={formData.name}
+                            onChange={handleInputChange}
+                            required
+                            placeholder={language === 'es' ? 'Tu nombre' : 'Your name'}
+                            className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-primary-200 text-primary-800 text-sm focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent"
+                          />
+                        </div>
+                        <div className="relative">
+                          <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-primary-400" />
+                          <input
+                            type="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleInputChange}
+                            required
+                            placeholder="tu@email.com"
+                            className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-primary-200 text-primary-800 text-sm focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent"
+                          />
+                        </div>
+                        {error && <p className="text-red-600 text-xs">{error}</p>}
+                        <button
+                          type="submit"
+                          disabled={isSubmitting}
+                          className="w-full py-3 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-semibold rounded-xl hover:from-accent-600 hover:to-accent-700 transition-all text-sm flex items-center justify-center gap-2 disabled:opacity-70"
+                        >
+                          {isSubmitting
+                            ? (language === 'es' ? 'Enviando...' : 'Sending...')
+                            : (language === 'es' ? 'Quiero probar StorageFy' : 'I want to try StorageFy')}
+                        </button>
+                      </form>
+                      <div className="flex items-center justify-center gap-4 mt-3 text-xs text-primary-500">
+                        <span className="flex items-center gap-1">
+                          <Lock className="w-3 h-3" /> {language === 'es' ? 'Protegido' : 'Protected'}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <ShieldCheck className="w-3 h-3" /> {language === 'es' ? 'Sin spam' : 'No spam'}
+                        </span>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="text-center">
+                      <CheckCircle className="w-12 h-12 text-accent-500 mx-auto mb-3" />
+                      <h3 className="font-bold text-primary-800 mb-1">
+                        {language === 'es' ? '¡Listo!' : 'Ready!'}
+                      </h3>
+                      <p className="text-sm text-primary-600 mb-4">
+                        {language === 'es' ? 'Credenciales abajo' : 'Credentials below'}
+                      </p>
+                      <a
+                        href={LOGIN_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 px-4 py-2 bg-accent-500 text-white font-semibold rounded-lg text-sm hover:bg-accent-600"
+                      >
+                        {language === 'es' ? 'Ir a login' : 'Go to login'}
+                        <ArrowRight className="w-4 h-4" />
+                      </a>
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Social proof stats */}
+      <section className="py-8 bg-white border-b border-primary-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeInUp className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+            <div className="text-center">
+              <p className="text-2xl md:text-3xl font-bold text-accent-600">50+</p>
+              <p className="text-sm text-primary-600">
+                {language === 'es' ? 'Negocios activos' : 'Active businesses'}
+              </p>
+            </div>
+            <div className="text-center">
+              <p className="text-2xl md:text-3xl font-bold text-accent-600">15+</p>
+              <p className="text-sm text-primary-600">
+                {language === 'es' ? 'Módulos integrados' : 'Integrated modules'}
+              </p>
+            </div>
+            <div className="text-center">
+              <p className="text-2xl md:text-3xl font-bold text-accent-600">24/7</p>
+              <p className="text-sm text-primary-600">
+                {language === 'es' ? 'Widget reservas' : 'Booking widget'}
+              </p>
+            </div>
+            <div className="text-center">
+              <p className="text-2xl md:text-3xl font-bold text-accent-600">0</p>
+              <p className="text-sm text-primary-600">
+                {language === 'es' ? 'Tarjeta requerida' : 'Card required'}
+              </p>
+            </div>
+          </FadeInUp>
         </div>
       </section>
 
       {/* Benefits strip */}
-      <section className="py-10 bg-white border-b border-primary-100">
+      <section className="py-10 bg-gradient-to-b from-white to-primary-50/20 border-b border-primary-100">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeInUp className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="flex items-start gap-4">
@@ -426,7 +614,7 @@ export default function DemoTrialPage() {
               touchUnpauseRef.current = setTimeout(() => setCarouselPaused(false), 2500)
             }}
           >
-            <div className="overflow-hidden rounded-2xl shadow-2xl border border-primary-100 bg-white">
+            <div className="overflow-hidden rounded-2xl shadow-2xl border-2 border-primary-100 bg-white ring-2 ring-accent-500/10">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={currentSlide}
@@ -660,29 +848,35 @@ export default function DemoTrialPage() {
                   <label className="block text-sm font-medium text-primary-700 mb-1">
                     {language === 'es' ? 'Nombre' : 'Name'}
                   </label>
-                  <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-4 py-3 rounded-lg border border-primary-200 text-primary-800 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent"
-                    placeholder={language === 'es' ? 'Tu nombre' : 'Your name'}
-                  />
+                  <div className="relative">
+                    <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-primary-400" />
+                    <input
+                      type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      required
+                      className="w-full pl-10 pr-4 py-3 rounded-lg border border-primary-200 text-primary-800 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent"
+                      placeholder={language === 'es' ? 'Tu nombre' : 'Your name'}
+                    />
+                  </div>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-primary-700 mb-1">
                     Email
                   </label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-4 py-3 rounded-lg border border-primary-200 text-primary-800 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent"
-                    placeholder="tu@email.com"
-                  />
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-primary-400" />
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      required
+                      className="w-full pl-10 pr-4 py-3 rounded-lg border border-primary-200 text-primary-800 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent"
+                      placeholder="tu@email.com"
+                    />
+                  </div>
                 </div>
                 {error && (
                   <p className="text-red-600 text-sm">{error}</p>

@@ -124,7 +124,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Agregar campos opcionales si existen (phone es obligatorio, ya validado)
-    payload.phone = body.phone.trim()
+    payload.phone = (body.phone ?? '').trim()
     if (body.address) payload.address = body.address.trim()
     if (body.city) payload.city = body.city.trim()
     if (body.postalCode) payload.postalCode = body.postalCode.trim()

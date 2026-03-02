@@ -115,7 +115,7 @@ export default function SignupPageClient() {
       )
       return false
     }
-    if (!formData.phone.trim()) {
+    if (!formData.phone?.trim()) {
       setError(
         language === 'es' ? 'El teléfono es requerido' : 'Phone is required'
       )

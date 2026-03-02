@@ -38,6 +38,7 @@ const config: Config = {
       },
       fontFamily: {
         sans: ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
+        demo: ['var(--font-demo)', 'Plus Jakarta Sans', 'system-ui', 'sans-serif'],
       },
       letterSpacing: {
         tighter: '-0.02em',
