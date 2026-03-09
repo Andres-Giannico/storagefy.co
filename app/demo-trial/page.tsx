@@ -22,6 +22,8 @@ import {
   ShieldCheck,
   User,
   Mail,
+  Play,
+  Pause,
 } from 'lucide-react'
 import { useLanguage } from '@/lib/context/LanguageContext'
 import FadeInUp from '@/components/animations/FadeInUp'
@@ -37,60 +39,74 @@ const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 const slides = [
   {
-    image: '/images/reportes.webp',
-    titleEs: 'Dashboard y reportes',
-    titleEn: 'Dashboard and reports',
-    descEs: 'Métricas en tiempo real y KPIs de tu negocio',
-    descEn: 'Real-time metrics and business KPIs',
+    image: '/images/demo/dashboard.webp',
+    titleEs: 'Panel de Control',
+    titleEn: 'Control Panel',
+    descEs: 'Ocupación, ingresos mensuales, clientes y actividad reciente en un vistazo',
+    descEn: 'Occupancy, monthly income, clients and recent activity at a glance',
   },
   {
-    image: '/images/unidades.webp',
-    titleEs: 'Gestión de unidades',
-    titleEn: 'Unit management',
-    descEs: 'Control de unidades con dimensiones y estados',
-    descEn: 'Unit control with dimensions and status',
+    image: '/images/demo/ubicaciones.webp',
+    titleEs: 'Ubicaciones',
+    titleEn: 'Locations',
+    descEs: 'Gestiona tus almacenes: superficie, unidades, clientes, servicios y seguridad',
+    descEn: 'Manage your warehouses: area, units, clients, services and security',
   },
   {
-    image: '/images/clientes.webp',
+    image: '/images/demo/unidades.webp',
+    titleEs: 'Unidades',
+    titleEn: 'Units',
+    descEs: 'Dimensiones, precios, estado de pago y control de morosidad por unidad',
+    descEn: 'Dimensions, prices, payment status and delinquency control per unit',
+  },
+  {
+    image: '/images/demo/clientes.webp',
     titleEs: 'Clientes',
     titleEn: 'Clients',
-    descEs: 'Ficha completa de cada cliente',
-    descEn: 'Complete profile for each client',
+    descEs: 'Base de datos de clientes con unidades asignadas, contacto y estado',
+    descEn: 'Client database with assigned units, contact info and status',
   },
   {
-    image: '/images/contratos.webp',
-    titleEs: 'Contratos digitales',
-    titleEn: 'Digital contracts',
-    descEs: 'Generación automática y seguimiento',
-    descEn: 'Automatic generation and tracking',
+    image: '/images/demo/contratos.webp',
+    titleEs: 'Contratos',
+    titleEn: 'Contracts',
+    descEs: 'Contratos de alquiler con período, precio, estado de pago y depósito',
+    descEn: 'Rental contracts with period, price, payment status and deposit',
   },
   {
-    image: '/images/pagos.webp',
-    titleEs: 'Cobros y pagos',
-    titleEn: 'Payments',
-    descEs: 'Cobros recurrentes, recordatorios y links de pago',
-    descEn: 'Recurring payments, reminders and payment links',
+    image: '/images/demo/pagos.webp',
+    titleEs: 'Gestión de Pagos',
+    titleEn: 'Payment Management',
+    descEs: 'Administra pagos, crea facturas y asocia cobros a contratos',
+    descEn: 'Manage payments, create invoices and link collections to contracts',
   },
   {
-    image: '/images/help/form_factura.webp',
+    image: '/images/demo/widget.webp',
+    titleEs: 'Widget de Reservas 24/7',
+    titleEn: '24/7 Booking Widget',
+    descEs: 'Tus clientes reservan unidades desde tu web: dimensiones, precios y disponibilidad',
+    descEn: 'Your customers reserve units from your website: dimensions, prices and availability',
+  },
+  {
+    image: '/images/demo/facturacion.webp',
     titleEs: 'Facturación',
     titleEn: 'Invoicing',
-    descEs: 'Facturas automáticas a partir de los cobros',
-    descEn: 'Automatic invoices from payment data',
+    descEs: 'Facturas de alquiler, estados de pago e integración con Verifacti',
+    descEn: 'Rental invoices, payment status and Verifacti integration',
   },
   {
-    image: '/images/help/dashboard.webp',
-    titleEs: 'Panel de control',
-    titleEn: 'Control panel',
-    descEs: 'Vista general de tu negocio',
-    descEn: 'Overview of your business',
+    image: '/images/demo/reportes.webp',
+    titleEs: 'Reportes y Análisis',
+    titleEn: 'Reports and Analysis',
+    descEs: 'Ingresos, ocupación, morosidad y estado de pagos del periodo',
+    descEn: 'Income, occupancy, delinquency and payment status for the period',
   },
   {
-    image: '/images/help/clients.webp',
-    titleEs: 'Área de clientes',
-    titleEn: 'Client area',
-    descEs: 'Los clientes ven facturas, pagos y contratos',
-    descEn: 'Clients view invoices, payments and contracts',
+    image: '/images/demo/reportes-metricas.webp',
+    titleEs: 'Métricas Avanzadas',
+    titleEn: 'Advanced Metrics',
+    descEs: 'Valor por contrato, ingresos por m², retención y proyecciones',
+    descEn: 'Value per contract, revenue per m², retention and projections',
   },
 ]
 
@@ -107,12 +123,23 @@ export default function DemoTrialPage() {
   const [error, setError] = useState<string | null>(null)
   const [currentSlide, setCurrentSlide] = useState(0)
   const [carouselPaused, setCarouselPaused] = useState(false)
+  const [slideProgress, setSlideProgress] = useState(0)
   const [languageOpen, setLanguageOpen] = useState(false)
   const [copiedField, setCopiedField] = useState<'email' | 'password' | 'all' | null>(null)
   const [showCopiedTooltip, setShowCopiedTooltip] = useState(false)
   const [showStickyCTA, setShowStickyCTA] = useState(false)
   const formRef = useRef<HTMLDivElement>(null)
   const touchUnpauseRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const touchStartX = useRef<number>(0)
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
+
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
+    setPrefersReducedMotion(mq.matches)
+    const handler = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches)
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -126,17 +153,65 @@ export default function DemoTrialPage() {
 
   useEffect(() => {
     if (carouselPaused) return
+    const step = 50
+    const progressStep = (100 / CAROUSEL_INTERVAL) * step
     const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length)
-    }, CAROUSEL_INTERVAL)
+      setSlideProgress((p) => {
+        if (p + progressStep >= 100) {
+          setCurrentSlide((prev) => (prev + 1) % slides.length)
+          return 0
+        }
+        return p + progressStep
+      })
+    }, step)
     return () => clearInterval(timer)
   }, [carouselPaused])
+
+  useEffect(() => {
+    setSlideProgress(0)
+  }, [currentSlide])
+
+  useEffect(() => {
+    const nextIndex = (currentSlide + 1) % slides.length
+    const link = document.createElement('link')
+    link.rel = 'preload'
+    link.as = 'image'
+    link.href = slides[nextIndex].image
+    document.head.appendChild(link)
+    return () => { try { document.head.removeChild(link) } catch { /* ignore */ } }
+  }, [currentSlide])
 
   useEffect(() => {
     return () => {
       if (touchUnpauseRef.current) clearTimeout(touchUnpauseRef.current)
     }
   }, [])
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement
+      if (target.closest('input') || target.closest('textarea') || target.closest('select')) return
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault()
+        setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length)
+        setSlideProgress(0)
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault()
+        setCurrentSlide((prev) => (prev + 1) % slides.length)
+        setSlideProgress(0)
+      } else if (e.key === ' ') {
+        e.preventDefault()
+        setCarouselPaused((p) => !p)
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [])
+
+  const goToSlide = (index: number) => {
+    setCurrentSlide(index)
+    setSlideProgress(0)
+  }
 
   const scrollToForm = () => {
     formRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -257,14 +332,14 @@ export default function DemoTrialPage() {
       </AnimatePresence>
 
       {/* Header */}
-      <header className="absolute top-0 left-0 right-0 z-20 bg-white/80 backdrop-blur-sm border-b border-primary-100 shadow-sm">
+      <header className="absolute top-0 left-0 right-0 z-20 bg-white border-b border-primary-100 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 lg:h-20">
             <a
               href="https://storagefy.co"
               className="flex items-center space-x-3 group"
             >
-              <div className="relative w-10 h-10 lg:w-12 lg:h-12 flex-shrink-0 rounded-lg bg-white p-1.5 shadow-sm">
+              <div className="relative w-10 h-10 lg:w-12 lg:h-12 flex-shrink-0 rounded-lg bg-white p-1.5 shadow-sm border border-primary-100">
                 <Image
                   src="/logo.png"
                   alt="StorageFy Logo"
@@ -484,6 +559,23 @@ export default function DemoTrialPage() {
         </div>
       </section>
 
+      {/* Edad de piedra - ilustración */}
+      <section className="py-12 md:py-16 bg-gradient-to-b from-white to-primary-50/30">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeInUp>
+            <div className="rounded-2xl overflow-hidden shadow-xl border border-primary-100 bg-white">
+              <Image
+                src="/images/demo/edad-piedra.webp"
+                alt={language === 'es' ? 'Gestión prehistórica vs futuro con StorageFy' : 'Prehistoric management vs future with StorageFy'}
+                width={1200}
+                height={675}
+                className="w-full h-auto object-contain"
+              />
+            </div>
+          </FadeInUp>
+        </div>
+      </section>
+
       {/* Social proof stats */}
       <section className="py-8 bg-white border-b border-primary-100">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -606,25 +698,44 @@ export default function DemoTrialPage() {
             className="relative"
             onMouseEnter={() => setCarouselPaused(true)}
             onMouseLeave={() => setCarouselPaused(false)}
-            onTouchStart={() => {
+            onTouchStart={(e) => {
               if (touchUnpauseRef.current) clearTimeout(touchUnpauseRef.current)
               setCarouselPaused(true)
+              touchStartX.current = e.touches[0].clientX
             }}
-            onTouchEnd={() => {
+            onTouchEnd={(e) => {
+              const diff = touchStartX.current - e.changedTouches[0].clientX
+              if (Math.abs(diff) > 60) {
+                if (diff > 0) {
+                  setCurrentSlide((prev) => (prev + 1) % slides.length)
+                  setSlideProgress(0)
+                } else {
+                  setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length)
+                  setSlideProgress(0)
+                }
+              }
               touchUnpauseRef.current = setTimeout(() => setCarouselPaused(false), 2500)
             }}
           >
-            <div className="overflow-hidden rounded-2xl shadow-2xl border-2 border-primary-100 bg-white ring-2 ring-accent-500/10">
+            <div className="overflow-hidden rounded-2xl shadow-2xl border-2 border-primary-100 bg-primary-50 ring-2 ring-accent-500/10">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={currentSlide}
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  transition={{ duration: 0.4 }}
+                  initial={{ opacity: prefersReducedMotion ? 1 : 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: prefersReducedMotion ? 0.15 : 0.5, ease: 'easeInOut' }}
                   className="relative"
                 >
-                  <div className="aspect-video relative w-full bg-primary-50">
+                  <motion.div
+                    className="aspect-video relative w-full bg-primary-50 overflow-hidden"
+                    animate={prefersReducedMotion ? { scale: 1 } : { scale: [1, 1.02] }}
+                    transition={
+                      prefersReducedMotion
+                        ? { duration: 0 }
+                        : { duration: CAROUSEL_INTERVAL / 1000, ease: 'easeOut' }
+                    }
+                  >
                     <Image
                       src={slides[currentSlide].image}
                       alt={language === 'es' ? slides[currentSlide].titleEs : slides[currentSlide].titleEn}
@@ -633,49 +744,70 @@ export default function DemoTrialPage() {
                       sizes="(max-width: 768px) 100vw, 1024px"
                       priority
                     />
-                  </div>
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 text-white">
+                  </motion.div>
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-6 pb-4 text-white">
                     <h3 className="text-xl md:text-2xl font-bold mb-1">
                       {language === 'es' ? slides[currentSlide].titleEs : slides[currentSlide].titleEn}
                     </h3>
-                    <p className="text-gray-200 text-sm md:text-base">
+                    <p className="text-gray-200 text-sm md:text-base mb-3">
                       {language === 'es' ? slides[currentSlide].descEs : slides[currentSlide].descEn}
                     </p>
+                    {/* Progress bar - estilo video */}
+                    <div className="h-1 bg-white/20 rounded-full overflow-hidden">
+                      <motion.div
+                        className="h-full bg-accent-500 rounded-full"
+                        animate={{ width: `${slideProgress}%` }}
+                        transition={{ duration: 0.1 }}
+                      />
+                    </div>
                   </div>
                 </motion.div>
               </AnimatePresence>
             </div>
 
-            {/* Navigation */}
-            <button
-              onClick={() => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length)}
-              className="absolute left-2 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/90 shadow-lg border border-primary-100 flex items-center justify-center text-primary-700 hover:bg-white transition-colors z-10"
-              aria-label={language === 'es' ? 'Anterior' : 'Previous'}
-            >
-              <ChevronLeft className="w-6 h-6" />
-            </button>
-            <button
-              onClick={() => setCurrentSlide((prev) => (prev + 1) % slides.length)}
-              className="absolute right-2 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/90 shadow-lg border border-primary-100 flex items-center justify-center text-primary-700 hover:bg-white transition-colors z-10"
-              aria-label={language === 'es' ? 'Siguiente' : 'Next'}
-            >
-              <ChevronRight className="w-6 h-6" />
-            </button>
-
-            {/* Dots */}
-            <div className="flex justify-center gap-2 mt-6">
-              {slides.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setCurrentSlide(i)}
-                  className={`w-2.5 h-2.5 rounded-full transition-all ${
-                    i === currentSlide
-                      ? 'bg-accent-500 w-8'
-                      : 'bg-primary-200 hover:bg-primary-300'
-                  }`}
-                  aria-label={`${language === 'es' ? 'Ir a slide' : 'Go to slide'} ${i + 1}`}
-                />
-              ))}
+            {/* Controles tipo video */}
+            <div className="flex items-center justify-center gap-3 sm:gap-4 mt-6 flex-wrap">
+              <button
+                onClick={() => goToSlide((currentSlide - 1 + slides.length) % slides.length)}
+                className="w-12 h-12 rounded-full bg-white shadow-lg border border-primary-100 flex items-center justify-center text-primary-700 hover:bg-primary-50 transition-colors"
+                aria-label={language === 'es' ? 'Anterior' : 'Previous'}
+              >
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+              <button
+                onClick={() => setCarouselPaused((p) => !p)}
+                className="w-12 h-12 rounded-full bg-white shadow-lg border border-primary-100 flex items-center justify-center text-primary-700 hover:bg-primary-50 transition-colors"
+                aria-label={carouselPaused ? (language === 'es' ? 'Reproducir' : 'Play') : (language === 'es' ? 'Pausar' : 'Pause')}
+              >
+                {carouselPaused ? (
+                  <Play className="w-6 h-6 ml-0.5" />
+                ) : (
+                  <Pause className="w-6 h-6" />
+                )}
+              </button>
+              <div className="flex gap-1.5">
+                {slides.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => goToSlide(i)}
+                    className={cn(
+                      'h-1.5 rounded-full transition-all',
+                      i === currentSlide ? 'bg-accent-500 w-8' : 'bg-primary-200 hover:bg-primary-300 w-1.5'
+                    )}
+                    aria-label={`${language === 'es' ? 'Ir a slide' : 'Go to slide'} ${i + 1}`}
+                  />
+                ))}
+              </div>
+              <button
+                onClick={() => goToSlide((currentSlide + 1) % slides.length)}
+                className="w-12 h-12 rounded-full bg-white shadow-lg border border-primary-100 flex items-center justify-center text-primary-700 hover:bg-primary-50 transition-colors"
+                aria-label={language === 'es' ? 'Siguiente' : 'Next'}
+              >
+                <ChevronRight className="w-6 h-6" />
+              </button>
+              <span className="text-sm text-primary-500 font-medium min-w-[3rem] text-center">
+                {currentSlide + 1} / {slides.length}
+              </span>
             </div>
           </div>
           </FadeInUp>

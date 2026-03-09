@@ -117,7 +117,7 @@ const Footer = () => {
               transition={{ duration: 0.6 }}
             >
               <div className="flex items-center gap-3 mb-4">
-                <div className="relative w-10 h-10">
+                <div className="relative w-10 h-10 flex-shrink-0 rounded-lg bg-white p-1.5">
                   <Image
                     src="/logo.png"
                     alt="StorageFy Logo"
