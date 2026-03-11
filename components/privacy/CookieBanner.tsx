@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { ShieldCheck, Settings2, Cookie } from 'lucide-react'
+import { Cookie } from 'lucide-react'
 import { useLanguage } from '@/lib/context/LanguageContext'
 import { consentManager, ConsentState } from '@/lib/privacy/consent-manager'
 import CookiePreferencesModal from '@/components/privacy/CookiePreferencesModal'
@@ -120,16 +120,15 @@ export default function CookieBanner() {
       <AnimatePresence>
         {consentState.decision !== 'unknown' && (
           <motion.button
-            initial={{ opacity: 0, x: 40 }}
+            initial={{ opacity: 0, x: -40 }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 40 }}
+            exit={{ opacity: 0, x: -40 }}
             onClick={() => setShowModal(true)}
-            className="fixed bottom-6 right-6 z-40 flex items-center gap-2 rounded-full bg-primary-900 px-4 py-2 text-sm font-semibold text-white shadow-lg hover:bg-primary-800"
+            className="fixed bottom-6 left-6 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-primary-900 text-white shadow-lg hover:bg-primary-800"
             aria-label={bannerMessage.manageLabel}
             suppressHydrationWarning
           >
-            <Settings2 className="h-4 w-4" aria-hidden="true" />
-            <span>{bannerMessage.manageLabel}</span>
+            <Cookie className="h-5 w-5" aria-hidden="true" />
           </motion.button>
         )}
       </AnimatePresence>
@@ -143,7 +142,7 @@ export default function CookieBanner() {
       {process.env.NODE_ENV === 'development' && isMounted && (
         <button
           onClick={() => consentManager.reset()}
-          className="fixed bottom-6 left-6 z-40 rounded-full border border-dashed border-gray-300 px-3 py-1 text-xs text-gray-500 hover:bg-gray-100"
+          className="fixed bottom-20 left-6 z-40 rounded-full border border-dashed border-gray-300 px-3 py-1 text-xs text-gray-500 hover:bg-gray-100"
         >
           Reset cookies (dev)
         </button>
