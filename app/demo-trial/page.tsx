@@ -339,7 +339,7 @@ export default function DemoTrialPage() {
               href="https://storagefy.co"
               className="flex items-center space-x-3 group"
             >
-              <div className="relative w-10 h-10 lg:w-12 lg:h-12 flex-shrink-0 rounded-lg bg-white p-1.5 shadow-sm border border-primary-100">
+              <div className="relative w-11 h-11 lg:w-14 lg:h-14 flex-shrink-0 rounded-lg p-1.5">
                 <Image
                   src="/logo.png"
                   alt="StorageFy Logo"

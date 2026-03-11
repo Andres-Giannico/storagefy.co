@@ -30,8 +30,8 @@ const Footer = () => {
   ]
 
   const socialLinks = [
-    { icon: Twitter, href: 'https://twitter.com/storagefy', label: 'Twitter' },
-    { icon: Instagram, href: 'https://instagram.com/storagefy', label: 'Instagram' },
+    { icon: Twitter, href: 'https://x.com/storagefy', label: 'X' },
+    { icon: Instagram, href: 'https://www.instagram.com/storage.fy', label: 'Instagram' },
     { icon: Facebook, href: 'https://facebook.com/storagefy', label: 'Facebook' },
     { icon: Linkedin, href: 'https://www.linkedin.com/company/storagefy/posts/?feedView=all&viewAsMember=true', label: 'LinkedIn' },
   ]
@@ -117,7 +117,7 @@ const Footer = () => {
               transition={{ duration: 0.6 }}
             >
               <div className="flex items-center gap-3 mb-4">
-                <div className="relative w-10 h-10 flex-shrink-0 rounded-lg bg-white p-1.5">
+                <div className="relative w-11 h-11 flex-shrink-0 rounded-lg p-1.5">
                   <Image
                     src="/logo.png"
                     alt="StorageFy Logo"
