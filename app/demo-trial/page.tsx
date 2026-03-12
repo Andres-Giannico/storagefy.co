@@ -317,7 +317,7 @@ export default function DemoTrialPage() {
           >
             <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
               <span className="font-semibold text-primary-800 hidden sm:block">
-                {language === 'es' ? 'Prueba StorageFy gratis' : 'Try StorageFy free'}
+                {language === 'es' ? 'Prueba la demo en 2 minutos' : 'Try the demo in 2 minutes'}
               </span>
               <button
                 onClick={scrollToForm}
@@ -331,8 +331,8 @@ export default function DemoTrialPage() {
         )}
       </AnimatePresence>
 
-      {/* Header - transparent para que el logo muestre su transparencia sobre el hero */}
-      <header className="absolute top-0 left-0 right-0 z-20 bg-primary-900/80 backdrop-blur-md border-b border-white/10">
+      {/* Header */}
+      <header className="absolute top-0 left-0 right-0 z-20 bg-white border-b border-primary-100 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 lg:h-20">
             <a
@@ -348,7 +348,7 @@ export default function DemoTrialPage() {
                   priority
                 />
               </div>
-              <span className="text-xl lg:text-2xl font-bold bg-gradient-to-r from-white via-accent-200 to-accent-400 bg-clip-text text-transparent">
+              <span className="text-xl lg:text-2xl font-bold text-gradient">
                 StorageFy
               </span>
             </a>
@@ -357,13 +357,13 @@ export default function DemoTrialPage() {
             <div className="relative language-selector">
               <button
                 onClick={() => setLanguageOpen(!languageOpen)}
-                className="flex items-center space-x-2 px-3 py-2 rounded-lg border border-white/30 hover:bg-white/10 transition-colors text-white"
+                className="flex items-center space-x-2 px-3 py-2 rounded-lg border border-primary-200 hover:bg-primary-50 transition-colors"
               >
-                <Globe className="w-4 h-4 text-white/90" />
-                <span className="text-sm font-medium text-white/90">
+                <Globe className="w-4 h-4 text-primary-600" />
+                <span className="text-sm font-medium text-primary-700">
                   {languages.find((l) => l.code === language)?.flag}
                 </span>
-                <ChevronDown className="w-3 h-3 text-white/90" />
+                <ChevronDown className="w-3 h-3 text-primary-500" />
               </button>
               <AnimatePresence>
                 {languageOpen && (

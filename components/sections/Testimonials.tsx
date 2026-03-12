@@ -11,10 +11,10 @@ const Testimonials = () => {
 
   const testimonials = [
     {
-      name: language === 'es' ? 'Steffano' : 'Steffano',
+      name: 'Steffano',
       role: language === 'es' ? 'Propietario' : 'Owner',
       company: language === 'es' ? 'Trasteros Ibiza' : 'Ibiza Storage',
-      quote: language === 'es' 
+      quote: language === 'es'
         ? 'Pasamos de gestionar todo manualmente a StorageFy y aumentamos la ocupación del 52% al 82% en solo 5 meses. El widget de reservas 24/7 fue un cambio radical para nuestro negocio en Ibiza.'
         : 'We moved from managing everything manually to StorageFy and increased occupancy from 52% to 82% in just 5 months. The 24/7 booking widget was a game changer for our business in Ibiza.',
       avatar: '/images/steffnao.png',
@@ -23,16 +23,8 @@ const Testimonials = () => {
       companyUrl: 'https://www.trasteros-ibiza.com/',
       locations: 2,
       metrics: [
-        { 
-          icon: TrendingUp, 
-          value: '+30%', 
-          label: language === 'es' ? 'Ocupación' : 'Occupancy' 
-        },
-        { 
-          icon: Clock, 
-          value: '15h', 
-          label: language === 'es' ? 'Ahorro/semana' : 'Saved/week' 
-        }
+        { icon: TrendingUp, value: '+30%', label: language === 'es' ? 'Ocupación' : 'Occupancy' },
+        { icon: Clock, value: '15h', label: language === 'es' ? 'Ahorro/semana' : 'Saved/week' }
       ],
       size: 'small',
       color: 'blue'
@@ -303,12 +295,12 @@ const Testimonials = () => {
             }
           </p>
           <motion.a
-            href="/demo"
+            href="/demo-trial"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-semibold rounded-full hover:from-accent-600 hover:to-accent-700 transition-all duration-300 shadow-lg hover:shadow-xl"
           >
-            {language === 'es' ? 'Comenzar prueba gratuita de 14 días' : 'Start 14-day free trial'}
+            {language === 'es' ? 'Probar demo ahora' : 'Try demo now'}
           </motion.a>
           <p className="text-sm text-gray-500 mt-3">
             {language === 'es' ? 'Sin tarjeta • Cancela cuando quieras' : 'No card required • Cancel anytime'}

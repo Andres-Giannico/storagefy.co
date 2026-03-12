@@ -161,13 +161,13 @@ export default function DemoPage() {
 
   const testimonials = [
     {
-      name: language === 'es' ? 'María González' : 'María González',
-      role: language === 'es' ? 'Directora, Trasteros Madrid' : 'Director, Madrid Storage',
-      content: language === 'es' 
-        ? 'StorageFy transformó completamente nuestro negocio. Pasamos de gestionar todo manualmente a tener un sistema completamente automatizado.'
-        : 'StorageFy completely transformed our business. We went from managing everything manually to having a fully automated system.',
+      name: 'Steffano',
+      role: language === 'es' ? 'Propietario, Trasteros Ibiza (2 locaciones)' : 'Owner, Ibiza Storage (2 locations)',
+      content: language === 'es'
+        ? 'Pasamos de gestionar todo manualmente a StorageFy y aumentamos la ocupación del 52% al 82% en solo 5 meses. El widget de reservas 24/7 fue un cambio radical para nuestro negocio en Ibiza.'
+        : 'We moved from managing everything manually to StorageFy and increased occupancy from 52% to 82% in just 5 months. The 24/7 booking widget was a game changer for our business in Ibiza.',
       rating: 5,
-      avatar: '/images/clientes.webp'
+      avatar: '/images/steffnao.png'
     },
     {
       name: language === 'es' ? 'Carlos López' : 'Carlos López',
@@ -306,8 +306,8 @@ export default function DemoPage() {
                     <Clock className="w-5 h-5 text-green-600 flex-shrink-0" />
                     <p className="text-sm font-semibold text-green-700">
                       {language === 'es'
-                        ? 'Regístrate gratis en 2 minutos y comienza tu prueba de 14 días'
-                        : 'Sign up free in 2 minutes and start your 14-day trial'}
+                        ? 'Prueba la demo en 2 minutos'
+                        : 'Try the demo in 2 minutes'}
                     </p>
                   </div>
                 </div>

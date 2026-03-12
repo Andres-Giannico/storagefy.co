@@ -94,7 +94,7 @@ export default function RootLayout({
     logo: 'https://storagefy.co/logo.png',
     description: 'Software de gestión avanzada para trasteros y almacenes',
     sameAs: [
-      // Agregar redes sociales cuando estén disponibles
+      'https://www.linkedin.com/company/storagefy/posts/?feedView=all&viewAsMember=true',
     ],
     contactPoint: {
       '@type': 'ContactPoint',

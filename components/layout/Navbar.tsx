@@ -69,7 +69,7 @@ const Navbar = ({ className }: NavbarProps) => {
         )}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 lg:h-20">
+          <div className="flex items-center justify-between h-14 lg:h-16">
             
             {/* Logo */}
             <motion.div
@@ -77,8 +77,8 @@ const Navbar = ({ className }: NavbarProps) => {
               whileTap={{ scale: 0.95 }}
               className="flex-shrink-0"
             >
-              <LinkWithLang href="/" className="flex items-center space-x-3">
-                <div className="relative w-11 h-11 lg:w-14 lg:h-14 flex-shrink-0 rounded-lg p-1.5">
+              <LinkWithLang href="/" className="flex items-center space-x-2">
+                <div className="relative w-9 h-9 lg:w-10 lg:h-10 flex-shrink-0 rounded-lg p-1">
                   <Image
                     src="/logo.png"
                     alt="StorageFy Logo"
@@ -87,14 +87,14 @@ const Navbar = ({ className }: NavbarProps) => {
                     priority
                   />
                 </div>
-                <span className="text-xl lg:text-2xl font-bold text-gradient">
+                <span className="text-lg lg:text-xl font-bold text-gradient">
                   StorageFy
                 </span>
               </LinkWithLang>
             </motion.div>
 
             {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center space-x-8">
+            <div className="hidden lg:flex items-center space-x-5">
               {navItems.map((item) => (
                 <motion.div
                   key={item.href}
@@ -279,7 +279,7 @@ const Navbar = ({ className }: NavbarProps) => {
       </motion.nav>
 
       {/* Spacer to prevent content from hiding behind fixed navbar */}
-      <div className="h-16 lg:h-20" />
+      <div className="h-14 lg:h-16" />
     </>
   )
 }

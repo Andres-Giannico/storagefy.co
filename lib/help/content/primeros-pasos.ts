@@ -17,7 +17,7 @@ export const primerospasosArticles: HelpArticle[] = [
 
 ## Crear una Cuenta Nueva
 
-1. Visita [storagefy.app](https://storagefy.app) y haz clic en "Comenzar prueba gratis"
+1. Visita [storagefy.co/demo-trial](https://storagefy.co/demo-trial) y haz clic en "Probar demo ahora"
 2. Completa el formulario de registro con:
    - Tu nombre completo
    - Email corporativo
@@ -47,7 +47,7 @@ Si olvidaste tu contraseña:
 
 ## Create a New Account
 
-1. Visit [storagefy.app](https://storagefy.app) and click "Start free trial"
+1. Visit [storagefy.co/demo-trial](https://storagefy.co/demo-trial) and click "Try demo now"
 2. Complete the registration form with:
    - Your full name
    - Corporate email

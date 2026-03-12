@@ -45,8 +45,8 @@ export default function ContactPageClient() {
         : 'https://wa.me/34871242642?text=Hello%20Theo%2C%20I%27m%20interested%20in%20StorageFy%20to%20manage%20my%20storage%2Fparking%20business.%20I%27d%20like%20to%20know%20more%20information.',
       whatsappName: 'Theo',
       description: language === 'es' 
-        ? '¿Necesitas información, asesoría personalizada o ayuda para configurar tu cuenta de prueba gratis? Contáctame y te ayudo a empezar.'
-        : 'Need information, personalized advice or help setting up your free trial account? Contact me and I\'ll help you get started.'
+        ? '¿Necesitas información, asesoría personalizada o ayuda con la demo? Contáctame y te ayudo a empezar.'
+        : 'Need information, personalized advice or help with the demo? Contact me and I\'ll help you get started.'
     },
     {
       icon: Phone,
@@ -59,7 +59,7 @@ export default function ContactPageClient() {
       whatsappName: 'Juan David',
       description: language === 'es'
         ? '¿Necesitas información, asesoría personalizada o ayuda para configurar tu cuenta de prueba? Contacta conmigo.'
-        : 'Need information, personalized advice or help setting up your free trial account? Contact me.'
+        : 'Need information, personalized advice or help with the demo? Contact me.'
     },
     {
       icon: Phone,

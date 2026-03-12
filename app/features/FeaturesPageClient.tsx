@@ -24,6 +24,7 @@ import {
 } from 'lucide-react'
 import { useLanguage } from '@/lib/context/LanguageContext'
 import FadeInUp from '@/components/animations/FadeInUp'
+import LinkWithLang from '@/components/common/LinkWithLang'
 
 export default function FeaturesPageClient() {
   const { language } = useLanguage()
@@ -229,13 +230,12 @@ export default function FeaturesPageClient() {
               }
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="px-8 py-3 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-semibold rounded-full shadow-lg hover:from-accent-600 hover:to-accent-700 transition-all duration-200 hover:scale-105 active:scale-95">
-                {language === 'es' ? 'Probar Gratis 14 Días' : 'Try Free 14 Days'}
-              </button>
-              <button className="px-8 py-3 bg-white/10 border-2 border-white/30 text-white font-semibold rounded-full shadow-lg hover:border-white/50 hover:bg-white/20 transition-all duration-200 backdrop-blur-sm hover:scale-105 active:scale-95">
-                {language === 'es' ? 'Ver Demo' : 'View Demo'}
-              </button>
+            <div className="flex justify-center">
+              <LinkWithLang href="/demo-trial">
+                <span className="inline-block px-8 py-3 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-semibold rounded-full shadow-lg hover:from-accent-600 hover:to-accent-700 transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer">
+                  {language === 'es' ? 'Probar demo ahora' : 'Try demo now'}
+                </span>
+              </LinkWithLang>
             </div>
           </FadeInUp>
         </div>
@@ -396,15 +396,14 @@ export default function FeaturesPageClient() {
               }
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="/demo"
-                className="px-8 py-3 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-semibold rounded-full shadow-lg hover:from-accent-600 hover:to-accent-700 transition-all duration-200 hover:scale-105 active:scale-95"
-              >
-                {language === 'es' ? 'Probar Gratis 14 Días' : 'Try Free 14 Days'}
-              </a>
+              <LinkWithLang href="/demo-trial">
+                <span className="inline-block px-8 py-3 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-semibold rounded-full shadow-lg hover:from-accent-600 hover:to-accent-700 transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer text-center">
+                  {language === 'es' ? 'Probar demo ahora' : 'Try demo now'}
+                </span>
+              </LinkWithLang>
               <a
                 href="/contact"
-                className="px-8 py-3 glass border border-white/20 text-white font-semibold rounded-full shadow-md hover:bg-white/10 transition-all duration-200 hover:scale-105 active:scale-95"
+                className="px-8 py-3 glass border border-white/20 text-white font-semibold rounded-full shadow-md hover:bg-white/10 transition-all duration-200 hover:scale-105 active:scale-95 text-center"
               >
                 {language === 'es' ? 'Hablar con Experto' : 'Talk to Expert'}
               </a>

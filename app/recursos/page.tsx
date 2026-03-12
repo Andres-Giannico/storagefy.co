@@ -207,12 +207,12 @@ export default function RecursosPage() {
                 : 'Note: Resources are available to all StorageFy users. Some resources require logging in.'}
             </p>
             <motion.a
-              href="/demo"
+              href="/demo-trial"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
             >
-              {language === 'es' ? 'Comenzar Prueba Gratis' : 'Start Free Trial'}
+              {language === 'es' ? 'Probar demo ahora' : 'Try demo now'}
               <ArrowRight className="w-4 h-4" />
             </motion.a>
           </motion.div>

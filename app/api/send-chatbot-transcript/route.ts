@@ -176,7 +176,7 @@ export async function POST(request: NextRequest) {
                 <a href="mailto:hello@storagefy.co" class="cta-button">
                   ✉️ Email
                 </a>
-                <a href="https://storagefy.co/demo" class="cta-button">
+                <a href="https://storagefy.co/demo-trial" class="cta-button">
                   🎯 ${language === 'es' ? 'Ver Demo' : 'See Demo'}
                 </a>
               </div>

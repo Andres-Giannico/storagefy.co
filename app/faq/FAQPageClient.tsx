@@ -13,7 +13,7 @@ export default function FAQPageClient() {
   const faqs = language === 'es' ? [
     {
       question: '¿Cuáles son los planes y precios de StorageFy?',
-      answer: 'Tenemos un modelo de precios simple: 1 EUR por unidad al mes + IVA hasta 200 unidades. Para más de 200 unidades ofrecemos precios personalizados con descuentos por volumen. Todos los planes incluyen locaciones ilimitadas, usuarios ilimitados y 14 días de prueba gratis sin tarjeta de crédito.',
+      answer: 'Tenemos un modelo de precios simple: 1 EUR por unidad al mes + IVA hasta 200 unidades. Para más de 200 unidades ofrecemos precios personalizados con descuentos por volumen. Todos los planes incluyen locaciones ilimitadas, usuarios ilimitados. Puedes probar la demo en 2 minutos, sin tarjeta de crédito.',
     },
     {
       question: '¿Hay descuentos por volumen?',
@@ -24,8 +24,8 @@ export default function FAQPageClient() {
       answer: 'StorageFy incluye gestión completa de unidades, contratos digitales con firma electrónica, cobros automáticos con Stripe, reportes y analytics en tiempo real, widget de reservas para tu web, y mucho más.',
     },
     {
-      question: '¿Cómo funciona la prueba gratis?',
-      answer: 'Ofrecemos 14 días de prueba gratis sin necesidad de tarjeta de crédito. Puedes probar todas las funcionalidades durante este período. Si decides continuar, simplemente selecciona tu plan.',
+      question: '¿Cómo funciona la demo?',
+      answer: 'Puedes probar la demo en 2 minutos, sin tarjeta de crédito. Accede con nombre y email, explora el software con datos de ejemplo y, si te convence, crea tu cuenta para seguir.',
     },
     {
       question: '¿Puedo migrar mis datos desde otro sistema?',
@@ -46,7 +46,7 @@ export default function FAQPageClient() {
   ] : [
     {
       question: 'What are StorageFy plans and pricing?',
-      answer: 'We have a simple pricing model: 1 EUR per unit per month + VAT up to 200 units. For more than 200 units we offer custom pricing with volume discounts. All plans include unlimited locations, unlimited users, and 14 days free trial without credit card.',
+      answer: 'We have a simple pricing model: 1 EUR per unit per month + VAT up to 200 units. For more than 200 units we offer custom pricing with volume discounts. All plans include unlimited locations, unlimited users. You can try the demo in 2 minutes, no credit card required.',
     },
     {
       question: 'Are there volume discounts?',
@@ -57,8 +57,8 @@ export default function FAQPageClient() {
       answer: 'StorageFy includes complete unit management, digital contracts with electronic signature, automatic payments with Stripe, real-time reports and analytics, booking widget for your website, and much more.',
     },
     {
-      question: 'How does the free trial work?',
-      answer: 'We offer 14 days free trial without credit card required. You can try all features during this period. If you decide to continue, simply select your plan.',
+      question: 'How does the demo work?',
+      answer: 'You can try the demo in 2 minutes, no credit card required. Enter your name and email, explore the software with sample data and, if you like it, create your account to continue.',
     },
     {
       question: 'Can I migrate my data from another system?',

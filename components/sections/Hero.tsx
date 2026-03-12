@@ -2,7 +2,7 @@
 
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
-import { ArrowRight, TrendingUp, Users, DollarSign, Building2, CheckCircle, X, CreditCard, Globe, Clock } from 'lucide-react'
+import { ArrowRight, TrendingUp, Users, DollarSign, Building2, CheckCircle, CreditCard, Globe, Clock, MapPin, BarChart2, FileText, Calendar } from 'lucide-react'
 import { useLanguage } from '@/lib/context/LanguageContext'
 import LinkWithLang from '@/components/common/LinkWithLang'
 
@@ -27,14 +27,14 @@ const Hero = () => {
       { label: language === 'es' ? 'Facturas Pendientes' : 'Pending Invoices', value: '0', color: 'orange', icon: CheckCircle },
     ],
     recentPayments: [
-      { id: 'PAY-2025-0007', client: 'Omar Andres Giannico', amount: '€65.00', status: 'paid', unit: 'B-203' },
+      { id: 'PAY-2025-0007', client: 'Alex Martínez', amount: '€65.00', status: 'paid', unit: 'B-203' },
       { id: 'PAY-2025-0006', client: 'María García López', amount: '€145.00', status: 'paid', unit: 'A-104' },
       { id: 'PAY-2025-0005', client: 'Carlos López Ruiz', amount: '€85.00', status: 'pending', unit: 'A-102' },
     ]
   }
 
   return (
-    <section ref={containerRef} className="relative min-h-[120vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary-50 via-white to-accent-50/30">
+    <section ref={containerRef} className="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary-50 via-white to-accent-50/30 py-8 lg:py-10">
       
       {/* Background Elements */}
       <div className="absolute inset-0">
@@ -66,138 +66,104 @@ const Hero = () => {
         />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-8 lg:gap-10 items-center">
         
         {/* Content Left */}
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
-          className="space-y-10"
+          className="space-y-5"
         >
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
-            className="space-y-8"
+            className="space-y-4"
           >
-            {/* Título Principal */}
-            <div className="space-y-4">
-              <h1 className="text-3xl lg:text-5xl font-bold leading-tight">
+            {/* Título Principal - Plan: "The modern management software for self-storage operators" */}
+            <div className="space-y-3">
+              <h1 className="text-3xl lg:text-4xl xl:text-5xl font-bold leading-tight">
                 <span className="text-primary-800">
                   {language === 'es' 
-                    ? 'Software para negocios de trasteros y parkings:' 
-                    : 'Software for storage and parking businesses:'}
-                </span>
-                <br />
-                <span className="text-gradient">
-                  {language === 'es' 
-                    ? 'reservas online, cobros automáticos' 
-                    : 'online reservations, automatic payments'}
-                </span>
-                <br />
-                <span className="text-gradient-accent">
-                  {language === 'es' 
-                    ? 'y control total de unidades' 
-                    : 'and total unit control'}
+                    ? 'El software de gestión moderno para operadores de self storage y parkings'
+                    : 'The modern management software for self-storage and parking operators'}
                 </span>
               </h1>
 
-              <p className="text-lg lg:text-xl text-primary-600 leading-relaxed max-w-2xl">
+              <p className="text-base lg:text-lg text-primary-600 leading-relaxed max-w-2xl">
                 {language === 'es' 
-                  ? 'Automatiza reservas, contratos y pagos para reducir morosidad y llenar tus espacios más rápido.'
-                  : 'Automate reservations, contracts and payments to reduce delinquency and fill your spaces faster.'
+                  ? 'Multi-sede, facturación automática, analytics de ocupación, contratos y facturas, reservas online.'
+                  : 'Multi-location, automated billing, occupancy analytics, contracts + invoices, online booking.'
                 }
               </p>
             </div>
 
-            {/* Segmentación - Separada visualmente */}
-            <div className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg glass border border-accent-200 bg-accent-50/50">
-              <Building2 className="w-4 h-4 text-accent-600 flex-shrink-0" />
-              <span className="text-sm font-medium text-primary-700">
-                <span className="font-semibold text-accent-700">
-                  {language === 'es' ? 'Para: ' : 'For: '}
-                </span>
-                {language === 'es' 
-                  ? 'empresas de self storage, trasteros urbanos, parkings y mini almacenes'
-                  : 'self storage companies, urban storage, parking lots and mini warehouses'}
-              </span>
-            </div>
+            {/* Feature pills: multi-location, automated billing, occupancy analytics, contracts + invoices, online booking */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.25, duration: 0.5 }}
+              className="flex flex-wrap gap-2"
+            >
+              {[
+                { icon: MapPin, label: language === 'es' ? 'multi-sede' : 'multi-location' },
+                { icon: CreditCard, label: language === 'es' ? 'facturación automática' : 'automated billing' },
+                { icon: BarChart2, label: language === 'es' ? 'analytics de ocupación' : 'occupancy analytics' },
+                { icon: FileText, label: language === 'es' ? 'contratos + facturas' : 'contracts + invoices' },
+                { icon: Calendar, label: language === 'es' ? 'reservas online' : 'online booking' },
+              ].map((item, i) => {
+                const Icon = item.icon
+                return (
+                  <span
+                    key={item.label}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg glass border border-accent-200 bg-accent-50/50 text-sm font-medium text-primary-700"
+                  >
+                    <Icon className="w-3.5 h-3.5 text-accent-600 flex-shrink-0" />
+                    {item.label}
+                  </span>
+                )
+              })}
+            </motion.div>
           </motion.div>
 
-          {/* CTA Buttons - Sección separada */}
+          {/* CTA Buttons: Demo → demo-trial, Registrarse → signup */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.6 }}
-            className="space-y-4"
+            className="space-y-3"
           >
-            <div className="flex flex-col sm:flex-row gap-3">
-              {/* CTA Principal */}
-              <LinkWithLang href="/signup">
+            <div className="flex flex-col sm:flex-row gap-2.5">
+              <LinkWithLang href="/demo-trial">
                 <motion.span
                   whileHover={{ scale: 1.02, y: -1 }}
                   whileTap={{ scale: 0.98 }}
                   className="group px-6 py-2.5 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-medium rounded-lg hover:from-accent-600 hover:to-accent-700 transition-all duration-200 shadow-md hover:shadow-lg flex items-center justify-center gap-2 text-sm cursor-pointer"
                 >
-                  {language === 'es' ? 'Crear cuenta gratis' : 'Create free account'}
+                  {language === 'es' ? 'Ver demo' : 'View demo'}
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-200" />
                 </motion.span>
               </LinkWithLang>
 
-              {/* CTA Secundario */}
-              <LinkWithLang href="/demo">
+              <LinkWithLang href="/signup">
                 <motion.span
                   whileHover={{ scale: 1.02, y: -1 }}
                   whileTap={{ scale: 0.98 }}
                   className="px-6 py-2.5 bg-white/80 backdrop-blur-sm border border-primary-200 text-primary-700 font-medium rounded-lg hover:bg-white hover:border-accent-300 hover:text-accent-700 transition-all duration-200 shadow-sm hover:shadow-md flex items-center justify-center gap-2 text-sm cursor-pointer"
                 >
-                  {language === 'es' ? 'Ver demo' : 'View demo'}
+                  {language === 'es' ? 'Registrarse' : 'Sign up'}
                 </motion.span>
               </LinkWithLang>
             </div>
 
-            {/* Mensaje de registro rápido - Separado */}
-            <div className="bg-green-50 border border-green-200 rounded-lg px-4 py-3">
+            <div className="bg-green-50 border border-green-200 rounded-lg px-3 py-2">
               <p className="text-sm text-green-700 font-medium flex items-center justify-center gap-2">
                 <Clock className="w-4 h-4 text-green-600 flex-shrink-0" />
                 {language === 'es' 
-                  ? 'Regístrate gratis en 2 minutos • Sin tarjeta de crédito'
-                  : 'Sign up free in 2 minutes • No credit card required'}
+                  ? 'Prueba la demo en 2 minutos • Sin tarjeta de crédito'
+                  : 'Try the demo in 2 minutes • No credit card required'}
               </p>
-            </div>
-          </motion.div>
-
-          {/* 3 Bullets de Beneficios - Sección separada */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.6 }}
-            className="space-y-3 pt-4 border-t border-gray-200"
-          >
-            <div className="flex items-start gap-3">
-              <div className="mt-0.5 p-1.5 rounded-lg bg-red-50">
-                <X className="w-4 h-4 text-red-600 flex-shrink-0" />
-              </div>
-              <span className="text-sm lg:text-base font-medium text-primary-700 pt-1">
-                {language === 'es' ? 'Adiós a Excel y al papeleo.' : 'Goodbye to Excel and paperwork.'}
-              </span>
-            </div>
-            <div className="flex items-start gap-3">
-              <div className="mt-0.5 p-1.5 rounded-lg bg-green-50">
-                <CreditCard className="w-4 h-4 text-green-600 flex-shrink-0" />
-              </div>
-              <span className="text-sm lg:text-base font-medium text-primary-700 pt-1">
-                {language === 'es' ? 'Cobros automatizados y menos morosidad.' : 'Automated payments and less delinquency.'}
-              </span>
-            </div>
-            <div className="flex items-start gap-3">
-              <div className="mt-0.5 p-1.5 rounded-lg bg-blue-50">
-                <Globe className="w-4 h-4 text-blue-600 flex-shrink-0" />
-              </div>
-              <span className="text-sm lg:text-base font-medium text-primary-700 pt-1">
-                {language === 'es' ? 'Reservas 24/7 desde tu web.' : '24/7 reservations from your website.'}
-              </span>
             </div>
           </motion.div>
 

@@ -42,7 +42,7 @@ export default function FAQPage() {
         name: '¿Cuáles son los planes y precios de StorageFy?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Tenemos un modelo de precios simple: 1 EUR por unidad al mes + IVA hasta 200 unidades. Para más de 200 unidades ofrecemos precios personalizados con descuentos por volumen. Todos los planes incluyen locaciones ilimitadas, usuarios ilimitados y 14 días de prueba gratis sin tarjeta de crédito.',
+          text: 'Tenemos un modelo de precios simple: 1 EUR por unidad al mes + IVA hasta 200 unidades. Todos los planes incluyen locaciones ilimitadas, usuarios ilimitados. Puedes probar la demo en 2 minutos, sin tarjeta de crédito.',
         },
       },
       {

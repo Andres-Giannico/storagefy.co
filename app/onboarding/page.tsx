@@ -30,7 +30,7 @@ export default function OnboardingPage() {
       icon: Rocket,
       title: language === 'es' ? 'Registro (5 minutos)' : 'Registration (5 minutes)',
       items: [
-        language === 'es' ? 'Crea tu cuenta gratuita desde el botón "Comenzar prueba gratis"' : 'Create your free account from the "Start free trial" button',
+        language === 'es' ? 'Prueba la demo desde el botón "Probar demo ahora"' : 'Try the demo from the "Try demo now" button',
         language === 'es' ? 'Confirma tu email (recibirás un enlace de confirmación)' : 'Confirm your email (you will receive a confirmation link)',
         language === 'es' ? 'Selecciona tu plan (puedes cambiar después)' : 'Select your plan (you can change later)',
         language === 'es' ? 'Sin tarjeta de crédito requerida para la prueba' : 'No credit card required for trial'
@@ -607,19 +607,19 @@ export default function OnboardingPage() {
 
             <p className="text-xl text-white/80 mb-12 max-w-2xl mx-auto leading-relaxed">
               {language === 'es'
-                ? 'Comienza tu prueba gratuita de 14 días y nuestro equipo te ayudará en cada paso del proceso.'
-                : 'Start your 14-day free trial and our team will help you at every step of the process.'
+                ? 'Prueba la demo en 2 minutos y nuestro equipo te ayudará en cada paso del proceso.'
+                : 'Try the demo in 2 minutes and our team will help you at every step of the process.'
               }
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <motion.a
-                href="/demo"
+                href="/demo-trial"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
               >
-                {language === 'es' ? 'Comenzar Prueba Gratis' : 'Start Free Trial'}
+                {language === 'es' ? 'Probar demo ahora' : 'Try demo now'}
                 <ArrowRight className="w-5 h-5" />
               </motion.a>
 

@@ -119,13 +119,13 @@ const FinalCTA = () => {
             className="space-y-4"
           >
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <LinkWithLang href="/demo">
+              <LinkWithLang href="/demo-trial">
                 <motion.span
                   whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(124, 179, 66, 0.4)' }}
                   whileTap={{ scale: 0.95 }}
                   className="group px-8 py-4 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-semibold rounded-full hover:from-accent-600 hover:to-accent-700 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  {language === 'es' ? 'Comenzar prueba gratuita de 14 días' : 'Start 14-day free trial'}
+                  {language === 'es' ? 'Probar demo ahora' : 'Try demo now'}
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
                 </motion.span>
               </LinkWithLang>
@@ -142,8 +142,8 @@ const FinalCTA = () => {
             </div>
             <p className="text-sm text-gray-300 text-center">
               {language === 'es' 
-                ? '✓ Sin tarjeta • Sin permanencia • Registro en 2 minutos • Migración incluida'
-                : '✓ No card • No commitment • Sign up in 2 minutes • Migration included'}
+                ? '✓ Sin tarjeta • Demo en 2 minutos • Migración incluida'
+                : '✓ No card • Demo in 2 minutes • Migration included'}
             </p>
           </motion.div>
         </FadeInUp>

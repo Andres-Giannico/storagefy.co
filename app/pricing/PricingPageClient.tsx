@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 import { 
   Check, 
   CheckCircle, 
@@ -55,7 +56,7 @@ export default function PricingPageClient() {
         language === 'es' ? 'Soporte prioritario' : 'Priority support',
         language === 'es' ? 'Recordatorios automáticos' : 'Automatic reminders',
       ],
-      cta: language === 'es' ? 'Probar Gratis' : 'Start Free Trial',
+      cta: language === 'es' ? 'Probar demo ahora' : 'Try demo now',
       popular: true,
     },
     {
@@ -89,7 +90,7 @@ export default function PricingPageClient() {
   ]
 
   const benefits = [
-    language === 'es' ? '14 días gratis sin tarjeta' : '14 days free without card',
+    language === 'es' ? 'Demo en 2 min, sin tarjeta' : 'Demo in 2 min, no card',
     language === 'es' ? 'Sin permanencia' : 'No commitment',
     language === 'es' ? 'Migración de datos incluida' : 'Data migration included',
     language === 'es' ? 'Soporte en español' : 'Spanish support',
@@ -134,14 +135,15 @@ export default function PricingPageClient() {
 
   const testimonials = [
     {
-      name: language === 'es' ? 'Carlos Rodríguez' : 'Carlos Rodríguez',
-      role: language === 'es' ? 'CEO, TrasterosMadrid' : 'CEO, TrasterosMadrid',
+      name: 'Steffano',
+      role: language === 'es' ? 'Propietario, Trasteros Ibiza (2 locaciones)' : 'Owner, Ibiza Storage (2 locations)',
       plan: language === 'es' ? 'Estándar' : 'Standard',
       text: language === 'es'
-        ? 'Gestionamos 120 unidades. Pagamos 120 EUR/mes + IVA. La ocupación aumentó del 75% al 92% en solo 6 meses. La inversión se pagó sola en el primer mes.'
-        : 'We manage 120 units. We pay 120 EUR/month + VAT. Occupancy increased from 75% to 92% in just 6 months. The investment paid for itself in the first month.',
-      savings: language === 'es' ? '€2,400/mes ahorrados' : '€2,400/month saved',
-      emoji: '👨‍💼'
+        ? 'Pasamos de gestionar todo manualmente a StorageFy y aumentamos la ocupación del 52% al 82% en solo 5 meses. El widget de reservas 24/7 fue un cambio radical para nuestro negocio en Ibiza.'
+        : 'We moved from managing everything manually to StorageFy and increased occupancy from 52% to 82% in just 5 months. The 24/7 booking widget was a game changer for our business in Ibiza.',
+      savings: language === 'es' ? '+30% ocupación • 15h ahorro/semana' : '+30% occupancy • 15h saved/week',
+      emoji: '🏝️',
+      avatar: '/images/steffnao.png'
     },
     {
       name: language === 'es' ? 'Ana Martínez' : 'Ana Martínez',
@@ -152,16 +154,6 @@ export default function PricingPageClient() {
         : 'As an entrepreneur, I needed something simple but professional. With 40 units I pay only 40 EUR/month + VAT. I have everything I need. Incredible value.',
       savings: language === 'es' ? '15h/semana ahorradas' : '15h/week saved',
       emoji: '👩‍💼'
-    },
-    {
-      name: language === 'es' ? 'Miguel Fernández' : 'Miguel Fernández',
-      role: language === 'es' ? 'Director de Operaciones, StorageChain' : 'Operations Director, StorageChain',
-      plan: language === 'es' ? 'Enterprise' : 'Enterprise',
-      text: language === 'es'
-        ? 'Gestionamos 12 locaciones y +1000 unidades. La API personalizada y el soporte 24/7 nos permiten operar sin fricciones. ROI del 400% en el primer año.'
-        : 'We manage 12 locations and +1000 units. The custom API and 24/7 support allow us to operate without friction. 400% ROI in the first year.',
-      savings: language === 'es' ? '€8,000/mes ahorrados' : '€8,000/month saved',
-      emoji: '👔'
     }
   ]
 
@@ -184,7 +176,7 @@ export default function PricingPageClient() {
     },
     {
       question: '¿Puedo probar antes de pagar?',
-      answer: '¡Por supuesto! Todos los planes incluyen 14 días de prueba gratis sin necesidad de tarjeta de crédito. Puedes probar todas las funcionalidades sin compromiso.',
+      answer: '¡Por supuesto! Puedes probar la demo en 2 minutos sin tarjeta de crédito. Accede con nombre y email, explora todas las funcionalidades y, si te convence, crea tu cuenta.',
     },
     {
       question: '¿Hay costos de configuración?',
@@ -221,7 +213,7 @@ export default function PricingPageClient() {
     },
     {
       question: 'Can I try before paying?',
-      answer: 'Of course! All plans include 14 days free trial without credit card required. You can try all features without commitment.',
+      answer: 'Of course! You can try the demo in 2 minutes, no credit card required. Enter your name and email, explore all features and, if you like it, create your account.',
     },
     {
       question: 'Are there setup costs?',
@@ -398,7 +390,7 @@ export default function PricingPageClient() {
                 </ul>
 
                 <a
-                  href={plan.id === 'enterprise' ? '/contact' : '/demo'}
+                  href={plan.id === 'enterprise' ? '/contact' : '/demo-trial'}
                   className={`block w-full py-3 px-6 rounded-xl font-semibold transition-all text-center ${
                     plan.popular
                       ? 'bg-gradient-to-r from-accent-500 to-accent-600 text-white hover:from-accent-600 hover:to-accent-700'
@@ -511,7 +503,21 @@ export default function PricingPageClient() {
                 transition={{ delay: index * 0.1 }}
                 className="bg-white rounded-xl p-6 shadow-md border border-gray-100"
               >
-                <div className="text-4xl mb-4">{testimonial.emoji}</div>
+                <div className="mb-4">
+                  {'avatar' in testimonial && testimonial.avatar ? (
+                    <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-primary-100">
+                      <Image
+                        src={testimonial.avatar}
+                        alt={testimonial.name}
+                        fill
+                        className="object-cover"
+                        sizes="56px"
+                      />
+                    </div>
+                  ) : (
+                    <div className="text-4xl">{testimonial.emoji}</div>
+                  )}
+                </div>
                 <div className="flex items-center gap-2 mb-2">
                   <span className="text-xs font-semibold px-2 py-1 bg-accent-100 text-accent-700 rounded">
                     {testimonial.plan}

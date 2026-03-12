@@ -61,7 +61,7 @@ const Pricing = () => {
   ]
 
   const benefits = [
-    language === 'es' ? '14 días gratis sin tarjeta' : '14 days free without card',
+    language === 'es' ? 'Demo en 2 min, sin tarjeta' : 'Demo in 2 min, no card',
     language === 'es' ? 'Sin permanencia' : 'No commitment',
     language === 'es' ? 'Migración de datos incluida' : 'Data migration included',
     language === 'es' ? 'Soporte en español' : 'Spanish support',
@@ -222,7 +222,7 @@ const Pricing = () => {
 
                   {/* CTA Button */}
                   <motion.a
-                    href={plan.name === 'Enterprise' || plan.name === 'Enterprise' ? '/contact' : '/demo'}
+                    href={plan.name === 'Enterprise' || plan.name === 'Enterprise' ? '/contact' : '/demo-trial'}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     className={`block w-full py-3 px-6 rounded-xl font-semibold text-center transition-all duration-300 ${
@@ -233,14 +233,14 @@ const Pricing = () => {
                   >
                     {(plan.name === 'Enterprise' || plan.name === 'Enterprise')
                       ? (language === 'es' ? 'Hablar con especialista' : 'Talk to specialist')
-                      : (language === 'es' ? 'Comenzar prueba gratis' : 'Start free trial')
+                      : (language === 'es' ? 'Probar demo ahora' : 'Try demo now')
                     }
                   </motion.a>
 
                   {/* Trust Badge */}
                   {plan.name !== 'Enterprise' && plan.name !== 'Enterprise' && (
                     <p className="text-xs text-gray-500 text-center mt-3">
-                      {language === 'es' ? '✓ 14 días gratis • Sin tarjeta' : '✓ 14 days free • No card'}
+                      {language === 'es' ? '✓ Demo en 2 min • Sin tarjeta' : '✓ Demo in 2 min • No card'}
                     </p>
                   )}
                 </div>
