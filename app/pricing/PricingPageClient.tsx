@@ -9,6 +9,11 @@ import {
   ChevronUp,
   Building2,
   ArrowRightLeft,
+  Zap,
+  XCircle,
+  Database,
+  MessageCircle,
+  Sparkles,
 } from 'lucide-react'
 import LinkWithLang from '@/components/common/LinkWithLang'
 import { useLanguage } from '@/lib/context/LanguageContext'
@@ -100,11 +105,11 @@ export default function PricingPageClient() {
   ]
 
   const benefits = [
-    language === 'es' ? 'Demo en 2 min, sin tarjeta' : 'Demo in 2 min, no card',
-    language === 'es' ? 'Sin permanencia' : 'No commitment',
-    language === 'es' ? 'Migración de datos incluida' : 'Data migration included',
-    language === 'es' ? 'Soporte en español' : 'Spanish support',
-    language === 'es' ? 'Actualizaciones continuas' : 'Continuous updates'
+    { icon: Zap, text: language === 'es' ? 'Regístrate gratis en 2 min' : 'Sign up free in 2 min' },
+    { icon: XCircle, text: language === 'es' ? 'Sin permanencia' : 'No commitment' },
+    { icon: ArrowRightLeft, text: language === 'es' ? 'Migración de datos incluida' : 'Data migration included' },
+    { icon: MessageCircle, text: language === 'es' ? 'Soporte en español' : 'Spanish support' },
+    { icon: Sparkles, text: language === 'es' ? 'Actualizaciones continuas' : 'Continuous updates' },
   ]
 
   const useCases = [
@@ -269,7 +274,7 @@ export default function PricingPageClient() {
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur-sm border border-accent-200/60 mb-6 shadow-sm"
           >
             <span className="text-sm font-medium text-accent-700">
-              {language === 'es' ? 'Sin tarjeta • Demo en 2 min' : 'No card • Demo in 2 min'}
+              {language === 'es' ? 'Regístrate gratis • Sin tarjeta' : 'Sign up free • No card'}
             </span>
           </motion.div>
           <motion.h1
@@ -593,29 +598,42 @@ export default function PricingPageClient() {
           </div>
         </FadeInUp>
 
-        {/* All Plans Include */}
+        {/* Todo incluido */}
         <FadeInUp className="mb-16">
-          <div className="relative bg-gradient-to-br from-primary-800 via-primary-700 to-primary-800 rounded-2xl p-8 text-white overflow-hidden">
-            <div className="absolute top-0 right-0 w-96 h-96 bg-accent-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-            <div className="absolute bottom-0 left-0 w-64 h-64 bg-accent-400/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
-            <h3 className="relative text-2xl font-bold text-center mb-8">
-              {language === 'es' ? 'Todo incluido' : 'Everything included'}
-            </h3>
-            <div className="relative grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
-              {benefits.map((benefit, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.05 }}
-                  whileHover={{ scale: 1.02 }}
-                  className="flex items-center gap-2 p-3 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-colors"
-                >
-                  <CheckCircle className="w-5 h-5 text-accent-400 flex-shrink-0" />
-                  <span className="text-sm">{benefit}</span>
-                </motion.div>
-              ))}
+          <div className="relative max-w-4xl mx-auto rounded-2xl overflow-hidden border border-primary-200/80 shadow-xl">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary-800 via-primary-700 to-primary-800" />
+            <div className="absolute top-0 right-0 w-80 h-80 bg-accent-500/15 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+            <div className="absolute bottom-0 left-0 w-48 h-48 bg-accent-400/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+            <div className="relative px-6 py-8 md:px-10 md:py-10">
+              <div className="text-center mb-8">
+                <span className="inline-block px-4 py-1.5 rounded-full bg-accent-500/20 text-accent-300 text-xs font-semibold tracking-wider uppercase mb-4">
+                  {language === 'es' ? 'Sin sorpresas' : 'No surprises'}
+                </span>
+                <h3 className="text-2xl md:text-3xl font-bold text-white">
+                  {language === 'es' ? 'Todo incluido' : 'Everything included'}
+                </h3>
+              </div>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
+                {benefits.map((benefit, index) => {
+                  const Icon = benefit.icon
+                  return (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, y: 12 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.06 }}
+                      whileHover={{ y: -2, transition: { duration: 0.2 } }}
+                      className="flex flex-col items-center gap-3 p-5 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 hover:border-accent-400/30 transition-all duration-300"
+                    >
+                      <div className="w-11 h-11 rounded-xl bg-accent-500/20 flex items-center justify-center">
+                        <Icon className="w-5 h-5 text-accent-400" />
+                      </div>
+                      <span className="text-sm font-medium text-white/95 text-center leading-snug">{benefit.text}</span>
+                    </motion.div>
+                  )
+                })}
+              </div>
             </div>
           </div>
         </FadeInUp>
@@ -693,7 +711,7 @@ export default function PricingPageClient() {
               ? 'Empresas de todos los tamaños confían en StorageFy para gestionar sus trasteros.'
               : 'Businesses of all sizes trust StorageFy to manage their storage units.'}
           </p>
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
             {testimonials.map((testimonial, index) => (
               <motion.div
                 key={index}

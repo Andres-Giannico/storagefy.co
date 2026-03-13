@@ -33,155 +33,125 @@ const Hero = () => {
     ]
   }
 
+  const features = [
+    { icon: MapPin, label: language === 'es' ? 'multi-sede' : 'multi-location' },
+    { icon: CreditCard, label: language === 'es' ? 'facturación automática' : 'automated billing' },
+    { icon: BarChart2, label: language === 'es' ? 'analytics de ocupación' : 'occupancy analytics' },
+    { icon: FileText, label: language === 'es' ? 'contratos + facturas' : 'contracts + invoices' },
+    { icon: Calendar, label: language === 'es' ? 'reservas online' : 'online booking' },
+  ]
+
   return (
-    <section ref={containerRef} className="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary-50 via-white to-accent-50/30 py-8 lg:py-10">
+    <section ref={containerRef} className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-[#0a0a0b] py-20 lg:py-28">
+      {/* Fade to next section */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-primary-50 to-transparent pointer-events-none" />
       
-      {/* Background Elements */}
+      {/* Premium background */}
       <div className="absolute inset-0">
-        {/* Animated gradient orbs */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(34,197,94,0.15),transparent)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_80%_50%,rgba(34,197,94,0.08),transparent)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:100%_4px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,black,transparent)]" />
         <motion.div
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.6, 0.3],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: 'easeInOut'
-          }}
-          className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-accent-400/20 to-primary-400/20 rounded-full blur-3xl"
-        />
-        <motion.div
-          animate={{
-            scale: [1.2, 1, 1.2],
-            opacity: [0.2, 0.5, 0.2],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: 'easeInOut',
-            delay: 2
-          }}
-          className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-primary-400/20 to-accent-400/20 rounded-full blur-3xl"
+          animate={{ opacity: [0.4, 0.7, 0.4] }}
+          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent-500/10 rounded-full blur-[120px]"
         />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-8 lg:gap-10 items-center">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
         
-        {/* Content Left */}
+        {/* Content Left - Premium typography */}
         <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
-          className="space-y-5"
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          className="space-y-8"
         >
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.6 }}
-            className="space-y-4"
-          >
-            {/* Título Principal - Plan: "The modern management software for self-storage operators" */}
-            <div className="space-y-3">
-              <h1 className="text-3xl lg:text-4xl xl:text-5xl font-bold leading-tight">
-                <span className="text-primary-800">
-                  {language === 'es' 
-                    ? 'El software de gestión moderno para operadores de self storage y parkings'
-                    : 'The modern management software for self-storage and parking operators'}
-                </span>
-              </h1>
+          <div className="space-y-6">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.08] tracking-tight text-white">
+              {language === 'es' 
+                ? 'El software de gestión moderno para operadores de self storage y parkings'
+                : 'The modern management software for self-storage and parking operators'}
+            </h1>
 
-              <p className="text-base lg:text-lg text-primary-600 leading-relaxed max-w-2xl">
-                {language === 'es' 
-                  ? 'Multi-sede, facturación automática, analytics de ocupación, contratos y facturas, reservas online.'
-                  : 'Multi-location, automated billing, occupancy analytics, contracts + invoices, online booking.'
-                }
-              </p>
-            </div>
+            <p className="text-lg lg:text-xl text-zinc-400 leading-relaxed max-w-xl">
+              {language === 'es' 
+                ? 'Multi-sede, facturación automática, analytics de ocupación, contratos y facturas, reservas online.'
+                : 'Multi-location, automated billing, occupancy analytics, contracts + invoices, online booking.'}
+            </p>
 
-            {/* Feature pills: multi-location, automated billing, occupancy analytics, contracts + invoices, online booking */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.25, duration: 0.5 }}
-              className="flex flex-wrap gap-2"
-            >
-              {[
-                { icon: MapPin, label: language === 'es' ? 'multi-sede' : 'multi-location' },
-                { icon: CreditCard, label: language === 'es' ? 'facturación automática' : 'automated billing' },
-                { icon: BarChart2, label: language === 'es' ? 'analytics de ocupación' : 'occupancy analytics' },
-                { icon: FileText, label: language === 'es' ? 'contratos + facturas' : 'contracts + invoices' },
-                { icon: Calendar, label: language === 'es' ? 'reservas online' : 'online booking' },
-              ].map((item, i) => {
+            {/* Feature pills - refined */}
+            <div className="flex flex-wrap gap-2">
+              {features.map((item, i) => {
                 const Icon = item.icon
                 return (
-                  <span
+                  <motion.span
                     key={item.label}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg glass border border-accent-200 bg-accent-50/50 text-sm font-medium text-primary-700"
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 + i * 0.05, duration: 0.4 }}
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-zinc-300 text-sm font-medium hover:bg-white/10 hover:border-white/20 transition-all duration-300"
                   >
-                    <Icon className="w-3.5 h-3.5 text-accent-600 flex-shrink-0" />
+                    <Icon className="w-4 h-4 text-accent-400" />
                     {item.label}
-                  </span>
+                  </motion.span>
                 )
               })}
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
 
-          {/* CTA Buttons: Demo → demo-trial, Registrarse → signup */}
+          {/* CTAs - Premium style */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
-            className="space-y-3"
+            transition={{ delay: 0.5, duration: 0.6 }}
+            className="flex flex-col sm:flex-row gap-4"
           >
-            <div className="flex flex-col sm:flex-row gap-2.5">
-              <LinkWithLang href="/demo-trial">
-                <motion.span
-                  whileHover={{ scale: 1.02, y: -1 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="group px-6 py-2.5 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-medium rounded-lg hover:from-accent-600 hover:to-accent-700 transition-all duration-200 shadow-md hover:shadow-lg flex items-center justify-center gap-2 text-sm cursor-pointer"
-                >
-                  {language === 'es' ? 'Ver demo' : 'View demo'}
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-200" />
-                </motion.span>
-              </LinkWithLang>
+            <LinkWithLang href="/demo-trial">
+              <motion.span
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="group inline-flex items-center gap-2 px-8 py-4 bg-white text-zinc-900 font-semibold rounded-xl hover:bg-zinc-100 transition-all duration-200 shadow-xl shadow-black/20 cursor-pointer"
+              >
+                {language === 'es' ? 'Ver demo' : 'View demo'}
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
+              </motion.span>
+            </LinkWithLang>
 
-              <LinkWithLang href="/signup">
-                <motion.span
-                  whileHover={{ scale: 1.02, y: -1 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="px-6 py-2.5 bg-white/80 backdrop-blur-sm border border-primary-200 text-primary-700 font-medium rounded-lg hover:bg-white hover:border-accent-300 hover:text-accent-700 transition-all duration-200 shadow-sm hover:shadow-md flex items-center justify-center gap-2 text-sm cursor-pointer"
-                >
-                  {language === 'es' ? 'Registrarse' : 'Sign up'}
-                </motion.span>
-              </LinkWithLang>
-            </div>
-
-            <div className="bg-green-50 border border-green-200 rounded-lg px-3 py-2">
-              <p className="text-sm text-green-700 font-medium flex items-center justify-center gap-2">
-                <Clock className="w-4 h-4 text-green-600 flex-shrink-0" />
-                {language === 'es' 
-                  ? 'Prueba la demo en 2 minutos • Sin tarjeta de crédito'
-                  : 'Try the demo in 2 minutes • No credit card required'}
-              </p>
-            </div>
+            <LinkWithLang href="/signup">
+              <motion.span
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="inline-flex items-center gap-2 px-8 py-4 bg-white/5 border border-white/20 text-white font-semibold rounded-xl hover:bg-white/10 hover:border-white/30 transition-all duration-200 cursor-pointer"
+              >
+                {language === 'es' ? 'Registrarse' : 'Sign up'}
+              </motion.span>
+            </LinkWithLang>
           </motion.div>
 
+          <p className="text-sm text-zinc-500 flex items-center gap-2">
+            <Clock className="w-4 h-4" />
+            {language === 'es' 
+              ? 'Regístrate gratis en 2 min • Sin tarjeta'
+              : 'Sign up free in 2 min • No card'}
+          </p>
         </motion.div>
 
         {/* Dashboard Mockup Right */}
         <motion.div
           style={{ y, opacity, scale }}
-          initial={{ opacity: 0, x: 50 }}
+          initial={{ opacity: 0, x: 40 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
+          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
           className="relative"
         >
+          {/* Glow behind card */}
+          <div className="absolute -inset-1 bg-gradient-to-r from-accent-500/20 to-accent-600/10 rounded-3xl blur-2xl" />
           {/* Dashboard Container */}
           <motion.div
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.3 }}
-            className="relative bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden"
+            className="relative bg-white rounded-2xl shadow-2xl shadow-black/40 border border-white/20 overflow-hidden"
           >
             {/* Dashboard Header */}
             <div className="bg-gradient-to-r from-primary-800 to-primary-700 px-6 py-4">
@@ -282,32 +252,17 @@ const Hero = () => {
 
           {/* Floating Elements */}
           <motion.div
-            animate={{
-              y: [0, -10, 0],
-              rotate: [0, 5, 0],
-            }}
-            transition={{
-              duration: 4,
-              repeat: Infinity,
-              ease: 'easeInOut'
-            }}
-            className="absolute -top-4 -right-4 w-16 h-16 bg-gradient-to-r from-accent-400 to-accent-600 rounded-2xl shadow-lg flex items-center justify-center"
+            animate={{ y: [0, -8, 0] }}
+            transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+            className="absolute -top-4 -right-4 w-14 h-14 bg-accent-500 rounded-xl shadow-lg shadow-accent-500/30 flex items-center justify-center"
           >
-            <TrendingUp className="w-8 h-8 text-white" />
+            <TrendingUp className="w-7 h-7 text-white" />
           </motion.div>
 
           <motion.div
-            animate={{
-              y: [0, 10, 0],
-              rotate: [0, -5, 0],
-            }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              ease: 'easeInOut',
-              delay: 1
-            }}
-            className="absolute -bottom-4 -left-4 w-12 h-12 bg-gradient-to-r from-primary-400 to-primary-600 rounded-xl shadow-lg flex items-center justify-center"
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
+            className="absolute -bottom-4 -left-4 w-12 h-12 bg-zinc-800 rounded-xl shadow-lg flex items-center justify-center border border-white/10"
           >
             <Users className="w-6 h-6 text-white" />
           </motion.div>
@@ -319,27 +274,22 @@ const Hero = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5, duration: 1 }}
-        className="absolute bottom-8 left-8 flex items-center gap-3"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
       >
         <motion.div
-          animate={{ y: [0, 8, 0] }}
+          animate={{ y: [0, 6, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
-          className="w-6 h-10 border-2 border-primary-400 rounded-full flex justify-center hover:border-accent-400 transition-colors duration-300"
+          className="w-6 h-10 border-2 border-white/20 rounded-full flex justify-center"
         >
           <motion.div
-            animate={{ y: [0, 16, 0] }}
+            animate={{ y: [0, 12, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
-            className="w-1 h-3 bg-accent-500 rounded-full mt-2"
+            className="w-1 h-2 bg-white/60 rounded-full mt-2"
           />
         </motion.div>
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2, duration: 1 }}
-          className="text-sm text-primary-600 font-medium"
-        >
+        <span className="text-xs text-zinc-500 font-medium tracking-wider uppercase">
           {language === 'es' ? 'Desplázate' : 'Scroll'}
-        </motion.p>
+        </span>
       </motion.div>
     </section>
   )

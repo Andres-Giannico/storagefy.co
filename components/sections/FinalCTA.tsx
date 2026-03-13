@@ -141,9 +141,9 @@ const FinalCTA = () => {
               </LinkWithLang>
             </div>
             <p className="text-sm text-gray-300 text-center">
-              {language === 'es' 
-                ? '✓ Sin tarjeta • Demo en 2 minutos • Migración incluida'
-                : '✓ No card • Demo in 2 minutes • Migration included'}
+{language === 'es'
+                ? '✓ Regístrate gratis • Sin tarjeta • Migración incluida'
+                : '✓ Sign up free • No card • Migration included'}
             </p>
           </motion.div>
         </FadeInUp>

@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { motion } from 'framer-motion'
-import { Check, CheckCircle, Star } from 'lucide-react'
+import { CheckCircle, Star, Zap, XCircle, ArrowRightLeft, MessageCircle, Sparkles } from 'lucide-react'
 import { useLanguage } from '@/lib/context/LanguageContext'
 import FadeInUp from '@/components/animations/FadeInUp'
 
@@ -75,11 +75,11 @@ const Pricing = () => {
   ]
 
   const benefits = [
-    language === 'es' ? 'Demo en 2 min, sin tarjeta' : 'Demo in 2 min, no card',
-    language === 'es' ? 'Sin permanencia' : 'No commitment',
-    language === 'es' ? 'Migración de datos incluida' : 'Data migration included',
-    language === 'es' ? 'Soporte en español' : 'Spanish support',
-    language === 'es' ? 'Actualizaciones continuas' : 'Continuous updates'
+    { icon: Zap, text: language === 'es' ? 'Regístrate gratis en 2 min' : 'Sign up free in 2 min' },
+    { icon: XCircle, text: language === 'es' ? 'Sin permanencia' : 'No commitment' },
+    { icon: ArrowRightLeft, text: language === 'es' ? 'Migración de datos incluida' : 'Data migration included' },
+    { icon: MessageCircle, text: language === 'es' ? 'Soporte en español' : 'Spanish support' },
+    { icon: Sparkles, text: language === 'es' ? 'Actualizaciones continuas' : 'Continuous updates' },
   ]
 
   return (
@@ -235,7 +235,7 @@ const Pricing = () => {
 
                   {/* Trust Badge */}
                   <p className="text-xs text-gray-500 text-center mt-3">
-                    {language === 'es' ? '✓ Demo en 2 min • Sin tarjeta' : '✓ Demo in 2 min • No card'}
+                    {language === 'es' ? '✓ Regístrate gratis • Sin tarjeta' : '✓ Sign up free • No card'}
                   </p>
                 </div>
               </motion.div>
@@ -253,51 +253,41 @@ const Pricing = () => {
           </div>
         </FadeInUp>
 
-        {/* All Plans Include */}
+        {/* Todo incluido */}
         <FadeInUp className="mt-16">
-          <div className="relative">
-            {/* Background with gradient */}
-            <div className="absolute inset-0 bg-gradient-to-br from-primary-900 via-primary-800 to-primary-900 rounded-3xl opacity-95"></div>
-            
-            {/* Decorative elements */}
-            <div className="absolute inset-0 rounded-3xl overflow-hidden">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-accent-500/10 rounded-full blur-3xl"></div>
-              <div className="absolute bottom-0 left-0 w-64 h-64 bg-accent-500/10 rounded-full blur-3xl"></div>
-            </div>
-
-            <div className="relative px-8 py-12">
-              <motion.h3 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="text-3xl font-bold mb-8 text-center text-white"
-              >
-                {language === 'es' ? 'Todo incluido' : 'Everything included'}
-              </motion.h3>
-              
-              <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-6 max-w-6xl mx-auto">
-                {benefits.map((benefit, index) => (
-                  <motion.div
-                    key={benefit}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ 
-                      opacity: 1, 
-                      y: 0,
-                      transition: {
-                        delay: index * 0.1,
-                        duration: 0.5
-                      }
-                    }}
-                    viewport={{ once: true }}
-                    whileHover={{ scale: 1.05, y: -2 }}
-                    className="flex flex-col items-center text-center gap-3 p-4 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-accent-400/50 transition-all duration-300"
-                  >
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-accent-400 to-accent-600 flex items-center justify-center shadow-lg">
-                      <Check className="w-5 h-5 text-white" />
-                    </div>
-                    <span className="text-sm font-medium text-white leading-tight">{benefit}</span>
-                  </motion.div>
-                ))}
+          <div className="relative max-w-4xl mx-auto rounded-2xl overflow-hidden border border-primary-200/80 shadow-xl">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary-800 via-primary-700 to-primary-800" />
+            <div className="absolute top-0 right-0 w-80 h-80 bg-accent-500/15 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+            <div className="absolute bottom-0 left-0 w-48 h-48 bg-accent-400/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+            <div className="relative px-6 py-8 md:px-10 md:py-10">
+              <div className="text-center mb-8">
+                <span className="inline-block px-4 py-1.5 rounded-full bg-accent-500/20 text-accent-300 text-xs font-semibold tracking-wider uppercase mb-4">
+                  {language === 'es' ? 'Sin sorpresas' : 'No surprises'}
+                </span>
+                <h3 className="text-2xl md:text-3xl font-bold text-white">
+                  {language === 'es' ? 'Todo incluido' : 'Everything included'}
+                </h3>
+              </div>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
+                {benefits.map((benefit, index) => {
+                  const Icon = benefit.icon
+                  return (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, y: 12 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.06 }}
+                      whileHover={{ y: -2 }}
+                      className="flex flex-col items-center gap-3 p-5 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 hover:border-accent-400/30 transition-all duration-300"
+                    >
+                      <div className="w-11 h-11 rounded-xl bg-accent-500/20 flex items-center justify-center">
+                        <Icon className="w-5 h-5 text-accent-400" />
+                      </div>
+                      <span className="text-sm font-medium text-white/95 text-center leading-snug">{benefit.text}</span>
+                    </motion.div>
+                  )
+                })}
               </div>
             </div>
           </div>
