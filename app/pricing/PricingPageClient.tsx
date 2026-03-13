@@ -599,7 +599,7 @@ export default function PricingPageClient() {
             <div className="absolute top-0 right-0 w-96 h-96 bg-accent-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
             <div className="absolute bottom-0 left-0 w-64 h-64 bg-accent-400/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
             <h3 className="relative text-2xl font-bold text-center mb-8">
-              {language === 'es' ? 'Todos los planes incluyen' : 'All plans include'}
+              {language === 'es' ? 'Todo incluido' : 'Everything included'}
             </h3>
             <div className="relative grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
               {benefits.map((benefit, index) => (

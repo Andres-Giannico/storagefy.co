@@ -272,7 +272,7 @@ const Pricing = () => {
                 viewport={{ once: true }}
                 className="text-3xl font-bold mb-8 text-center text-white"
               >
-                {language === 'es' ? 'Todos los planes incluyen' : 'All plans include'}
+                {language === 'es' ? 'Todo incluido' : 'Everything included'}
               </motion.h3>
               
               <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-6 max-w-6xl mx-auto">
