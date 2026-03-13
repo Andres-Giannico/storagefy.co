@@ -761,34 +761,28 @@ export default function DemoTrialPage() {
       <section className="py-12 md:py-16 bg-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeInUp>
-            <div className="rounded-2xl border-2 border-accent-200/60 bg-gradient-to-br from-accent-50/50 to-white overflow-hidden shadow-lg shadow-accent-500/5">
+            <div className="rounded-lg border border-accent-200/50 bg-accent-50/40 overflow-hidden">
               <button
                 onClick={() => setShowAllFeatures(!showAllFeatures)}
-                className="w-full px-6 py-5 flex items-center justify-between gap-4 hover:bg-accent-50/30 transition-colors text-left"
+                className="w-full px-4 py-3 flex items-center justify-between gap-3 hover:bg-accent-50/60 transition-colors text-left"
               >
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-accent-100 flex items-center justify-center">
-                    <CheckCircle className="w-5 h-5 text-accent-600" />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-primary-800 text-lg">
-                      {language === 'es' ? '43 funciones incluidas' : '43 features included'}
-                    </h3>
-                    <p className="text-sm text-primary-600">
-                      {language === 'es'
-                        ? 'Todo lo que necesitas para gestionar tu negocio de trasteros'
-                        : 'Everything you need to run your storage business'}
-                    </p>
-                  </div>
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <CheckCircle className="w-4 h-4 text-accent-600 flex-shrink-0" />
+                  <span className="font-semibold text-primary-800 text-sm">
+                    {language === 'es' ? '43 funciones incluidas' : '43 features included'}
+                  </span>
+                  <span className="text-primary-500 text-sm hidden sm:inline">
+                    — {language === 'es' ? 'todo incluido' : 'all included'}
+                  </span>
                 </div>
-                <span className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-accent-500 text-white font-semibold text-base shrink-0 hover:bg-accent-600 transition-colors shadow-md shadow-accent-500/30">
+                <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-accent-500 text-white font-semibold text-sm shrink-0 hover:bg-accent-600 transition-colors">
                   {showAllFeatures
                     ? (language === 'es' ? 'Ocultar' : 'Hide')
                     : (language === 'es' ? 'Ver todo' : 'View all')}
                   {showAllFeatures ? (
-                    <ChevronUp className="w-5 h-5" />
+                    <ChevronUp className="w-4 h-4" />
                   ) : (
-                    <ChevronDown className="w-5 h-5" />
+                    <ChevronDown className="w-4 h-4" />
                   )}
                 </span>
               </button>
@@ -801,7 +795,7 @@ export default function DemoTrialPage() {
                     transition={{ duration: 0.3, ease: 'easeInOut' }}
                     className="overflow-hidden"
                   >
-                    <div className="px-6 pb-6 pt-0 border-t border-accent-200/40">
+                    <div className="px-4 pb-4 pt-0 border-t border-accent-200/40">
                       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-2.5 pt-6">
                         {(language === 'es' ? ALL_FEATURES_ES : ALL_FEATURES_EN).map((feature, i) => (
                           <motion.div

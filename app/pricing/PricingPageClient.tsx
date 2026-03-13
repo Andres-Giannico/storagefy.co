@@ -276,18 +276,24 @@ export default function PricingPageClient() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-5xl md:text-6xl font-extrabold text-primary-800 mb-4 tracking-tight"
+            className="mb-6"
           >
-            {language === 'es' ? 'Precio simple:' : 'Simple pricing:'}
-            <br />
-            <motion.span
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="bg-gradient-to-r from-accent-500 via-accent-600 to-accent-700 bg-clip-text text-transparent"
+            <span className="block text-primary-500 font-medium text-sm md:text-base mb-3 tracking-widest uppercase">
+              {language === 'es' ? 'Precio simple' : 'Simple pricing'}
+            </span>
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.25 }}
+              className="inline-flex items-baseline gap-3 px-6 py-4 rounded-2xl bg-white/60 backdrop-blur-sm border border-primary-100 shadow-lg shadow-primary-900/5"
             >
-              1 EUR por unidad
-            </motion.span>
+              <span className="text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-accent-500 via-accent-600 to-accent-700 bg-clip-text text-transparent">
+                1 EUR
+              </span>
+              <span className="text-primary-600 font-semibold text-xl md:text-2xl">
+                {language === 'es' ? 'por unidad' : 'per unit'}
+              </span>
+            </motion.div>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 10 }}
@@ -313,7 +319,7 @@ export default function PricingPageClient() {
 
         {/* CAP Banner - Grandes operadores */}
         <FadeInUp className="mb-8">
-          <div className="max-w-3xl mx-auto">
+          <div className="max-w-4xl mx-auto">
             <div className="bg-white/70 backdrop-blur-md border border-primary-200/80 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 rounded-xl bg-primary-200 flex items-center justify-center flex-shrink-0">
@@ -347,7 +353,7 @@ export default function PricingPageClient() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="bg-white/80 backdrop-blur-xl rounded-2xl p-8 shadow-xl border border-white/60 max-w-2xl mx-auto hover:shadow-2xl transition-all duration-300"
+            className="bg-white/80 backdrop-blur-xl rounded-2xl p-8 shadow-xl border border-white/60 max-w-4xl mx-auto hover:shadow-2xl transition-all duration-300"
           >
             <h2 className="text-2xl font-bold text-primary-800 mb-6 text-center">
               {language === 'es' ? 'Calcula tu precio mensual' : 'Calculate your monthly price'}
@@ -468,36 +474,30 @@ export default function PricingPageClient() {
                   </div>
                 </div>
 
-                {/* 43 funciones - expandible */}
-                <div className="mb-8 rounded-xl border-2 border-accent-200/60 bg-accent-50/30 overflow-hidden">
+                {/* 43 funciones - expandible tipo tip */}
+                <div className="mb-8 rounded-lg border border-accent-200/50 bg-accent-50/40 overflow-hidden">
                   <button
                     type="button"
                     onClick={() => setShowAllFeatures(!showAllFeatures)}
-                    className="w-full px-5 py-4 flex items-center justify-between gap-4 hover:bg-accent-50/50 transition-colors text-left"
+                    className="w-full px-4 py-3 flex items-center justify-between gap-3 hover:bg-accent-50/60 transition-colors text-left"
                   >
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-accent-100 flex items-center justify-center">
-                        <CheckCircle className="w-5 h-5 text-accent-600" />
-                      </div>
-                      <div>
-                        <h4 className="font-bold text-primary-800">
-                          {language === 'es' ? '43 funciones incluidas' : '43 features included'}
-                        </h4>
-                        <p className="text-sm text-primary-600">
-                          {language === 'es'
-                            ? 'Todo lo que necesitas para gestionar tu negocio'
-                            : 'Everything you need to run your business'}
-                        </p>
-                      </div>
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <CheckCircle className="w-4 h-4 text-accent-600 flex-shrink-0" />
+                      <span className="font-semibold text-primary-800 text-sm">
+                        {language === 'es' ? '43 funciones incluidas' : '43 features included'}
+                      </span>
+                      <span className="text-primary-500 text-sm hidden sm:inline">
+                        — {language === 'es' ? 'todo incluido' : 'all included'}
+                      </span>
                     </div>
-                    <span className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-accent-500 text-white font-semibold text-base shrink-0 hover:bg-accent-600 transition-colors shadow-md shadow-accent-500/30">
+                    <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-accent-500 text-white font-semibold text-sm shrink-0 hover:bg-accent-600 transition-colors">
                       {showAllFeatures
                         ? (language === 'es' ? 'Ocultar' : 'Hide')
                         : (language === 'es' ? 'Ver todo' : 'View all')}
                       {showAllFeatures ? (
-                        <ChevronUp className="w-5 h-5" />
+                        <ChevronUp className="w-4 h-4" />
                       ) : (
-                        <ChevronDown className="w-5 h-5" />
+                        <ChevronDown className="w-4 h-4" />
                       )}
                     </span>
                   </button>
@@ -510,7 +510,7 @@ export default function PricingPageClient() {
                         transition={{ duration: 0.3, ease: 'easeInOut' }}
                         className="overflow-hidden"
                       >
-                        <div className="px-5 pb-5 pt-0 border-t border-accent-200/40">
+                        <div className="px-4 pb-4 pt-0 border-t border-accent-200/40">
                           <div className="grid sm:grid-cols-2 gap-x-6 gap-y-2.5 pt-6">
                             {plan.features.map((feature, i) => (
                               <motion.div
