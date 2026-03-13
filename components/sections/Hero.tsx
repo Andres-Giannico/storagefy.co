@@ -2,7 +2,7 @@
 
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
-import { ArrowRight, TrendingUp, Users, DollarSign, Building2, CheckCircle, CreditCard, Globe, Clock, MapPin, BarChart2, FileText, Calendar } from 'lucide-react'
+import { ArrowRight, TrendingUp, Users, DollarSign, Building2, CheckCircle, CreditCard, Clock, MapPin, BarChart2, FileText, Calendar, Package, Euro, Wallet } from 'lucide-react'
 import { useLanguage } from '@/lib/context/LanguageContext'
 import LinkWithLang from '@/components/common/LinkWithLang'
 
@@ -18,19 +18,28 @@ const Hero = () => {
   const opacity = useTransform(scrollYProgress, [0, 0.9], [1, 0.8])
   const scale = useTransform(scrollYProgress, [0, 0.9], [1, 0.95])
 
-  // Datos genéricos para el mockup
-  const dashboardData = {
-    stats: [
-      { label: language === 'es' ? 'Ocupación' : 'Occupation', value: '70.0%', color: 'blue', icon: Building2 },
-      { label: language === 'es' ? 'Ingresos Mensuales' : 'Monthly Revenue', value: '€495', color: 'green', icon: DollarSign },
-      { label: language === 'es' ? 'Clientes' : 'Clients', value: '6', color: 'purple', icon: Users },
-      { label: language === 'es' ? 'Facturas Pendientes' : 'Pending Invoices', value: '0', color: 'orange', icon: CheckCircle },
-    ],
-    recentPayments: [
-      { id: 'PAY-2025-0007', client: 'Alex Martínez', amount: '€65.00', status: 'paid', unit: 'B-203' },
-      { id: 'PAY-2025-0006', client: 'María García López', amount: '€145.00', status: 'paid', unit: 'A-104' },
-      { id: 'PAY-2025-0005', client: 'Carlos López Ruiz', amount: '€85.00', status: 'pending', unit: 'A-102' },
-    ]
+  // Datos estilo app móvil real
+  const dashboardCards = [
+    { label: language === 'es' ? 'OCUPACIÓN' : 'OCCUPANCY', value: '91.3%', detail: '94 de 103 espacios', color: 'blue', icon: Package, progress: 91.3 },
+    { label: language === 'es' ? 'INGRESOS MENSUALES' : 'MONTHLY INCOME', value: '7998 €', detail: language === 'es' ? 'De 86 contratos • Cobrado: 3770 €' : 'From 86 contracts • Collected: 3770 €', color: 'green', icon: Euro },
+    { label: language === 'es' ? 'POTENCIAL DISPONIBLE' : 'AVAILABLE POTENTIAL', value: '620 €', detail: language === 'es' ? 'Ingresos si se alquilaran todas las unidades libres' : 'Income if all free units were rented', color: 'cyan', icon: Wallet },
+    { label: language === 'es' ? 'CLIENTES' : 'CLIENTS', value: '114', detail: language === 'es' ? 'Clientes registrados' : 'Registered clients', color: 'purple', icon: Users },
+    { label: language === 'es' ? 'FACTURAS PENDIENTES' : 'PENDING INVOICES', value: '5', detail: language === 'es' ? '0 vencidas' : '0 overdue', color: 'orange', icon: FileText },
+  ]
+  const paymentSummary = [
+    { label: language === 'es' ? 'Total Pagos' : 'Total Payments', value: '211', detail: '€35017.33 total', color: 'blue', icon: DollarSign },
+    { label: language === 'es' ? 'Pagados' : 'Paid', value: '202', detail: '€34062.33 cobrado', color: 'green', icon: CheckCircle },
+    { label: language === 'es' ? 'Pendientes' : 'Pending', value: '9', detail: '€955.00 pendiente', color: 'orange', icon: Clock },
+  ]
+  const paymentDetail = {
+    id: 'PAY-2026-0108',
+    status: language === 'es' ? 'Pagado' : 'Paid',
+    method: 'Bizum',
+    contract: 'CTR-2025-0058',
+    client: 'SELENE MOYANO',
+    unit: 'SP-26',
+    period: '14/02/2026 - 13/03/2026',
+    amount: '€120.00',
   }
 
   const features = [
@@ -146,107 +155,135 @@ const Hero = () => {
           className="relative"
         >
           {/* Glow behind card */}
-          <div className="absolute -inset-1 bg-gradient-to-r from-accent-500/20 to-accent-600/10 rounded-3xl blur-2xl" />
-          {/* Dashboard Container */}
+          <div className="absolute -inset-1 bg-gradient-to-r from-accent-500/20 to-accent-600/10 rounded-[2rem] blur-2xl" />
+          {/* Mobile Frame - estilo app real */}
           <motion.div
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.3 }}
-            className="relative bg-white rounded-2xl shadow-2xl shadow-black/40 border border-white/20 overflow-hidden"
+            className="relative w-[320px] mx-auto bg-zinc-900 rounded-[2rem] shadow-2xl shadow-black/50 border border-zinc-700 overflow-hidden"
           >
-            {/* Dashboard Header */}
-            <div className="bg-gradient-to-r from-primary-800 to-primary-700 px-6 py-4">
+            {/* Notch / Status bar */}
+            <div className="h-8 bg-zinc-900 flex items-center justify-center">
+              <div className="w-20 h-5 bg-zinc-800 rounded-full" />
+            </div>
+
+            {/* App Header */}
+            <div className="px-4 py-3 bg-zinc-900 border-b border-zinc-800">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 bg-gradient-to-r from-accent-400 to-accent-600 rounded-lg flex items-center justify-center">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 bg-gradient-to-r from-accent-500 to-accent-600 rounded-lg flex items-center justify-center">
                     <Building2 className="w-4 h-4 text-white" />
                   </div>
-                  <div>
-                    <div className="text-white font-semibold text-lg">
-                      {language === 'es' ? 'Panel de Control' : 'Control Panel'}
-                    </div>
-                    <p className="text-primary-200 text-sm">
-                      {language === 'es' ? 'Dashboard en tiempo real' : 'Real-time dashboard'}
-                    </p>
-                  </div>
+                  <span className="font-semibold text-white text-sm">StorageFy</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                  <span className="text-primary-200 text-sm">Live</span>
-                </div>
+                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
               </div>
             </div>
 
-            {/* Stats Grid */}
-            <div className="p-6">
-              <div className="grid grid-cols-2 gap-4 mb-6">
-                {dashboardData.stats.map((stat, index) => {
-                  const Icon = stat.icon
-                  return (
-                    <motion.div
-                      key={stat.label}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.8 + index * 0.1, duration: 0.5 }}
-                      className="bg-white p-4 rounded-xl border border-gray-100 shadow-md hover:shadow-lg transition-shadow duration-300"
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-                          stat.color === 'blue' ? 'bg-blue-100' :
-                          stat.color === 'green' ? 'bg-green-100' :
-                          stat.color === 'purple' ? 'bg-purple-100' :
-                          'bg-orange-100'
-                        }`}>
-                          <Icon className={`w-5 h-5 ${
-                            stat.color === 'blue' ? 'text-blue-600' :
-                            stat.color === 'green' ? 'text-green-600' :
-                            stat.color === 'purple' ? 'text-purple-600' :
-                            'text-orange-600'
-                          }`} />
+            {/* Scrollable content - Dashboard + Pagos */}
+            <div className="h-[420px] overflow-y-auto bg-zinc-950/50">
+              {/* Panel de Control */}
+              <div className="px-3 pt-4 pb-2">
+                <h3 className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-3">
+                  {language === 'es' ? 'Panel de Control' : 'Control Panel'}
+                </h3>
+                <div className="space-y-2">
+                  {dashboardCards.map((card, index) => {
+                    const Icon = card.icon
+                    const borderColor = card.color === 'blue' ? 'border-l-blue-500' : card.color === 'green' ? 'border-l-green-500' : card.color === 'cyan' ? 'border-l-cyan-500' : card.color === 'purple' ? 'border-l-purple-500' : 'border-l-orange-500'
+                    return (
+                      <motion.div
+                        key={card.label}
+                        initial={{ opacity: 0, y: 12 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.6 + index * 0.08, duration: 0.4 }}
+                        className={`bg-zinc-800/80 rounded-lg border-l-4 ${borderColor} p-3 relative`}
+                      >
+                        <div className="absolute top-2 right-2">
+                          <Icon className="w-4 h-4 text-zinc-500" />
                         </div>
-                        <div>
-                          <div className="text-2xl font-bold text-gray-900">{stat.value}</div>
-                          <div className="text-sm text-gray-600">{stat.label}</div>
-                        </div>
-                      </div>
-                    </motion.div>
-                  )
-                })}
+                        <div className="text-[10px] font-medium text-zinc-400 uppercase tracking-wide">{card.label}</div>
+                        <div className="text-lg font-bold text-white mt-0.5">{card.value}</div>
+                        {card.detail && <div className="text-[11px] text-zinc-500 mt-1">{card.detail}</div>}
+                        {'progress' in card && card.progress !== undefined && (
+                          <div className="mt-2 h-1.5 bg-zinc-700 rounded-full overflow-hidden">
+                            <motion.div
+                              initial={{ width: 0 }}
+                              animate={{ width: `${card.progress}%` }}
+                              transition={{ delay: 1, duration: 0.8 }}
+                              className="h-full bg-blue-500 rounded-full"
+                            />
+                          </div>
+                        )}
+                      </motion.div>
+                    )
+                  })}
+                </div>
               </div>
 
-              {/* Recent Payments */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.2, duration: 0.5 }}
-                className="bg-white rounded-xl border border-gray-100 p-4 shadow-md"
-              >
-                <h4 className="font-semibold text-gray-900 mb-4">
-                  {language === 'es' ? 'Pagos Recientes' : 'Recent Payments'}
-                </h4>
-                <div className="space-y-3">
-                  {dashboardData.recentPayments.map((payment, index) => (
-                    <motion.div
-                      key={payment.id}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 1.4 + index * 0.1, duration: 0.4 }}
-                      className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-100 hover:bg-white hover:shadow-md transition-all duration-300"
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className={`w-2 h-2 rounded-full ${payment.status === 'paid' ? 'bg-green-400' : 'bg-orange-400'}`}></div>
-                        <div>
-                          <div className="font-medium text-gray-900">{payment.id}</div>
-                          <div className="text-sm text-gray-600">{payment.client}</div>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <div className="font-semibold text-green-700">{payment.amount}</div>
-                        <div className="text-xs text-gray-500">{payment.unit}</div>
-                      </div>
-                    </motion.div>
-                  ))}
+              {/* Pagos - Resumen */}
+              <div className="px-3 pt-4 pb-2">
+                <h3 className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-2">
+                  {language === 'es' ? 'Pagos' : 'Payments'}
+                </h3>
+                <p className="text-[10px] text-zinc-500 mb-2">{language === 'es' ? 'Toca una tarjeta para filtrar' : 'Tap a card to filter'}</p>
+                <div className="grid grid-cols-3 gap-2 mb-3">
+                  {paymentSummary.map((s, i) => {
+                    const Icon = s.icon
+                    const borderColor = s.color === 'blue' ? 'border-l-blue-500' : s.color === 'green' ? 'border-l-green-500' : 'border-l-orange-500'
+                    return (
+                      <motion.div
+                        key={s.label}
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 1 + i * 0.05, duration: 0.4 }}
+                        className={`bg-zinc-800/80 rounded-lg border-l-4 ${borderColor} p-2`}
+                      >
+                        <Icon className="w-3.5 h-3.5 text-zinc-500 mb-1" />
+                        <div className="text-[10px] text-zinc-400 truncate">{s.label}</div>
+                        <div className="text-sm font-bold text-white">{s.value}</div>
+                      </motion.div>
+                    )
+                  })}
                 </div>
-              </motion.div>
+
+                {/* Detalle de pago - card con borde verde */}
+                <motion.div
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 1.2, duration: 0.4 }}
+                  className="bg-zinc-800/80 rounded-lg border-l-4 border-l-green-500 p-3"
+                >
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs font-semibold text-white">{paymentDetail.id}</span>
+                    <div className="flex gap-1">
+                      <span className="px-1.5 py-0.5 text-[9px] font-medium bg-green-500/20 text-green-400 rounded">{paymentDetail.status}</span>
+                      <span className="px-1.5 py-0.5 text-[9px] font-medium bg-zinc-600 text-zinc-300 rounded">{paymentDetail.method}</span>
+                    </div>
+                  </div>
+                  <div className="space-y-1.5 text-[11px]">
+                    <div className="flex items-center gap-2 text-zinc-400">
+                      <FileText className="w-3 h-3" /> {paymentDetail.contract}
+                    </div>
+                    <div className="flex items-center gap-2 text-zinc-400">
+                      <Users className="w-3 h-3" /> {paymentDetail.client}
+                    </div>
+                    <div className="flex items-center gap-2 text-zinc-400">
+                      <Package className="w-3 h-3" /> {paymentDetail.unit}
+                    </div>
+                    <div className="flex items-center gap-2 text-zinc-400">
+                      <Calendar className="w-3 h-3" /> {paymentDetail.period}
+                    </div>
+                    <div className="flex items-center gap-2 text-zinc-300 font-semibold mt-2">
+                      <DollarSign className="w-3 h-3 text-green-400" /> {paymentDetail.amount}
+                    </div>
+                  </div>
+                  <div className="flex gap-1.5 mt-3">
+                    <span className="text-[9px] px-2 py-1 bg-zinc-700 text-zinc-300 rounded">{language === 'es' ? 'Ver Detalles' : 'View Details'}</span>
+                    <span className="text-[9px] px-2 py-1 bg-zinc-700 text-zinc-300 rounded">{language === 'es' ? 'Editar' : 'Edit'}</span>
+                  </div>
+                </motion.div>
+              </div>
             </div>
           </motion.div>
 
