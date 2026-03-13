@@ -68,7 +68,7 @@ const Pricing = () => {
         // Extras
         language === 'es' ? 'Time Travel en planos (ocupación pasada/futura)' : 'Time Travel on floor plans (past/future occupancy)',
         language === 'es' ? 'Control de acceso (integración Sonoff)' : 'Access control (Sonoff integration)',
-        language === 'es' ? '14 días de prueba gratis' : '14-day free trial',
+        language === 'es' ? '30 días de prueba gratis' : '30-day free trial',
         language === 'es' ? 'Sin permanencia ni costes ocultos' : 'No commitment or hidden costs',
       ]
     }

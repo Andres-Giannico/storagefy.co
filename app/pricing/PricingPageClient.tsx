@@ -1,11 +1,12 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import { 
   CheckCircle, 
   Star, 
   ChevronDown,
+  ChevronUp,
   Building2,
   ArrowRightLeft,
 } from 'lucide-react'
@@ -18,6 +19,7 @@ export default function PricingPageClient() {
   const { language } = useLanguage()
   const [openFaq, setOpenFaq] = useState<number | null>(0)
   const [units, setUnits] = useState(50)
+  const [showAllFeatures, setShowAllFeatures] = useState(false)
   
   const VAT_RATE = 0.21
   const ANNUAL_DISCOUNT = 0.20
@@ -89,7 +91,7 @@ export default function PricingPageClient() {
         // Extras
         language === 'es' ? 'Time Travel en planos (ocupación pasada/futura)' : 'Time Travel on floor plans (past/future occupancy)',
         language === 'es' ? 'Control de acceso (integración Sonoff)' : 'Access control (Sonoff integration)',
-        language === 'es' ? '14 días de prueba gratis' : '14-day free trial',
+        language === 'es' ? '30 días de prueba gratis' : '30-day free trial',
         language === 'es' ? 'Sin permanencia ni costes ocultos' : 'No commitment or hidden costs',
       ],
       cta: language === 'es' ? 'Probar demo ahora' : 'Try demo now',
@@ -466,14 +468,68 @@ export default function PricingPageClient() {
                   </div>
                 </div>
 
-                <ul className="grid sm:grid-cols-2 gap-x-8 gap-y-3 mb-8">
-                  {plan.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-start gap-2">
-                      <CheckCircle className="w-5 h-5 text-accent-500 flex-shrink-0 mt-0.5" />
-                      <span className="text-primary-700">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
+                {/* 43 funciones - expandible */}
+                <div className="mb-8 rounded-xl border-2 border-accent-200/60 bg-accent-50/30 overflow-hidden">
+                  <button
+                    type="button"
+                    onClick={() => setShowAllFeatures(!showAllFeatures)}
+                    className="w-full px-5 py-4 flex items-center justify-between gap-4 hover:bg-accent-50/50 transition-colors text-left"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-accent-100 flex items-center justify-center">
+                        <CheckCircle className="w-5 h-5 text-accent-600" />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-primary-800">
+                          {language === 'es' ? '43 funciones incluidas' : '43 features included'}
+                        </h4>
+                        <p className="text-sm text-primary-600">
+                          {language === 'es'
+                            ? 'Todo lo que necesitas para gestionar tu negocio'
+                            : 'Everything you need to run your business'}
+                        </p>
+                      </div>
+                    </div>
+                    <span className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-accent-500 text-white font-semibold text-base shrink-0 hover:bg-accent-600 transition-colors shadow-md shadow-accent-500/30">
+                      {showAllFeatures
+                        ? (language === 'es' ? 'Ocultar' : 'Hide')
+                        : (language === 'es' ? 'Ver todo' : 'View all')}
+                      {showAllFeatures ? (
+                        <ChevronUp className="w-5 h-5" />
+                      ) : (
+                        <ChevronDown className="w-5 h-5" />
+                      )}
+                    </span>
+                  </button>
+                  <AnimatePresence>
+                    {showAllFeatures && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3, ease: 'easeInOut' }}
+                        className="overflow-hidden"
+                      >
+                        <div className="px-5 pb-5 pt-0 border-t border-accent-200/40">
+                          <div className="grid sm:grid-cols-2 gap-x-6 gap-y-2.5 pt-6">
+                            {plan.features.map((feature, i) => (
+                              <motion.div
+                                key={i}
+                                initial={{ opacity: 0, x: -8 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: i * 0.02, duration: 0.2 }}
+                                className="flex items-center gap-2"
+                              >
+                                <CheckCircle className="w-4 h-4 text-accent-500 flex-shrink-0" />
+                                <span className="text-sm text-primary-700">{feature}</span>
+                              </motion.div>
+                            ))}
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
 
                 <LinkWithLang
                   href="/demo-trial"

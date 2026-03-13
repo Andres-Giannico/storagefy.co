@@ -17,6 +17,7 @@ import {
   TrendingUp,
   Globe,
   ChevronDown,
+  ChevronUp,
   Copy,
   Check,
   Lock,
@@ -116,6 +117,38 @@ const languages = [
   { code: 'en' as const, name: 'English', flag: '🇺🇸' },
 ]
 
+const ALL_FEATURES_ES = [
+  'Hasta 140 unidades', 'Precio simple: €1/unidad/mes + IVA', 'Locaciones ilimitadas', 'Usuarios ilimitados',
+  'Widget reservas 24/7', 'Contratos digitales', 'Fotos DNI seguras', 'Contratos multi-unidad',
+  'Planos interactivos', 'Tablón de anuncios', 'Reportes avanzados', 'Soporte prioritario',
+  'Recordatorios automáticos', 'Facturación automática mensual', 'Cobro con tarjeta (Stripe)',
+  'Domiciliación bancaria SEPA', 'Envío de facturas a la AEAT (Verifactu)', 'Gestión de depósitos y cauciones',
+  'Links de pago automáticos', 'Portal del cliente 24/7', 'Descarga de facturas desde el portal',
+  'Historial de pagos y contratos', 'Autoservicio de reservas', 'Dimensiones exactas (m² y m³)',
+  'Precios por m², m³ o fijo', 'Gestión de impagos y morosidad', 'Dashboard en tiempo real',
+  'Exportación de datos (Excel, CSV)', 'Búsqueda avanzada de clientes', 'Cumplimiento GDPR',
+  'Datos encriptados', 'Backup automático', 'Integración con Stripe', 'Integración con Verifactu',
+  'Centro de ayuda y documentación', 'Sesión de onboarding incluida', 'Migración de datos sin coste',
+  'Soporte en español', 'Time Travel en planos (ocupación pasada/futura)', 'Control de acceso (integración Sonoff)',
+  '30 días de prueba gratis', 'Sin permanencia ni costes ocultos',
+]
+
+const ALL_FEATURES_EN = [
+  'Up to 140 units', 'Simple price: €1/unit/month + VAT', 'Unlimited locations', 'Unlimited users',
+  '24/7 booking widget', 'Digital contracts', 'Secure ID photos', 'Multi-unit contracts',
+  'Interactive floor plans', 'Announcement board', 'Advanced reports', 'Priority support',
+  'Automatic reminders', 'Automatic monthly invoicing', 'Card payments (Stripe)',
+  'SEPA direct debit', 'Invoice submission to AEAT (Verifactu)', 'Deposit and security management',
+  'Automatic payment links', '24/7 client portal', 'Invoice download from portal',
+  'Payment and contract history', 'Self-service reservations', 'Exact dimensions (m² and m³)',
+  'Pricing by m², m³ or fixed', 'Delinquency management', 'Real-time dashboard',
+  'Data export (Excel, CSV)', 'Advanced client search', 'GDPR compliance',
+  'Encrypted data', 'Automatic backup', 'Stripe integration', 'Verifactu integration',
+  'Help center and documentation', 'Onboarding session included', 'Free data migration',
+  'Spanish support', 'Time Travel on floor plans (past/future occupancy)', 'Access control (Sonoff integration)',
+  '30-day free trial', 'No commitment or hidden costs',
+]
+
 export default function DemoTrialPage() {
   const { language, setLanguage } = useLanguage()
   const [formData, setFormData] = useState({ name: '', email: '' })
@@ -129,6 +162,7 @@ export default function DemoTrialPage() {
   const [copiedField, setCopiedField] = useState<'email' | 'password' | 'all' | null>(null)
   const [showCopiedTooltip, setShowCopiedTooltip] = useState(false)
   const [showStickyCTA, setShowStickyCTA] = useState(false)
+  const [showAllFeatures, setShowAllFeatures] = useState(false)
   const formRef = useRef<HTMLDivElement>(null)
   const touchUnpauseRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const touchStartX = useRef<number>(0)
@@ -306,7 +340,7 @@ export default function DemoTrialPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-accent-50/30 font-demo">
+    <div className="min-h-screen bg-gradient-to-br from-primary-50/80 via-white to-accent-50/40 font-demo">
       {/* Sticky CTA */}
       <AnimatePresence>
         {showStickyCTA && (
@@ -398,15 +432,21 @@ export default function DemoTrialPage() {
         </div>
       </header>
 
-      {/* Hero - Split layout con mockup y form */}
-      <section className="pt-24 pb-32 md:pt-28 md:pb-36 lg:pb-40 bg-gradient-to-br from-primary-800 via-primary-700 to-primary-900 text-white relative overflow-hidden">
+      {/* Hero - Split layout con mockup y form - nivel premium */}
+      <section className="pt-24 pb-32 md:pt-28 md:pb-36 lg:pb-40 bg-gradient-to-br from-primary-900 via-primary-800 to-primary-900 text-white relative overflow-hidden">
+        {/* Background orbs */}
         <div className="absolute inset-0">
           <motion.div
-            animate={{ scale: [1, 1.1, 1], opacity: [0.1, 0.2, 0.1] }}
+            animate={{ scale: [1, 1.15, 1], opacity: [0.15, 0.25, 0.15] }}
             transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-            className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-accent-400/20 to-accent-600/20 rounded-full blur-3xl"
+            className="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-gradient-to-r from-accent-400/25 to-accent-600/20 rounded-full blur-3xl"
           />
-          <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-accent-500/10 rounded-full blur-3xl" />
+          <motion.div
+            animate={{ scale: [1.1, 1, 1.1], opacity: [0.1, 0.2, 0.1] }}
+            transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+            className="absolute bottom-1/4 right-1/4 w-[350px] h-[350px] bg-accent-500/15 rounded-full blur-3xl"
+          />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-accent-500/5 via-transparent to-transparent" />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -456,9 +496,9 @@ export default function DemoTrialPage() {
               </div>
               <motion.button
                 onClick={scrollToForm}
-                whileHover={{ scale: 1.02 }}
+                whileHover={{ scale: 1.03, boxShadow: '0 20px 40px -15px rgba(34, 197, 94, 0.4)' }}
                 whileTap={{ scale: 0.98 }}
-                className="px-8 py-4 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-semibold rounded-xl shadow-lg hover:from-accent-600 hover:to-accent-700 transition-all flex items-center gap-2 mx-auto lg:mx-0"
+                className="px-8 py-4 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-semibold rounded-xl shadow-lg shadow-accent-500/30 hover:from-accent-600 hover:to-accent-700 transition-all flex items-center gap-2 mx-auto lg:mx-0"
               >
                 {language === 'es' ? 'Obtener acceso a la demo' : 'Get demo access'}
                 <ArrowRight className="w-5 h-5" />
@@ -485,8 +525,8 @@ export default function DemoTrialPage() {
                     />
                   </div>
                 </div>
-                {/* Form card - floating */}
-                <div className="absolute -bottom-6 left-4 right-4 md:left-8 md:right-8 lg:left-12 lg:right-12 bg-white rounded-2xl shadow-2xl border border-primary-100 p-6 md:p-8">
+                {/* Form card - floating premium */}
+                <div className="absolute -bottom-6 left-4 right-4 md:left-8 md:right-8 lg:left-12 lg:right-12 bg-white rounded-2xl shadow-2xl border border-primary-100 p-6 md:p-8 ring-4 ring-white/20 backdrop-blur-sm">
                   {!submitted ? (
                     <>
                       <h3 className="text-xl font-bold text-primary-800 mb-2">
@@ -586,34 +626,50 @@ export default function DemoTrialPage() {
         </div>
       </section>
 
-      {/* Social proof stats */}
-      <section className="py-8 bg-white border-b border-primary-100">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Social proof stats - nivel premium */}
+      <section className="py-12 md:py-16 bg-gradient-to-b from-primary-800 via-primary-700 to-primary-800 text-white relative overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute top-0 left-1/4 w-64 h-64 bg-accent-500/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 right-1/4 w-48 h-48 bg-accent-400/10 rounded-full blur-3xl" />
+        </div>
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <FadeInUp className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
-            <div className="text-center">
-              <p className="text-2xl md:text-3xl font-bold text-accent-600">50+</p>
-              <p className="text-sm text-primary-600">
+            <motion.div
+              whileHover={{ scale: 1.03, y: -2 }}
+              className="text-center p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 hover:border-accent-400/30 transition-all"
+            >
+              <p className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-accent-300 to-accent-400 bg-clip-text text-transparent">50+</p>
+              <p className="text-sm text-white/80 mt-1">
                 {language === 'es' ? 'Negocios activos' : 'Active businesses'}
               </p>
-            </div>
-            <div className="text-center">
-              <p className="text-2xl md:text-3xl font-bold text-accent-600">15+</p>
-              <p className="text-sm text-primary-600">
-                {language === 'es' ? 'Módulos integrados' : 'Integrated modules'}
+            </motion.div>
+            <motion.div
+              whileHover={{ scale: 1.03, y: -2 }}
+              className="text-center p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 hover:border-accent-400/30 transition-all"
+            >
+              <p className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-accent-300 to-accent-400 bg-clip-text text-transparent">43</p>
+              <p className="text-sm text-white/80 mt-1">
+                {language === 'es' ? 'Funciones incluidas' : 'Features included'}
               </p>
-            </div>
-            <div className="text-center">
-              <p className="text-2xl md:text-3xl font-bold text-accent-600">24/7</p>
-              <p className="text-sm text-primary-600">
+            </motion.div>
+            <motion.div
+              whileHover={{ scale: 1.03, y: -2 }}
+              className="text-center p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 hover:border-accent-400/30 transition-all"
+            >
+              <p className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-accent-300 to-accent-400 bg-clip-text text-transparent">24/7</p>
+              <p className="text-sm text-white/80 mt-1">
                 {language === 'es' ? 'Widget reservas' : 'Booking widget'}
               </p>
-            </div>
-            <div className="text-center">
-              <p className="text-2xl md:text-3xl font-bold text-accent-600">0</p>
-              <p className="text-sm text-primary-600">
+            </motion.div>
+            <motion.div
+              whileHover={{ scale: 1.03, y: -2 }}
+              className="text-center p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 hover:border-accent-400/30 transition-all"
+            >
+              <p className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-accent-300 to-accent-400 bg-clip-text text-transparent">0</p>
+              <p className="text-sm text-white/80 mt-1">
                 {language === 'es' ? 'Tarjeta requerida' : 'Card required'}
               </p>
-            </div>
+            </motion.div>
           </FadeInUp>
         </div>
       </section>
@@ -621,12 +677,12 @@ export default function DemoTrialPage() {
       {/* Benefits strip */}
       <section className="py-10 bg-gradient-to-b from-white to-primary-50/20 border-b border-primary-100">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <FadeInUp className="grid sm:grid-cols-2 lg:grid-cols-5 gap-8">
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-xl bg-accent-100 flex items-center justify-center flex-shrink-0">
+          <FadeInUp className="grid sm:grid-cols-2 lg:grid-cols-5 gap-6 lg:gap-8 items-stretch">
+            <div className="flex flex-col sm:flex-row lg:flex-col items-center sm:items-start lg:items-center text-center sm:text-left lg:text-center gap-4 p-5 rounded-xl bg-white/60 border border-primary-100/80 shadow-sm hover:shadow-md hover:border-accent-200/50 transition-all">
+              <div className="w-12 h-12 rounded-xl bg-accent-100 flex items-center justify-center flex-shrink-0 shrink-0">
                 <TrendingDown className="w-6 h-6 text-accent-600" />
               </div>
-              <div>
+              <div className="min-w-0 flex-1">
                 <h3 className="font-semibold text-primary-800 mb-1">
                   {language === 'es' ? 'Reduce la morosidad hasta 80%' : 'Reduce delinquency up to 80%'}
                 </h3>
@@ -637,11 +693,11 @@ export default function DemoTrialPage() {
                 </p>
               </div>
             </div>
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-xl bg-accent-100 flex items-center justify-center flex-shrink-0">
-                <Clock className="w-6 h-6 text-accent-600" />
+            <div className="flex flex-col sm:flex-row lg:flex-col items-center sm:items-start lg:items-center text-center sm:text-left lg:text-center gap-4 p-5 rounded-xl bg-white/60 border border-primary-100/80 shadow-sm hover:shadow-md hover:border-accent-200/50 transition-all">
+              <div className="w-12 h-12 rounded-xl bg-accent-100 flex items-center justify-center flex-shrink-0 shrink-0">
+                <Zap className="w-6 h-6 text-accent-600" />
               </div>
-              <div>
+              <div className="min-w-0 flex-1">
                 <h3 className="font-semibold text-primary-800 mb-1">
                   {language === 'es' ? 'Configura en 5 minutos' : 'Set up in 5 minutes'}
                 </h3>
@@ -652,11 +708,11 @@ export default function DemoTrialPage() {
                 </p>
               </div>
             </div>
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-xl bg-accent-100 flex items-center justify-center flex-shrink-0">
-                <Zap className="w-6 h-6 text-accent-600" />
+            <div className="flex flex-col sm:flex-row lg:flex-col items-center sm:items-start lg:items-center text-center sm:text-left lg:text-center gap-4 p-5 rounded-xl bg-white/60 border border-primary-100/80 shadow-sm hover:shadow-md hover:border-accent-200/50 transition-all">
+              <div className="w-12 h-12 rounded-xl bg-accent-100 flex items-center justify-center flex-shrink-0 shrink-0">
+                <CheckCircle className="w-6 h-6 text-accent-600" />
               </div>
-              <div>
+              <div className="min-w-0 flex-1">
                 <h3 className="font-semibold text-primary-800 mb-1">
                   {language === 'es' ? 'Adiós a Excel — Todo integrado' : 'Goodbye Excel — Everything integrated'}
                 </h3>
@@ -667,11 +723,11 @@ export default function DemoTrialPage() {
                 </p>
               </div>
             </div>
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-xl bg-accent-100 flex items-center justify-center flex-shrink-0">
+            <div className="flex flex-col sm:flex-row lg:flex-col items-center sm:items-start lg:items-center text-center sm:text-left lg:text-center gap-4 p-5 rounded-xl bg-white/60 border border-primary-100/80 shadow-sm hover:shadow-md hover:border-accent-200/50 transition-all">
+              <div className="w-12 h-12 rounded-xl bg-accent-100 flex items-center justify-center flex-shrink-0 shrink-0">
                 <Shield className="w-6 h-6 text-accent-600" />
               </div>
-              <div>
+              <div className="min-w-0 flex-1">
                 <h3 className="font-semibold text-primary-800 mb-1">
                   {language === 'es' ? 'Hecho en España' : 'Made in Spain'}
                 </h3>
@@ -682,11 +738,11 @@ export default function DemoTrialPage() {
                 </p>
               </div>
             </div>
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-xl bg-accent-100 flex items-center justify-center flex-shrink-0">
+            <div className="flex flex-col sm:flex-row lg:flex-col items-center sm:items-start lg:items-center text-center sm:text-left lg:text-center gap-4 p-5 rounded-xl bg-white/60 border border-primary-100/80 shadow-sm hover:shadow-md hover:border-accent-200/50 transition-all">
+              <div className="w-12 h-12 rounded-xl bg-accent-100 flex items-center justify-center flex-shrink-0 shrink-0">
                 <ArrowRightLeft className="w-6 h-6 text-accent-600" />
               </div>
-              <div>
+              <div className="min-w-0 flex-1">
                 <h3 className="font-semibold text-primary-800 mb-1">
                   {language === 'es' ? 'Migración + igualamos tu precio' : 'Migration + we match your price'}
                 </h3>
@@ -696,6 +752,74 @@ export default function DemoTrialPage() {
                     : 'Using another system? Until May 1, 2026: we migrate your clients for free. Is yours cheaper? We match your price.'}
                 </p>
               </div>
+            </div>
+          </FadeInUp>
+        </div>
+      </section>
+
+      {/* Todo lo que incluye - expandible */}
+      <section className="py-12 md:py-16 bg-white">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeInUp>
+            <div className="rounded-2xl border-2 border-accent-200/60 bg-gradient-to-br from-accent-50/50 to-white overflow-hidden shadow-lg shadow-accent-500/5">
+              <button
+                onClick={() => setShowAllFeatures(!showAllFeatures)}
+                className="w-full px-6 py-5 flex items-center justify-between gap-4 hover:bg-accent-50/30 transition-colors text-left"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-accent-100 flex items-center justify-center">
+                    <CheckCircle className="w-5 h-5 text-accent-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-primary-800 text-lg">
+                      {language === 'es' ? '43 funciones incluidas' : '43 features included'}
+                    </h3>
+                    <p className="text-sm text-primary-600">
+                      {language === 'es'
+                        ? 'Todo lo que necesitas para gestionar tu negocio de trasteros'
+                        : 'Everything you need to run your storage business'}
+                    </p>
+                  </div>
+                </div>
+                <span className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-accent-500 text-white font-semibold text-base shrink-0 hover:bg-accent-600 transition-colors shadow-md shadow-accent-500/30">
+                  {showAllFeatures
+                    ? (language === 'es' ? 'Ocultar' : 'Hide')
+                    : (language === 'es' ? 'Ver todo' : 'View all')}
+                  {showAllFeatures ? (
+                    <ChevronUp className="w-5 h-5" />
+                  ) : (
+                    <ChevronDown className="w-5 h-5" />
+                  )}
+                </span>
+              </button>
+              <AnimatePresence>
+                {showAllFeatures && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.3, ease: 'easeInOut' }}
+                    className="overflow-hidden"
+                  >
+                    <div className="px-6 pb-6 pt-0 border-t border-accent-200/40">
+                      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-2.5 pt-6">
+                        {(language === 'es' ? ALL_FEATURES_ES : ALL_FEATURES_EN).map((feature, i) => (
+                          <motion.div
+                            key={feature}
+                            initial={{ opacity: 0, x: -8 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: i * 0.02, duration: 0.2 }}
+                            className="flex items-center gap-2"
+                          >
+                            <CheckCircle className="w-4 h-4 text-accent-500 flex-shrink-0" />
+                            <span className="text-sm text-primary-700">{feature}</span>
+                          </motion.div>
+                        ))}
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </FadeInUp>
         </div>
@@ -973,9 +1097,10 @@ export default function DemoTrialPage() {
         </div>
       </section>
 
-      {/* Form / Success */}
-      <section className="py-16 md:py-20 bg-gradient-to-br from-primary-50 via-white to-accent-50/30">
-        <div ref={formRef} className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Form / Success - CTA final */}
+      <section className="py-20 md:py-24 bg-gradient-to-br from-primary-50 via-white to-accent-50/40 relative overflow-hidden">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-accent-400/10 rounded-full blur-3xl -translate-y-1/2" />
+        <div ref={formRef} className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <FadeInUp>
           <div className="bg-gradient-to-r from-accent-50 to-green-50 border-2 border-accent-200 rounded-xl p-5 mb-6 text-center">
             <p className="text-primary-700 font-medium mb-2">
@@ -999,7 +1124,7 @@ export default function DemoTrialPage() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-white rounded-2xl shadow-2xl border border-primary-100 p-8 md:p-10"
+              className="bg-white rounded-2xl shadow-2xl shadow-accent-500/10 border-2 border-primary-100 p-8 md:p-10 hover:shadow-accent-500/15 transition-shadow"
             >
               <h2 className="text-2xl md:text-3xl font-bold text-primary-800 mb-3">
                 {language === 'es'
