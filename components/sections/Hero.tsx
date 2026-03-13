@@ -2,7 +2,8 @@
 
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
-import { ArrowRight, TrendingUp, Users, DollarSign, Building2, CheckCircle, CreditCard, Clock, MapPin, BarChart2, FileText, Calendar, Package, Euro, Wallet } from 'lucide-react'
+import { ArrowRight, TrendingUp, Users, DollarSign, CheckCircle, CreditCard, Clock, MapPin, BarChart2, FileText, Calendar, Package, Euro, Wallet } from 'lucide-react'
+import Image from 'next/image'
 import { useLanguage } from '@/lib/context/LanguageContext'
 import LinkWithLang from '@/components/common/LinkWithLang'
 
@@ -21,7 +22,7 @@ const Hero = () => {
   // Datos estilo app móvil real
   const dashboardCards = [
     { label: language === 'es' ? 'OCUPACIÓN' : 'OCCUPANCY', value: '91.3%', detail: '94 de 103 espacios', color: 'blue', icon: Package, progress: 91.3 },
-    { label: language === 'es' ? 'INGRESOS MENSUALES' : 'MONTHLY INCOME', value: '7998 €', detail: language === 'es' ? 'De 86 contratos • Cobrado: 3770 €' : 'From 86 contracts • Collected: 3770 €', color: 'green', icon: Euro },
+    { label: language === 'es' ? 'INGRESOS MENSUALES' : 'MONTHLY INCOME', value: '7998 €', detail: language === 'es' ? 'De 86 contratos • Cobrado: 7340 €' : 'From 86 contracts • Collected: 7340 €', color: 'green', icon: Euro },
     { label: language === 'es' ? 'POTENCIAL DISPONIBLE' : 'AVAILABLE POTENTIAL', value: '620 €', detail: language === 'es' ? 'Ingresos si se alquilaran todas las unidades libres' : 'Income if all free units were rented', color: 'cyan', icon: Wallet },
     { label: language === 'es' ? 'CLIENTES' : 'CLIENTS', value: '114', detail: language === 'es' ? 'Clientes registrados' : 'Registered clients', color: 'purple', icon: Users },
     { label: language === 'es' ? 'FACTURAS PENDIENTES' : 'PENDING INVOICES', value: '5', detail: language === 'es' ? '0 vencidas' : '0 overdue', color: 'orange', icon: FileText },
@@ -36,8 +37,8 @@ const Hero = () => {
     status: language === 'es' ? 'Pagado' : 'Paid',
     method: 'Bizum',
     contract: 'CTR-2025-0058',
-    client: 'SELENE MOYANO',
-    unit: 'SP-26',
+    client: 'MARÍA GARCÍA',
+    unit: 'A-104',
     period: '14/02/2026 - 13/03/2026',
     amount: '€120.00',
   }
@@ -77,7 +78,7 @@ const Hero = () => {
           className="space-y-8"
         >
           <div className="space-y-6">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.08] tracking-tight text-white">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.08] tracking-tight bg-gradient-to-r from-white via-zinc-300 to-accent-400 bg-clip-text text-transparent">
               {language === 'es' 
                 ? 'El software de gestión moderno para operadores de self storage y parkings'
                 : 'The modern management software for self-storage and parking operators'}
@@ -114,13 +115,13 @@ const Hero = () => {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.6 }}
-            className="flex flex-col sm:flex-row gap-4"
+            className="flex flex-row flex-wrap gap-3"
           >
             <LinkWithLang href="/demo-trial">
               <motion.span
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="group inline-flex items-center gap-2 px-8 py-4 bg-white text-zinc-900 font-semibold rounded-xl hover:bg-zinc-100 transition-all duration-200 shadow-xl shadow-black/20 cursor-pointer"
+                className="group inline-flex items-center gap-2 px-5 sm:px-8 py-3 sm:py-4 bg-white text-zinc-900 font-semibold rounded-xl hover:bg-zinc-100 transition-all duration-200 shadow-xl shadow-black/20 cursor-pointer text-sm sm:text-base"
               >
                 {language === 'es' ? 'Ver demo' : 'View demo'}
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
@@ -131,16 +132,16 @@ const Hero = () => {
               <motion.span
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="inline-flex items-center gap-2 px-8 py-4 bg-white/5 border border-white/20 text-white font-semibold rounded-xl hover:bg-white/10 hover:border-white/30 transition-all duration-200 cursor-pointer"
+                className="inline-flex items-center gap-2 px-5 sm:px-8 py-3 sm:py-4 bg-white/5 border border-white/20 text-white font-semibold rounded-xl hover:bg-white/10 hover:border-white/30 transition-all duration-200 cursor-pointer text-sm sm:text-base"
               >
                 {language === 'es' ? 'Registrarse' : 'Sign up'}
               </motion.span>
             </LinkWithLang>
           </motion.div>
 
-          <p className="text-sm text-zinc-500 flex items-center gap-2">
-            <Clock className="w-4 h-4" />
-            {language === 'es' 
+<p className="hidden sm:flex text-sm text-zinc-500 items-center gap-2">
+            <Clock className="w-4 h-4 flex-shrink-0" />
+            {language === 'es'
               ? 'Regístrate gratis en 2 min • Sin tarjeta'
               : 'Sign up free in 2 min • No card'}
           </p>
@@ -152,7 +153,7 @@ const Hero = () => {
           initial={{ opacity: 0, x: 40 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
-          className="relative"
+          className="relative -mt-8 lg:-mt-40"
         >
           {/* Glow behind card */}
           <div className="absolute -inset-1 bg-gradient-to-r from-accent-500/20 to-accent-600/10 rounded-[2rem] blur-2xl" />
@@ -171,17 +172,22 @@ const Hero = () => {
             <div className="px-4 py-3 bg-zinc-900 border-b border-zinc-800">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 bg-gradient-to-r from-accent-500 to-accent-600 rounded-lg flex items-center justify-center">
-                    <Building2 className="w-4 h-4 text-white" />
+                  <div className="relative w-8 h-8 flex-shrink-0 rounded-lg overflow-hidden">
+                    <Image
+                      src="/logo.svg"
+                      alt="StorageFy"
+                      fill
+                      className="object-contain"
+                    />
                   </div>
-                  <span className="font-semibold text-white text-sm">StorageFy</span>
+                  <span className="font-semibold text-sm bg-gradient-to-r from-accent-400 to-accent-500 bg-clip-text text-transparent">StorageFy</span>
                 </div>
-                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                <div className="w-2 h-2 bg-accent-400 rounded-full animate-pulse" />
               </div>
             </div>
 
             {/* Scrollable content - Dashboard + Pagos */}
-            <div className="h-[420px] overflow-y-auto bg-zinc-950/50">
+            <div className="h-[560px] overflow-y-auto bg-zinc-950/50">
               {/* Panel de Control */}
               <div className="px-3 pt-4 pb-2">
                 <h3 className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-3">
@@ -204,7 +210,18 @@ const Hero = () => {
                         </div>
                         <div className="text-[10px] font-medium text-zinc-400 uppercase tracking-wide">{card.label}</div>
                         <div className="text-lg font-bold text-white mt-0.5">{card.value}</div>
-                        {card.detail && <div className="text-[11px] text-zinc-500 mt-1">{card.detail}</div>}
+                        {card.detail && (
+                          <div className="text-[11px] text-zinc-500 mt-1">
+                            {card.label === (language === 'es' ? 'INGRESOS MENSUALES' : 'MONTHLY INCOME') ? (
+                              <>
+                                {language === 'es' ? 'De 86 contratos • Cobrado: ' : 'From 86 contracts • Collected: '}
+                                <span className="text-green-400 font-medium">7340 €</span>
+                              </>
+                            ) : (
+                              card.detail
+                            )}
+                          </div>
+                        )}
                         {'progress' in card && card.progress !== undefined && (
                           <div className="mt-2 h-1.5 bg-zinc-700 rounded-full overflow-hidden">
                             <motion.div
