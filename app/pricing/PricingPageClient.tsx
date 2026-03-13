@@ -11,7 +11,9 @@ import {
   TrendingUp,
   Users,
   Building2,
+  ArrowRightLeft,
 } from 'lucide-react'
+import LinkWithLang from '@/components/common/LinkWithLang'
 import { useLanguage } from '@/lib/context/LanguageContext'
 import FadeInUp from '@/components/animations/FadeInUp'
 import { useState } from 'react'
@@ -39,12 +41,12 @@ export default function PricingPageClient() {
       priceUnit: language === 'es' ? 'EUR/unidad' : 'EUR/unit',
       period: language === 'es' ? '/mes + IVA' : '/month + VAT',
       description: language === 'es' 
-        ? 'Hasta 200 unidades. Precio simple y transparente'
-        : 'Up to 200 units. Simple and transparent pricing',
+        ? 'Hasta 140 unidades. Precio simple y transparente'
+        : 'Up to 140 units. Simple and transparent pricing',
       icon: Star,
       features: [
         language === 'es' ? 'Locaciones ilimitadas' : 'Unlimited locations',
-        language === 'es' ? 'Hasta 200 unidades' : 'Up to 200 units',
+        language === 'es' ? 'Hasta 140 unidades' : 'Up to 140 units',
         language === 'es' ? 'Usuarios ilimitados' : 'Unlimited users',
         language === 'es' ? 'Widget reservas 24/7' : '24/7 booking widget',
         language === 'es' ? 'Contratos digitales' : 'Digital contracts',
@@ -66,8 +68,8 @@ export default function PricingPageClient() {
       priceUnit: '',
       period: '',
       description: language === 'es' 
-        ? 'Más de 200 unidades. Nos adaptamos a tu negocio con descuentos por volumen'
-        : 'More than 200 units. We adapt to your business with volume discounts',
+        ? 'Más de 140 unidades. Nos adaptamos a tu negocio con descuentos por volumen'
+        : 'More than 140 units. We adapt to your business with volume discounts',
       icon: Crown,
       features: [
         language === 'es' ? 'Locaciones ilimitadas' : 'Unlimited locations',
@@ -114,10 +116,10 @@ export default function PricingPageClient() {
       title: language === 'es' ? 'Negocio en Crecimiento' : 'Growing Business',
       name: language === 'es' ? 'María' : 'María',
       description: language === 'es'
-        ? 'gestiona 2 locaciones con 150 unidades. Paga 150 EUR/mes + IVA. Todas las funcionalidades incluidas sin límites.'
-        : 'manages 2 locations with 150 units. Pays 150 EUR/month + VAT. All features included without limits.',
-      units: 150,
-      price: 150,
+        ? 'gestiona 2 locaciones con 120 unidades. Paga 120 EUR/mes + IVA. Todas las funcionalidades incluidas sin límites.'
+        : 'manages 2 locations with 120 units. Pays 120 EUR/month + VAT. All features included without limits.',
+      units: 120,
+      price: 120,
       occupancy: 92
     },
     {
@@ -160,11 +162,11 @@ export default function PricingPageClient() {
   const faqs = language === 'es' ? [
     {
       question: '¿Cómo funciona el precio por unidad?',
-      answer: 'El precio es simple: 1 EUR por unidad al mes + IVA (21%). Si tienes 50 unidades, pagas 50 EUR/mes + IVA = 60.50 EUR/mes. Si tienes 150 unidades, pagas 150 EUR/mes + IVA = 181.50 EUR/mes. Hasta 200 unidades.',
+      answer: 'El precio es simple: 1 EUR por unidad al mes + IVA (21%). Si tienes 50 unidades, pagas 50 EUR/mes + IVA = 60.50 EUR/mes. Si tienes 100 unidades, pagas 100 EUR/mes + IVA = 121 EUR/mes. Hasta 140 unidades.',
     },
     {
-      question: '¿Qué pasa si tengo más de 200 unidades?',
-      answer: 'Si tienes más de 200 unidades, contacta con nosotros para un plan Enterprise personalizado. Ofrecemos descuentos por volumen, por lo que el precio por unidad será menor que 1 EUR. Además, incluye funcionalidades adicionales como API personalizada y soporte 24/7.',
+      question: '¿Qué pasa si tengo más de 140 unidades?',
+      answer: 'Si tienes más de 140 unidades, contacta con nosotros para un plan Enterprise personalizado. Ofrecemos descuentos por volumen, por lo que el precio por unidad será menor que 1 EUR. Además, incluye funcionalidades adicionales como API personalizada y soporte 24/7.',
     },
     {
       question: '¿Qué incluye el soporte técnico?',
@@ -192,16 +194,16 @@ export default function PricingPageClient() {
     },
     {
       question: '¿Hay límites de usuarios o locaciones?',
-      answer: 'No, en el plan Estándar no hay límites de usuarios ni de locaciones. Solo el límite es de 200 unidades. En Enterprise, todo es ilimitado.',
+      answer: 'No, en el plan Estándar no hay límites de usuarios ni de locaciones. Solo el límite es de 140 unidades. En Enterprise, todo es ilimitado.',
     },
   ] : [
     {
       question: 'How does per-unit pricing work?',
-      answer: 'The price is simple: 1 EUR per unit per month + VAT (21%). If you have 50 units, you pay 50 EUR/month + VAT = 60.50 EUR/month. If you have 150 units, you pay 150 EUR/month + VAT = 181.50 EUR/month. Up to 200 units.',
+      answer: 'The price is simple: 1 EUR per unit per month + VAT (21%). If you have 50 units, you pay 50 EUR/month + VAT = 60.50 EUR/month. If you have 100 units, you pay 100 EUR/month + VAT = 121 EUR/month. Up to 140 units.',
     },
     {
-      question: 'What happens if I have more than 200 units?',
-      answer: 'If you have more than 200 units, contact us for a custom Enterprise plan. We offer volume discounts, so the price per unit will be less than 1 EUR. Plus, it includes additional features like custom API and 24/7 support.',
+      question: 'What happens if I have more than 140 units?',
+      answer: 'If you have more than 140 units, contact us for a custom Enterprise plan. We offer volume discounts, so the price per unit will be less than 1 EUR. Plus, it includes additional features like custom API and 24/7 support.',
     },
     {
       question: 'What does technical support include?',
@@ -229,7 +231,11 @@ export default function PricingPageClient() {
     },
     {
       question: 'Are there limits on users or locations?',
-      answer: 'No, in the Standard plan there are no limits on users or locations. Only the limit is 200 units. In Enterprise, everything is unlimited.',
+      answer: 'No, in the Standard plan there are no limits on users or locations. Only the limit is 140 units. In Enterprise, everything is unlimited.',
+    },
+    {
+      question: 'Do intra-community companies pay VAT?',
+      answer: 'No. Intra-community companies (B2B within the EU with a valid VAT number) are exempt from Spanish VAT under the reverse charge mechanism. You pay the net price without VAT.',
     },
   ]
 
@@ -242,11 +248,46 @@ export default function PricingPageClient() {
             <br />
             <span className="text-accent-600">1 EUR por unidad</span>
           </h1>
-          <p className="text-xl text-primary-600 max-w-3xl mx-auto">
+          <p className="text-xl text-primary-600 max-w-3xl mx-auto mb-4">
             {language === 'es' 
-              ? 'Creamos contigo. Hasta 200 unidades a 1 EUR/unidad + IVA. ¿Más de 200? Hablamos y ajustamos el precio a tu medida con descuentos por volumen.'
-              : 'We grow with you. Up to 200 units at 1 EUR/unit + VAT. More than 200? Let\'s talk and adjust the price to your needs with volume discounts.'}
+              ? 'Creamos contigo. Hasta 140 unidades a 1 EUR/unidad + IVA. ¿Más de 140? Hablamos y ajustamos el precio a tu medida con descuentos por volumen.'
+              : 'We grow with you. Up to 140 units at 1 EUR/unit + VAT. More than 140? Let\'s talk and adjust the price to your needs with volume discounts.'}
           </p>
+          <p className="text-lg font-semibold text-accent-600 max-w-2xl mx-auto">
+            {language === 'es' 
+              ? 'El sistema más completo del sector. Por lo mismo que pagas ahora.'
+              : 'The most complete system in the industry. For the same price you pay now.'}
+          </p>
+        </FadeInUp>
+
+        {/* CAP Banner - Grandes operadores */}
+        <FadeInUp className="mb-8">
+          <div className="max-w-3xl mx-auto">
+            <div className="bg-gradient-to-r from-primary-100 to-accent-50 border-2 border-primary-200 rounded-2xl p-6">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-xl bg-primary-200 flex items-center justify-center flex-shrink-0">
+                  <Building2 className="w-6 h-6 text-primary-700" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-primary-800 mb-1">
+                    {language === 'es' ? '¿Tienes muchas unidades?' : 'Have many units?'}
+                  </h3>
+                  <p className="text-primary-600 text-sm mb-3">
+                    {language === 'es' 
+                      ? 'Con 1.000 unidades no pagas 1.000€/mes. Los grandes operadores tienen precio especial por volumen. Contacta con nosotros y te hacemos una oferta a medida.'
+                      : 'With 1,000 units you don\'t pay 1,000€/month. Large operators get special volume pricing. Contact us for a custom quote.'}
+                  </p>
+                  <LinkWithLang
+                    href="/contact"
+                    className="inline-flex items-center gap-2 text-accent-600 font-semibold text-sm hover:text-accent-700"
+                  >
+                    {language === 'es' ? 'Solicitar precio especial' : 'Request special pricing'}
+                    <ChevronDown className="w-4 h-4 rotate-[-90deg]" />
+                  </LinkWithLang>
+                </div>
+              </div>
+            </div>
+          </div>
         </FadeInUp>
 
         {/* Price Calculator */}
@@ -263,14 +304,14 @@ export default function PricingPageClient() {
                 id="units-slider"
                 type="range"
                 min="1"
-                max="200"
+                max="140"
                 value={units}
                 onChange={(e) => setUnits(Number(e.target.value))}
                 className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-accent-500"
               />
               <div className="flex justify-between text-xs text-gray-500 mt-1">
                 <span>1</span>
-                <span>200</span>
+                <span>140</span>
               </div>
             </div>
             <div className="grid md:grid-cols-2 gap-6">
@@ -310,6 +351,11 @@ export default function PricingPageClient() {
                 </div>
               </div>
             </div>
+            {language === 'en' && (
+              <p className="mt-4 text-sm text-primary-600 text-center">
+                Intra-community companies (EU B2B with valid VAT number) are exempt from VAT.
+              </p>
+            )}
           </div>
         </FadeInUp>
 
@@ -403,6 +449,46 @@ export default function PricingPageClient() {
             )
           })}
         </div>
+
+        {/* Migration Offer Banner */}
+        <FadeInUp className="mb-16">
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-gradient-to-r from-accent-50 to-green-50 border-2 border-accent-200 rounded-2xl p-6 md:p-8">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-xl bg-accent-500/20 flex items-center justify-center flex-shrink-0">
+                  <ArrowRightLeft className="w-6 h-6 text-accent-600" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-bold text-primary-800 mb-2 text-lg">
+                    {language === 'es' ? '¿Usas otro sistema?' : 'Using another system?'}
+                  </h3>
+                  <p className="text-primary-600 text-sm mb-3">
+                    {language === 'es' 
+                      ? 'Hasta el 1 de mayo de 2026: migramos todos tus clientes gratis.'
+                      : 'Until May 1, 2026: we migrate all your clients for free.'}
+                  </p>
+                  <p className="text-base font-bold text-accent-700 mb-2">
+                    {language === 'es' 
+                      ? '¿Tu sistema actual es más barato? Igualamos tu precio.'
+                      : 'Is your current system cheaper? We match your price.'}
+                  </p>
+                  <p className="text-accent-700 font-semibold text-sm">
+                    {language === 'es' 
+                      ? 'El sistema más completo. Por lo mismo que pagas ahora.'
+                      : 'The most complete system. For the same price you pay now.'}
+                  </p>
+                  <LinkWithLang
+                    href="/demo-trial"
+                    className="inline-flex items-center gap-2 mt-4 text-accent-600 font-semibold text-sm hover:text-accent-700"
+                  >
+                    {language === 'es' ? 'Probar demo ahora' : 'Try demo now'}
+                    <ChevronDown className="w-4 h-4 rotate-[-90deg]" />
+                  </LinkWithLang>
+                </div>
+              </div>
+            </div>
+          </div>
+        </FadeInUp>
 
         {/* All Plans Include */}
         <FadeInUp className="mb-16">

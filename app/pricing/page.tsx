@@ -3,14 +3,14 @@ import PricingPageClient from './PricingPageClient'
 
 export const metadata: Metadata = {
   title: 'Precios - StorageFy | Planes y Tarifas',
-  description: 'Precio simple: 1 EUR por unidad al mes + IVA. Hasta 200 unidades. Prueba la demo en 2 minutos, sin tarjeta.',
+  description: 'Precio simple: 1 EUR por unidad al mes + IVA. Hasta 140 unidades. Prueba la demo en 2 minutos, sin tarjeta.',
   keywords: ['precios storagefy', 'planes trasteros', 'tarifas software trasteros', 'precio gestión almacenes'],
   alternates: {
     canonical: 'https://storagefy.co/pricing',
   },
   openGraph: {
     title: 'Precios - StorageFy',
-    description: 'Precio simple: 1 EUR por unidad al mes + IVA. Hasta 200 unidades.',
+    description: 'Precio simple: 1 EUR por unidad al mes + IVA. Hasta 140 unidades.',
     url: 'https://storagefy.co/pricing',
     type: 'website',
     images: [

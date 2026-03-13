@@ -234,7 +234,7 @@ export default function ROICalculator() {
                     id="units"
                     type="range"
                     min="1"
-                    max="200"
+                    max="140"
                     value={units}
                     onChange={(e) => setUnits(Number(e.target.value))}
                     className="flex-1"
@@ -244,11 +244,11 @@ export default function ROICalculator() {
                     {units}
                   </span>
                 </div>
-                {units > 200 && (
+                {units > 140 && (
                   <p className="text-xs text-accent-600 mt-2">
                     {language === 'es' 
-                      ? '💡 Más de 200 unidades: Contacta para precio Enterprise personalizado'
-                      : '💡 More than 200 units: Contact for custom Enterprise pricing'}
+                      ? '💡 Más de 140 unidades: Contacta para precio Enterprise personalizado'
+                      : '💡 More than 140 units: Contact for custom Enterprise pricing'}
                   </p>
                 )}
               </div>

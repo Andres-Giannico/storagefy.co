@@ -15,13 +15,13 @@ const Pricing = () => {
       price: '1',
       priceUnit: language === 'es' ? 'EUR/unidad' : 'EUR/unit',
       period: language === 'es' ? '/mes + IVA' : '/month + VAT',
-      description: language === 'es' ? 'Hasta 200 unidades. Precio simple y transparente' : 'Up to 200 units. Simple and transparent pricing',
+      description: language === 'es' ? 'Hasta 140 unidades. Precio simple y transparente' : 'Up to 140 units. Simple and transparent pricing',
       icon: Star,
       color: 'green',
       popular: true,
       features: [
         language === 'es' ? 'Locaciones ilimitadas' : 'Unlimited locations',
-        language === 'es' ? 'Hasta 200 unidades' : 'Up to 200 units',
+        language === 'es' ? 'Hasta 140 unidades' : 'Up to 140 units',
         language === 'es' ? 'Usuarios ilimitados' : 'Unlimited users',
         language === 'es' ? 'Widget reservas 24/7' : '24/7 booking widget',
         language === 'es' ? 'Contratos digitales' : 'Digital contracts',
@@ -39,7 +39,7 @@ const Pricing = () => {
       price: language === 'es' ? 'Personalizado' : 'Custom',
       priceUnit: '',
       period: '',
-      description: language === 'es' ? 'Más de 200 unidades. Nos adaptamos a tu negocio con descuentos por volumen' : 'More than 200 units. We adapt to your business with volume discounts',
+      description: language === 'es' ? 'Más de 140 unidades. Nos adaptamos a tu negocio con descuentos por volumen' : 'More than 140 units. We adapt to your business with volume discounts',
       icon: Crown,
       color: 'purple',
       popular: false,
@@ -115,8 +115,8 @@ const Pricing = () => {
 
           <p className="text-xl text-primary-600 max-w-3xl mx-auto leading-relaxed">
             {language === 'es'
-              ? 'Creamos contigo. Hasta 200 unidades a 1 EUR/unidad + IVA. ¿Más de 200? Hablamos y ajustamos el precio a tu medida con descuentos por volumen.'
-              : 'We grow with you. Up to 200 units at 1 EUR/unit + VAT. More than 200? Let\'s talk and adjust the price to your needs with volume discounts.'
+              ? 'Creamos contigo. Hasta 140 unidades a 1 EUR/unidad + IVA. ¿Más de 140? Hablamos y ajustamos el precio a tu medida con descuentos por volumen.'
+              : 'We grow with you. Up to 140 units at 1 EUR/unit + VAT. More than 140? Let\'s talk and adjust the price to your needs with volume discounts.'
             }
           </p>
         </FadeInUp>
@@ -275,7 +275,7 @@ const Pricing = () => {
                       category: language === 'es' ? 'Capacidad' : 'Capacity',
                       features: [
                         { name: language === 'es' ? 'Locaciones' : 'Locations', standard: language === 'es' ? 'Ilimitadas' : 'Unlimited', enterprise: language === 'es' ? 'Ilimitadas' : 'Unlimited' },
-                        { name: language === 'es' ? 'Unidades' : 'Units', standard: language === 'es' ? 'Hasta 200' : 'Up to 200', enterprise: language === 'es' ? 'Ilimitadas' : 'Unlimited' },
+                        { name: language === 'es' ? 'Unidades' : 'Units', standard: language === 'es' ? 'Hasta 140' : 'Up to 140', enterprise: language === 'es' ? 'Ilimitadas' : 'Unlimited' },
                         { name: language === 'es' ? 'Usuarios' : 'Users', standard: language === 'es' ? 'Ilimitados' : 'Unlimited', enterprise: language === 'es' ? 'Ilimitados' : 'Unlimited' }
                       ]
                     },
@@ -355,8 +355,8 @@ const Pricing = () => {
             {/* Note about expansion */}
             <div className="bg-gray-50 px-8 py-4 text-sm text-gray-600 text-center border-t border-gray-100">
               {language === 'es' 
-                ? '💡 ¿Más de 200 unidades? Contacta con nosotros para un precio personalizado con descuentos por volumen.'
-                : '💡 More than 200 units? Contact us for custom pricing with volume discounts.'
+                ? '💡 ¿Más de 140 unidades? Contacta con nosotros para un precio personalizado con descuentos por volumen.'
+                : '💡 More than 140 units? Contact us for custom pricing with volume discounts.'
               }
             </div>
           </div>

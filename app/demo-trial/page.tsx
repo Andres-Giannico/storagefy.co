@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import {
   ArrowRight,
+  ArrowRightLeft,
   CheckCircle,
   ChevronLeft,
   ChevronRight,
@@ -430,7 +431,7 @@ export default function DemoTrialPage() {
                   ? 'El software más completo para trasteros. Unidades, clientes, contratos, cobros, facturas, widget 24/7… Todo en una plataforma.'
                   : 'The most complete software for storage. Units, clients, contracts, payments, invoices, 24/7 widget… Everything in one platform.'}
               </p>
-              <div className="flex flex-wrap gap-4 justify-center lg:justify-start mb-8">
+              <div className="flex flex-wrap gap-4 justify-center lg:justify-start mb-6">
                 <span className="flex items-center gap-2 text-accent-300 text-sm font-medium">
                   <CheckCircle className="w-4 h-4" />
                   {language === 'es' ? 'Acceso inmediato' : 'Instant access'}
@@ -442,6 +443,15 @@ export default function DemoTrialPage() {
                 <span className="flex items-center gap-2 text-accent-300 text-sm font-medium">
                   <Zap className="w-4 h-4" />
                   {language === 'es' ? '15+ módulos' : '15+ modules'}
+                </span>
+              </div>
+              <div className="inline-flex flex-col sm:flex-row items-start sm:items-center gap-1 sm:gap-3 px-4 py-3 rounded-lg bg-accent-500/20 border border-accent-400/40 mb-8">
+                <span className="flex items-center gap-2 text-sm font-medium text-accent-200">
+                  <ArrowRightLeft className="w-4 h-4" />
+                  {language === 'es' ? 'Migración gratis hasta 1 mayo 2026' : 'Free migration until May 1, 2026'}
+                </span>
+                <span className="text-base font-bold text-accent-100">
+                  {language === 'es' ? '¿Más barato? Igualamos tu precio.' : 'Cheaper? We match your price.'}
                 </span>
               </div>
               <motion.button
@@ -611,7 +621,7 @@ export default function DemoTrialPage() {
       {/* Benefits strip */}
       <section className="py-10 bg-gradient-to-b from-white to-primary-50/20 border-b border-primary-100">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <FadeInUp className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <FadeInUp className="grid sm:grid-cols-2 lg:grid-cols-5 gap-8">
             <div className="flex items-start gap-4">
               <div className="w-12 h-12 rounded-xl bg-accent-100 flex items-center justify-center flex-shrink-0">
                 <TrendingDown className="w-6 h-6 text-accent-600" />
@@ -669,6 +679,21 @@ export default function DemoTrialPage() {
                   {language === 'es'
                     ? 'Soporte en español, SEPA, facturación española.'
                     : 'Spanish support, SEPA, Spanish invoicing.'}
+                </p>
+              </div>
+            </div>
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 rounded-xl bg-accent-100 flex items-center justify-center flex-shrink-0">
+                <ArrowRightLeft className="w-6 h-6 text-accent-600" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-primary-800 mb-1">
+                  {language === 'es' ? 'Migración + igualamos tu precio' : 'Migration + we match your price'}
+                </h3>
+                <p className="text-sm text-primary-600">
+                  {language === 'es'
+                    ? '¿Usas otro sistema? Hasta 1 mayo 2026: migramos tus clientes gratis. ¿El tuyo es más barato? Igualamos tu precio.'
+                    : 'Using another system? Until May 1, 2026: we migrate your clients for free. Is yours cheaper? We match your price.'}
                 </p>
               </div>
             </div>
@@ -952,6 +977,18 @@ export default function DemoTrialPage() {
       <section className="py-16 md:py-20 bg-gradient-to-br from-primary-50 via-white to-accent-50/30">
         <div ref={formRef} className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeInUp>
+          <div className="bg-gradient-to-r from-accent-50 to-green-50 border-2 border-accent-200 rounded-xl p-5 mb-6 text-center">
+            <p className="text-primary-700 font-medium mb-2">
+              {language === 'es'
+                ? '¿Usas otro sistema? Migramos todos tus clientes gratis hasta el 1 de mayo de 2026.'
+                : 'Using another system? We migrate all your clients for free until May 1, 2026.'}
+            </p>
+            <p className="text-lg font-bold text-accent-700">
+              {language === 'es'
+                ? '¿Tu sistema es más barato? Igualamos tu precio.'
+                : 'Is your system cheaper? We match your price.'}
+            </p>
+          </div>
           <p className="text-center text-primary-600 mb-8">
             {language === 'es'
               ? 'El sistema más completo para trasteros. Más de 50 negocios ya gestionan todo con StorageFy.'

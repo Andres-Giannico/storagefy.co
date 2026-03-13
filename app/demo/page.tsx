@@ -9,6 +9,7 @@ import {
   Volume2, 
   VolumeX, 
   ArrowRight, 
+  ArrowRightLeft,
   CheckCircle, 
   Star, 
   Users, 
@@ -301,7 +302,7 @@ export default function DemoPage() {
                 </p>
 
                 {/* Banner de registro rápido */}
-                <div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg p-4 mb-6">
+                <div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg p-4 mb-4">
                   <div className="flex items-center gap-3">
                     <Clock className="w-5 h-5 text-green-600 flex-shrink-0" />
                     <p className="text-sm font-semibold text-green-700">
@@ -310,6 +311,18 @@ export default function DemoPage() {
                         : 'Try the demo in 2 minutes'}
                     </p>
                   </div>
+                </div>
+                <div className="bg-gradient-to-r from-accent-50 to-green-50 border-2 border-accent-200 rounded-lg p-4 mb-6">
+                  <p className="text-sm font-medium text-primary-700 mb-1">
+                    {language === 'es'
+                      ? '¿Vienes de otro sistema? Migración gratis hasta 1 mayo 2026.'
+                      : 'Coming from another system? Free migration until May 1, 2026.'}
+                  </p>
+                  <p className="text-base font-bold text-accent-700">
+                    {language === 'es'
+                      ? '¿Tu sistema es más barato? Igualamos tu precio.'
+                      : 'Is your system cheaper? We match your price.'}
+                  </p>
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-3">
@@ -688,8 +701,8 @@ export default function DemoPage() {
                   rows={4}
                   className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent resize-none"
                   placeholder={language === 'es' 
-                    ? '¿Cuántas unidades gestionas? ¿Qué desafíos enfrentas? ¿Cuándo te gustaría la demo?'
-                    : 'How many units do you manage? What challenges do you face? When would you like the demo?'
+                    ? '¿Cuántas unidades gestionas? ¿Qué desafíos enfrentas? ¿Cuándo te gustaría la demo? ¿Usas otro sistema? Migración incluida + match de precio si el tuyo es más barato.'
+                    : 'How many units do you manage? What challenges do you face? When would you like the demo? Using another system? Migration included + price match if yours is cheaper.'
                   }
                 />
               </div>

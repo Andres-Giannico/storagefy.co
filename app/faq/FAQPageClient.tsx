@@ -13,11 +13,11 @@ export default function FAQPageClient() {
   const faqs = language === 'es' ? [
     {
       question: '¿Cuáles son los planes y precios de StorageFy?',
-      answer: 'Tenemos un modelo de precios simple: 1 EUR por unidad al mes + IVA hasta 200 unidades. Para más de 200 unidades ofrecemos precios personalizados con descuentos por volumen. Todos los planes incluyen locaciones ilimitadas, usuarios ilimitados. Puedes probar la demo en 2 minutos, sin tarjeta de crédito.',
+      answer: 'Tenemos un modelo de precios simple: 1 EUR por unidad al mes + IVA hasta 140 unidades. Para más de 140 unidades ofrecemos precios personalizados con descuentos por volumen. Todos los planes incluyen locaciones ilimitadas, usuarios ilimitados. Puedes probar la demo en 2 minutos, sin tarjeta de crédito.',
     },
     {
       question: '¿Hay descuentos por volumen?',
-      answer: 'Sí, para más de 200 unidades ofrecemos precios personalizados con descuentos por volumen. Contacta con nuestro equipo para más información.',
+      answer: 'Sí, para más de 140 unidades ofrecemos precios personalizados con descuentos por volumen. Contacta con nuestro equipo para más información.',
     },
     {
       question: '¿Qué funcionalidades incluye StorageFy?',
@@ -46,11 +46,11 @@ export default function FAQPageClient() {
   ] : [
     {
       question: 'What are StorageFy plans and pricing?',
-      answer: 'We have a simple pricing model: 1 EUR per unit per month + VAT up to 200 units. For more than 200 units we offer custom pricing with volume discounts. All plans include unlimited locations, unlimited users. You can try the demo in 2 minutes, no credit card required.',
+      answer: 'We have a simple pricing model: 1 EUR per unit per month + VAT up to 140 units. For more than 140 units we offer custom pricing with volume discounts. All plans include unlimited locations, unlimited users. You can try the demo in 2 minutes, no credit card required.',
     },
     {
       question: 'Are there volume discounts?',
-      answer: 'Yes, for more than 200 units we offer custom pricing with volume discounts. Contact our team for more information.',
+      answer: 'Yes, for more than 140 units we offer custom pricing with volume discounts. Contact our team for more information.',
     },
     {
       question: 'What features does StorageFy include?',
@@ -75,6 +75,10 @@ export default function FAQPageClient() {
     {
       question: 'Can I cancel my subscription at any time?',
       answer: 'Yes, there is no commitment. You can cancel your subscription at any time from your account settings.',
+    },
+    {
+      question: 'Do intra-community companies pay VAT?',
+      answer: 'No. Intra-community companies (B2B within the EU with a valid VAT number) are exempt from Spanish VAT under the reverse charge mechanism. You pay the net price without VAT.',
     },
   ]
 

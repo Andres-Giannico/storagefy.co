@@ -34,12 +34,12 @@ export async function POST(request: NextRequest) {
 **INFORMACIÓN CLAVE DE STORAGEFY:**
 
 **Planes y Precios:**
-- Estándar: 1 EUR por unidad al mes + IVA (hasta 200 unidades, locaciones ilimitadas, usuarios ilimitados, widget reservas 24/7, contratos digitales, fotos DNI seguras, contratos multi-unidad, planos interactivos, tablón de anuncios, reportes avanzados, soporte prioritario, recordatorios automáticos)
-- Enterprise: Precio personalizado (más de 200 unidades, unidades ilimitadas, locaciones ilimitadas, usuarios ilimitados, precio personalizado con descuento por volumen, API personalizada, soporte 24/7, onboarding dedicado, account manager, SLA garantizado, planos ilimitados, analytics avanzados, integraciones personalizadas)
+- Estándar: 1 EUR por unidad al mes + IVA (hasta 140 unidades, locaciones ilimitadas, usuarios ilimitados, widget reservas 24/7, contratos digitales, fotos DNI seguras, contratos multi-unidad, planos interactivos, tablón de anuncios, reportes avanzados, soporte prioritario, recordatorios automáticos)
+- Enterprise: Precio personalizado (más de 140 unidades, unidades ilimitadas, locaciones ilimitadas, usuarios ilimitados, precio personalizado con descuento por volumen, API personalizada, soporte 24/7, onboarding dedicado, account manager, SLA garantizado, planos ilimitados, analytics avanzados, integraciones personalizadas)
 - Todos incluyen: demo en 2 min sin tarjeta, migración de datos incluida, soporte en español, actualizaciones continuas
 
 **Descuentos:**
-- Descuentos por volumen para más de 200 unidades
+- Descuentos por volumen para más de 140 unidades
 
 **Funcionalidades Principales:**
 - Gestión completa de unidades de trasteros
@@ -104,12 +104,15 @@ ${userName ? `- El usuario se llama ${userName}, úsalo naturalmente en la conve
 **KEY STORAGEFY INFORMATION:**
 
 **Plans and Pricing:**
-- Standard: 1 EUR per unit per month + VAT (up to 200 units, unlimited locations, unlimited users, 24/7 booking widget, digital contracts, secure ID photos, multi-unit contracts, interactive floor plans, announcement board, advanced reports, priority support, automatic reminders)
-- Enterprise: Custom pricing (more than 200 units, unlimited units, unlimited locations, unlimited users, custom pricing with volume discounts, custom API, 24/7 support, dedicated onboarding, account manager, guaranteed SLA, unlimited floor plans, advanced analytics, custom integrations)
+- Standard: 1 EUR per unit per month + VAT (up to 140 units, unlimited locations, unlimited users, 24/7 booking widget, digital contracts, secure ID photos, multi-unit contracts, interactive floor plans, announcement board, advanced reports, priority support, automatic reminders)
+- Enterprise: Custom pricing (more than 140 units, unlimited units, unlimited locations, unlimited users, custom pricing with volume discounts, custom API, 24/7 support, dedicated onboarding, account manager, guaranteed SLA, unlimited floor plans, advanced analytics, custom integrations)
 - All include: demo in 2 min, no card, data migration included, Spanish support, continuous updates
 
 **Discounts:**
-- Volume discounts for more than 200 units
+- Volume discounts for more than 140 units
+
+**VAT:**
+- Intra-community companies (EU B2B with valid VAT number) are exempt from Spanish VAT under reverse charge. They pay the net price without VAT.
 
 **Main Features:**
 - Complete storage unit management
