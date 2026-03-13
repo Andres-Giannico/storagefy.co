@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { motion } from 'framer-motion'
-import { Check, CheckCircle, Star, Zap, Crown } from 'lucide-react'
+import { Check, CheckCircle, Star } from 'lucide-react'
 import { useLanguage } from '@/lib/context/LanguageContext'
 import FadeInUp from '@/components/animations/FadeInUp'
 
@@ -20,8 +20,10 @@ const Pricing = () => {
       color: 'green',
       popular: true,
       features: [
-        language === 'es' ? 'Locaciones ilimitadas' : 'Unlimited locations',
+        // Lo que ya tenéis
         language === 'es' ? 'Hasta 140 unidades' : 'Up to 140 units',
+        language === 'es' ? 'Precio simple: €1/unidad/mes + IVA' : 'Simple price: €1/unit/month + VAT',
+        language === 'es' ? 'Locaciones ilimitadas' : 'Unlimited locations',
         language === 'es' ? 'Usuarios ilimitados' : 'Unlimited users',
         language === 'es' ? 'Widget reservas 24/7' : '24/7 booking widget',
         language === 'es' ? 'Contratos digitales' : 'Digital contracts',
@@ -31,31 +33,43 @@ const Pricing = () => {
         language === 'es' ? 'Tablón de anuncios' : 'Announcement board',
         language === 'es' ? 'Reportes avanzados' : 'Advanced reports',
         language === 'es' ? 'Soporte prioritario' : 'Priority support',
-        language === 'es' ? 'Recordatorios automáticos' : 'Automatic reminders'
-      ]
-    },
-    {
-      name: language === 'es' ? 'Enterprise' : 'Enterprise',
-      price: language === 'es' ? 'Personalizado' : 'Custom',
-      priceUnit: '',
-      period: '',
-      description: language === 'es' ? 'Más de 140 unidades. Nos adaptamos a tu negocio con descuentos por volumen' : 'More than 140 units. We adapt to your business with volume discounts',
-      icon: Crown,
-      color: 'purple',
-      popular: false,
-      features: [
-        language === 'es' ? 'Locaciones ilimitadas' : 'Unlimited locations',
-        language === 'es' ? 'Unidades ilimitadas' : 'Unlimited units',
-        language === 'es' ? 'Usuarios ilimitados' : 'Unlimited users',
-        language === 'es' ? 'Precio personalizado con descuento por volumen' : 'Custom pricing with volume discounts',
-        language === 'es' ? 'API personalizada' : 'Custom API',
-        language === 'es' ? 'Soporte 24/7' : '24/7 support',
-        language === 'es' ? 'Onboarding dedicado' : 'Dedicated onboarding',
-        language === 'es' ? 'Account manager' : 'Account manager',
-        language === 'es' ? 'SLA garantizado' : 'Guaranteed SLA',
-        language === 'es' ? 'Planos ilimitados' : 'Unlimited floor plans',
-        language === 'es' ? 'Analytics avanzados' : 'Advanced analytics',
-        language === 'es' ? 'Integraciones personalizadas' : 'Custom integrations'
+        language === 'es' ? 'Recordatorios automáticos' : 'Automatic reminders',
+        // Facturación y pagos
+        language === 'es' ? 'Facturación automática mensual' : 'Automatic monthly invoicing',
+        language === 'es' ? 'Cobro con tarjeta (Stripe)' : 'Card payments (Stripe)',
+        language === 'es' ? 'Domiciliación bancaria SEPA' : 'SEPA direct debit',
+        language === 'es' ? 'Envío de facturas a la AEAT (Verifactu)' : 'Invoice submission to AEAT (Verifactu)',
+        language === 'es' ? 'Gestión de depósitos y cauciones' : 'Deposit and security management',
+        language === 'es' ? 'Links de pago automáticos' : 'Automatic payment links',
+        // Área de cliente
+        language === 'es' ? 'Portal del cliente 24/7' : '24/7 client portal',
+        language === 'es' ? 'Descarga de facturas desde el portal' : 'Invoice download from portal',
+        language === 'es' ? 'Historial de pagos y contratos' : 'Payment and contract history',
+        language === 'es' ? 'Autoservicio de reservas' : 'Self-service reservations',
+        // Operaciones
+        language === 'es' ? 'Dimensiones exactas (m² y m³)' : 'Exact dimensions (m² and m³)',
+        language === 'es' ? 'Precios por m², m³ o fijo' : 'Pricing by m², m³ or fixed',
+        language === 'es' ? 'Gestión de impagos y morosidad' : 'Delinquency management',
+        language === 'es' ? 'Dashboard en tiempo real' : 'Real-time dashboard',
+        language === 'es' ? 'Exportación de datos (Excel, CSV)' : 'Data export (Excel, CSV)',
+        language === 'es' ? 'Búsqueda avanzada de clientes' : 'Advanced client search',
+        // Seguridad y cumplimiento
+        language === 'es' ? 'Cumplimiento GDPR' : 'GDPR compliance',
+        language === 'es' ? 'Datos encriptados' : 'Encrypted data',
+        language === 'es' ? 'Backup automático' : 'Automatic backup',
+        // Integraciones
+        language === 'es' ? 'Integración con Stripe' : 'Stripe integration',
+        language === 'es' ? 'Integración con Verifactu' : 'Verifactu integration',
+        // Soporte y onboarding
+        language === 'es' ? 'Centro de ayuda y documentación' : 'Help center and documentation',
+        language === 'es' ? 'Sesión de onboarding incluida' : 'Onboarding session included',
+        language === 'es' ? 'Migración de datos sin coste' : 'Free data migration',
+        language === 'es' ? 'Soporte en español' : 'Spanish support',
+        // Extras
+        language === 'es' ? 'Time Travel en planos (ocupación pasada/futura)' : 'Time Travel on floor plans (past/future occupancy)',
+        language === 'es' ? 'Control de acceso (integración Sonoff)' : 'Access control (Sonoff integration)',
+        language === 'es' ? '14 días de prueba gratis' : '14-day free trial',
+        language === 'es' ? 'Sin permanencia ni costes ocultos' : 'No commitment or hidden costs',
       ]
     }
   ]
@@ -121,8 +135,9 @@ const Pricing = () => {
           </p>
         </FadeInUp>
 
-        {/* Pricing Cards */}
-        <div className="grid md:grid-cols-2 gap-8 mb-16 max-w-5xl mx-auto">
+        {/* Pricing Card */}
+        <div className="flex justify-center mb-16">
+          <div className="w-full max-w-4xl">
           {plans.map((plan, index) => {
             const Icon = plan.icon
             const colorClasses = {
@@ -150,21 +165,9 @@ const Pricing = () => {
                   y: -5,
                   transition: { duration: 0.3 }
                 }}
-                className={`relative ${plan.popular ? 'md:-mt-8' : ''}`}
+                className="relative"
               >
-                {plan.popular && (
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                    <div className="bg-gradient-to-r from-accent-500 to-accent-600 text-white px-6 py-2 rounded-full text-sm font-semibold shadow-lg">
-                      {language === 'es' ? 'Más Popular' : 'Most Popular'}
-                    </div>
-                  </div>
-                )}
-                
-                <div className={`bg-white rounded-2xl p-8 shadow-lg border-2 transition-all duration-300 h-full ${
-                  plan.popular 
-                    ? 'border-accent-200 shadow-xl' 
-                    : 'border-gray-100 hover:border-accent-200'
-                }`}>
+                <div className="bg-white rounded-2xl p-8 shadow-lg border-2 border-accent-200 shadow-xl transition-all duration-300 h-full">
                   
                   {/* Icon */}
                   <div className={`inline-flex items-center justify-center w-12 h-12 bg-gradient-to-r ${colorClasses[plan.color as keyof typeof colorClasses]} rounded-xl mb-6`}>
@@ -198,7 +201,7 @@ const Pricing = () => {
                   </div>
 
                   {/* Features */}
-                  <div className="space-y-4 mb-8">
+                  <div className="grid sm:grid-cols-2 gap-x-8 gap-y-3 mb-8">
                     {plan.features.map((feature, featureIndex) => (
                       <motion.div
                         key={feature}
@@ -207,7 +210,7 @@ const Pricing = () => {
                           opacity: 1, 
                           x: 0,
                           transition: {
-                            delay: featureIndex * 0.05,
+                            delay: featureIndex * 0.03,
                             duration: 0.3
                           }
                         }}
@@ -222,143 +225,31 @@ const Pricing = () => {
 
                   {/* CTA Button */}
                   <motion.a
-                    href={plan.name === 'Enterprise' || plan.name === 'Enterprise' ? '/contact' : '/demo-trial'}
+                    href="/demo-trial"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className={`block w-full py-3 px-6 rounded-xl font-semibold text-center transition-all duration-300 ${
-                      plan.popular
-                        ? 'bg-gradient-to-r from-accent-500 to-accent-600 text-white hover:from-accent-600 hover:to-accent-700 shadow-lg hover:shadow-xl'
-                        : 'bg-primary-100 text-primary-700 hover:bg-primary-200'
-                    }`}
+                    className="block w-full py-3 px-6 rounded-xl font-semibold text-center transition-all duration-300 bg-gradient-to-r from-accent-500 to-accent-600 text-white hover:from-accent-600 hover:to-accent-700 shadow-lg hover:shadow-xl"
                   >
-                    {(plan.name === 'Enterprise' || plan.name === 'Enterprise')
-                      ? (language === 'es' ? 'Hablar con especialista' : 'Talk to specialist')
-                      : (language === 'es' ? 'Probar demo ahora' : 'Try demo now')
-                    }
+                    {language === 'es' ? 'Probar demo ahora' : 'Try demo now'}
                   </motion.a>
 
                   {/* Trust Badge */}
-                  {plan.name !== 'Enterprise' && plan.name !== 'Enterprise' && (
-                    <p className="text-xs text-gray-500 text-center mt-3">
-                      {language === 'es' ? '✓ Demo en 2 min • Sin tarjeta' : '✓ Demo in 2 min • No card'}
-                    </p>
-                  )}
+                  <p className="text-xs text-gray-500 text-center mt-3">
+                    {language === 'es' ? '✓ Demo en 2 min • Sin tarjeta' : '✓ Demo in 2 min • No card'}
+                  </p>
                 </div>
               </motion.div>
             )
           })}
+          </div>
         </div>
 
-        {/* Detailed Comparison Table */}
-        <FadeInUp className="mt-20">
-          <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
-            <div className="bg-gradient-to-r from-primary-800 to-primary-700 px-8 py-6">
-              <h3 className="text-2xl font-bold text-white text-center">
-                {language === 'es' ? 'Comparación Detallada de Planes' : 'Detailed Plan Comparison'}
-              </h3>
-            </div>
-            
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-primary-800">
-                      {language === 'es' ? 'Características' : 'Features'}
-                    </th>
-                    <th className="px-6 py-4 text-center text-sm font-semibold text-accent-600 bg-accent-50">Estándar</th>
-                    <th className="px-6 py-4 text-center text-sm font-semibold text-primary-800">Enterprise</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-100">
-                  {[
-                    { 
-                      category: language === 'es' ? 'Capacidad' : 'Capacity',
-                      features: [
-                        { name: language === 'es' ? 'Locaciones' : 'Locations', standard: language === 'es' ? 'Ilimitadas' : 'Unlimited', enterprise: language === 'es' ? 'Ilimitadas' : 'Unlimited' },
-                        { name: language === 'es' ? 'Unidades' : 'Units', standard: language === 'es' ? 'Hasta 140' : 'Up to 140', enterprise: language === 'es' ? 'Ilimitadas' : 'Unlimited' },
-                        { name: language === 'es' ? 'Usuarios' : 'Users', standard: language === 'es' ? 'Ilimitados' : 'Unlimited', enterprise: language === 'es' ? 'Ilimitados' : 'Unlimited' }
-                      ]
-                    },
-                    {
-                      category: language === 'es' ? 'Funcionalidades' : 'Features',
-                      features: [
-                        { name: 'Widget reservas 24/7', standard: true, enterprise: true },
-                        { name: language === 'es' ? 'Contratos digitales' : 'Digital contracts', standard: true, enterprise: true },
-                        { name: language === 'es' ? 'Fotos DNI seguras' : 'Secure ID photos', standard: true, enterprise: true },
-                        { name: language === 'es' ? 'Contratos multi-unidad' : 'Multi-unit contracts', standard: true, enterprise: true },
-                        { name: language === 'es' ? 'Planos interactivos' : 'Interactive floor plans', standard: true, enterprise: true },
-                        { name: language === 'es' ? 'Tablón de anuncios' : 'Announcement board', standard: true, enterprise: true },
-                        { name: language === 'es' ? 'Onboarding guiado' : 'Guided onboarding', standard: true, enterprise: true },
-                        { name: language === 'es' ? 'Gestión de usuarios' : 'User management', standard: true, enterprise: true },
-                        { name: 'API personalizada', standard: false, enterprise: true },
-                        { name: language === 'es' ? 'Integraciones custom' : 'Custom integrations', standard: false, enterprise: true }
-                      ]
-                    },
-                    {
-                      category: language === 'es' ? 'Reportes' : 'Reports',
-                      features: [
-                        { name: language === 'es' ? 'Reportes básicos' : 'Basic reports', standard: true, enterprise: true },
-                        { name: language === 'es' ? 'Analytics en tiempo real' : 'Real-time analytics', standard: true, enterprise: true },
-                        { name: language === 'es' ? 'Exportación de datos' : 'Data export', standard: true, enterprise: true },
-                        { name: language === 'es' ? 'Dashboard personalizado' : 'Custom dashboard', standard: false, enterprise: true }
-                      ]
-                    },
-                    {
-                      category: language === 'es' ? 'Funcionalidades Avanzadas' : 'Advanced Features',
-                      features: [
-                        { name: language === 'es' ? 'Planos ilimitados' : 'Unlimited floor plans', standard: true, enterprise: true },
-                        { name: language === 'es' ? 'Analytics avanzados' : 'Advanced analytics', standard: false, enterprise: true },
-                        { name: language === 'es' ? 'Gestión usuarios ilimitada' : 'Unlimited user management', standard: true, enterprise: true }
-                      ]
-                    },
-                    {
-                      category: language === 'es' ? 'Soporte' : 'Support',
-                      features: [
-                        { name: language === 'es' ? 'Soporte prioritario' : 'Priority support', standard: true, enterprise: true },
-                        { name: language === 'es' ? 'Soporte 24/7' : '24/7 support', standard: false, enterprise: true },
-                        { name: 'Account manager', standard: false, enterprise: true },
-                        { name: 'SLA garantizado', standard: false, enterprise: true }
-                      ]
-                    }
-                  ].map((section, sectionIndex) => (
-                    <React.Fragment key={`section-${sectionIndex}`}>
-                      <tr className="bg-gray-50">
-                        <td colSpan={3} className="px-6 py-3 text-sm font-semibold text-primary-800">
-                          {section.category}
-                        </td>
-                      </tr>
-                      {section.features.map((feature, featureIndex) => (
-                        <tr key={`${sectionIndex}-${featureIndex}`} className="hover:bg-gray-50 transition-colors">
-                          <td className="px-6 py-4 text-sm text-gray-700">{feature.name}</td>
-                          <td className="px-6 py-4 text-center bg-accent-50/30">
-                            {typeof feature.standard === 'boolean' ? (
-                              feature.standard ? <Check className="w-5 h-5 text-green-500 mx-auto" /> : <span className="text-gray-300">—</span>
-                            ) : (
-                              <span className="text-sm font-medium text-gray-700">{feature.standard}</span>
-                            )}
-                          </td>
-                          <td className="px-6 py-4 text-center">
-                            {typeof feature.enterprise === 'boolean' ? (
-                              feature.enterprise ? <Check className="w-5 h-5 text-green-500 mx-auto" /> : <span className="text-gray-300">—</span>
-                            ) : (
-                              <span className="text-sm font-medium text-gray-700">{feature.enterprise}</span>
-                            )}
-                          </td>
-                        </tr>
-                      ))}
-                    </React.Fragment>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-
-            {/* Note about expansion */}
-            <div className="bg-gray-50 px-8 py-4 text-sm text-gray-600 text-center border-t border-gray-100">
-              {language === 'es' 
-                ? '💡 ¿Más de 140 unidades? Contacta con nosotros para un precio personalizado con descuentos por volumen.'
-                : '💡 More than 140 units? Contact us for custom pricing with volume discounts.'
-              }
-            </div>
+        {/* Note about expansion */}
+        <FadeInUp className="mt-12">
+          <div className="bg-gray-50 rounded-xl px-8 py-4 text-sm text-gray-600 text-center">
+            {language === 'es' 
+              ? '💡 ¿Más de 140 unidades? Contacta con nosotros para un precio personalizado con descuentos por volumen.'
+              : '💡 More than 140 units? Contact us for custom pricing with volume discounts.'}
           </div>
         </FadeInUp>
 
