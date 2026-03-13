@@ -172,15 +172,15 @@ const Hero = () => {
             <div className="px-4 py-3 bg-zinc-900 border-b border-zinc-800">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <div className="relative w-8 h-8 flex-shrink-0 rounded-lg overflow-hidden">
+                  <div className="relative w-8 h-8 flex-shrink-0">
                     <Image
-                      src="/logo.svg"
+                      src="/logo-navbar.png"
                       alt="StorageFy"
                       fill
                       className="object-contain"
                     />
                   </div>
-                  <span className="font-semibold text-sm bg-gradient-to-r from-accent-400 to-accent-500 bg-clip-text text-transparent">StorageFy</span>
+                  <span className="text-sm font-bold bg-gradient-to-r from-accent-300 to-accent-500 bg-clip-text text-transparent">StorageFy</span>
                 </div>
                 <div className="w-2 h-2 bg-accent-400 rounded-full animate-pulse" />
               </div>

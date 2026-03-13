@@ -78,9 +78,9 @@ const Navbar = ({ className }: NavbarProps) => {
               className="flex-shrink-0"
             >
               <LinkWithLang href="/" className="flex items-center space-x-2">
-                <div className="relative w-9 h-9 lg:w-10 lg:h-10 flex-shrink-0 rounded-lg p-1">
+                <div className="relative w-9 h-9 lg:w-10 lg:h-10 flex-shrink-0">
                   <Image
-                    src="/logo.png"
+                    src="/logo-navbar.png"
                     alt="StorageFy Logo"
                     fill
                     className="object-contain"
