@@ -8,6 +8,7 @@ import {
   Pause, 
   Volume2, 
   VolumeX, 
+  Maximize2,
   ArrowRight, 
   ArrowRightLeft,
   CheckCircle, 
@@ -42,6 +43,8 @@ export default function DemoPage() {
   })
 
   const containerRef = useRef<HTMLDivElement>(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const [showVideoPoster, setShowVideoPoster] = useState(true)
 
   const tourSteps = [
     {
@@ -190,6 +193,29 @@ export default function DemoPage() {
     }
   ]
 
+  const toggleVideoPlay = () => {
+    if (!videoRef.current) return
+    if (videoRef.current.paused) {
+      videoRef.current.play()
+      setIsPlaying(true)
+      setShowVideoPoster(false)
+    } else {
+      videoRef.current.pause()
+      setIsPlaying(false)
+    }
+  }
+
+  const toggleVideoMute = () => setIsMuted((m) => !m)
+
+  const toggleVideoFullscreen = () => {
+    if (!videoRef.current) return
+    if (!document.fullscreenElement) {
+      videoRef.current.requestFullscreen?.()
+    } else {
+      document.exitFullscreen?.()
+    }
+  }
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
       ...formData,
@@ -333,7 +359,7 @@ export default function DemoPage() {
                     </span>
                   </LinkWithLang>
                   <button
-                    onClick={() => setIsPlaying(!isPlaying)}
+                    onClick={toggleVideoPlay}
                     className="px-5 py-2.5 bg-white/10 border border-white/20 text-white font-medium rounded-lg shadow-sm hover:bg-white/20 hover:border-white/30 transition-all duration-200 backdrop-blur-sm flex items-center justify-center gap-2 text-sm"
                   >
                     {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
@@ -343,7 +369,7 @@ export default function DemoPage() {
                     }
                   </button>
                   <button
-                    onClick={() => setIsMuted(!isMuted)}
+                    onClick={toggleVideoMute}
                     className="px-5 py-2.5 bg-white/10 border border-white/20 text-white font-medium rounded-lg shadow-sm hover:bg-white/20 hover:border-white/30 transition-all duration-200 backdrop-blur-sm flex items-center justify-center gap-2 text-sm"
                   >
                     {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
@@ -356,7 +382,7 @@ export default function DemoPage() {
               </motion.div>
             </FadeInUp>
 
-            {/* Video/Mockup Area */}
+            {/* Video Area */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -364,24 +390,62 @@ export default function DemoPage() {
               transition={{ duration: 0.5 }}
               className="relative"
             >
-              <div className="relative rounded-2xl shadow-2xl border border-gray-200 overflow-hidden bg-white">
-                <Image
-                  src="/images/reportes.webp"
-                  alt="StorageFy Dashboard Demo"
-                  width={800}
-                  height={600}
-                  className="w-full h-auto"
-                  loading="lazy"
-                  quality={75}
+              <div
+                className="relative rounded-2xl shadow-2xl border border-white/20 overflow-hidden bg-black/40 cursor-pointer group"
+                onClick={() => toggleVideoPlay()}
+              >
+                <video
+                  ref={videoRef}
+                  src="/Storagefy.mp4"
+                  poster="/images/help/storagefy_hero_mockup.webp"
+                  className="w-full aspect-video object-contain"
+                  playsInline
+                  muted={isMuted}
+                  onPlay={() => {
+                    setIsPlaying(true)
+                    setShowVideoPoster(false)
+                  }}
+                  onPause={() => setIsPlaying(false)}
+                  onEnded={() => {
+                    setIsPlaying(false)
+                    setShowVideoPoster(true)
+                  }}
                 />
                 {/* Play overlay */}
-                {!isPlaying && (
-                  <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-                    <div className="w-20 h-20 bg-white/90 rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-transform duration-200">
-                      <Play className="w-8 h-8 text-primary-800 ml-1" />
+                {showVideoPoster && (
+                  <div
+                    data-play-overlay
+                    className="absolute inset-0 bg-black/30 flex items-center justify-center"
+                  >
+                    <div className="w-20 h-20 bg-white/95 rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-200 shadow-xl">
+                      <Play className="w-8 h-8 text-primary-800 ml-1" fill="currentColor" />
                     </div>
                   </div>
                 )}
+                {/* Controles flotantes al hover */}
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2">
+                  <button
+                    onClick={(e) => { e.stopPropagation(); toggleVideoPlay() }}
+                    className="p-2 rounded-lg hover:bg-white/20 transition-colors text-white"
+                    aria-label={isPlaying ? (language === 'es' ? 'Pausar' : 'Pause') : (language === 'es' ? 'Reproducir' : 'Play')}
+                  >
+                    {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
+                  </button>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); toggleVideoMute() }}
+                    className="p-2 rounded-lg hover:bg-white/20 transition-colors text-white"
+                    aria-label={isMuted ? (language === 'es' ? 'Activar sonido' : 'Unmute') : (language === 'es' ? 'Silenciar' : 'Mute')}
+                  >
+                    {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+                  </button>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); toggleVideoFullscreen() }}
+                    className="p-2 rounded-lg hover:bg-white/20 transition-colors text-white ml-auto"
+                    aria-label={language === 'es' ? 'Pantalla completa' : 'Fullscreen'}
+                  >
+                    <Maximize2 className="w-5 h-5" />
+                  </button>
+                </div>
                 {/* Glow effect */}
                 <div className="absolute inset-0 rounded-2xl shadow-2xl opacity-20 pointer-events-none" 
                      style={{ boxShadow: '0 0 60px rgba(124, 179, 66, 0.3)' }} />
