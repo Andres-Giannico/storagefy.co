@@ -147,12 +147,6 @@ export default function VideoPage() {
             transition={{ duration: 0.5 }}
             className="text-center mb-8"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-6">
-              <Play className="w-4 h-4 text-accent-400" />
-              <span className="text-sm font-medium text-white/90">
-                {language === 'es' ? 'Vídeo demo' : 'Demo video'}
-              </span>
-            </div>
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 leading-tight">
               <span className="bg-gradient-to-r from-white via-accent-200 to-accent-400 bg-clip-text text-transparent">
                 {language === 'es'
