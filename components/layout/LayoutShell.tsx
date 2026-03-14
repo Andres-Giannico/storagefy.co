@@ -11,8 +11,9 @@ export default function LayoutShell({
 }) {
   const pathname = usePathname()
   const isDemoTrial = pathname?.startsWith('/demo-trial')
+  const isVideoPage = pathname?.startsWith('/video')
 
-  if (isDemoTrial) {
+  if (isDemoTrial || isVideoPage) {
     return <>{children}</>
   }
 
