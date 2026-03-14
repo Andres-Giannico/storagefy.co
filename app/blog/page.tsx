@@ -1,84 +1,83 @@
-'use client'
+import type { Metadata } from 'next'
+import { blogArticles } from '@/lib/blog/blog-content'
+import BlogArticleCard from '@/components/blog/BlogArticleCard'
+import BlogBreadcrumbs from '@/components/blog/BlogBreadcrumbs'
+import StructuredData from '@/components/seo/StructuredData'
 
-import { motion } from 'framer-motion'
-import { Construction, ArrowLeft, Home } from 'lucide-react'
-import Link from 'next/link'
-import { useLanguage } from '@/lib/context/LanguageContext'
+export const metadata: Metadata = {
+  title: 'Blog - StorageFy | Software de Gestión de Trasteros',
+  description: 'Artículos sobre software de self storage, gestión de trasteros, automatización y mejores prácticas para operadores de almacenamiento.',
+  keywords: ['blog storage', 'software trasteros', 'gestión almacenamiento', 'self storage', 'automatización'],
+  alternates: {
+    canonical: 'https://storagefy.co/blog',
+  },
+  openGraph: {
+    title: 'Blog - StorageFy | Software de Gestión de Trasteros',
+    description: 'Artículos sobre software de self storage, gestión de trasteros y mejores prácticas.',
+    url: 'https://storagefy.co/blog',
+    siteName: 'StorageFy',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Blog - StorageFy',
+    description: 'Artículos sobre software de self storage y gestión de trasteros.',
+  },
+}
 
-export default function FeaturesPage() {
-  const { language } = useLanguage()
+export default function BlogPage() {
+  const baseUrl = 'https://storagefy.co'
+
+  const blogListSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Blog',
+    name: 'StorageFy Blog',
+    description: 'Artículos sobre software de self storage, gestión de trasteros y mejores prácticas.',
+    url: `${baseUrl}/blog`,
+    publisher: {
+      '@type': 'Organization',
+      name: 'StorageFy',
+      logo: {
+        '@type': 'ImageObject',
+        url: `${baseUrl}/logo.png`,
+      },
+    },
+    blogPost: blogArticles.map((article) => ({
+      '@type': 'BlogPosting',
+      headline: article.title.es,
+      url: `${baseUrl}/blog/${article.slug}`,
+      datePublished: article.publishedAt,
+      dateModified: article.updatedAt,
+      author: {
+        '@type': 'Organization',
+        name: article.author.name,
+      },
+    })),
+  }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 via-white to-accent-50/30 px-4">
-      <div className="max-w-2xl mx-auto text-center">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          {/* Icon */}
-          <motion.div
-            animate={{ 
-              rotate: [0, -10, 10, -10, 0],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              repeatDelay: 3,
-              ease: "easeInOut"
-            }}
-            className="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-accent-400 to-accent-600 rounded-2xl mb-8 shadow-xl"
-          >
-            <Construction className="w-12 h-12 text-white" />
-          </motion.div>
+    <>
+      <StructuredData data={blogListSchema} />
+      <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-accent-50/30">
+        <div className="max-w-7xl mx-auto px-4 py-12">
+          <BlogBreadcrumbs />
 
-          {/* Title */}
-          <h1 className="text-4xl md:text-5xl font-bold text-primary-800 mb-4">
-            {language === 'es' ? '🚧 En Construcción' : '🚧 Under Construction'}
-          </h1>
+          <header className="mb-12">
+            <h1 className="text-4xl lg:text-5xl font-bold text-primary-800 mb-4">
+              Blog StorageFy
+            </h1>
+            <p className="text-xl text-primary-600 max-w-2xl">
+              Artículos sobre software de self storage, gestión de trasteros, automatización y mejores prácticas para operadores.
+            </p>
+          </header>
 
-          {/* Description */}
-          <p className="text-xl text-primary-600 mb-8">
-            {language === 'es' 
-              ? 'Estamos trabajando en esta página para ofrecerte la mejor experiencia.'
-              : 'We are working on this page to offer you the best experience.'
-            }
-          </p>
-
-          {/* Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Link
-                href="/"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
-              >
-                <Home className="w-5 h-5" />
-                {language === 'es' ? 'Volver al Inicio' : 'Back to Home'}
-              </Link>
-            </motion.div>
-
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <button
-                onClick={() => window.history.back()}
-                className="inline-flex items-center gap-2 px-6 py-3 glass border border-primary-200 text-primary-700 font-semibold rounded-full hover:bg-white/50 transition-all duration-300"
-              >
-                <ArrowLeft className="w-5 h-5" />
-                {language === 'es' ? 'Volver Atrás' : 'Go Back'}
-              </button>
-            </motion.div>
-          </div>
-
-          {/* Coming Soon Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.5 }}
-            className="mt-12 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-100 text-accent-700 text-sm font-medium"
-          >
-            ⏳ {language === 'es' ? 'Próximamente' : 'Coming Soon'}
-          </motion.div>
-        </motion.div>
+          <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {blogArticles.map((article) => (
+              <BlogArticleCard key={article.slug} article={article} />
+            ))}
+          </section>
+        </div>
       </div>
-    </div>
+    </>
   )
 }

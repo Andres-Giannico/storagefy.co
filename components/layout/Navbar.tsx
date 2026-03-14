@@ -23,6 +23,7 @@ const Navbar = ({ className }: NavbarProps) => {
     { href: '/features', key: 'nav.features' },
     { href: '/pricing', key: 'nav.pricing' },
     { href: '/help', key: 'nav.help' },
+    { href: '/blog', key: 'nav.blog' },
     { href: '/about', key: 'nav.about' },
     { href: '/contact', key: 'nav.contact' },
   ]

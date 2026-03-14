@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next'
 import { helpArticles } from '@/lib/help/help-content'
 import { helpCategories } from '@/lib/help/help-categories'
+import { blogArticles } from '@/lib/blog/blog-content'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://storagefy.co'
@@ -54,6 +55,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/blog`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
     },
     {
       url: `${baseUrl}/help`,
@@ -168,12 +175,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }))
 
   // Rutas de artículos de ayuda
-  const articleRoutes: MetadataRoute.Sitemap = helpArticles.map(article => ({
+  const helpArticleRoutes: MetadataRoute.Sitemap = helpArticles.map(article => ({
     url: `${baseUrl}/help/${article.categoryId}/${article.id}`,
     lastModified: new Date(),
     changeFrequency: 'monthly' as const,
     priority: 0.7,
   }))
 
-  return [...staticRoutes, ...categoryRoutes, ...articleRoutes]
+  // Rutas de artículos del blog
+  const blogArticleRoutes: MetadataRoute.Sitemap = blogArticles.map(article => ({
+    url: `${baseUrl}/blog/${article.slug}`,
+    lastModified: new Date(article.updatedAt),
+    changeFrequency: 'weekly' as const,
+    priority: 0.8,
+  }))
+
+  return [...staticRoutes, ...categoryRoutes, ...helpArticleRoutes, ...blogArticleRoutes]
 }

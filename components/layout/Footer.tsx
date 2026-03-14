@@ -14,6 +14,7 @@ const Footer = () => {
     { label: language === 'es' ? 'Características' : 'Features', href: '/features' },
     { label: language === 'es' ? 'Precios' : 'Pricing', href: '/pricing' },
     { label: language === 'es' ? 'Centro de Ayuda' : 'Help Center', href: '/help' },
+    { label: 'Blog', href: '/blog' },
     { label: language === 'es' ? 'Comparativa' : 'Comparison', href: '/comparativa' },
     { label: language === 'es' ? 'Onboarding' : 'Onboarding', href: '/onboarding' },
     { label: language === 'es' ? 'Integraciones' : 'Integrations', href: '/integraciones' },
