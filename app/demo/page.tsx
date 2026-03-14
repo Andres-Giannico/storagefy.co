@@ -200,6 +200,8 @@ export default function DemoPage() {
       videoRef.current.play()
       setIsPlaying(true)
       setShowVideoPoster(false)
+      // Fullscreen automático al dar play (debe ser en el mismo gesto del usuario)
+      enterFullscreen()
     } else {
       videoRef.current.pause()
       setIsPlaying(false)
@@ -208,13 +210,40 @@ export default function DemoPage() {
 
   const toggleVideoMute = () => setIsMuted((m) => !m)
 
+  const enterFullscreen = async () => {
+    const video = videoRef.current as (HTMLVideoElement & { webkitEnterFullScreen?: () => void; webkitExitFullScreen?: () => void }) | null
+    const container = videoContainerRef.current
+    if (!video && !container) return
+
+    const doc = document as Document & { webkitFullscreenElement?: Element; mozFullScreenElement?: Element; msFullscreenElement?: Element }
+    const isFullscreen = !!(
+      document.fullscreenElement ||
+      doc.webkitFullscreenElement ||
+      doc.mozFullScreenElement ||
+      doc.msFullscreenElement
+    )
+    if (isFullscreen) return
+
+    try {
+      if (video?.webkitEnterFullScreen) {
+        video.webkitEnterFullScreen()
+        return
+      }
+      const elem = container || video
+      if (!elem) return
+      const reqFs = elem.requestFullscreen || (elem as { webkitRequestFullscreen?: () => Promise<void> }).webkitRequestFullscreen || (elem as { mozRequestFullScreen?: () => Promise<void> }).mozRequestFullScreen || (elem as { msRequestFullscreen?: () => Promise<void> }).msRequestFullscreen
+      await reqFs?.call(elem)
+    } catch (err) {
+      console.warn('Fullscreen error:', err)
+    }
+  }
+
   const toggleVideoFullscreen = async () => {
     const video = videoRef.current as (HTMLVideoElement & { webkitEnterFullScreen?: () => void; webkitExitFullScreen?: () => void }) | null
     const container = videoContainerRef.current
     if (!video && !container) return
 
     try {
-      // iOS Safari: webkitEnterFullScreen en el video
       if (video?.webkitEnterFullScreen) {
         if (document.fullscreenElement || (document as { webkitFullscreenElement?: Element }).webkitFullscreenElement) {
           video.webkitExitFullScreen?.()
@@ -223,18 +252,10 @@ export default function DemoPage() {
         }
         return
       }
-
-      // Desktop y otros: fullscreen en el contenedor (video + controles)
       const elem = container || video
       if (!elem) return
       const doc = document as Document & { webkitFullscreenElement?: Element; mozFullScreenElement?: Element; msFullscreenElement?: Element }
-      const isFullscreen = !!(
-        document.fullscreenElement ||
-        doc.webkitFullscreenElement ||
-        doc.mozFullScreenElement ||
-        doc.msFullscreenElement
-      )
-
+      const isFullscreen = !!(document.fullscreenElement || doc.webkitFullscreenElement || doc.mozFullScreenElement || doc.msFullscreenElement)
       if (isFullscreen) {
         const exitFs = document.exitFullscreen || (document as { webkitExitFullscreen?: () => Promise<void> }).webkitExitFullscreen || (document as { mozCancelFullScreen?: () => Promise<void> }).mozCancelFullScreen || (document as { msExitFullscreen?: () => Promise<void> }).msExitFullscreen
         exitFs?.call(document)
@@ -429,7 +450,7 @@ export default function DemoPage() {
                 <video
                   ref={videoRef}
                   src="/Storagefy.mp4"
-                  poster="/images/help/storagefy_hero_mockup.webp"
+                  poster="/images/video-cover.webp"
                   className="w-full aspect-video object-contain"
                   playsInline
                   muted={isMuted}
