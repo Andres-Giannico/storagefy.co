@@ -185,7 +185,7 @@ const TabletMock = () => {
                       <button
                         key={item.label}
                         type="button"
-                        onClick={() => isClickable && setActiveView(item.view)}
+                        onClick={() => { if (isClickable && 'view' in item && item.view) setActiveView(item.view) }}
                         title={item.label}
                         className={`w-full flex items-center justify-center md:justify-start gap-2 px-2 md:px-3 py-2 rounded-lg text-[11px] text-left transition-colors ${
                           isActive ? 'bg-accent-500/20 text-accent-400' : 'text-zinc-500 hover:text-zinc-300'

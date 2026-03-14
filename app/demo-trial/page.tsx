@@ -529,7 +529,7 @@ export default function DemoTrialPage() {
                 <div className="absolute -bottom-6 left-3 right-3 sm:left-4 sm:right-4 md:left-8 md:right-8 lg:left-12 lg:right-12 bg-white rounded-2xl shadow-2xl border border-primary-100 p-4 sm:p-6 md:p-8 ring-4 ring-white/20 backdrop-blur-sm">
                   {!submitted ? (
                     <>
-                      <h3 className="text-xl font-bold text-primary-800 mb-2">
+                      <h3 className="text-2xl sm:text-xl font-bold text-primary-900 mb-2">
                         {language === 'es' ? 'Accede ahora' : 'Access now'}
                       </h3>
                       <p className="text-sm text-primary-600 mb-4">
