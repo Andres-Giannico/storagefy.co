@@ -376,7 +376,7 @@ export default function DemoTrialPage() {
             >
               <div className="relative w-9 h-9 sm:w-11 sm:h-11 lg:w-14 lg:h-14 flex-shrink-0 rounded-lg p-1 sm:p-1.5">
                 <Image
-                  src={language === 'en' ? '/logo-3d.png' : '/logo.png'}
+                  src="/logo-demo-navbar.png"
                   alt="StorageFy Logo"
                   fill
                   className="object-contain"

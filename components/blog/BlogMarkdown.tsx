@@ -3,7 +3,11 @@
 function processInlineMarkdown(text: string): string {
   let processed = text
   processed = processed.replace(/`([^`]+)`/g, '<code class="bg-gray-100 px-2 py-1 rounded text-sm font-mono">$1</code>')
-  processed = processed.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-accent-600 hover:text-accent-700 underline" target="_blank" rel="noopener noreferrer">$1</a>')
+  processed = processed.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, text, url) => {
+    const isInternal = url.startsWith('/') || url.startsWith('#')
+    const attrs = isInternal ? '' : ' target="_blank" rel="noopener noreferrer"'
+    return `<a href="${url}" class="text-accent-600 hover:text-accent-700 underline"${attrs}>${text}</a>`
+  })
   processed = processed.replace(/\*\*([^*]+)\*\*/g, '<strong class="font-semibold text-primary-800">$1</strong>')
   processed = processed.replace(/\*([^*]+)\*/g, '<em class="italic">$1</em>')
   return processed

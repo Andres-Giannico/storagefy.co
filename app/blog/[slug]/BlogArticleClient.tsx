@@ -6,20 +6,11 @@ import Link from 'next/link'
 import { useLanguage } from '@/lib/context/LanguageContext'
 import { BlogArticle, BlogArticleSummary } from '@/lib/blog/blog-types'
 import { Calendar, Clock, ArrowLeft } from 'lucide-react'
+import { renderBlogMarkdown } from '@/components/blog/BlogMarkdown'
 
 interface BlogArticleClientProps {
   article: BlogArticle
   relatedArticles?: BlogArticleSummary[]
-}
-
-function simpleMarkdown(text: string): string {
-  return text
-    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
-    .replace(/^## (.+)$/gm, '</p><h2 class="text-2xl font-bold text-primary-800 mt-10 mb-6">$1</h2>')
-    .replace(/^### (.+)$/gm, '</p><h3 class="text-xl font-semibold text-primary-800 mt-8 mb-4">$1</h3>')
-    .replace(/^- (.+)$/gm, '<li class="mb-2 text-primary-700">$1</li>')
-    .replace(/\n\n/g, '</p><p class="mb-4 text-primary-700 leading-relaxed">')
-    .replace(/\n/g, '<br/>')
 }
 
 export default function BlogArticleClient({ article, relatedArticles = [] }: BlogArticleClientProps) {
@@ -30,7 +21,7 @@ export default function BlogArticleClient({ article, relatedArticles = [] }: Blo
   const category = article.category[language]
   const readingTime = Math.max(1, Math.ceil(content.split(/\s+/).length / 200))
   const publishedDate = new Date(article.publishedAt).toLocaleDateString(language === 'es' ? 'es-ES' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' })
-  const html = '<p class="mb-4 text-primary-700 leading-relaxed">' + simpleMarkdown(content) + '</p>'
+  const html = renderBlogMarkdown(content)
 
   const header = React.createElement('header', { className: 'mb-8' },
     React.createElement(Link, { href: '/blog', className: 'inline-flex items-center gap-2 text-primary-600 hover:text-accent-600 transition-colors mb-6' },
