@@ -193,16 +193,16 @@ export default function Chatbot() {
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0, opacity: 0 }}
-            className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2"
+            className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex flex-col items-end gap-1.5 sm:gap-2"
           >
-            <span className="text-sm font-semibold text-white bg-accent-500 px-3 py-1.5 rounded-lg shadow-md">
+            <span className="text-xs sm:text-sm font-semibold text-white bg-accent-500 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg shadow-md">
               {language === 'es' ? 'Contáctanos' : 'Contact us'}
             </span>
             <a
               href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="block w-16 h-16 rounded-full shadow-2xl overflow-hidden ring-2 ring-white/50 hover:scale-110 active:scale-95 transition-transform"
+              className="block w-14 h-14 sm:w-16 sm:h-16 rounded-full shadow-2xl overflow-hidden ring-2 ring-white/50 hover:scale-110 active:scale-95 transition-transform"
               aria-label="Contactar por WhatsApp"
             >
               <Image

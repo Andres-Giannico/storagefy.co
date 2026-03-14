@@ -17,7 +17,6 @@ import {
   ArrowRight,
   BarChart3,
   Target,
-  Star,
   MessageSquare,
   Layers,
   Map
@@ -25,6 +24,7 @@ import {
 import { useLanguage } from '@/lib/context/LanguageContext'
 import FadeInUp from '@/components/animations/FadeInUp'
 import LinkWithLang from '@/components/common/LinkWithLang'
+import TabletMock from '@/components/sections/TabletMock'
 
 export default function FeaturesPageClient() {
   const { language } = useLanguage()
@@ -202,41 +202,78 @@ export default function FeaturesPageClient() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-accent-50/30">
       
-      {/* Hero Section */}
-      <section className="py-24 bg-gradient-to-br from-primary-800 via-primary-700 to-primary-900 text-white relative overflow-hidden">
-        {/* Background Elements - Optimized with CSS animations */}
+      {/* Hero Section - homogeneo con home */}
+      <section className="relative min-h-[85vh] flex flex-col items-center justify-center overflow-hidden bg-[#0a0a0b] py-20 lg:py-28">
+        {/* Premium background - igual que home */}
         <div className="absolute inset-0">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-accent-400/15 to-accent-600/15 rounded-full blur-2xl animate-pulse-slow" />
-          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-accent-500/15 to-accent-700/15 rounded-full blur-2xl animate-pulse-slow-delayed" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(34,197,94,0.15),transparent)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_80%_50%,rgba(34,197,94,0.08),transparent)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:100%_4px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,black,transparent)]" />
+          <motion.div
+            animate={{ opacity: [0.4, 0.7, 0.4] }}
+            transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+            className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent-500/10 rounded-full blur-[120px]"
+          />
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <FadeInUp className="text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/20 backdrop-blur-md border border-white/40 mb-6 shadow-lg">
-              <Star className="w-4 h-4 text-accent-300" />
-              <span className="text-sm font-medium text-white">
-                {language === 'es' ? 'Características' : 'Features'}
-              </span>
-            </div>
-            
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center w-full">
+          {/* Texto arriba - tipografia premium como home */}
+          <FadeInUp className="text-center w-full max-w-3xl mb-12 lg:mb-16">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.08] tracking-tight bg-gradient-to-r from-white via-zinc-300 to-accent-400 bg-clip-text text-transparent mb-6">
               {language === 'es' ? 'Todas las herramientas que necesitas' : 'All the tools you need'}
             </h1>
             
-            <p className="text-xl text-gray-200 max-w-3xl mx-auto mb-8">
+            <p className="text-lg lg:text-xl text-zinc-400 leading-relaxed max-w-2xl mx-auto mb-8">
               {language === 'es'
-                ? 'Una plataforma completa que digitaliza y automatiza cada aspecto de tu negocio de trasteros, desde la captación de leads hasta el cobro de pagos.'
-                : 'A complete platform that digitalizes and automates every aspect of your storage business, from lead capture to payment collection.'
-              }
+                ? 'Una plataforma completa que digitaliza y automatiza cada aspecto de tu negocio de trasteros.'
+                : 'A complete platform that digitalizes and automates every aspect of your storage business.'}
             </p>
 
-            <div className="flex justify-center">
+            {/* Feature pills - refinados como home */}
+            <div className="flex flex-wrap justify-center gap-2 mb-8">
+              {[Package, FileText, CreditCard, BarChart3, Globe].map((Icon, i) => (
+                <motion.span
+                  key={i}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 + i * 0.05, duration: 0.4 }}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-zinc-300 text-sm font-medium hover:bg-white/10 hover:border-white/20 transition-all duration-300"
+                >
+                  <Icon className="w-4 h-4 text-accent-400" />
+                  {language === 'es' 
+                    ? ['Unidades', 'Contratos', 'Pagos', 'Reportes', 'Widget'][i]
+                    : ['Units', 'Contracts', 'Payments', 'Reports', 'Widget'][i]}
+                </motion.span>
+              ))}
+            </div>
+
+            {/* CTAs - estilo premium como home */}
+            <div className="flex flex-row flex-wrap gap-3 justify-center">
               <LinkWithLang href="/demo-trial">
-                <span className="inline-block px-8 py-3 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-semibold rounded-full shadow-lg hover:from-accent-600 hover:to-accent-700 transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer">
-                  {language === 'es' ? 'Probar demo ahora' : 'Try demo now'}
-                </span>
+                <motion.span
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="group inline-flex items-center gap-2 px-5 sm:px-8 py-3 sm:py-4 bg-white text-zinc-900 font-semibold rounded-xl hover:bg-zinc-100 transition-all duration-200 shadow-xl shadow-black/20 cursor-pointer text-sm sm:text-base"
+                >
+                  {language === 'es' ? 'Ver demo' : 'View demo'}
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
+                </motion.span>
+              </LinkWithLang>
+              <LinkWithLang href="/signup">
+                <motion.span
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="inline-flex items-center gap-2 px-5 sm:px-8 py-3 sm:py-4 bg-white/5 border border-white/20 text-white font-semibold rounded-xl hover:bg-white/10 hover:border-white/30 transition-all duration-200 cursor-pointer text-sm sm:text-base"
+                >
+                  {language === 'es' ? 'Registrarse' : 'Sign up'}
+                </motion.span>
               </LinkWithLang>
             </div>
+          </FadeInUp>
+
+          {/* Tablet centrada */}
+          <FadeInUp className="w-full flex justify-center">
+            <TabletMock />
           </FadeInUp>
         </div>
       </section>

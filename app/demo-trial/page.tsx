@@ -340,7 +340,7 @@ export default function DemoTrialPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-50/80 via-white to-accent-50/40 font-demo">
+    <div className="min-h-screen bg-gradient-to-br from-primary-50/80 via-white to-accent-50/40 font-demo pb-28 overflow-x-hidden">
       {/* Sticky CTA */}
       <AnimatePresence>
         {showStickyCTA && (
@@ -350,7 +350,7 @@ export default function DemoTrialPage() {
             exit={{ y: -100, opacity: 0 }}
             className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-primary-100 shadow-lg"
           >
-            <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div className="max-w-6xl mx-auto px-3 sm:px-4 py-3 flex items-center justify-between gap-2">
               <span className="font-semibold text-primary-800 hidden sm:block">
                 {language === 'es' ? 'Prueba la demo en 2 minutos' : 'Try the demo in 2 minutes'}
               </span>
@@ -368,31 +368,31 @@ export default function DemoTrialPage() {
 
       {/* Header */}
       <header className="absolute top-0 left-0 right-0 z-20 bg-white border-b border-primary-100 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 lg:h-20">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16 lg:h-20 gap-2 min-w-0">
             <a
               href="https://storagefy.co"
-              className="flex items-center space-x-3 group"
+              className="flex items-center space-x-2 sm:space-x-3 group min-w-0 flex-shrink"
             >
-              <div className="relative w-11 h-11 lg:w-14 lg:h-14 flex-shrink-0 rounded-lg p-1.5">
+              <div className="relative w-9 h-9 sm:w-11 sm:h-11 lg:w-14 lg:h-14 flex-shrink-0 rounded-lg p-1 sm:p-1.5">
                 <Image
-                  src="/logo.png"
+                  src={language === 'en' ? '/logo-3d.png' : '/logo.png'}
                   alt="StorageFy Logo"
                   fill
                   className="object-contain"
                   priority
                 />
               </div>
-              <span className="text-xl lg:text-2xl font-bold text-gradient">
+              <span className="text-lg sm:text-xl lg:text-2xl font-bold text-gradient truncate">
                 StorageFy
               </span>
             </a>
 
             {/* Selector de idioma */}
-            <div className="relative language-selector">
+            <div className="relative language-selector flex-shrink-0">
               <button
                 onClick={() => setLanguageOpen(!languageOpen)}
-                className="flex items-center space-x-2 px-3 py-2 rounded-lg border border-primary-200 hover:bg-primary-50 transition-colors"
+                className="flex items-center space-x-1.5 sm:space-x-2 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-lg border border-primary-200 hover:bg-primary-50 transition-colors"
               >
                 <Globe className="w-4 h-4 text-primary-600" />
                 <span className="text-sm font-medium text-primary-700">
@@ -433,7 +433,7 @@ export default function DemoTrialPage() {
       </header>
 
       {/* Hero - Split layout con mockup y form - nivel premium */}
-      <section className="pt-24 pb-32 md:pt-28 md:pb-36 lg:pb-40 bg-gradient-to-br from-primary-900 via-primary-800 to-primary-900 text-white relative overflow-hidden">
+      <section className="pt-20 sm:pt-24 pb-40 sm:pb-32 md:pt-28 md:pb-36 lg:pb-40 bg-gradient-to-br from-primary-900 via-primary-800 to-primary-900 text-white relative overflow-hidden">
         {/* Background orbs */}
         <div className="absolute inset-0">
           <motion.div
@@ -449,8 +449,8 @@ export default function DemoTrialPage() {
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-accent-500/5 via-transparent to-transparent" />
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center">
             {/* Left: Copy */}
             <div className="text-center lg:text-left order-2 lg:order-1">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-6">
@@ -471,7 +471,7 @@ export default function DemoTrialPage() {
                   ? 'El software más completo para trasteros. Unidades, clientes, contratos, cobros, facturas, widget 24/7… Todo en una plataforma.'
                   : 'The most complete software for storage. Units, clients, contracts, payments, invoices, 24/7 widget… Everything in one platform.'}
               </p>
-              <div className="flex flex-wrap gap-4 justify-center lg:justify-start mb-6">
+              <div className="flex flex-wrap gap-3 sm:gap-4 justify-center lg:justify-start mb-4 sm:mb-6">
                 <span className="flex items-center gap-2 text-accent-300 text-sm font-medium">
                   <CheckCircle className="w-4 h-4" />
                   {language === 'es' ? 'Acceso inmediato' : 'Instant access'}
@@ -485,7 +485,7 @@ export default function DemoTrialPage() {
                   {language === 'es' ? '15+ módulos' : '15+ modules'}
                 </span>
               </div>
-              <div className="inline-flex flex-col sm:flex-row items-start sm:items-center gap-1 sm:gap-3 px-4 py-3 rounded-lg bg-accent-500/20 border border-accent-400/40 mb-8">
+              <div className="inline-flex flex-col sm:flex-row items-start sm:items-center gap-1 sm:gap-3 px-3 sm:px-4 py-3 rounded-lg bg-accent-500/20 border border-accent-400/40 mb-6 sm:mb-8 max-w-full">
                 <span className="flex items-center gap-2 text-sm font-medium text-accent-200">
                   <ArrowRightLeft className="w-4 h-4" />
                   {language === 'es' ? 'Migración gratis hasta 1 mayo 2026' : 'Free migration until May 1, 2026'}
@@ -526,7 +526,7 @@ export default function DemoTrialPage() {
                   </div>
                 </div>
                 {/* Form card - floating premium */}
-                <div className="absolute -bottom-6 left-4 right-4 md:left-8 md:right-8 lg:left-12 lg:right-12 bg-white rounded-2xl shadow-2xl border border-primary-100 p-6 md:p-8 ring-4 ring-white/20 backdrop-blur-sm">
+                <div className="absolute -bottom-6 left-3 right-3 sm:left-4 sm:right-4 md:left-8 md:right-8 lg:left-12 lg:right-12 bg-white rounded-2xl shadow-2xl border border-primary-100 p-4 sm:p-6 md:p-8 ring-4 ring-white/20 backdrop-blur-sm">
                   {!submitted ? (
                     <>
                       <h3 className="text-xl font-bold text-primary-800 mb-2">
@@ -888,15 +888,31 @@ export default function DemoTrialPage() {
                       priority
                     />
                   </motion.div>
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-6 pb-4 text-white">
+                  {/* Overlay solo en desktop - en mobile el texto va abajo */}
+                  <div className="hidden md:block absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-6 pb-4 text-white">
                     <h3 className="text-xl md:text-2xl font-bold mb-1">
                       {language === 'es' ? slides[currentSlide].titleEs : slides[currentSlide].titleEn}
                     </h3>
                     <p className="text-gray-200 text-sm md:text-base mb-3">
                       {language === 'es' ? slides[currentSlide].descEs : slides[currentSlide].descEn}
                     </p>
-                    {/* Progress bar - estilo video */}
                     <div className="h-1 bg-white/20 rounded-full overflow-hidden">
+                      <motion.div
+                        className="h-full bg-accent-500 rounded-full"
+                        animate={{ width: `${slideProgress}%` }}
+                        transition={{ duration: 0.1 }}
+                      />
+                    </div>
+                  </div>
+                  {/* Texto debajo en mobile - screenshot visible sin tapar */}
+                  <div className="md:hidden p-4 bg-white border-t border-primary-100">
+                    <h3 className="text-lg font-bold text-primary-800 mb-1">
+                      {language === 'es' ? slides[currentSlide].titleEs : slides[currentSlide].titleEn}
+                    </h3>
+                    <p className="text-primary-600 text-sm">
+                      {language === 'es' ? slides[currentSlide].descEs : slides[currentSlide].descEn}
+                    </p>
+                    <div className="mt-3 h-1 bg-primary-100 rounded-full overflow-hidden">
                       <motion.div
                         className="h-full bg-accent-500 rounded-full"
                         animate={{ width: `${slideProgress}%` }}

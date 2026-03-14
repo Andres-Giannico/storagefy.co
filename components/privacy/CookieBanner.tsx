@@ -77,7 +77,7 @@ export default function CookieBanner() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 40 }}
-            className="pointer-events-auto fixed inset-x-0 bottom-0 z-50 flex justify-center px-4 pb-6"
+            className="pointer-events-auto fixed inset-x-0 bottom-0 z-50 flex justify-center px-3 sm:px-4 pb-4 sm:pb-6"
             suppressHydrationWarning
           >
             <div className="w-full max-w-4xl rounded-3xl bg-white/90 p-6 shadow-2xl backdrop-blur-lg ring-1 ring-primary-100">
@@ -124,7 +124,7 @@ export default function CookieBanner() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -40 }}
             onClick={() => setShowModal(true)}
-            className="fixed bottom-6 left-6 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-primary-900 text-white shadow-lg hover:bg-primary-800"
+            className="fixed bottom-4 left-4 sm:bottom-6 sm:left-6 z-40 flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-primary-900 text-white shadow-lg hover:bg-primary-800"
             aria-label={bannerMessage.manageLabel}
             suppressHydrationWarning
           >
