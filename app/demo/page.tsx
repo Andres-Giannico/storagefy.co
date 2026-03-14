@@ -1,7 +1,7 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import { useRef, useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { useRef, useState, useEffect } from 'react'
 import Image from 'next/image'
 import { 
   Play, 
@@ -15,16 +15,18 @@ import {
   Star, 
   Users, 
   TrendingUp, 
+  TrendingDown,
   Clock,
   Mail,
   Phone,
   Building2,
-  Calendar,
-  MessageCircle,
+  ChevronLeft,
+  ChevronRight,
   Zap,
   Shield,
   Target
 } from 'lucide-react'
+import { cn } from '@/lib/utils'
 import { useLanguage } from '@/lib/context/LanguageContext'
 import FadeInUp from '@/components/animations/FadeInUp'
 import LinkWithLang from '@/components/common/LinkWithLang'
@@ -34,87 +36,46 @@ export default function DemoPage() {
   const [isPlaying, setIsPlaying] = useState(false)
   const [isMuted, setIsMuted] = useState(true)
   const [currentStep, setCurrentStep] = useState(0)
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    company: '',
-    phone: '',
-    message: ''
-  })
 
   const containerRef = useRef<HTMLDivElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
   const videoContainerRef = useRef<HTMLDivElement>(null)
   const [showVideoPoster, setShowVideoPoster] = useState(true)
 
-  const tourSteps = [
-    {
-      id: 'dashboard',
-      title: language === 'es' ? 'Dashboard Principal' : 'Main Dashboard',
-      description: language === 'es' 
-        ? 'Vista general de tu negocio con métricas clave y KPIs en tiempo real.'
-        : 'Overview of your business with key metrics and real-time KPIs.',
-      image: '/images/reportes.webp',
-      features: language === 'es' 
-        ? ['Métricas en tiempo real', 'KPIs visuales', 'Exportación PDF', 'Actualización automática']
-        : ['Real-time metrics', 'Visual KPIs', 'PDF export', 'Auto-update']
-    },
-    {
-      id: 'onboarding',
-      title: language === 'es' ? 'Setup Guiado en 5 Pasos' : '5-Step Guided Setup',
-      description: language === 'es'
-        ? 'Configura tu cuenta en 5 minutos con nuestro onboarding interactivo paso a paso.'
-        : 'Set up your account in 5 minutes with our interactive step-by-step onboarding.',
-      image: '/images/onboarding-setup.webp',
-      features: language === 'es'
-        ? ['Setup en 5 minutos', 'Navegación flexible', 'Pasos opcionales', 'Sin conocimientos técnicos']
-        : ['5-minute setup', 'Flexible navigation', 'Optional steps', 'No technical knowledge']
-    },
-    {
-      id: 'user-management',
-      title: language === 'es' ? 'Gestión de Usuarios' : 'User Management',
-      description: language === 'es'
-        ? 'Administra roles y permisos de tu equipo con control granular.'
-        : 'Manage team roles and permissions with granular control.',
-      image: '/images/user-management.webp',
-      features: language === 'es'
-        ? ['Roles diferenciados', 'Estados en tiempo real', 'Multi-usuario', 'Permisos personalizados']
-        : ['Differentiated roles', 'Real-time status', 'Multi-user', 'Custom permissions']
-    },
-    {
-      id: 'units',
-      title: language === 'es' ? 'Gestión de Unidades' : 'Unit Management',
-      description: language === 'es'
-        ? 'Control total de unidades con dimensiones exactas y estados en tiempo real.'
-        : 'Complete unit control with exact dimensions and real-time status.',
-      image: '/images/unidades.webp',
-      features: language === 'es'
-        ? ['Dimensiones precisas', 'Estados visuales', 'Tipos especializados', 'Pricing inteligente']
-        : ['Precise dimensions', 'Visual status', 'Specialized types', 'Smart pricing']
-    },
-    {
-      id: 'contracts',
-      title: language === 'es' ? 'Contratos Digitales' : 'Digital Contracts',
-      description: language === 'es'
-        ? 'Gestiona contratos con generación automática y seguimiento completo.'
-        : 'Manage contracts with automatic generation and complete tracking.',
-      image: '/images/contratos.webp',
-      features: language === 'es'
-        ? ['Generación automática', 'Estados visuales', 'Control depósitos', 'Renovación automática']
-        : ['Automatic generation', 'Visual status', 'Deposit control', 'Auto-renewal']
-    },
-    {
-      id: 'payments',
-      title: language === 'es' ? 'Sistema de Pagos' : 'Payment System',
-      description: language === 'es'
-        ? 'Cobra más rápido con links automáticos y recordatorios inteligentes.'
-        : 'Get paid faster with automatic links and smart reminders.',
-      image: '/images/pagos.webp',
-      features: language === 'es'
-        ? ['Links 24/7', 'Recordatorios automáticos', 'Integración Stripe', 'Reducción morosidad 80%']
-        : ['24/7 links', 'Automatic reminders', 'Stripe integration', '80% delinquency reduction']
-    }
+  const CAROUSEL_INTERVAL = 4500
+  const [carouselPaused, setCarouselPaused] = useState(false)
+  const [slideProgress, setSlideProgress] = useState(0)
+
+  const slides = [
+    { image: '/images/demo/dashboard.webp', titleEs: 'Panel de Control', titleEn: 'Control Panel', descEs: 'Ocupación, ingresos mensuales, clientes y actividad reciente en un vistazo', descEn: 'Occupancy, monthly income, clients and recent activity at a glance' },
+    { image: '/images/demo/ubicaciones.webp', titleEs: 'Ubicaciones', titleEn: 'Locations', descEs: 'Gestiona tus almacenes: superficie, unidades, clientes, servicios y seguridad', descEn: 'Manage your warehouses: area, units, clients, services and security' },
+    { image: '/images/demo/unidades.webp', titleEs: 'Unidades', titleEn: 'Units', descEs: 'Dimensiones, precios, estado de pago y control de morosidad por unidad', descEn: 'Dimensions, prices, payment status and delinquency control per unit' },
+    { image: '/images/demo/clientes.webp', titleEs: 'Clientes', titleEn: 'Clients', descEs: 'Base de datos de clientes con unidades asignadas, contacto y estado', descEn: 'Client database with assigned units, contact info and status' },
+    { image: '/images/demo/contratos.webp', titleEs: 'Contratos', titleEn: 'Contracts', descEs: 'Contratos de alquiler con período, precio, estado de pago y depósito', descEn: 'Rental contracts with period, price, payment status and deposit' },
+    { image: '/images/demo/pagos.webp', titleEs: 'Gestión de Pagos', titleEn: 'Payment Management', descEs: 'Administra pagos, crea facturas y asocia cobros a contratos', descEn: 'Manage payments, create invoices and link collections to contracts' },
+    { image: '/images/demo/widget.webp', titleEs: 'Widget de Reservas 24/7', titleEn: '24/7 Booking Widget', descEs: 'Tus clientes reservan unidades desde tu web: dimensiones, precios y disponibilidad', descEn: 'Your customers reserve units from your website: dimensions, prices and availability' },
+    { image: '/images/demo/facturacion.webp', titleEs: 'Facturación', titleEn: 'Invoicing', descEs: 'Facturas de alquiler, estados de pago e integración con Verifacti', descEn: 'Rental invoices, payment status and Verifacti integration' },
+    { image: '/images/demo/reportes.webp', titleEs: 'Reportes y Análisis', titleEn: 'Reports and Analysis', descEs: 'Ingresos, ocupación, morosidad y estado de pagos del periodo', descEn: 'Income, occupancy, delinquency and payment status for the period' },
+    { image: '/images/demo/reportes-metricas.webp', titleEs: 'Métricas Avanzadas', titleEn: 'Advanced Metrics', descEs: 'Valor por contrato, ingresos por m², retención y proyecciones', descEn: 'Value per contract, revenue per m², retention and projections' },
   ]
+
+  useEffect(() => {
+    if (carouselPaused) return
+    const step = 50
+    const progressStep = (100 / CAROUSEL_INTERVAL) * step
+    const timer = setInterval(() => {
+      setSlideProgress((p) => {
+        if (p + progressStep >= 100) {
+          setCurrentStep((prev) => (prev + 1) % slides.length)
+          return 0
+        }
+        return p + progressStep
+      })
+    }, step)
+    return () => clearInterval(timer)
+  }, [carouselPaused, currentStep, slides.length])
+
+  useEffect(() => setSlideProgress(0), [currentStep])
 
   const useCases = [
     {
@@ -172,7 +133,11 @@ export default function DemoPage() {
         ? 'Pasamos de gestionar todo manualmente a StorageFy y aumentamos la ocupación del 52% al 82% en solo 5 meses. El widget de reservas 24/7 fue un cambio radical para nuestro negocio en Ibiza.'
         : 'We moved from managing everything manually to StorageFy and increased occupancy from 52% to 82% in just 5 months. The 24/7 booking widget was a game changer for our business in Ibiza.',
       rating: 5,
-      avatar: '/images/steffnao.png'
+      avatar: '/images/steffnao.png',
+      metrics: [
+        { value: '+30%', label: language === 'es' ? 'Ocupación' : 'Occupancy', icon: TrendingUp },
+        { value: '15h', label: language === 'es' ? 'Ahorro/semana' : 'Saved/week', icon: Clock }
+      ]
     },
     {
       name: language === 'es' ? 'Carlos López' : 'Carlos López',
@@ -181,7 +146,11 @@ export default function DemoPage() {
         ? 'La reducción de morosidad fue impresionante. En 3 meses bajamos del 15% al 3%. Los clientes pagan más rápido que nunca.'
         : 'The delinquency reduction was impressive. In 3 months we went from 15% to 3%. Clients pay faster than ever.',
       rating: 5,
-      avatar: '/images/clientes.webp'
+      avatar: '/images/clientes.webp',
+      metrics: [
+        { value: '-12%', label: language === 'es' ? 'Morosidad' : 'Delinquency', icon: TrendingDown },
+        { value: '€18k', label: language === 'es' ? 'Recuperado' : 'Recovered', icon: TrendingUp }
+      ]
     },
     {
       name: language === 'es' ? 'Ana Fernández' : 'Ana Fernández',
@@ -190,7 +159,11 @@ export default function DemoPage() {
         ? 'El widget de captación online es increíble. Recibimos 5x más leads y la conversión es automática. Nuestro negocio creció 200%.'
         : 'The online capture widget is incredible. We receive 5x more leads and conversion is automatic. Our business grew 200%.',
       rating: 5,
-      avatar: '/images/clientes.webp'
+      avatar: '/images/clientes.webp',
+      metrics: [
+        { value: '5x', label: language === 'es' ? 'Más leads' : 'More leads', icon: TrendingUp },
+        { value: '200%', label: language === 'es' ? 'Crecimiento' : 'Growth', icon: TrendingUp }
+      ]
     }
   ]
 
@@ -265,61 +238,6 @@ export default function DemoPage() {
       }
     } catch (err) {
       console.warn('Fullscreen error:', err)
-    }
-  }
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    })
-  }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    
-    try {
-      const response = await fetch('/api/send-demo-request', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...formData,
-          language
-        }),
-      })
-
-      const result = await response.json()
-
-      if (response.ok) {
-        // Mostrar mensaje de éxito
-        alert(language === 'es' 
-          ? '¡Demo solicitado exitosamente! Te hemos enviado un email de confirmación y te contactaremos en 24 horas.'
-          : 'Demo requested successfully! We have sent you a confirmation email and will contact you within 24 hours.'
-        )
-        
-        // Resetear el formulario
-        setFormData({
-          name: '',
-          email: '',
-          company: '',
-          phone: '',
-          message: ''
-        })
-      } else {
-        // Mostrar error
-        alert(language === 'es' 
-          ? 'Hubo un error al enviar la solicitud. Por favor, inténtalo de nuevo.'
-          : 'There was an error sending the request. Please try again.'
-        )
-      }
-    } catch (error) {
-      console.error('Error submitting form:', error)
-      alert(language === 'es' 
-        ? 'Hubo un error al enviar la solicitud. Por favor, inténtalo de nuevo.'
-        : 'There was an error sending the request. Please try again.'
-      )
     }
   }
 
@@ -404,10 +322,15 @@ export default function DemoPage() {
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-3">
-                  <LinkWithLang href="/signup">
+                  <LinkWithLang href="/demo-trial">
                     <span className="px-6 py-2.5 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-medium rounded-lg shadow-md hover:from-accent-600 hover:to-accent-700 hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2 text-sm cursor-pointer">
-                      {language === 'es' ? 'Crear cuenta gratis' : 'Create free account'}
+                      {language === 'es' ? 'Probar demo gratis' : 'Try free demo'}
                       <ArrowRight className="w-4 h-4" />
+                    </span>
+                  </LinkWithLang>
+                  <LinkWithLang href="/signup">
+                    <span className="px-5 py-2.5 bg-white/10 border border-white/20 text-white font-medium rounded-lg shadow-sm hover:bg-white/20 transition-all duration-200 flex items-center justify-center gap-2 text-sm cursor-pointer">
+                      {language === 'es' ? 'Crear cuenta' : 'Create account'}
                     </span>
                   </LinkWithLang>
                   <button
@@ -508,85 +431,153 @@ export default function DemoPage() {
         </div>
       </section>
 
-      {/* Interactive Tour Section */}
+      {/* Social proof stats */}
+      <section className="py-12 bg-gradient-to-b from-primary-800 via-primary-700 to-primary-800 text-white">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+            <motion.div whileHover={{ scale: 1.03, y: -2 }} className="text-center p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10">
+              <p className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-accent-300 to-accent-400 bg-clip-text text-transparent">50+</p>
+              <p className="text-sm text-white/80 mt-1">{language === 'es' ? 'Negocios activos' : 'Active businesses'}</p>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.03, y: -2 }} className="text-center p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10">
+              <p className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-accent-300 to-accent-400 bg-clip-text text-transparent">43</p>
+              <p className="text-sm text-white/80 mt-1">{language === 'es' ? 'Funciones incluidas' : 'Features included'}</p>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.03, y: -2 }} className="text-center p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10">
+              <p className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-accent-300 to-accent-400 bg-clip-text text-transparent">24/7</p>
+              <p className="text-sm text-white/80 mt-1">{language === 'es' ? 'Widget reservas' : 'Booking widget'}</p>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.03, y: -2 }} className="text-center p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10">
+              <p className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-accent-300 to-accent-400 bg-clip-text text-transparent">0</p>
+              <p className="text-sm text-white/80 mt-1">{language === 'es' ? 'Tarjeta requerida' : 'Card required'}</p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Screenshot Carousel Section */}
       <section ref={containerRef} className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          {/* Header */}
-          <FadeInUp className="text-center mb-16">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeInUp className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-extrabold text-primary-800 mb-6">
-              {language === 'es' ? 'Tour Interactivo' : 'Interactive Tour'}
+              {language === 'es' ? 'El software más completo del sector' : 'The most complete software in the industry'}
             </h2>
             <p className="text-xl text-primary-600 max-w-3xl mx-auto">
               {language === 'es'
-                ? 'Explora las características principales de StorageFy paso a paso'
-                : 'Explore StorageFy\'s main features step by step'
+                ? 'Explora las capturas y descubre todo lo que StorageFy puede hacer por ti.'
+                : 'Explore the screenshots and discover everything StorageFy can do for you.'
               }
             </p>
           </FadeInUp>
 
-          {/* Tour Navigation */}
-          <div className="flex flex-wrap justify-center gap-4 mb-12">
-            {tourSteps.map((step, index) => (
-              <button
-                key={step.id}
-                onClick={() => setCurrentStep(index)}
-                className={`px-6 py-3 rounded-full font-semibold transition-all duration-200 hover:scale-105 active:scale-95 ${
-                  currentStep === index
-                    ? 'bg-gradient-to-r from-accent-500 to-accent-600 text-white shadow-lg'
-                    : 'bg-gray-100 text-primary-700 hover:bg-gray-200'
-                }`}
-              >
-                {step.title}
-              </button>
-            ))}
-          </div>
-
-          {/* Tour Content */}
-          <motion.div
-            key={currentStep}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="grid lg:grid-cols-2 gap-12 items-center"
+          <div
+            className="relative"
+            onMouseEnter={() => setCarouselPaused(true)}
+            onMouseLeave={() => setCarouselPaused(false)}
           >
-            {/* Content */}
-            <div>
-              <h3 className="text-3xl font-bold text-primary-800 mb-4">
-                {tourSteps[currentStep].title}
-              </h3>
-              <p className="text-lg text-primary-600 mb-8 leading-relaxed">
-                {tourSteps[currentStep].description}
-              </p>
-              
-              <div className="grid sm:grid-cols-2 gap-4">
-                {tourSteps[currentStep].features.map((feature) => (
-                  <div
-                    key={feature}
-                    className="flex items-center gap-3"
-                  >
-                    <CheckCircle className="w-5 h-5 text-accent-500 flex-shrink-0" />
-                    <span className="text-primary-700 font-medium">{feature}</span>
+            <div className="overflow-hidden rounded-2xl shadow-2xl border-2 border-primary-100 bg-primary-50 ring-2 ring-accent-500/10">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentStep}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5, ease: 'easeInOut' }}
+                  className="relative"
+                >
+                  <div className="aspect-video relative w-full bg-primary-50 overflow-hidden">
+                    <Image
+                      src={slides[currentStep].image}
+                      alt={language === 'es' ? slides[currentStep].titleEs : slides[currentStep].titleEn}
+                      fill
+                      className="object-contain object-center"
+                      sizes="(max-width: 768px) 100vw, 1024px"
+                      priority
+                    />
                   </div>
+                  <div className="hidden md:block absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-6 pb-4 text-white">
+                    <h3 className="text-xl md:text-2xl font-bold mb-1">
+                      {language === 'es' ? slides[currentStep].titleEs : slides[currentStep].titleEn}
+                    </h3>
+                    <p className="text-gray-200 text-sm md:text-base">
+                      {language === 'es' ? slides[currentStep].descEs : slides[currentStep].descEn}
+                    </p>
+                    <div className="mt-3 h-1 bg-white/20 rounded-full overflow-hidden">
+                      <motion.div
+                        className="h-full bg-accent-500 rounded-full"
+                        animate={{ width: `${slideProgress}%` }}
+                        transition={{ duration: 0.1 }}
+                      />
+                    </div>
+                  </div>
+                  <div className="md:hidden p-4 bg-white border-t border-primary-100">
+                    <h3 className="text-lg font-bold text-primary-800 mb-1">
+                      {language === 'es' ? slides[currentStep].titleEs : slides[currentStep].titleEn}
+                    </h3>
+                    <p className="text-primary-600 text-sm">
+                      {language === 'es' ? slides[currentStep].descEs : slides[currentStep].descEn}
+                    </p>
+                    <div className="mt-3 h-1 bg-primary-100 rounded-full overflow-hidden">
+                      <motion.div
+                        className="h-full bg-accent-500 rounded-full"
+                        animate={{ width: `${slideProgress}%` }}
+                        transition={{ duration: 0.1 }}
+                      />
+                    </div>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
+            <div className="flex items-center justify-center gap-3 sm:gap-4 mt-6 flex-wrap">
+              <button
+                onClick={() => setCurrentStep((prev) => (prev - 1 + slides.length) % slides.length)}
+                className="w-12 h-12 rounded-full bg-white shadow-lg border border-primary-100 flex items-center justify-center text-primary-700 hover:bg-primary-50 transition-colors"
+                aria-label={language === 'es' ? 'Anterior' : 'Previous'}
+              >
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+              <button
+                onClick={() => setCarouselPaused((p) => !p)}
+                className="w-12 h-12 rounded-full bg-white shadow-lg border border-primary-100 flex items-center justify-center text-primary-700 hover:bg-primary-50 transition-colors"
+                aria-label={carouselPaused ? (language === 'es' ? 'Reproducir' : 'Play') : (language === 'es' ? 'Pausar' : 'Pause')}
+              >
+                {carouselPaused ? <Play className="w-6 h-6 ml-0.5" /> : <Pause className="w-6 h-6" />}
+              </button>
+              <div className="flex gap-1.5">
+                {slides.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setCurrentStep(i)}
+                    className={cn(
+                      'h-1.5 rounded-full transition-all',
+                      i === currentStep ? 'bg-accent-500 w-8' : 'bg-primary-200 hover:bg-primary-300 w-1.5'
+                    )}
+                    aria-label={`${language === 'es' ? 'Ir a slide' : 'Go to slide'} ${i + 1}`}
+                  />
                 ))}
               </div>
+              <button
+                onClick={() => setCurrentStep((prev) => (prev + 1) % slides.length)}
+                className="w-12 h-12 rounded-full bg-white shadow-lg border border-primary-100 flex items-center justify-center text-primary-700 hover:bg-primary-50 transition-colors"
+                aria-label={language === 'es' ? 'Siguiente' : 'Next'}
+              >
+                <ChevronRight className="w-6 h-6" />
+              </button>
+              <span className="text-sm text-primary-500 font-medium min-w-[3rem] text-center">
+                {currentStep + 1} / {slides.length}
+              </span>
             </div>
+          </div>
 
-            {/* Screenshot */}
-            <div className="relative">
-              <div className="relative rounded-2xl shadow-2xl border border-gray-200 overflow-hidden bg-white">
-                <Image
-                  src={tourSteps[currentStep].image}
-                  alt={tourSteps[currentStep].title}
-                  width={800}
-                  height={600}
-                  className="w-full h-auto"
-                  loading="lazy"
-                  quality={75}
-                />
-              </div>
-            </div>
-          </motion.div>
+          <div className="mt-12 text-center">
+            <LinkWithLang href="/demo-trial">
+              <span className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-semibold rounded-xl hover:from-accent-600 hover:to-accent-700 transition-all shadow-lg hover:shadow-accent-500/30">
+                {language === 'es' ? 'Probar demo en 2 minutos' : 'Try demo in 2 minutes'}
+                <ArrowRight className="w-5 h-5" />
+              </span>
+            </LinkWithLang>
+          </div>
         </div>
       </section>
 
@@ -612,7 +603,7 @@ export default function DemoPage() {
               return (
                 <div
                   key={useCase.title}
-                  className="bg-white rounded-2xl p-8 shadow-xl border border-white/20 hover:shadow-2xl transition-all duration-200 hover:scale-[1.02] hover:-translate-y-1"
+                  className="bg-white rounded-2xl p-8 shadow-xl border border-primary-100 hover:shadow-2xl transition-all duration-200 hover:scale-[1.02] hover:-translate-y-1"
                 >
                   <div className="w-12 h-12 bg-gradient-to-r from-accent-500 to-accent-600 rounded-xl flex items-center justify-center mb-6">
                     <Icon className="w-6 h-6 text-white" />
@@ -661,67 +652,69 @@ export default function DemoPage() {
           </FadeInUp>
 
           <div className="grid md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <motion.div
-                key={testimonial.name}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ 
-                  opacity: 1, 
-                  y: 0,
-                  transition: {
-                    delay: index * 0.2,
-                    duration: 0.6
-                  }
-                }}
-                viewport={{ once: true, margin: '-100px' }}
-                className="bg-gradient-to-br from-primary-50 to-white rounded-2xl p-8 shadow-lg border border-primary-100"
-              >
-                {/* Rating */}
-                <div className="flex gap-1 mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
-                  ))}
-                </div>
-                
-                {/* Content */}
-                <p className="text-primary-700 mb-6 leading-relaxed italic">
-                  &ldquo;{testimonial.content}&rdquo;
-                </p>
-                
-                {/* Author */}
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-gradient-to-r from-accent-500 to-accent-600 rounded-full flex items-center justify-center">
-                    <Users className="w-6 h-6 text-white" />
+            {testimonials.map((testimonial, index) => {
+              const hasMetrics = 'metrics' in testimonial && testimonial.metrics
+              return (
+                <motion.div
+                  key={testimonial.name}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ 
+                    opacity: 1, 
+                    y: 0,
+                    transition: {
+                      delay: index * 0.2,
+                      duration: 0.6
+                    }
+                  }}
+                  viewport={{ once: true, margin: '-100px' }}
+                  className="bg-white rounded-2xl p-8 shadow-xl border border-primary-100 hover:shadow-2xl transition-shadow"
+                >
+                  <div className="flex gap-1 mb-4">
+                    {[...Array(testimonial.rating)].map((_, i) => (
+                      <Star key={i} className="w-5 h-5 text-amber-400 fill-amber-400" />
+                    ))}
                   </div>
-                  <div>
-                    <div className="font-bold text-primary-800">
-                      {testimonial.name}
+                  <p className="text-primary-700 mb-6 leading-relaxed italic">
+                    &ldquo;{testimonial.content}&rdquo;
+                  </p>
+                  {hasMetrics && (
+                    <div className="grid grid-cols-2 gap-4 py-4 border-y border-primary-100 mb-6">
+                      {testimonial.metrics!.map((m) => {
+                        const Icon = m.icon
+                        return (
+                          <div key={m.label} className="flex items-center gap-2">
+                            <Icon className="w-5 h-5 text-accent-600 flex-shrink-0" />
+                            <div>
+                              <span className="text-xl font-bold text-primary-800 block">{m.value}</span>
+                              <span className="text-sm text-primary-600">{m.label}</span>
+                            </div>
+                          </div>
+                        )
+                      })}
                     </div>
-                    <div className="text-sm text-primary-600">
-                      {testimonial.role}
+                  )}
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-gradient-to-r from-accent-500 to-accent-600 rounded-full flex items-center justify-center flex-shrink-0">
+                      <Users className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <div className="font-bold text-primary-800">{testimonial.name}</div>
+                      <div className="text-sm text-primary-600">{testimonial.role}</div>
                     </div>
                   </div>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              )
+            })}
           </div>
         </div>
       </section>
 
-      {/* Demo Request Form Section */}
+      {/* CTA Section */}
       <section className="py-24 bg-gradient-to-br from-primary-800 via-primary-700 to-primary-900 text-white relative overflow-hidden">
-        {/* Background Elements */}
         <div className="absolute inset-0">
           <motion.div
-            animate={{
-              scale: [1, 1.2, 1],
-              opacity: [0.1, 0.2, 0.1],
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: 'easeInOut'
-            }}
+            animate={{ scale: [1, 1.2, 1], opacity: [0.1, 0.2, 0.1] }}
+            transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
             className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-accent-400/20 to-accent-600/20 rounded-full blur-3xl"
           />
         </div>
@@ -729,137 +722,54 @@ export default function DemoPage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <FadeInUp className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-extrabold mb-6 leading-tight">
-              {language === 'es' ? '¿Listo para abrir tu cuenta en 2 minutos?' : 'Ready to open your account in 2 minutes?'}
+              {language === 'es' ? '¿Listo para probar StorageFy?' : 'Ready to try StorageFy?'}
             </h2>
-            <p className="text-xl text-gray-200 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-200 max-w-2xl mx-auto mb-8">
               {language === 'es'
-                ? 'Crea tu cuenta gratis y comienza a gestionar tu negocio de trasteros de forma profesional desde hoy.'
-                : 'Create your free account and start managing your storage business professionally from today.'
+                ? 'Accede a la demo en 2 minutos. Sin tarjeta de crédito. Credenciales al instante.'
+                : 'Access the demo in 2 minutes. No credit card required. Instant credentials.'
               }
             </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <LinkWithLang href="/demo-trial">
+                <span className="inline-flex items-center justify-center gap-2 px-10 py-4 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-semibold rounded-xl hover:from-accent-600 hover:to-accent-700 transition-all shadow-lg hover:shadow-accent-500/30 text-lg">
+                  {language === 'es' ? 'Probar demo gratis' : 'Try free demo'}
+                  <ArrowRight className="w-5 h-5" />
+                </span>
+              </LinkWithLang>
+              <LinkWithLang href="/signup">
+                <span className="inline-flex items-center justify-center gap-2 px-10 py-4 bg-white/10 border border-white/20 text-white font-semibold rounded-xl hover:bg-white/20 transition-all text-lg">
+                  {language === 'es' ? 'Crear cuenta' : 'Create account'}
+                </span>
+              </LinkWithLang>
+            </div>
           </FadeInUp>
 
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/20 shadow-2xl"
+            className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10"
           >
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-semibold text-white mb-2">
-                    {language === 'es' ? 'Nombre completo' : 'Full name'}
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent"
-                    placeholder={language === 'es' ? 'Tu nombre' : 'Your name'}
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold text-white mb-2">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent"
-                    placeholder={language === 'es' ? 'tu@email.com' : 'your@email.com'}
-                  />
-                </div>
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="flex items-center gap-3">
+                <Mail className="w-5 h-5 text-accent-300 flex-shrink-0" />
+                <span className="text-white">hola@storagefy.co</span>
               </div>
-
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-semibold text-white mb-2">
-                    {language === 'es' ? 'Empresa' : 'Company'}
-                  </label>
-                  <input
-                    type="text"
-                    name="company"
-                    value={formData.company}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent"
-                    placeholder={language === 'es' ? 'Nombre de tu empresa' : 'Company name'}
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold text-white mb-2">
-                    {language === 'es' ? 'Teléfono' : 'Phone'}
-                  </label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent"
-                    placeholder={language === 'es' ? '+34 123 456 789' : '+1 234 567 890'}
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-white mb-2">
-                  {language === 'es' ? 'Cuéntanos sobre tu negocio' : 'Tell us about your business'}
-                </label>
-                <textarea
-                  name="message"
-                  value={formData.message}
-                  onChange={handleInputChange}
-                  rows={4}
-                  className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent resize-none"
-                  placeholder={language === 'es' 
-                    ? '¿Cuántas unidades gestionas? ¿Qué desafíos enfrentas? ¿Cuándo te gustaría la demo? ¿Usas otro sistema? Migración incluida + match de precio si el tuyo es más barato.'
-                    : 'How many units do you manage? What challenges do you face? When would you like the demo? Using another system? Migration included + price match if yours is cheaper.'
-                  }
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="w-full px-8 py-4 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-semibold rounded-xl hover:from-accent-600 hover:to-accent-700 transition-all duration-200 flex items-center justify-center gap-2 hover:scale-105 active:scale-95"
-              >
-                <Calendar className="w-5 h-5" />
-                {language === 'es' ? 'Crear cuenta gratis' : 'Create free account'}
-              </button>
-            </form>
-
-            {/* Contact Info */}
-            <div className="mt-8 pt-8 border-t border-white/20">
-              <div className="grid md:grid-cols-2 gap-6">
+              <div className="space-y-2">
                 <div className="flex items-center gap-3">
-                  <Mail className="w-5 h-5 text-accent-300" />
-                  <span className="text-white">hola@storagefy.co</span>
+                  <Phone className="w-5 h-5 text-accent-300 flex-shrink-0" />
+                  <span className="text-white">{language === 'es' ? 'Theo:' : 'Theo:'} +34 871 242 642</span>
                 </div>
-                <div className="space-y-2">
-                  <div className="flex items-center gap-3">
-                    <Phone className="w-5 h-5 text-accent-300" />
-                    <span className="text-white">{language === 'es' ? 'Especialista Theo:' : 'Specialist Theo:'} +34 871 242 642</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Phone className="w-5 h-5 text-accent-300" />
-                    <span className="text-white">{language === 'es' ? 'Especialista Juan David:' : 'Specialist Juan David:'} +34 871 242 616</span>
-                  </div>
+                <div className="flex items-center gap-3">
+                  <Phone className="w-5 h-5 text-accent-300 flex-shrink-0" />
+                  <span className="text-white">Juan David: +34 871 242 616</span>
                 </div>
-              </div>
-              <div className="mt-4 text-center">
-                <p className="text-white/80 text-sm">
-                  {language === 'es' 
-                    ? 'Te responderemos en menos de 24 horas'
-                    : 'We will respond within 24 hours'
-                  }
-                </p>
               </div>
             </div>
+            <p className="mt-4 text-center text-white/80 text-sm">
+              {language === 'es' ? 'Te responderemos en menos de 24 horas' : 'We will respond within 24 hours'}
+            </p>
           </motion.div>
         </div>
       </section>
