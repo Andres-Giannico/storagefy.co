@@ -20,6 +20,7 @@ import LinkWithLang from '@/components/common/LinkWithLang'
 export default function VideoPage() {
   const { language } = useLanguage()
   const videoRef = useRef<HTMLVideoElement>(null)
+  const videoContainerRef = useRef<HTMLDivElement>(null)
   const [isPlaying, setIsPlaying] = useState(false)
   const [isMuted, setIsMuted] = useState(true)
   const [showPoster, setShowPoster] = useState(true)
@@ -42,12 +43,42 @@ export default function VideoPage() {
     setIsMuted(videoRef.current.muted)
   }
 
-  const toggleFullscreen = () => {
-    if (!videoRef.current) return
-    if (!document.fullscreenElement) {
-      videoRef.current.requestFullscreen?.()
-    } else {
-      document.exitFullscreen?.()
+  const toggleFullscreen = async () => {
+    const video = videoRef.current as (HTMLVideoElement & { webkitEnterFullScreen?: () => void; webkitExitFullScreen?: () => void }) | null
+    const container = videoContainerRef.current
+    if (!video && !container) return
+
+    try {
+      // iOS Safari: webkitEnterFullScreen en el video
+      if (video?.webkitEnterFullScreen) {
+        if (document.fullscreenElement || (document as { webkitFullscreenElement?: Element }).webkitFullscreenElement) {
+          video.webkitExitFullScreen?.()
+        } else {
+          video.webkitEnterFullScreen()
+        }
+        return
+      }
+
+      // Desktop y otros: fullscreen en el contenedor
+      const elem = container || video
+      if (!elem) return
+      const doc = document as Document & { webkitFullscreenElement?: Element; mozFullScreenElement?: Element; msFullscreenElement?: Element }
+      const isFullscreen = !!(
+        document.fullscreenElement ||
+        doc.webkitFullscreenElement ||
+        doc.mozFullScreenElement ||
+        doc.msFullscreenElement
+      )
+
+      if (isFullscreen) {
+        const exitFs = document.exitFullscreen || (document as { webkitExitFullscreen?: () => Promise<void> }).webkitExitFullscreen || (document as { mozCancelFullScreen?: () => Promise<void> }).mozCancelFullScreen || (document as { msExitFullscreen?: () => Promise<void> }).msExitFullscreen
+        exitFs?.call(document)
+      } else {
+        const reqFs = elem.requestFullscreen || (elem as { webkitRequestFullscreen?: () => Promise<void> }).webkitRequestFullscreen || (elem as { mozRequestFullScreen?: () => Promise<void> }).mozRequestFullScreen || (elem as { msRequestFullscreen?: () => Promise<void> }).msRequestFullscreen
+        await reqFs?.call(elem)
+      }
+    } catch (err) {
+      console.warn('Fullscreen error:', err)
     }
   }
 
@@ -128,6 +159,7 @@ export default function VideoPage() {
             className="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-black/40 backdrop-blur-sm"
           >
             <div
+              ref={videoContainerRef}
               className="relative aspect-video w-full cursor-pointer group"
               onClick={handleVideoClick}
             >
@@ -165,8 +197,8 @@ export default function VideoPage() {
                 </div>
               )}
 
-              {/* Controles flotantes */}
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 opacity-0 group-hover:opacity-100 transition-opacity">
+              {/* Controles flotantes - visibles en móvil, hover en desktop */}
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
                 <div className="flex items-center gap-3">
                   <button
                     onClick={(e) => {
