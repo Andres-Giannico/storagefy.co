@@ -2,7 +2,7 @@
 
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
-import { ArrowRight, TrendingUp, Users, DollarSign, CheckCircle, CreditCard, Clock, MapPin, BarChart2, FileText, Calendar, Package, Euro, Wallet, Lock, Zap, Plug2, Shield } from 'lucide-react'
+import { ArrowRight, Users, DollarSign, CheckCircle, CreditCard, Clock, MapPin, BarChart2, FileText, Calendar, Package, Euro, Wallet, Lock, Zap, Plug2, Shield } from 'lucide-react'
 import Image from 'next/image'
 import { useLanguage } from '@/lib/context/LanguageContext'
 import LinkWithLang from '@/components/common/LinkWithLang'
@@ -309,14 +309,6 @@ const Hero = () => {
           </motion.div>
 
           {/* Floating Elements */}
-          <motion.div
-            animate={{ y: [0, -8, 0] }}
-            transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-            className="absolute -top-4 -right-4 w-14 h-14 bg-accent-500 rounded-xl shadow-lg shadow-accent-500/30 flex items-center justify-center"
-          >
-            <TrendingUp className="w-7 h-7 text-white" />
-          </motion.div>
-
           <motion.div
             animate={{ y: [0, 8, 0] }}
             transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
