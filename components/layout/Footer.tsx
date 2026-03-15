@@ -13,21 +13,25 @@ const Footer = () => {
     { label: language === 'es' ? 'Inicio' : 'Home', href: '/' },
     { label: language === 'es' ? 'Características' : 'Features', href: '/features' },
     { label: language === 'es' ? 'Precios' : 'Pricing', href: '/pricing' },
+    { label: language === 'es' ? 'Nosotros' : 'About', href: '/about' },
+    { label: language === 'es' ? 'Preguntas Frecuentes' : 'FAQs', href: '/faq' },
+    { label: language === 'es' ? 'Contacto' : 'Contact', href: '/contact' },
+  ]
+
+  const serviceLinks = [
+    { label: language === 'es' ? 'Página web profesional' : 'Professional website', href: '/website' },
     { label: language === 'es' ? 'Centro de Ayuda' : 'Help Center', href: '/help' },
     { label: 'Blog', href: '/blog' },
     { label: language === 'es' ? 'Comparativa' : 'Comparison', href: '/comparativa' },
     { label: language === 'es' ? 'Onboarding' : 'Onboarding', href: '/onboarding' },
     { label: language === 'es' ? 'Integraciones' : 'Integrations', href: '/integraciones' },
     { label: language === 'es' ? 'Recursos' : 'Resources', href: '/recursos' },
-    { label: language === 'es' ? 'Nosotros' : 'About', href: '/about' },
-    { label: language === 'es' ? 'Preguntas Frecuentes' : 'FAQs', href: '/faq' },
-    { label: language === 'es' ? 'Contacto' : 'Contact', href: '/contact' },
+    { label: language === 'es' ? 'Política de Cookies' : 'Cookie Policy', href: '/cookies' },
   ]
 
   const legalLinks = [
     { label: language === 'es' ? 'Términos de Servicio' : 'Terms of Service', href: '/terms' },
     { label: language === 'es' ? 'Política de Privacidad' : 'Privacy Policy', href: '/privacy' },
-    { label: language === 'es' ? 'Política de Cookies' : 'Cookie Policy', href: '/cookies' },
   ]
 
   const socialLinks = [
@@ -107,7 +111,7 @@ const Footer = () => {
         </div>
 
         {/* Main Footer Content */}
-        <div className="py-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="py-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           
           {/* Brand Section - Column 1 */}
           <div className="lg:col-span-1">
@@ -188,7 +192,32 @@ const Footer = () => {
             </ul>
           </motion.div>
 
-          {/* Legal - Column 3 */}
+          {/* Servicios - Column 3 */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.15 }}
+          >
+            <h3 className="text-gray-900 font-bold mb-4 text-sm uppercase tracking-wider">
+              {language === 'es' ? 'Servicios' : 'Services'}
+            </h3>
+            <ul className="space-y-2">
+              {serviceLinks.map((link) => (
+                <li key={link.label}>
+                  <LinkWithLang
+                    href={link.href}
+                    className="text-gray-600 hover:text-accent-600 transition-colors duration-200 text-sm inline-flex items-center group"
+                  >
+                    <span className="w-1 h-1 rounded-full bg-accent-500 mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200"></span>
+                    {link.label}
+                  </LinkWithLang>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+
+          {/* Legal - Column 4 */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -213,7 +242,7 @@ const Footer = () => {
             </ul>
           </motion.div>
 
-          {/* Social - Column 4 */}
+          {/* Social - Column 5 */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
