@@ -2,7 +2,7 @@
 
 import { useRef, useState } from 'react'
 import Image from 'next/image'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import {
   Play,
   Pause,
@@ -19,6 +19,8 @@ import {
   ShieldCheck,
   Copy,
   Check,
+  Menu,
+  X,
 } from 'lucide-react'
 import { useLanguage } from '@/lib/context/LanguageContext'
 import LinkWithLang from '@/components/common/LinkWithLang'
@@ -41,6 +43,7 @@ export default function VideoPage() {
   const [submitted, setSubmitted] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [copiedField, setCopiedField] = useState<'email' | 'password' | 'all' | null>(null)
+  const [menuOpen, setMenuOpen] = useState(false)
 
   const togglePlay = () => {
     if (!videoRef.current) return
@@ -171,15 +174,15 @@ export default function VideoPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-900 via-primary-800 to-primary-900 text-white overflow-x-hidden">
-      {/* Header minimal */}
+      {/* Header responsive */}
       <header className="fixed top-0 left-0 right-0 z-30 bg-primary-900/80 backdrop-blur-md border-b border-white/10">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
+        <div className="max-w-6xl mx-auto px-3 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-14 sm:h-16 gap-2 min-w-0">
             <a
               href="https://storagefy.co"
-              className="flex items-center gap-2 group"
+              className="flex items-center gap-1.5 sm:gap-2 group min-w-0 flex-shrink"
             >
-              <div className="relative w-10 h-10 rounded-lg overflow-hidden">
+              <div className="relative w-8 h-8 sm:w-10 sm:h-10 flex-shrink-0 rounded-lg overflow-hidden">
                 <Image
                   src="/logo-demo-navbar.png"
                   alt="StorageFy"
@@ -188,25 +191,63 @@ export default function VideoPage() {
                   priority
                 />
               </div>
-              <span className="text-xl font-bold text-white group-hover:text-accent-300 transition-colors">
+              <span className="text-base sm:text-xl font-bold text-white group-hover:text-accent-300 transition-colors truncate">
                 StorageFy
               </span>
             </a>
-            <div className="flex items-center gap-2">
+
+            {/* Desktop: botones inline */}
+            <div className="hidden sm:flex items-center gap-2 flex-shrink-0">
               <LinkWithLang href="/signup">
-                <span className="px-4 py-2 border border-white/30 text-white font-medium rounded-lg hover:bg-white/10 transition-colors text-sm">
+                <span className="px-3 sm:px-4 py-1.5 sm:py-2 border border-white/30 text-white font-medium rounded-lg hover:bg-white/10 transition-colors text-sm">
                   {language === 'es' ? 'Registrarse' : 'Sign up'}
                 </span>
               </LinkWithLang>
               <LinkWithLang href="/demo-trial">
-                <span className="px-4 py-2 bg-accent-500 hover:bg-accent-600 text-white font-semibold rounded-lg transition-colors flex items-center gap-2 text-sm">
+                <span className="px-3 sm:px-4 py-1.5 sm:py-2 bg-accent-500 hover:bg-accent-600 text-white font-semibold rounded-lg transition-colors flex items-center gap-2 text-sm">
                   {language === 'es' ? 'Probar demo' : 'Try demo'}
                   <ArrowRight className="w-4 h-4" />
                 </span>
               </LinkWithLang>
             </div>
+
+            {/* Mobile: hamburger */}
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="sm:hidden p-2 rounded-lg hover:bg-white/10 transition-colors flex-shrink-0"
+              aria-label={menuOpen ? (language === 'es' ? 'Cerrar menú' : 'Close menu') : (language === 'es' ? 'Abrir menú' : 'Open menu')}
+            >
+              {menuOpen ? <X className="w-6 h-6 text-white" /> : <Menu className="w-6 h-6 text-white" />}
+            </button>
           </div>
         </div>
+
+        {/* Mobile menu drawer */}
+        <AnimatePresence>
+          {menuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.25 }}
+              className="sm:hidden bg-primary-900/95 backdrop-blur-md border-t border-white/10"
+            >
+              <div className="px-4 py-4 space-y-3">
+                <LinkWithLang href="/signup" onClick={() => setMenuOpen(false)}>
+                  <span className="block w-full py-3 px-4 border border-white/30 text-white font-medium rounded-lg hover:bg-white/10 transition-colors text-center">
+                    {language === 'es' ? 'Registrarse' : 'Sign up'}
+                  </span>
+                </LinkWithLang>
+                <LinkWithLang href="/demo-trial" onClick={() => setMenuOpen(false)}>
+                  <span className="block w-full py-3 px-4 bg-accent-500 hover:bg-accent-600 text-white font-semibold rounded-lg transition-colors flex items-center justify-center gap-2">
+                    {language === 'es' ? 'Probar demo' : 'Try demo'}
+                    <ArrowRight className="w-4 h-4" />
+                  </span>
+                </LinkWithLang>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </header>
 
       {/* Hero + Video */}
