@@ -7,8 +7,6 @@ import {
   ArrowRight,
   ArrowRightLeft,
   CheckCircle,
-  ChevronLeft,
-  ChevronRight,
   Zap,
   Clock,
   TrendingDown,
@@ -26,6 +24,7 @@ import {
   Mail,
   Play,
   Pause,
+  Maximize2,
 } from 'lucide-react'
 import { useLanguage } from '@/lib/context/LanguageContext'
 import FadeInUp from '@/components/animations/FadeInUp'
@@ -35,82 +34,7 @@ const DEMO_EMAIL = 'demo@storagefy.app'
 const DEMO_PASSWORD = 'demo123'
 const LOGIN_URL = 'https://www.storagefy.app/auth/signin?email=demo@storagefy.app&password=demo123'
 
-const CAROUSEL_INTERVAL = 4500
-
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-
-const slides = [
-  {
-    image: '/images/demo/dashboard.webp',
-    titleEs: 'Panel de Control',
-    titleEn: 'Control Panel',
-    descEs: 'Ocupación, ingresos mensuales, clientes y actividad reciente en un vistazo',
-    descEn: 'Occupancy, monthly income, clients and recent activity at a glance',
-  },
-  {
-    image: '/images/demo/ubicaciones.webp',
-    titleEs: 'Ubicaciones',
-    titleEn: 'Locations',
-    descEs: 'Gestiona tus almacenes: superficie, unidades, clientes, servicios y seguridad',
-    descEn: 'Manage your warehouses: area, units, clients, services and security',
-  },
-  {
-    image: '/images/demo/unidades.webp',
-    titleEs: 'Unidades',
-    titleEn: 'Units',
-    descEs: 'Dimensiones, precios, estado de pago y control de morosidad por unidad',
-    descEn: 'Dimensions, prices, payment status and delinquency control per unit',
-  },
-  {
-    image: '/images/demo/clientes.webp',
-    titleEs: 'Clientes',
-    titleEn: 'Clients',
-    descEs: 'Base de datos de clientes con unidades asignadas, contacto y estado',
-    descEn: 'Client database with assigned units, contact info and status',
-  },
-  {
-    image: '/images/demo/contratos.webp',
-    titleEs: 'Contratos',
-    titleEn: 'Contracts',
-    descEs: 'Contratos de alquiler con período, precio, estado de pago y depósito',
-    descEn: 'Rental contracts with period, price, payment status and deposit',
-  },
-  {
-    image: '/images/demo/pagos.webp',
-    titleEs: 'Gestión de Pagos',
-    titleEn: 'Payment Management',
-    descEs: 'Administra pagos, crea facturas y asocia cobros a contratos',
-    descEn: 'Manage payments, create invoices and link collections to contracts',
-  },
-  {
-    image: '/images/demo/widget.webp',
-    titleEs: 'Widget de Reservas 24/7',
-    titleEn: '24/7 Booking Widget',
-    descEs: 'Tus clientes reservan unidades desde tu web: dimensiones, precios y disponibilidad',
-    descEn: 'Your customers reserve units from your website: dimensions, prices and availability',
-  },
-  {
-    image: '/images/demo/facturacion.webp',
-    titleEs: 'Facturación',
-    titleEn: 'Invoicing',
-    descEs: 'Facturas de alquiler, estados de pago e integración con Verifacti',
-    descEn: 'Rental invoices, payment status and Verifacti integration',
-  },
-  {
-    image: '/images/demo/reportes.webp',
-    titleEs: 'Reportes y Análisis',
-    titleEn: 'Reports and Analysis',
-    descEs: 'Ingresos, ocupación, morosidad y estado de pagos del periodo',
-    descEn: 'Income, occupancy, delinquency and payment status for the period',
-  },
-  {
-    image: '/images/demo/reportes-metricas.webp',
-    titleEs: 'Métricas Avanzadas',
-    titleEn: 'Advanced Metrics',
-    descEs: 'Valor por contrato, ingresos por m², retención y proyecciones',
-    descEn: 'Value per contract, revenue per m², retention and projections',
-  },
-]
 
 const languages = [
   { code: 'es' as const, name: 'Español', flag: '🇪🇸' },
@@ -155,26 +79,16 @@ export default function DemoTrialPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [currentSlide, setCurrentSlide] = useState(0)
-  const [carouselPaused, setCarouselPaused] = useState(false)
-  const [slideProgress, setSlideProgress] = useState(0)
   const [languageOpen, setLanguageOpen] = useState(false)
   const [copiedField, setCopiedField] = useState<'email' | 'password' | 'all' | null>(null)
   const [showCopiedTooltip, setShowCopiedTooltip] = useState(false)
   const [showStickyCTA, setShowStickyCTA] = useState(false)
   const [showAllFeatures, setShowAllFeatures] = useState(false)
   const formRef = useRef<HTMLDivElement>(null)
-  const touchUnpauseRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-  const touchStartX = useRef<number>(0)
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
-
-  useEffect(() => {
-    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
-    setPrefersReducedMotion(mq.matches)
-    const handler = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches)
-    mq.addEventListener('change', handler)
-    return () => mq.removeEventListener('change', handler)
-  }, [])
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const videoContainerRef = useRef<HTMLDivElement>(null)
+  const [videoPlaying, setVideoPlaying] = useState(false)
+  const [videoPosterVisible, setVideoPosterVisible] = useState(true)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -186,70 +100,75 @@ export default function DemoTrialPage() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [submitted])
 
-  useEffect(() => {
-    if (carouselPaused) return
-    const step = 50
-    const progressStep = (100 / CAROUSEL_INTERVAL) * step
-    const timer = setInterval(() => {
-      setSlideProgress((p) => {
-        if (p + progressStep >= 100) {
-          setCurrentSlide((prev) => (prev + 1) % slides.length)
-          return 0
-        }
-        return p + progressStep
-      })
-    }, step)
-    return () => clearInterval(timer)
-  }, [carouselPaused])
-
-  useEffect(() => {
-    setSlideProgress(0)
-  }, [currentSlide])
-
-  useEffect(() => {
-    const nextIndex = (currentSlide + 1) % slides.length
-    const link = document.createElement('link')
-    link.rel = 'preload'
-    link.as = 'image'
-    link.href = slides[nextIndex].image
-    document.head.appendChild(link)
-    return () => { try { document.head.removeChild(link) } catch { /* ignore */ } }
-  }, [currentSlide])
-
-  useEffect(() => {
-    return () => {
-      if (touchUnpauseRef.current) clearTimeout(touchUnpauseRef.current)
-    }
-  }, [])
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      const target = e.target as HTMLElement
-      if (target.closest('input') || target.closest('textarea') || target.closest('select')) return
-      if (e.key === 'ArrowLeft') {
-        e.preventDefault()
-        setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length)
-        setSlideProgress(0)
-      } else if (e.key === 'ArrowRight') {
-        e.preventDefault()
-        setCurrentSlide((prev) => (prev + 1) % slides.length)
-        setSlideProgress(0)
-      } else if (e.key === ' ') {
-        e.preventDefault()
-        setCarouselPaused((p) => !p)
-      }
-    }
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [])
-
-  const goToSlide = (index: number) => {
-    setCurrentSlide(index)
-    setSlideProgress(0)
-  }
-
   const scrollToForm = () => {
     formRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  const enterFullscreen = async () => {
+    const video = videoRef.current as (HTMLVideoElement & { webkitEnterFullScreen?: () => void }) | null
+    const container = videoContainerRef.current
+    if (!video && !container) return
+
+    const doc = document as Document & { webkitFullscreenElement?: Element; mozFullScreenElement?: Element; msFullscreenElement?: Element }
+    if (document.fullscreenElement || doc.webkitFullscreenElement || doc.mozFullScreenElement || doc.msFullscreenElement) return
+
+    try {
+      if (video?.webkitEnterFullScreen) {
+        video.webkitEnterFullScreen()
+        return
+      }
+      const elem = container || video
+      if (!elem) return
+      const reqFs = elem.requestFullscreen || (elem as { webkitRequestFullscreen?: () => Promise<void> }).webkitRequestFullscreen || (elem as { mozRequestFullScreen?: () => Promise<void> }).mozRequestFullScreen || (elem as { msRequestFullscreen?: () => Promise<void> }).msRequestFullscreen
+      await reqFs?.call(elem)
+    } catch (err) {
+      console.warn('Fullscreen error:', err)
+    }
+  }
+
+  const toggleFullscreen = async () => {
+    const video = videoRef.current as (HTMLVideoElement & { webkitEnterFullScreen?: () => void; webkitExitFullScreen?: () => void }) | null
+    const container = videoContainerRef.current
+    if (!video && !container) return
+
+    const doc = document as Document & { webkitFullscreenElement?: Element; mozFullScreenElement?: Element; msFullscreenElement?: Element }
+    const isFullscreen = !!(document.fullscreenElement || doc.webkitFullscreenElement || doc.mozFullScreenElement || doc.msFullscreenElement)
+
+    try {
+      if (video?.webkitEnterFullScreen) {
+        if (isFullscreen) {
+          video.webkitExitFullScreen?.()
+        } else {
+          video.webkitEnterFullScreen()
+        }
+        return
+      }
+      const elem = container || video
+      if (!elem) return
+      if (isFullscreen) {
+        const exitFs = document.exitFullscreen || (document as { webkitExitFullscreen?: () => Promise<void> }).webkitExitFullscreen || (document as { mozCancelFullScreen?: () => Promise<void> }).mozCancelFullScreen || (document as { msExitFullscreen?: () => Promise<void> }).msExitFullscreen
+        exitFs?.call(document)
+      } else {
+        const reqFs = elem.requestFullscreen || (elem as { webkitRequestFullscreen?: () => Promise<void> }).webkitRequestFullscreen || (elem as { mozRequestFullScreen?: () => Promise<void> }).mozRequestFullScreen || (elem as { msRequestFullscreen?: () => Promise<void> }).msRequestFullscreen
+        await reqFs?.call(elem)
+      }
+    } catch (err) {
+      console.warn('Fullscreen error:', err)
+    }
+  }
+
+  const toggleVideoPlay = () => {
+    if (!videoRef.current) return
+    if (videoRef.current.paused) {
+      videoRef.current.play()
+      setVideoPlaying(true)
+      setVideoPosterVisible(false)
+      enterFullscreen()
+    } else {
+      videoRef.current.pause()
+      setVideoPlaying(false)
+      setVideoPosterVisible(true)
+    }
   }
 
   useEffect(() => {
@@ -340,7 +259,7 @@ export default function DemoTrialPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-50/80 via-white to-accent-50/40 font-demo pb-28 overflow-x-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-primary-50/80 via-white to-accent-50/40 font-demo pb-28 overflow-x-hidden antialiased">
       {/* Sticky CTA */}
       <AnimatePresence>
         {showStickyCTA && (
@@ -383,7 +302,7 @@ export default function DemoTrialPage() {
                   priority
                 />
               </div>
-              <span className="text-lg sm:text-xl lg:text-2xl font-bold text-gradient truncate">
+              <span className="text-lg sm:text-xl lg:text-2xl font-extrabold text-gradient truncate tracking-tight">
                 StorageFy
               </span>
             </a>
@@ -459,14 +378,14 @@ export default function DemoTrialPage() {
                   {language === 'es' ? 'negocios activos' : 'active businesses'}
                 </span>
               </div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 leading-[1.1] tracking-tight">
+              <h1 className="font-demo-display text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold mb-6 leading-[1.05] tracking-tighter">
                 <span className="bg-gradient-to-r from-white via-accent-200 to-accent-400 bg-clip-text text-transparent drop-shadow-lg">
                   {language === 'es'
                     ? 'Deja de perder tiempo con Excel'
                     : 'Stop wasting time with spreadsheets'}
                 </span>
               </h1>
-              <p className="text-lg md:text-xl text-gray-200 max-w-xl mx-auto lg:mx-0 leading-relaxed mb-6">
+              <p className="text-lg md:text-xl text-gray-200 max-w-xl mx-auto lg:mx-0 leading-relaxed mb-6 font-medium">
                 {language === 'es'
                   ? 'El software más completo para trasteros. Unidades, clientes, contratos, cobros, facturas, widget 24/7… Todo en una plataforma.'
                   : 'The most complete software for storage. Units, clients, contracts, payments, invoices, 24/7 widget… Everything in one platform.'}
@@ -498,7 +417,7 @@ export default function DemoTrialPage() {
                 onClick={scrollToForm}
                 whileHover={{ scale: 1.03, boxShadow: '0 20px 40px -15px rgba(34, 197, 94, 0.4)' }}
                 whileTap={{ scale: 0.98 }}
-                className="px-8 py-4 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-semibold rounded-xl shadow-lg shadow-accent-500/30 hover:from-accent-600 hover:to-accent-700 transition-all flex items-center gap-2 mx-auto lg:mx-0"
+                className="px-8 py-4 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-bold rounded-xl shadow-lg shadow-accent-500/30 hover:from-accent-600 hover:to-accent-700 transition-all flex items-center gap-2 mx-auto lg:mx-0 text-base"
               >
                 {language === 'es' ? 'Obtener acceso a la demo' : 'Get demo access'}
                 <ArrowRight className="w-5 h-5" />
@@ -525,14 +444,14 @@ export default function DemoTrialPage() {
                     />
                   </div>
                 </div>
-                {/* Form card - floating premium */}
+                {/* Form card - flotante premium */}
                 <div className="absolute -bottom-6 left-3 right-3 sm:left-4 sm:right-4 md:left-8 md:right-8 lg:left-12 lg:right-12 bg-white rounded-2xl shadow-2xl border border-primary-100 p-4 sm:p-6 md:p-8 ring-4 ring-white/20 backdrop-blur-sm">
                   {!submitted ? (
                     <>
-                      <h3 className="text-2xl sm:text-xl font-bold text-primary-900 mb-2">
+                      <h3 className="font-demo-display text-2xl sm:text-3xl font-extrabold text-primary-900 mb-2 tracking-tight">
                         {language === 'es' ? 'Accede ahora' : 'Access now'}
                       </h3>
-                      <p className="text-sm text-primary-600 mb-4">
+                      <p className="text-sm text-primary-600 mb-4 font-medium">
                         {language === 'es'
                           ? 'Nombre y email. Credenciales al instante.'
                           : 'Name and email. Instant credentials.'}
@@ -566,7 +485,7 @@ export default function DemoTrialPage() {
                         <button
                           type="submit"
                           disabled={isSubmitting}
-                          className="w-full py-3 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-semibold rounded-xl hover:from-accent-600 hover:to-accent-700 transition-all text-sm flex items-center justify-center gap-2 disabled:opacity-70"
+                          className="w-full py-3.5 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-bold rounded-xl hover:from-accent-600 hover:to-accent-700 transition-all text-base flex items-center justify-center gap-2 disabled:opacity-70 shadow-lg shadow-accent-500/25"
                         >
                           {isSubmitting
                             ? (language === 'es' ? 'Enviando...' : 'Sending...')
@@ -626,6 +545,93 @@ export default function DemoTrialPage() {
         </div>
       </section>
 
+      {/* Video - StorageFy en acción */}
+      <section className="py-12 sm:py-16 md:py-24 bg-white">
+        <div className="max-w-4xl mx-auto px-3 sm:px-6 lg:px-8">
+          <FadeInUp className="text-center mb-8 sm:mb-10">
+            <p className="text-accent-600 font-semibold text-xs sm:text-sm uppercase tracking-widest mb-2 sm:mb-3">
+              {language === 'es' ? 'Vídeo demo' : 'Video demo'}
+            </p>
+            <h2 className="font-demo-display text-2xl sm:text-4xl md:text-5xl font-extrabold text-primary-800 tracking-tight leading-[1.1] mb-3 sm:mb-4">
+              {language === 'es'
+                ? 'StorageFy en acción'
+                : 'StorageFy in action'}
+            </h2>
+            <p className="text-base sm:text-lg text-primary-600 max-w-2xl mx-auto px-2 sm:px-0">
+              {language === 'es'
+                ? 'Descubre en 2 minutos cómo el software más completo para trasteros puede transformar tu negocio.'
+                : 'Discover in 2 minutes how the most complete storage software can transform your business.'}
+            </p>
+          </FadeInUp>
+          <FadeInUp>
+            <div className="relative rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl border-2 border-primary-100 ring-2 sm:ring-4 ring-accent-500/10 w-full max-w-4xl mx-auto">
+              <div
+                ref={videoContainerRef}
+                className="relative aspect-video w-full cursor-pointer group bg-primary-900"
+                onClick={toggleVideoPlay}
+              >
+                <video
+                  ref={videoRef}
+                  src="/Storagefy.mp4"
+                  poster="/images/video-cover.webp"
+                  className="w-full h-full object-contain"
+                  playsInline
+                  preload="metadata"
+                  onPlay={() => {
+                    setVideoPlaying(true)
+                    setVideoPosterVisible(false)
+                  }}
+                  onPause={() => {
+                    setVideoPlaying(false)
+                    setVideoPosterVisible(true)
+                  }}
+                  onEnded={() => {
+                    setVideoPlaying(false)
+                    setVideoPosterVisible(true)
+                  }}
+                />
+                {videoPosterVisible && (
+                  <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                    <motion.button
+                      whileHover={{ scale: 1.08 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full bg-white flex items-center justify-center shadow-2xl hover:shadow-accent-500/30 transition-shadow"
+                      aria-label={language === 'es' ? 'Reproducir' : 'Play'}
+                    >
+                      <Play className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-accent-600 ml-1" fill="currentColor" />
+                    </motion.button>
+                  </div>
+                )}
+                {!videoPosterVisible && (
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3 sm:p-4 flex items-center gap-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        toggleVideoPlay()
+                      }}
+                      className="p-2 rounded-lg hover:bg-white/20 transition-colors"
+                      aria-label={videoPlaying ? (language === 'es' ? 'Pausar' : 'Pause') : (language === 'es' ? 'Reproducir' : 'Play')}
+                    >
+                      {videoPlaying ? <Pause className="w-5 h-5 sm:w-6 sm:h-6 text-white" /> : <Play className="w-5 h-5 sm:w-6 sm:h-6 text-white" />}
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        toggleFullscreen()
+                      }}
+                      className="p-2 rounded-lg hover:bg-white/20 transition-colors ml-auto"
+                      aria-label={language === 'es' ? 'Pantalla completa' : 'Fullscreen'}
+                    >
+                      <Maximize2 className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+          </FadeInUp>
+        </div>
+      </section>
+
       {/* Social proof stats - nivel premium */}
       <section className="py-12 md:py-16 bg-gradient-to-b from-primary-800 via-primary-700 to-primary-800 text-white relative overflow-hidden">
         <div className="absolute inset-0">
@@ -675,84 +681,94 @@ export default function DemoTrialPage() {
       </section>
 
       {/* Benefits strip */}
-      <section className="py-10 bg-gradient-to-b from-white to-primary-50/20 border-b border-primary-100">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <FadeInUp className="grid sm:grid-cols-2 lg:grid-cols-5 gap-6 lg:gap-8 items-stretch">
-            <div className="flex flex-col sm:flex-row lg:flex-col items-center sm:items-start lg:items-center text-center sm:text-left lg:text-center gap-4 p-5 rounded-xl bg-white/60 border border-primary-100/80 shadow-sm hover:shadow-md hover:border-accent-200/50 transition-all">
-              <div className="w-12 h-12 rounded-xl bg-accent-100 flex items-center justify-center flex-shrink-0 shrink-0">
-                <TrendingDown className="w-6 h-6 text-accent-600" />
+      <section className="py-16 md:py-20 bg-gradient-to-b from-primary-50 via-white to-accent-50/30 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(124,179,66,0.08)_0%,_transparent_50%)]" />
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <FadeInUp className="text-center mb-12">
+            <h2 className="font-demo-display text-2xl sm:text-3xl md:text-4xl font-extrabold text-primary-800 tracking-tight mb-2">
+              {language === 'es' ? 'Por qué StorageFy' : 'Why StorageFy'}
+            </h2>
+            <p className="text-primary-600 text-base sm:text-lg max-w-2xl mx-auto">
+              {language === 'es' ? 'Todo lo que necesitas para gestionar tu negocio de trasteros.' : 'Everything you need to manage your storage business.'}
+            </p>
+          </FadeInUp>
+          <FadeInUp className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 items-stretch">
+            <motion.div
+              whileHover={{ y: -6, scale: 1.02 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+              className="group flex flex-col sm:flex-row lg:flex-col items-center sm:items-start lg:items-center text-center sm:text-left lg:text-center gap-5 p-6 sm:p-8 rounded-2xl bg-white border-l-4 border-l-accent-500 shadow-lg shadow-primary-900/5 hover:shadow-xl hover:shadow-accent-500/15 transition-all duration-300"
+            >
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-accent-400 to-accent-600 flex items-center justify-center flex-shrink-0 shadow-lg shadow-accent-500/30 group-hover:scale-110 transition-transform">
+                <TrendingDown className="w-7 h-7 text-white" />
               </div>
               <div className="min-w-0 flex-1">
-                <h3 className="font-semibold text-primary-800 mb-1">
+                <h3 className="font-demo-display font-extrabold text-primary-800 mb-2 text-lg sm:text-xl">
                   {language === 'es' ? 'Reduce la morosidad hasta 80%' : 'Reduce delinquency up to 80%'}
                 </h3>
-                <p className="text-sm text-primary-600">
+                <p className="text-base text-primary-700 leading-relaxed">
                   {language === 'es'
                     ? 'Cobros automáticos, recordatorios y links de pago 24/7.'
                     : 'Automatic charges, reminders and 24/7 payment links.'}
                 </p>
               </div>
-            </div>
-            <div className="flex flex-col sm:flex-row lg:flex-col items-center sm:items-start lg:items-center text-center sm:text-left lg:text-center gap-4 p-5 rounded-xl bg-white/60 border border-primary-100/80 shadow-sm hover:shadow-md hover:border-accent-200/50 transition-all">
-              <div className="w-12 h-12 rounded-xl bg-accent-100 flex items-center justify-center flex-shrink-0 shrink-0">
-                <Zap className="w-6 h-6 text-accent-600" />
+            </motion.div>
+            <motion.div
+              whileHover={{ y: -6, scale: 1.02 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+              className="group flex flex-col sm:flex-row lg:flex-col items-center sm:items-start lg:items-center text-center sm:text-left lg:text-center gap-5 p-6 sm:p-8 rounded-2xl bg-white border-l-4 border-l-accent-500 shadow-lg shadow-primary-900/5 hover:shadow-xl hover:shadow-accent-500/15 transition-all duration-300"
+            >
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-accent-400 to-accent-600 flex items-center justify-center flex-shrink-0 shadow-lg shadow-accent-500/30 group-hover:scale-110 transition-transform">
+                <Zap className="w-7 h-7 text-white" />
               </div>
               <div className="min-w-0 flex-1">
-                <h3 className="font-semibold text-primary-800 mb-1">
+                <h3 className="font-demo-display font-extrabold text-primary-800 mb-2 text-lg sm:text-xl">
                   {language === 'es' ? 'Configura en 5 minutos' : 'Set up in 5 minutes'}
                 </h3>
-                <p className="text-sm text-primary-600">
+                <p className="text-base text-primary-700 leading-relaxed">
                   {language === 'es'
                     ? 'Onboarding guiado. Ubicaciones, unidades, clientes y contratos.'
                     : 'Guided onboarding. Locations, units, clients and contracts.'}
                 </p>
               </div>
-            </div>
-            <div className="flex flex-col sm:flex-row lg:flex-col items-center sm:items-start lg:items-center text-center sm:text-left lg:text-center gap-4 p-5 rounded-xl bg-white/60 border border-primary-100/80 shadow-sm hover:shadow-md hover:border-accent-200/50 transition-all">
-              <div className="w-12 h-12 rounded-xl bg-accent-100 flex items-center justify-center flex-shrink-0 shrink-0">
-                <CheckCircle className="w-6 h-6 text-accent-600" />
+            </motion.div>
+            <motion.div
+              whileHover={{ y: -6, scale: 1.02 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+              className="group flex flex-col sm:flex-row lg:flex-col items-center sm:items-start lg:items-center text-center sm:text-left lg:text-center gap-5 p-6 sm:p-8 rounded-2xl bg-white border-l-4 border-l-accent-500 shadow-lg shadow-primary-900/5 hover:shadow-xl hover:shadow-accent-500/15 transition-all duration-300"
+            >
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-accent-400 to-accent-600 flex items-center justify-center flex-shrink-0 shadow-lg shadow-accent-500/30 group-hover:scale-110 transition-transform">
+                <CheckCircle className="w-7 h-7 text-white" />
               </div>
               <div className="min-w-0 flex-1">
-                <h3 className="font-semibold text-primary-800 mb-1">
+                <h3 className="font-demo-display font-extrabold text-primary-800 mb-2 text-lg sm:text-xl">
                   {language === 'es' ? 'Adiós a Excel — Todo integrado' : 'Goodbye Excel — Everything integrated'}
                 </h3>
-                <p className="text-sm text-primary-600">
+                <p className="text-base text-primary-700 leading-relaxed">
                   {language === 'es'
                     ? 'Widget web 24/7, facturas, cobros, área de clientes, roles, exportaciones, control de puertas desde el móvil…'
                     : '24/7 web widget, invoices, payments, client area, roles, exports, remote door control from your phone…'}
                 </p>
               </div>
-            </div>
-            <div className="flex flex-col sm:flex-row lg:flex-col items-center sm:items-start lg:items-center text-center sm:text-left lg:text-center gap-4 p-5 rounded-xl bg-white/60 border border-primary-100/80 shadow-sm hover:shadow-md hover:border-accent-200/50 transition-all">
-              <div className="w-12 h-12 rounded-xl bg-accent-100 flex items-center justify-center flex-shrink-0 shrink-0">
-                <Shield className="w-6 h-6 text-accent-600" />
+            </motion.div>
+            <motion.div
+              whileHover={{ y: -6, scale: 1.02 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+              className="group flex flex-col sm:flex-row lg:flex-col items-center sm:items-start lg:items-center text-center sm:text-left lg:text-center gap-5 p-6 sm:p-8 rounded-2xl bg-white border-l-4 border-l-accent-500 shadow-lg shadow-primary-900/5 hover:shadow-xl hover:shadow-accent-500/15 transition-all duration-300"
+            >
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-accent-400 to-accent-600 flex items-center justify-center flex-shrink-0 shadow-lg shadow-accent-500/30 group-hover:scale-110 transition-transform">
+                <ArrowRightLeft className="w-7 h-7 text-white" />
               </div>
               <div className="min-w-0 flex-1">
-                <h3 className="font-semibold text-primary-800 mb-1">
-                  {language === 'es' ? 'Hecho en España' : 'Made in Spain'}
-                </h3>
-                <p className="text-sm text-primary-600">
-                  {language === 'es'
-                    ? 'Soporte en español, SEPA, facturación española.'
-                    : 'Spanish support, SEPA, Spanish invoicing.'}
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-col sm:flex-row lg:flex-col items-center sm:items-start lg:items-center text-center sm:text-left lg:text-center gap-4 p-5 rounded-xl bg-white/60 border border-primary-100/80 shadow-sm hover:shadow-md hover:border-accent-200/50 transition-all">
-              <div className="w-12 h-12 rounded-xl bg-accent-100 flex items-center justify-center flex-shrink-0 shrink-0">
-                <ArrowRightLeft className="w-6 h-6 text-accent-600" />
-              </div>
-              <div className="min-w-0 flex-1">
-                <h3 className="font-semibold text-primary-800 mb-1">
+                <h3 className="font-demo-display font-extrabold text-primary-800 mb-2 text-lg sm:text-xl">
                   {language === 'es' ? 'Migración + igualamos tu precio' : 'Migration + we match your price'}
                 </h3>
-                <p className="text-sm text-primary-600">
+                <p className="text-base text-primary-700 leading-relaxed">
                   {language === 'es'
                     ? '¿Usas otro sistema? Hasta 1 mayo 2026: migramos tus clientes gratis. ¿El tuyo es más barato? Igualamos tu precio.'
                     : 'Using another system? Until May 1, 2026: we migrate your clients for free. Is yours cheaper? We match your price.'}
                 </p>
               </div>
-            </div>
+            </motion.div>
           </FadeInUp>
         </div>
       </section>
@@ -768,7 +784,7 @@ export default function DemoTrialPage() {
               >
                 <div className="flex items-center gap-2.5 min-w-0">
                   <CheckCircle className="w-4 h-4 text-accent-600 flex-shrink-0" />
-                  <span className="font-semibold text-primary-800 text-sm">
+                  <span className="font-demo-display font-bold text-primary-800 text-base">
                     {language === 'es' ? '43 funciones incluidas' : '43 features included'}
                   </span>
                   <span className="text-primary-500 text-sm hidden sm:inline">
@@ -815,160 +831,6 @@ export default function DemoTrialPage() {
                 )}
               </AnimatePresence>
             </div>
-          </FadeInUp>
-        </div>
-      </section>
-
-      {/* Screenshot carousel */}
-      <section className="py-16 md:py-20 bg-gradient-to-b from-white to-primary-50/30">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <FadeInUp>
-          <h2 className="text-3xl md:text-4xl font-bold text-primary-800 mb-4 text-center">
-            {language === 'es' ? 'El software más completo del sector' : 'The most complete software in the industry'}
-          </h2>
-          <p className="text-primary-600 mb-4 text-center max-w-3xl mx-auto text-lg leading-relaxed">
-            {language === 'es'
-              ? 'No hay otra herramienta que integre unidades, clientes, contratos, cobros, facturación, widget de reservas 24/7, roles de usuario, exportaciones a Excel/PDF, control de puertas desde el móvil, planos interactivos y tablón de anuncios. Miles de negocios ya dejaron Excel atrás.'
-              : 'No other tool integrates units, clients, contracts, payments, invoicing, 24/7 booking widget, user roles, Excel/PDF exports, remote door control from your phone, interactive floor plans and announcement board. Thousands of businesses have left spreadsheets behind.'}
-          </p>
-          <p className="text-primary-500 mb-12 text-center max-w-2xl mx-auto">
-            {language === 'es'
-              ? 'Explora las capturas y descubre todo lo que el sistema puede hacer por ti.'
-              : 'Explore the screenshots and discover everything the system can do for you.'}
-          </p>
-
-          <div
-            className="relative"
-            onMouseEnter={() => setCarouselPaused(true)}
-            onMouseLeave={() => setCarouselPaused(false)}
-            onTouchStart={(e) => {
-              if (touchUnpauseRef.current) clearTimeout(touchUnpauseRef.current)
-              setCarouselPaused(true)
-              touchStartX.current = e.touches[0].clientX
-            }}
-            onTouchEnd={(e) => {
-              const diff = touchStartX.current - e.changedTouches[0].clientX
-              if (Math.abs(diff) > 60) {
-                if (diff > 0) {
-                  setCurrentSlide((prev) => (prev + 1) % slides.length)
-                  setSlideProgress(0)
-                } else {
-                  setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length)
-                  setSlideProgress(0)
-                }
-              }
-              touchUnpauseRef.current = setTimeout(() => setCarouselPaused(false), 2500)
-            }}
-          >
-            <div className="overflow-hidden rounded-2xl shadow-2xl border-2 border-primary-100 bg-primary-50 ring-2 ring-accent-500/10">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={currentSlide}
-                  initial={{ opacity: prefersReducedMotion ? 1 : 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: prefersReducedMotion ? 0.15 : 0.5, ease: 'easeInOut' }}
-                  className="relative"
-                >
-                  <motion.div
-                    className="aspect-video relative w-full bg-primary-50 overflow-hidden"
-                    animate={prefersReducedMotion ? { scale: 1 } : { scale: [1, 1.02] }}
-                    transition={
-                      prefersReducedMotion
-                        ? { duration: 0 }
-                        : { duration: CAROUSEL_INTERVAL / 1000, ease: 'easeOut' }
-                    }
-                  >
-                    <Image
-                      src={slides[currentSlide].image}
-                      alt={language === 'es' ? slides[currentSlide].titleEs : slides[currentSlide].titleEn}
-                      fill
-                      className="object-contain object-center"
-                      sizes="(max-width: 768px) 100vw, 1024px"
-                      priority
-                    />
-                  </motion.div>
-                  {/* Overlay solo en desktop - en mobile el texto va abajo */}
-                  <div className="hidden md:block absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-6 pb-4 text-white">
-                    <h3 className="text-xl md:text-2xl font-bold mb-1">
-                      {language === 'es' ? slides[currentSlide].titleEs : slides[currentSlide].titleEn}
-                    </h3>
-                    <p className="text-gray-200 text-sm md:text-base mb-3">
-                      {language === 'es' ? slides[currentSlide].descEs : slides[currentSlide].descEn}
-                    </p>
-                    <div className="h-1 bg-white/20 rounded-full overflow-hidden">
-                      <motion.div
-                        className="h-full bg-accent-500 rounded-full"
-                        animate={{ width: `${slideProgress}%` }}
-                        transition={{ duration: 0.1 }}
-                      />
-                    </div>
-                  </div>
-                  {/* Texto debajo en mobile - screenshot visible sin tapar */}
-                  <div className="md:hidden p-4 bg-white border-t border-primary-100">
-                    <h3 className="text-lg font-bold text-primary-800 mb-1">
-                      {language === 'es' ? slides[currentSlide].titleEs : slides[currentSlide].titleEn}
-                    </h3>
-                    <p className="text-primary-600 text-sm">
-                      {language === 'es' ? slides[currentSlide].descEs : slides[currentSlide].descEn}
-                    </p>
-                    <div className="mt-3 h-1 bg-primary-100 rounded-full overflow-hidden">
-                      <motion.div
-                        className="h-full bg-accent-500 rounded-full"
-                        animate={{ width: `${slideProgress}%` }}
-                        transition={{ duration: 0.1 }}
-                      />
-                    </div>
-                  </div>
-                </motion.div>
-              </AnimatePresence>
-            </div>
-
-            {/* Controles tipo video */}
-            <div className="flex items-center justify-center gap-3 sm:gap-4 mt-6 flex-wrap">
-              <button
-                onClick={() => goToSlide((currentSlide - 1 + slides.length) % slides.length)}
-                className="w-12 h-12 rounded-full bg-white shadow-lg border border-primary-100 flex items-center justify-center text-primary-700 hover:bg-primary-50 transition-colors"
-                aria-label={language === 'es' ? 'Anterior' : 'Previous'}
-              >
-                <ChevronLeft className="w-6 h-6" />
-              </button>
-              <button
-                onClick={() => setCarouselPaused((p) => !p)}
-                className="w-12 h-12 rounded-full bg-white shadow-lg border border-primary-100 flex items-center justify-center text-primary-700 hover:bg-primary-50 transition-colors"
-                aria-label={carouselPaused ? (language === 'es' ? 'Reproducir' : 'Play') : (language === 'es' ? 'Pausar' : 'Pause')}
-              >
-                {carouselPaused ? (
-                  <Play className="w-6 h-6 ml-0.5" />
-                ) : (
-                  <Pause className="w-6 h-6" />
-                )}
-              </button>
-              <div className="flex gap-1.5">
-                {slides.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => goToSlide(i)}
-                    className={cn(
-                      'h-1.5 rounded-full transition-all',
-                      i === currentSlide ? 'bg-accent-500 w-8' : 'bg-primary-200 hover:bg-primary-300 w-1.5'
-                    )}
-                    aria-label={`${language === 'es' ? 'Ir a slide' : 'Go to slide'} ${i + 1}`}
-                  />
-                ))}
-              </div>
-              <button
-                onClick={() => goToSlide((currentSlide + 1) % slides.length)}
-                className="w-12 h-12 rounded-full bg-white shadow-lg border border-primary-100 flex items-center justify-center text-primary-700 hover:bg-primary-50 transition-colors"
-                aria-label={language === 'es' ? 'Siguiente' : 'Next'}
-              >
-                <ChevronRight className="w-6 h-6" />
-              </button>
-              <span className="text-sm text-primary-500 font-medium min-w-[3rem] text-center">
-                {currentSlide + 1} / {slides.length}
-              </span>
-            </div>
-          </div>
           </FadeInUp>
         </div>
       </section>
@@ -1112,13 +974,13 @@ export default function DemoTrialPage() {
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-accent-400/10 rounded-full blur-3xl -translate-y-1/2" />
         <div ref={formRef} className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <FadeInUp>
-          <div className="bg-gradient-to-r from-accent-50 to-green-50 border-2 border-accent-200 rounded-xl p-5 mb-6 text-center">
-            <p className="text-primary-700 font-medium mb-2">
+          <div className="bg-gradient-to-r from-accent-50 to-green-50 border-2 border-accent-200 rounded-xl p-6 mb-6 text-center">
+            <p className="text-primary-700 font-semibold mb-2 text-base">
               {language === 'es'
                 ? '¿Usas otro sistema? Migramos todos tus clientes gratis hasta el 1 de mayo de 2026.'
                 : 'Using another system? We migrate all your clients for free until May 1, 2026.'}
             </p>
-            <p className="text-lg font-bold text-accent-700">
+            <p className="text-xl font-extrabold text-accent-700 font-demo-display">
               {language === 'es'
                 ? '¿Tu sistema es más barato? Igualamos tu precio.'
                 : 'Is your system cheaper? We match your price.'}
@@ -1134,61 +996,73 @@ export default function DemoTrialPage() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-white rounded-2xl shadow-2xl shadow-accent-500/10 border-2 border-primary-100 p-8 md:p-10 hover:shadow-accent-500/15 transition-shadow"
+              className="relative overflow-hidden rounded-3xl bg-white shadow-2xl shadow-primary-900/10 ring-1 ring-primary-100 p-8 md:p-10 lg:p-12 hover:shadow-accent-500/20 transition-all duration-300 border-l-4 border-l-accent-500"
             >
-              <h2 className="text-2xl md:text-3xl font-bold text-primary-800 mb-3">
+              {/* Decorative gradient corner */}
+              <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-accent-100/40 to-transparent rounded-bl-full -translate-y-1/2 translate-x-1/2" />
+              <div className="absolute -top-24 -right-24 w-48 h-48 bg-accent-500/5 rounded-full blur-2xl" />
+
+              {/* Badge */}
+              <div className="relative inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-50 border border-accent-200/60 mb-6">
+                <Zap className="w-4 h-4 text-accent-600" />
+                <span className="text-sm font-semibold text-accent-700">
+                  {language === 'es' ? 'Acceso en 30 segundos' : 'Access in 30 seconds'}
+                </span>
+              </div>
+
+              <h2 className="relative font-demo-display text-3xl md:text-4xl lg:text-[2.5rem] font-extrabold text-primary-800 mb-4 tracking-tight">
                 {language === 'es'
                   ? 'Accede a la demo ahora'
                   : 'Access the demo now'}
               </h2>
-              <p className="text-primary-600 mb-6 leading-relaxed">
+              <p className="relative text-primary-600 mb-8 leading-relaxed text-base md:text-lg max-w-lg">
                 {language === 'es'
                   ? 'Introduce tu nombre y email y accede al software más completo del sector. Explora todo lo que StorageFy hace —desde el widget de reservas hasta el control de puertas desde el móvil— con datos de ejemplo. Sin compromiso.'
                   : 'Enter your name and email and access the most complete software in the industry. Explore everything StorageFy does —from the booking widget to remote door control from your phone— with sample data. No commitment.'}
               </p>
 
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form onSubmit={handleSubmit} className="relative space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-primary-700 mb-1">
+                  <label className="block text-sm font-semibold text-primary-700 mb-2">
                     {language === 'es' ? 'Nombre' : 'Name'}
                   </label>
-                  <div className="relative">
-                    <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-primary-400" />
+                  <div className="relative group">
+                    <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-primary-400 group-focus-within:text-accent-500 transition-colors" />
                     <input
                       type="text"
                       name="name"
                       value={formData.name}
                       onChange={handleInputChange}
                       required
-                      className="w-full pl-10 pr-4 py-3 rounded-lg border border-primary-200 text-primary-800 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent"
+                      className="w-full pl-12 pr-4 py-3.5 rounded-xl border-2 border-primary-200 text-primary-800 placeholder:text-primary-400 focus:outline-none focus:ring-2 focus:ring-accent-500/30 focus:border-accent-500 transition-all"
                       placeholder={language === 'es' ? 'Tu nombre' : 'Your name'}
                     />
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-primary-700 mb-1">
+                  <label className="block text-sm font-semibold text-primary-700 mb-2">
                     Email
                   </label>
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-primary-400" />
+                  <div className="relative group">
+                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-primary-400 group-focus-within:text-accent-500 transition-colors" />
                     <input
                       type="email"
                       name="email"
                       value={formData.email}
                       onChange={handleInputChange}
                       required
-                      className="w-full pl-10 pr-4 py-3 rounded-lg border border-primary-200 text-primary-800 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent"
+                      className="w-full pl-12 pr-4 py-3.5 rounded-xl border-2 border-primary-200 text-primary-800 placeholder:text-primary-400 focus:outline-none focus:ring-2 focus:ring-accent-500/30 focus:border-accent-500 transition-all"
                       placeholder="tu@email.com"
                     />
                   </div>
                 </div>
                 {error && (
-                  <p className="text-red-600 text-sm">{error}</p>
+                  <p className="text-red-600 text-sm font-medium">{error}</p>
                 )}
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full px-6 py-4 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-semibold rounded-xl hover:from-accent-600 hover:to-accent-700 transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-70 shadow-lg hover:shadow-xl"
+                  className="w-full px-6 py-4 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-bold rounded-xl hover:from-accent-600 hover:to-accent-700 transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-70 shadow-lg shadow-accent-500/25 hover:shadow-xl hover:shadow-accent-500/30 hover:-translate-y-0.5"
                 >
                   {isSubmitting
                     ? language === 'es'
@@ -1230,7 +1104,7 @@ export default function DemoTrialPage() {
               <div className="flex items-center gap-3 mb-6">
                 <CheckCircle className="w-10 h-10 text-accent-500 flex-shrink-0" />
                 <div>
-                  <h2 className="text-2xl font-bold text-primary-800">
+                  <h2 className="text-2xl md:text-3xl font-extrabold text-primary-800 tracking-tight">
                     {language === 'es'
                       ? '¡Listo! Ya puedes entrar'
                       : 'Ready! You can log in now'}
