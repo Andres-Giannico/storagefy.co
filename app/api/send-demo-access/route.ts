@@ -127,20 +127,28 @@ export async function POST(request: NextRequest) {
     // Enviar credenciales al cliente vía API de storagefy.app
     const apiKey = process.env.STORAGEFY_API_KEY || process.env.SIGNUP_API_KEY || ''
     if (apiKey) {
-      fetch('https://storagefy.app/api/public/demo-access', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-API-Key': apiKey,
-        },
-        body: JSON.stringify({
-          email,
-          name: name || '',
-          lang: language === 'en' ? 'en' : 'es',
-        }),
-      }).catch((err) => {
+      try {
+        const credRes = await fetch('https://storagefy.app/api/public/demo-access', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-API-Key': apiKey,
+          },
+          body: JSON.stringify({
+            email,
+            name: name || '',
+            lang: language === 'en' ? 'en' : 'es',
+          }),
+        })
+        const credBody = await credRes.text()
+        if (!credRes.ok) {
+          console.error('[DEMO] API storagefy.app rechazó la petición:', credRes.status, credBody)
+        } else {
+          console.log('[DEMO] Credenciales enviadas al cliente:', email)
+        }
+      } catch (err) {
         console.error('[DEMO] Error enviando credenciales al cliente:', err)
-      })
+      }
     } else {
       console.warn('[DEMO] STORAGEFY_API_KEY/SIGNUP_API_KEY no configurada, no se envía email al cliente')
     }
