@@ -19,7 +19,9 @@ import {
   Clock,
   TrendingUp,
   Layout,
-  MessageSquare
+  MessageSquare,
+  Lock,
+  Plug2
 } from 'lucide-react'
 import { useLanguage } from '@/lib/context/LanguageContext'
 import FadeInUp from '@/components/animations/FadeInUp'
@@ -40,14 +42,36 @@ const Features = () => {
   // Features data with translations
   const getFeatures = (lang: string) => [
     {
-      icon: Building2,
-      title: lang === 'es' ? 'Gestión Completa de Locaciones' : 'Complete Location Management',
+      icon: Lock,
+      title: lang === 'es' ? 'Control de accesos y automatización' : 'Access Control & Automation',
       description: lang === 'es' 
-        ? 'Administra múltiples trasteros desde un solo panel con métricas independientes y configuración específica por centro.'
-        : 'Manage multiple storage facilities from a single dashboard with independent metrics and location-specific configuration.',
+        ? 'Acceso remoto, apertura automática y centro autónomo. Controla el acceso a tus unidades desde el panel, sin necesidad de personal presencial.'
+        : 'Remote access, automatic opening and autonomous center. Control unit access from the dashboard, no on-site staff required.',
       benefits: lang === 'es' 
-        ? ['Múltiples centros', 'Configuración independiente', 'Métricas por locación', 'Vista geográfica']
-        : ['Multiple facilities', 'Independent configuration', 'Location metrics', 'Geographic view'],
+        ? ['Acceso remoto', 'Apertura automática', 'Centro autónomo', 'Operación sin personal']
+        : ['Remote access', 'Automatic opening', 'Autonomous center', 'Unmanned operation'],
+      color: 'blue'
+    },
+    {
+      icon: Zap,
+      title: lang === 'es' ? 'Bloqueo por impago' : 'Block on Non-Payment',
+      description: lang === 'es' 
+        ? 'Si no paga, el sistema actúa. Conexión automática entre cobros y acceso: cobro y operativa unidos de forma directa y clara.'
+        : 'If they don\'t pay, the system acts. Automatic connection between payments and access: billing and operations linked directly.',
+      benefits: lang === 'es' 
+        ? ['Cobro-acceso unificado', 'Actuación automática', 'Menos morosidad', 'Control total']
+        : ['Payment-access unified', 'Automatic action', 'Less delinquency', 'Full control'],
+      color: 'amber'
+    },
+    {
+      icon: Building2,
+      title: lang === 'es' ? 'Multi-sede: robusto para operadores grandes' : 'Multi-Site: Robust for Large Operators',
+      description: lang === 'es' 
+        ? 'No solo fácil de usar: sólido para cadenas, multi-centro y crecimiento. Administra múltiples centros desde un solo panel con métricas independientes.'
+        : 'Not just easy to use: solid for chains, multi-center and growth. Manage multiple facilities from one dashboard with independent metrics.',
+      benefits: lang === 'es' 
+        ? ['Múltiples centros', 'Escalable', 'Métricas por locación', 'Preparado para crecer']
+        : ['Multiple facilities', 'Scalable', 'Location metrics', 'Ready to scale'],
       color: 'blue'
     },
     {
@@ -85,24 +109,24 @@ const Features = () => {
     },
     {
       icon: CreditCard,
-      title: lang === 'es' ? 'Cobros automáticos y menos morosidad' : 'Automatic payments and less delinquency',
+      title: lang === 'es' ? 'SEPA, cobros bancarios y recobro' : 'SEPA, Bank Payments & Recovery',
       description: lang === 'es'
-        ? 'Cobra más rápido con links de pago 24/7, recordatorios automáticos y reducción de morosidad del 80%.'
-        : 'Get paid faster with 24/7 payment links, automatic reminders and 80% reduction in delinquency.',
+        ? 'Cobros profesionales: Stripe, SEPA, Redsys, recobro automático. La parte financiera visible, profesional y estratégica para tu negocio.'
+        : 'Professional payments: Stripe, SEPA, Redsys, automatic recovery. Financial control visible, professional and strategic for your business.',
       benefits: lang === 'es'
-        ? ['Links de pago 24/7', 'Recordatorios automáticos', 'Integración Stripe', 'Reducción morosidad 80%']
-        : ['24/7 payment links', 'Automatic reminders', 'Stripe integration', '80% delinquency reduction'],
+        ? ['SEPA y Redsys', 'Recobro automático', 'Links de pago 24/7', 'Reducción morosidad 80%']
+        : ['SEPA & Redsys', 'Automatic recovery', '24/7 payment links', '80% delinquency reduction'],
       color: 'emerald'
     },
     {
       icon: FileBarChart,
-      title: lang === 'es' ? 'Reportes y Analytics Avanzados' : 'Advanced Reports & Analytics',
+      title: lang === 'es' ? 'Reporting e inteligencia de negocio' : 'Reporting & Business Intelligence',
       description: lang === 'es'
-        ? 'Dashboard completo con métricas en tiempo real, KPIs visuales, exportación PDF y análisis predictivo.'
-        : 'Complete dashboard with real-time metrics, visual KPIs, PDF export and predictive analytics.',
+        ? 'No solo gestión: inteligencia de negocio. Dashboards, KPIs, ocupación, ingresos, morosidad, rentabilidad por centro y evolución del negocio.'
+        : 'Not just management: business intelligence. Dashboards, KPIs, occupancy, revenue, delinquency, profitability per center and business evolution.',
       benefits: lang === 'es'
-        ? ['Métricas en tiempo real', 'KPIs visuales', 'Exportación PDF', 'Análisis predictivo']
-        : ['Real-time metrics', 'Visual KPIs', 'PDF export', 'Predictive analytics'],
+        ? ['Dashboards y KPIs', 'Ocupación e ingresos', 'Morosidad y rentabilidad', 'Exportación PDF']
+        : ['Dashboards & KPIs', 'Occupancy & revenue', 'Delinquency & profitability', 'PDF export'],
       color: 'indigo'
     },
     {
@@ -148,6 +172,17 @@ const Features = () => {
         ? ['Captación 24/7', 'Catálogo en tiempo real', 'Conversión automática', 'Aumento leads 300-500%']
         : ['24/7 capture', 'Real-time catalog', 'Automatic conversion', '300-500% lead increase'],
       color: 'cyan'
+    },
+    {
+      icon: Plug2,
+      title: lang === 'es' ? 'Integraciones y ecosistema' : 'Integrations & Ecosystem',
+      description: lang === 'es'
+        ? 'Integración con accesos, banca, contabilidad y operativa. La simplicidad no significa falta de profundidad: conectamos con tu stack.'
+        : 'Integration with access systems, banking, accounting and operations. Simplicity doesn\'t mean lack of depth: we connect with your stack.',
+      benefits: lang === 'es'
+        ? ['Stripe y pagos', 'Widget para tu web', 'Contabilidad (próximamente)', 'APIs disponibles']
+        : ['Stripe & payments', 'Widget for your web', 'Accounting (coming)', 'APIs available'],
+      color: 'teal'
     }
   ]
 
@@ -256,31 +291,31 @@ const Features = () => {
             <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
               {[
                 {
-                  icon: Layout,
+                  icon: Lock,
                   title: language === 'es' 
-                    ? 'Gestión de centros y unidades' 
-                    : 'Center and unit management',
+                    ? 'Accesos, automatización y control' 
+                    : 'Access control and automation',
                   description: language === 'es'
-                    ? 'Planos, ocupación y precios.'
-                    : 'Floor plans, occupancy and pricing.'
+                    ? 'Centro autónomo, acceso remoto, bloqueo por impago.'
+                    : 'Autonomous center, remote access, block on non-payment.'
                 },
                 {
                   icon: Users,
                   title: language === 'es'
-                    ? 'Clientes, contratos y pagos automáticos'
-                    : 'Clients, contracts and automatic payments',
+                    ? 'Clientes, contratos, SEPA y cobros'
+                    : 'Clients, contracts, SEPA and payments',
                   description: language === 'es'
-                    ? 'Todo integrado con Stripe.'
-                    : 'All integrated with Stripe.'
+                    ? 'Cobros profesionales, recobro automático.'
+                    : 'Professional payments, automatic recovery.'
                 },
                 {
-                  icon: Globe,
+                  icon: Plug2,
                   title: language === 'es'
-                    ? 'Reservas online y widget para tu web'
-                    : 'Online reservations and widget for your website',
+                    ? 'Reporting, multi-sede e integraciones'
+                    : 'Reporting, multi-site and integrations',
                   description: language === 'es'
-                    ? 'Disponible 24/7 sin intermediarios.'
-                    : 'Available 24/7 without intermediaries.'
+                    ? 'Robusto para operadores grandes.'
+                    : 'Robust for large operators.'
                 }
               ].map((pilar, index) => {
                 const Icon = pilar.icon
@@ -377,7 +412,8 @@ const Features = () => {
               indigo: 'from-indigo-500 to-indigo-600 bg-indigo-100 text-indigo-600',
               pink: 'from-pink-500 to-pink-600 bg-pink-100 text-pink-600',
               teal: 'from-teal-500 to-teal-600 bg-teal-100 text-teal-600',
-              rose: 'from-rose-500 to-rose-600 bg-rose-100 text-rose-600'
+              rose: 'from-rose-500 to-rose-600 bg-rose-100 text-rose-600',
+              amber: 'from-amber-500 to-amber-600 bg-amber-100 text-amber-600'
             }
 
             return (

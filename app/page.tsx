@@ -9,15 +9,15 @@ import FinalCTA from '@/components/sections/FinalCTA'
 import StructuredData from '@/components/seo/StructuredData'
 
 export const metadata: Metadata = {
-  title: 'StorageFy - Gestión de Trasteros y Parkings | Software SaaS',
-  description: 'Software de gestión para trasteros y parkings. Reservas online, cobros automáticos y control total de unidades. Gestiona clientes, contratos y pagos en una sola plataforma.',
-  keywords: ['software de trasteros', 'gestión de parkings', 'software gestión almacenamiento', 'sistema de gestión trasteros', 'alquiler parking largo plazo'],
+  title: 'StorageFy - Software Potente para Self Storage y Parkings | SaaS',
+  description: 'Software potente y automatizado para trasteros y parkings. Accesos, automatización, multi-sede, SEPA, reporting e integraciones. Fácil de implantar, potente para escalar.',
+  keywords: ['software de trasteros', 'gestión de parkings', 'software self storage', 'accesos automatización', 'SEPA cobros', 'multi-sede', 'software gestión almacenamiento'],
   alternates: {
     canonical: 'https://storagefy.co',
   },
   openGraph: {
-    title: 'StorageFy - Gestión de Trasteros y Parkings',
-    description: 'Software de gestión para trasteros y parkings. Reservas online, cobros automáticos y control total de unidades.',
+    title: 'StorageFy - Software Potente para Self Storage y Parkings',
+    description: 'Software potente y automatizado. Accesos, automatización, multi-sede, SEPA, reporting e integraciones. Fácil de implantar, potente para escalar.',
     url: 'https://storagefy.co',
     siteName: 'StorageFy',
     images: [
@@ -33,8 +33,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'StorageFy - Gestión de Trasteros y Parkings',
-    description: 'Software de gestión para trasteros y parkings. Reservas online y cobros automáticos.',
+    title: 'StorageFy - Software Potente para Self Storage y Parkings',
+    description: 'Software potente y automatizado. Accesos, multi-sede, SEPA, reporting e integraciones.',
     images: ['/logo.png'],
   },
 }
@@ -60,16 +60,16 @@ export default function Home() {
       bestRating: '5',
       worstRating: '1',
     },
-    description: 'Software de gestión avanzada para trasteros y parkings. Controla unidades, clientes, contratos y pagos en una sola plataforma.',
+    description: 'Software potente y automatizado para self storage y parkings. Accesos, automatización, multi-sede, SEPA, reporting e integraciones en una plataforma.',
     url: 'https://storagefy.co',
     screenshot: 'https://storagefy.co/logo.png',
     featureList: [
-      'Gestión de unidades con dimensiones precisas',
-      'CRM integrado para clientes',
-      'Contratos digitales',
-      'Sistema de pagos integrado',
-      'Reportes y analytics',
-      'Planos interactivos',
+      'Control de accesos y automatización',
+      'Multi-sede y gestión de locaciones',
+      'SEPA, cobros bancarios y recobro',
+      'Reporting e inteligencia de negocio',
+      'Integraciones (Stripe, widget, contabilidad)',
+      'Bloqueo por impago',
     ],
   }
 

@@ -2,7 +2,7 @@
 
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
-import { ArrowRight, TrendingUp, Users, DollarSign, CheckCircle, CreditCard, Clock, MapPin, BarChart2, FileText, Calendar, Package, Euro, Wallet } from 'lucide-react'
+import { ArrowRight, TrendingUp, Users, DollarSign, CheckCircle, CreditCard, Clock, MapPin, BarChart2, FileText, Calendar, Package, Euro, Wallet, Lock, Zap, Plug2, Shield } from 'lucide-react'
 import Image from 'next/image'
 import { useLanguage } from '@/lib/context/LanguageContext'
 import LinkWithLang from '@/components/common/LinkWithLang'
@@ -45,10 +45,14 @@ const Hero = () => {
 
   const features = [
     { icon: MapPin, label: language === 'es' ? 'multi-sede' : 'multi-location' },
-    { icon: CreditCard, label: language === 'es' ? 'facturación automática' : 'automated billing' },
-    { icon: BarChart2, label: language === 'es' ? 'analytics de ocupación' : 'occupancy analytics' },
+    { icon: Lock, label: language === 'es' ? 'accesos' : 'access control' },
+    { icon: Zap, label: language === 'es' ? 'automatización' : 'automation' },
+    { icon: CreditCard, label: language === 'es' ? 'SEPA y cobros' : 'SEPA & payments' },
+    { icon: BarChart2, label: language === 'es' ? 'reporting' : 'reporting' },
     { icon: FileText, label: language === 'es' ? 'contratos + facturas' : 'contracts + invoices' },
+    { icon: Plug2, label: language === 'es' ? 'integraciones' : 'integrations' },
     { icon: Calendar, label: language === 'es' ? 'reservas online' : 'online booking' },
+    { icon: Shield, label: language === 'es' ? 'prueba social' : 'social proof' },
   ]
 
   return (
@@ -80,14 +84,14 @@ const Hero = () => {
           <div className="space-y-6">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.08] tracking-tight bg-gradient-to-r from-white via-zinc-300 to-accent-400 bg-clip-text text-transparent">
               {language === 'es' 
-                ? 'El software de gestión moderno para operadores de self storage y parkings'
-                : 'The modern management software for self-storage and parking operators'}
+                ? 'Software potente y automatizado para operadores de self storage y parkings'
+                : 'Powerful, automated software for self-storage and parking operators'}
             </h1>
 
             <p className="text-lg lg:text-xl text-zinc-400 leading-relaxed max-w-xl">
               {language === 'es' 
-                ? 'Multi-sede, facturación automática, analytics de ocupación, contratos y facturas, reservas online.'
-                : 'Multi-location, automated billing, occupancy analytics, contracts + invoices, online booking.'}
+                ? 'Fácil de implantar, potente para escalar. Accesos, automatización, multi-sede, SEPA, reporting e integraciones en una sola plataforma.'
+                : 'Easy to implement, powerful to scale. Access control, automation, multi-location, SEPA, reporting and integrations in one platform.'}
             </p>
 
             {/* Feature pills - refined */}

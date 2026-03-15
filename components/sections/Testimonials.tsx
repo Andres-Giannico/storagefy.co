@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Star, TrendingUp, Clock, DollarSign, Quote } from 'lucide-react'
+import { Star, TrendingUp, Clock, DollarSign, Quote, Building2, Users, Shield } from 'lucide-react'
 import Image from 'next/image'
 import { useLanguage } from '@/lib/context/LanguageContext'
 import FadeInUp from '@/components/animations/FadeInUp'
@@ -130,6 +130,39 @@ const Testimonials = () => {
               : 'Companies of all sizes trust StorageFy to transform their management'
             }
           </p>
+        </FadeInUp>
+
+        {/* Autoridad de mercado - Prueba social */}
+        <FadeInUp className="mb-12">
+          <div className="flex flex-wrap justify-center gap-8 lg:gap-12 py-6 px-6 bg-white/80 rounded-2xl border border-primary-100 shadow-sm">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-accent-500 to-accent-600 flex items-center justify-center">
+                <Building2 className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-primary-800">150+</div>
+                <div className="text-sm text-primary-600">{language === 'es' ? 'Operadores activos' : 'Active operators'}</div>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-accent-500 to-accent-600 flex items-center justify-center">
+                <Users className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-primary-800">10.000+</div>
+                <div className="text-sm text-primary-600">{language === 'es' ? 'Clientes gestionados' : 'Clients managed'}</div>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-accent-500 to-accent-600 flex items-center justify-center">
+                <Shield className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-primary-800">4.8/5</div>
+                <div className="text-sm text-primary-600">{language === 'es' ? 'Valoración media' : 'Average rating'}</div>
+              </div>
+            </div>
+          </div>
         </FadeInUp>
 
         {/* Testimonials Grid */}
