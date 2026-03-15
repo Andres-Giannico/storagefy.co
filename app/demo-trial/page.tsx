@@ -352,7 +352,7 @@ export default function DemoTrialPage() {
           >
             <div className="max-w-6xl mx-auto px-3 sm:px-4 py-3 flex items-center justify-between gap-2">
               <span className="font-semibold text-primary-800 hidden sm:block">
-                {language === 'es' ? 'Prueba la demo en 2 minutos' : 'Try the demo in 2 minutes'}
+                {language === 'es' ? 'Prueba la demo en 30 segundos' : 'Try the demo in 30 seconds'}
               </span>
               <button
                 onClick={scrollToForm}

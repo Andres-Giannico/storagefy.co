@@ -185,49 +185,34 @@ export default function Chatbot() {
 
   return (
     <>
-      {/* Botón flotante: WhatsApp en demo-trial, Chatbot en el resto */}
+      {/* Botón flotante: WhatsApp con foto de Diego (igual que demo-trial) en todas las páginas */}
       <AnimatePresence mode="wait">
-        {isDemoTrial ? (
-          <motion.div
-            key="whatsapp"
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0, opacity: 0 }}
-            className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex flex-col items-end gap-1.5 sm:gap-2"
+        <motion.div
+          key="whatsapp"
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0, opacity: 0 }}
+          className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex flex-col items-end gap-1.5 sm:gap-2"
+        >
+          <span className="text-xs sm:text-sm font-semibold text-white bg-accent-500 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg shadow-md">
+            {language === 'es' ? 'Contáctanos' : 'Contact us'}
+          </span>
+          <a
+            href={WHATSAPP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block w-14 h-14 sm:w-16 sm:h-16 rounded-full shadow-2xl overflow-hidden ring-2 ring-white/50 hover:scale-110 active:scale-95 transition-transform"
+            aria-label="Contactar por WhatsApp"
           >
-            <span className="text-xs sm:text-sm font-semibold text-white bg-accent-500 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg shadow-md">
-              {language === 'es' ? 'Contáctanos' : 'Contact us'}
-            </span>
-            <a
-              href={WHATSAPP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block w-14 h-14 sm:w-16 sm:h-16 rounded-full shadow-2xl overflow-hidden ring-2 ring-white/50 hover:scale-110 active:scale-95 transition-transform"
-              aria-label="Contactar por WhatsApp"
-            >
-              <Image
-                src="/images/whatsapp-button.webp"
-                alt="Contactar por WhatsApp"
-                width={64}
-                height={64}
-                className="w-full h-full object-cover"
-              />
-            </a>
-          </motion.div>
-        ) : !isOpen ? (
-          <motion.button
-            key="chatbot"
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0, opacity: 0 }}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={() => setIsOpen(true)}
-            className="fixed bottom-6 right-6 w-16 h-16 bg-gradient-to-br from-accent-500 to-accent-600 text-white rounded-full shadow-2xl flex items-center justify-center z-50 hover:shadow-accent-500/50 transition-shadow"
-          >
-            <MessageCircle className="w-7 h-7" />
-          </motion.button>
-        ) : null}
+            <Image
+              src="/images/whatsapp-button.webp"
+              alt="Contactar por WhatsApp"
+              width={64}
+              height={64}
+              className="w-full h-full object-cover"
+            />
+          </a>
+        </motion.div>
       </AnimatePresence>
 
       {/* Chatbot Window - no mostrar en demo-trial */}

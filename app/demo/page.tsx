@@ -303,8 +303,8 @@ export default function DemoPage() {
                     <Clock className="w-5 h-5 text-green-600 flex-shrink-0" />
                     <p className="text-sm font-semibold text-green-700">
                       {language === 'es'
-                        ? 'Prueba la demo en 2 minutos'
-                        : 'Try the demo in 2 minutes'}
+                        ? 'Prueba la demo en 30 segundos'
+                        : 'Try the demo in 30 seconds'}
                     </p>
                   </div>
                 </div>
@@ -573,7 +573,7 @@ export default function DemoPage() {
           <div className="mt-12 text-center">
             <LinkWithLang href="/demo-trial">
               <span className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-semibold rounded-xl hover:from-accent-600 hover:to-accent-700 transition-all shadow-lg hover:shadow-accent-500/30">
-                {language === 'es' ? 'Probar demo en 2 minutos' : 'Try demo in 2 minutes'}
+                {language === 'es' ? 'Probar demo en 30 segundos' : 'Try demo in 30 seconds'}
                 <ArrowRight className="w-5 h-5" />
               </span>
             </LinkWithLang>
@@ -726,8 +726,8 @@ export default function DemoPage() {
             </h2>
             <p className="text-xl text-gray-200 max-w-2xl mx-auto mb-8">
               {language === 'es'
-                ? 'Accede a la demo en 2 minutos. Sin tarjeta de crédito. Credenciales al instante.'
-                : 'Access the demo in 2 minutes. No credit card required. Instant credentials.'
+                ? 'Accede a la demo en 30 segundos. Sin tarjeta de crédito. Credenciales al instante.'
+                : 'Access the demo in 30 seconds. No credit card required. Instant credentials.'
               }
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

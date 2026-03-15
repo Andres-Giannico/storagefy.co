@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
+import { createContext, useContext, useState, useEffect, useRef, ReactNode } from 'react'
 
 interface LanguageContextType {
   language: 'es' | 'en'
@@ -51,36 +51,32 @@ interface LanguageProviderProps {
 }
 
 export function LanguageProvider({ children }: LanguageProviderProps) {
-  // Cargar idioma desde localStorage o usar 'es' por defecto
-  const [language, setLanguageState] = useState<'es' | 'en'>(() => {
-    if (typeof window !== 'undefined') {
-      // Primero intentar leer de la URL
+  // Siempre iniciar con 'es' para evitar hydration mismatch (server no tiene acceso a URL/localStorage)
+  const [language, setLanguageState] = useState<'es' | 'en'>('es')
+  const hasInitialized = useRef(false)
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    if (!hasInitialized.current) {
+      hasInitialized.current = true
       const url = new URL(window.location.href)
       const langParam = url.searchParams.get('lang')
       if (langParam === 'en' || langParam === 'es') {
-        return langParam
+        setLanguageState(langParam)
+        return
       }
-      // Si no hay en URL, leer de localStorage
       const saved = localStorage.getItem('storagefy-language')
       if (saved === 'en' || saved === 'es') {
-        return saved
+        setLanguageState(saved)
       }
+      return
     }
-    return 'es'
-  })
-
-  // Sincronizar idioma con localStorage y URL
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      // Guardar en localStorage
-      localStorage.setItem('storagefy-language', language)
-      
-      // Actualizar URL sin recargar la página
-      const url = new URL(window.location.href)
-      if (url.searchParams.get('lang') !== language) {
-        url.searchParams.set('lang', language)
-        window.history.replaceState({}, '', url.toString())
-      }
+    // Sincronizar a localStorage y URL cuando cambie (tras init)
+    localStorage.setItem('storagefy-language', language)
+    const url = new URL(window.location.href)
+    if (url.searchParams.get('lang') !== language) {
+      url.searchParams.set('lang', language)
+      window.history.replaceState({}, '', url.toString())
     }
   }, [language])
 

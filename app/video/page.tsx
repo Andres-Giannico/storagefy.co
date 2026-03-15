@@ -13,17 +13,34 @@ import {
   CheckCircle,
   Zap,
   Shield,
+  User,
+  Mail,
+  Lock,
+  ShieldCheck,
+  Copy,
+  Check,
 } from 'lucide-react'
 import { useLanguage } from '@/lib/context/LanguageContext'
 import LinkWithLang from '@/components/common/LinkWithLang'
+
+const DEMO_EMAIL = 'demo@storagefy.app'
+const DEMO_PASSWORD = 'demo123'
+const LOGIN_URL = 'https://www.storagefy.app/auth/signin?email=demo@storagefy.app&password=demo123'
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 export default function VideoPage() {
   const { language } = useLanguage()
   const videoRef = useRef<HTMLVideoElement>(null)
   const videoContainerRef = useRef<HTMLDivElement>(null)
+  const formRef = useRef<HTMLElement>(null)
   const [isPlaying, setIsPlaying] = useState(false)
   const [isMuted, setIsMuted] = useState(true)
   const [showPoster, setShowPoster] = useState(true)
+  const [formData, setFormData] = useState({ name: '', email: '' })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [copiedField, setCopiedField] = useState<'email' | 'password' | 'all' | null>(null)
 
   const togglePlay = () => {
     if (!videoRef.current) return
@@ -104,6 +121,54 @@ export default function VideoPage() {
     }
   }
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+    setError(null)
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setError(null)
+    if (!EMAIL_REGEX.test(formData.email)) {
+      setError(language === 'es' ? 'Introduce un email válido.' : 'Please enter a valid email address.')
+      return
+    }
+    setIsSubmitting(true)
+    try {
+      const response = await fetch('/api/send-demo-access', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...formData, language }),
+      })
+      const result = await response.json()
+      if (response.ok) {
+        setSubmitted(true)
+        setTimeout(() => formRef.current?.scrollIntoView({ behavior: 'smooth' }), 100)
+      } else {
+        setError(result.error || (language === 'es' ? 'Hubo un error. Por favor, inténtalo de nuevo.' : 'An error occurred. Please try again.'))
+        if (response.status === 429) {
+          setError(result.error || (language === 'es' ? 'Demasiados intentos. Espera un momento.' : 'Too many attempts. Please wait.'))
+        }
+      }
+    } catch {
+      setError(language === 'es' ? 'Error de conexión. Comprueba tu internet.' : 'Connection error. Check your internet.')
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  const copyToClipboard = async (text: string, field: 'email' | 'password' | 'all') => {
+    try {
+      await navigator.clipboard.writeText(text)
+      setCopiedField(field)
+      setTimeout(() => setCopiedField(null), 2000)
+    } catch { /* ignore */ }
+  }
+
+  const copyAllCredentials = () => {
+    copyToClipboard(`${language === 'es' ? 'Email' : 'Email'}: ${DEMO_EMAIL}\n${language === 'es' ? 'Contraseña' : 'Password'}: ${DEMO_PASSWORD}`, 'all')
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-900 via-primary-800 to-primary-900 text-white overflow-x-hidden">
       {/* Header minimal */}
@@ -127,12 +192,19 @@ export default function VideoPage() {
                 StorageFy
               </span>
             </a>
-            <LinkWithLang href="/demo-trial">
-              <span className="px-4 py-2 bg-accent-500 hover:bg-accent-600 text-white font-semibold rounded-lg transition-colors flex items-center gap-2 text-sm">
-                {language === 'es' ? 'Probar demo' : 'Try demo'}
-                <ArrowRight className="w-4 h-4" />
-              </span>
-            </LinkWithLang>
+            <div className="flex items-center gap-2">
+              <LinkWithLang href="/signup">
+                <span className="px-4 py-2 border border-white/30 text-white font-medium rounded-lg hover:bg-white/10 transition-colors text-sm">
+                  {language === 'es' ? 'Registrarse' : 'Sign up'}
+                </span>
+              </LinkWithLang>
+              <LinkWithLang href="/demo-trial">
+                <span className="px-4 py-2 bg-accent-500 hover:bg-accent-600 text-white font-semibold rounded-lg transition-colors flex items-center gap-2 text-sm">
+                  {language === 'es' ? 'Probar demo' : 'Try demo'}
+                  <ArrowRight className="w-4 h-4" />
+                </span>
+              </LinkWithLang>
+            </div>
           </div>
         </div>
       </header>
@@ -276,9 +348,9 @@ export default function VideoPage() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-transparent to-primary-950/50">
-        <div className="max-w-2xl mx-auto text-center">
+      {/* CTA Section - Formulario de acceso a demo */}
+      <section ref={formRef} className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-transparent to-primary-950/50">
+        <div className="max-w-md mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -286,29 +358,129 @@ export default function VideoPage() {
             transition={{ duration: 0.5 }}
             className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10"
           >
-            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">
+            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4 text-center">
               {language === 'es'
                 ? '¿Listo para probarlo tú mismo?'
                 : 'Ready to try it yourself?'}
             </h2>
-            <p className="text-gray-300 mb-6">
+            <p className="text-gray-300 mb-6 text-center">
               {language === 'es'
-                ? 'Accede a la demo en 2 minutos. Sin tarjeta de crédito.'
-                : 'Access the demo in 2 minutes. No credit card required.'}
+                ? 'Accede a la demo en 30 segundos. Sin tarjeta de crédito.'
+                : 'Access the demo in 30 seconds. No credit card required.'}
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <LinkWithLang href="/demo-trial">
-                <span className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-semibold rounded-xl hover:from-accent-600 hover:to-accent-700 transition-all shadow-lg hover:shadow-accent-500/30">
-                  {language === 'es' ? 'Probar demo gratis' : 'Try free demo'}
-                  <ArrowRight className="w-5 h-5" />
-                </span>
-              </LinkWithLang>
-              <LinkWithLang href="/signup">
-                <span className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/10 border border-white/20 text-white font-semibold rounded-xl hover:bg-white/20 transition-all">
-                  {language === 'es' ? 'Crear cuenta' : 'Create account'}
-                </span>
-              </LinkWithLang>
-            </div>
+
+            {!submitted ? (
+              <>
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-white/90 mb-1">
+                      {language === 'es' ? 'Nombre' : 'Name'}
+                    </label>
+                    <div className="relative">
+                      <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/50" />
+                      <input
+                        type="text"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleInputChange}
+                        placeholder={language === 'es' ? 'Tu nombre' : 'Your name'}
+                        required
+                        className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-white/10 border border-white/20 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-white/90 mb-1">
+                      {language === 'es' ? 'Email' : 'Email'}
+                    </label>
+                    <div className="relative">
+                      <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/50" />
+                      <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        placeholder={language === 'es' ? 'tu@email.com' : 'you@email.com'}
+                        required
+                        className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-white/10 border border-white/20 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                      />
+                    </div>
+                  </div>
+                  {error && (
+                    <p className="text-sm text-red-400">{error}</p>
+                  )}
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full flex items-center justify-center gap-2 py-3 rounded-lg bg-primary-500 text-white font-semibold hover:bg-primary-600 disabled:opacity-70 disabled:cursor-not-allowed transition-colors"
+                  >
+                    {isSubmitting ? (language === 'es' ? 'Enviando...' : 'Sending...') : (language === 'es' ? 'Enviar credenciales' : 'Send credentials')}
+                  </button>
+                </form>
+                <div className="mt-4 flex items-center gap-2 text-xs text-white/60">
+                  <Lock className="w-3.5 h-3.5 shrink-0" />
+                  <span>{language === 'es' ? 'Sin tarjeta de crédito' : 'No credit card required'}</span>
+                </div>
+                <div className="mt-1 flex items-center gap-2 text-xs text-white/60">
+                  <ShieldCheck className="w-3.5 h-3.5 shrink-0" />
+                  <span>{language === 'es' ? 'Datos protegidos' : 'Data protected'}</span>
+                </div>
+              </>
+            ) : (
+              <div className="space-y-4">
+                <div className="flex items-center gap-2 text-green-400">
+                  <Check className="w-5 h-5" />
+                  <span className="font-semibold">{language === 'es' ? 'Credenciales enviadas' : 'Credentials sent'}</span>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between gap-2 rounded-lg bg-white/10 px-3 py-2">
+                    <span className="text-sm text-white/80">{language === 'es' ? 'Email' : 'Email'}</span>
+                    <div className="flex items-center gap-2">
+                      <code className="text-sm text-white font-mono truncate max-w-[140px] sm:max-w-none">{DEMO_EMAIL}</code>
+                      <button
+                        type="button"
+                        onClick={() => copyToClipboard(DEMO_EMAIL, 'email')}
+                        className="p-1 rounded hover:bg-white/10 text-white/70 hover:text-white shrink-0"
+                        title={language === 'es' ? 'Copiar' : 'Copy'}
+                      >
+                        {copiedField === 'email' ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                      </button>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between gap-2 rounded-lg bg-white/10 px-3 py-2">
+                    <span className="text-sm text-white/80">{language === 'es' ? 'Contraseña' : 'Password'}</span>
+                    <div className="flex items-center gap-2">
+                      <code className="text-sm text-white font-mono">{DEMO_PASSWORD}</code>
+                      <button
+                        type="button"
+                        onClick={() => copyToClipboard(DEMO_PASSWORD, 'password')}
+                        className="p-1 rounded hover:bg-white/10 text-white/70 hover:text-white shrink-0"
+                        title={language === 'es' ? 'Copiar' : 'Copy'}
+                      >
+                        {copiedField === 'password' ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <a
+                  href={LOGIN_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full flex items-center justify-center gap-2 py-3 rounded-lg bg-primary-500 text-white font-semibold hover:bg-primary-600 transition-colors"
+                >
+                  {language === 'es' ? 'Ir a login' : 'Go to login'}
+                  <ArrowRight className="w-4 h-4" />
+                </a>
+                <button
+                  type="button"
+                  onClick={copyAllCredentials}
+                  className="w-full flex items-center justify-center gap-2 py-2 rounded-lg border border-white/30 text-white/90 text-sm hover:bg-white/10 transition-colors"
+                >
+                  {copiedField === 'all' ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                  {language === 'es' ? 'Copiar credenciales' : 'Copy credentials'}
+                </button>
+              </div>
+            )}
           </motion.div>
         </div>
       </section>
